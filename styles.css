@@ -2363,3 +2363,194 @@ body[data-season="winter"] .ripple {
     );
   }
 }
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #6366f1;
+    --secondary: #f59e0b;
+    --accent: #ec4899;
+    --neutral: #374151;
+    --background: #ffffff;
+    --text: #111827;
+    --shadow: rgba(0, 0, 0, 0.1);
+    --space-4: 1rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --text-2xl: clamp(1.5rem, 1.3rem + 0.8vw, 2rem);
+    --text-5xl: clamp(3rem, 2.5rem + 2vw, 4rem);
+    --text-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+    --radius-lg: 1rem;
+    --transition-normal: 300ms ease-in-out;
+}
+
+[data-theme="dark"] {
+    --background: #111827;
+    --text: #f9fafb;
+    --neutral: #6b7280;
+    --shadow: rgba(255, 255, 255, 0.1);
+}
+
+body {
+    font-family: system-ui, -apple-system, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text);
+    background-color: var(--background);
+    overflow-x: hidden;
+    min-height: 100dvh;
+}
+
+/* Header styles for immediate display */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(229, 231, 235, 0.8);
+    z-index: 1020;
+    transition: all var(--transition-normal);
+}
+
+[data-theme="dark"] .header {
+    background: rgba(17, 24, 39, 0.95);
+}
+
+.nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-4);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    font-size: var(--text-2xl);
+    font-weight: 800;
+    color: var(--primary);
+    margin: 0;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+    list-style: none;
+    margin: 0;
+}
+
+@media (max-width: 767px) {
+    .nav-menu {
+        display: none;
+    }
+}
+
+/* Hero section critical styles */
+.hero {
+    height: 100vh;
+    min-height: 600px;
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('./img/秀歌-メインビジュアル.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    position: relative;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero {
+        background-attachment: scroll;
+    }
+}
+
+@media (max-width: 767px) {
+    .hero {
+        background-attachment: scroll;
+        height: 100dvh;
+    }
+}
+
+.hero-content {
+    max-width: 800px;
+    padding: var(--space-4);
+    z-index: 2;
+    position: relative;
+}
+
+.hero-title {
+    font-size: var(--text-5xl);
+    font-weight: 800;
+    margin-bottom: var(--space-6);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.hero-subtitle {
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-8);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.hero-actions {
+    display: flex;
+    gap: var(--space-4);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-6);
+    border: none;
+    border-radius: var(--radius-lg);
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+}
+
+.cta-button.primary {
+    background: linear-gradient(135deg, var(--primary), #8b5cf6);
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.cta-button.secondary {
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+}
+
+/* Skip link for accessibility */
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: var(--space-4);
+    background: var(--primary);
+    color: white;
+    padding: var(--space-4);
+    border-radius: var(--radius-lg);
+    font-weight: 600;
+    z-index: 1060;
+    transition: top var(--transition-normal);
+}
+
+.skip-link:focus {
+    top: var(--space-4);
+}
+
+/* Loading state to prevent FOUC */
+body:not(.loaded) * {
+    transition: none !important;
+}
