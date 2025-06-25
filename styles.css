@@ -1,4 +1,26 @@
+/* WINDSURF_START Fonts */
+:root{
+  --ff-heading: "Zen Antique Soft", serif;
+  --ff-body: "Noto Sans JP", sans-serif;
+}
+body{ font-family: var(--ff-body); }
+h1,h2,h3{ font-family: var(--ff-heading); }
+/* WINDSURF_END Fonts */
+
 /* ===== CSS Variables ===== */
+
+/* WINDSURF_START SeasonVars */
+:root{
+  --primary-spring:#FFB7C5; --accent-spring:#FF7C98;
+  --primary-summer:#6FDCC2; --accent-summer:#10BFA7;
+  --primary-autumn:#F9AF4B; --accent-autumn:#E57C04;
+  --primary-winter:#ADC8FF; --accent-winter:#4B6CFF;
+}
+body[data-season="spring"]{ --primary:var(--primary-spring); --accent:var(--accent-spring); }
+body[data-season="summer"]{ --primary:var(--primary-summer); --accent:var(--accent-summer); }
+body[data-season="autumn"]{ --primary:var(--primary-autumn); --accent:var(--accent-autumn); }
+body[data-season="winter"]{ --primary:var(--primary-winter); --accent:var(--accent-winter); }
+/* WINDSURF_END SeasonVars */
 :root {
   /* Color Palette */
   --primary: #6366f1;
@@ -135,7 +157,7 @@ html {
 }
 
 body {
-  font-family: var(--font-sans);
+  font-family: var(--ff-body);
   font-size: var(--text-base);
   line-height: 1.6;
   color: var(--text);
@@ -368,6 +390,50 @@ a:focus {
   background-color: var(--neutral-800);
 }
 
+/* Duplicate FontsVariables block removed */
+:root {
+  --font-en: 'Inter', sans-serif;
+  --font-jp: 'Noto Sans JP', sans-serif;
+  --font-season: 'Great Vibes', cursive;
+}
+
+body {
+  font-family: var(--font-en);
+}
+
+
+/* Duplicate SeasonVars block removed */
+}
+
+.autumn {
+  --primary: #FFC080;
+  --accent: #FF69B4;
+}
+
+.winter {
+  --primary: #87CEEB;
+  --accent: #ADD8E6;
+}
+
+.spring {
+  --primary: #C6E2B5;
+  --accent: #8BC34A;
+}
+
+.summer {
+  --primary: #FFA07A;
+  --accent: #FFC080;
+}
+/* WINDSURF_END SeasonVars */
+
+/* WINDSURF_START FooterIconsStyle */
+.social-links{
+  display:flex; gap:1rem; justify-content:center; margin-top:1.5rem;
+}
+.social-links a{ font-size:1.8rem; color:var(--accent); transition:opacity .3s; }
+.social-links a:hover{ opacity:.6; }
+/* WINDSURF_END FooterIconsStyle */
+
 /* Mobile Navigation */
 @media (max-width: 767px) {
   .nav-toggle {
@@ -413,22 +479,28 @@ a:focus {
 
 /* ===== Hero Section ===== */
 .hero {
-  height: 100vh;
-  min-height: 600px;
+  /* Prevent header overlap */
+  --header-height: 80px;
+  margin-top: var(--header-height);
+  height: calc(80vh - var(--header-height));
+  min-height: 480px;
   background: linear-gradient(
     rgba(0, 0, 0, 0.4), 
     rgba(0, 0, 0, 0.4)
   ), url('./img/秀歌-メインビジュアル.png');
   background-size: cover;
-  background-position: center;
+  background-position: left top;
   background-attachment: fixed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: white;
-  position: relative;
-  overflow: hidden;
+}
+
+/* Mobile adjustments to keep subject visible */
+@media (max-width: 600px) {
+  .hero {
+    background-position: left 20%;
+    height: calc(90vh - var(--header-height));
+  }
+
+
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -491,11 +563,18 @@ a:focus {
   overflow: hidden;
 }
 
-.cta-button.primary {
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+/* WINDSURF_START CTA_Gradient */
+.cta-button.primary{
+  background: linear-gradient(120deg,var(--accent) 0%,var(--primary) 100%);
+  background-size: 200% 100%;
   color: white;
   box-shadow: 0 4px 15px var(--shadow-lg);
+  transition: background-position .4s ease;
 }
+.cta-button.primary:hover{
+  background-position: 100% 0;
+}
+/* WINDSURF_END CTA_Gradient */
 
 .cta-button.primary:hover,
 .cta-button.primary:focus {
@@ -1253,48 +1332,8 @@ audio:focus-visible {
   position: relative;
 }
 
-.season-btn[data-season="spring"]::before {
-  content: "";
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  width: 8px;
-  height: 8px;
-  background: var(--spring);
-  border-radius: 50%;
-}
 
-.season-btn[data-season="summer"]::before {
-  content: "";
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  width: 8px;
-  height: 8px;
-  background: var(--summer);
-  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-}
 
-.season-btn[data-season="autumn"]::before {
-  content: "";
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  width: 8px;
-  height: 8px;
-  background: var(--autumn);
-  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-}
-
-.season-btn[data-season="winter"]::before {
-  content: "";
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  width: 8px;
-  height: 8px;
-  background: var(--winter);
-}
 
 /* ===== Touch Target Size Enhancement ===== */
 /* Ensure minimum 44px touch targets for mobile */

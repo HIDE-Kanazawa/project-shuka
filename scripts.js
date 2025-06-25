@@ -192,17 +192,17 @@ class Navigation {
 }
 
 // Utility functions for external use
-window.scrollToSection = function(sectionId) {
-  const targetElement = document.getElementById(sectionId);
-  const header = document.getElementById('header');
+window.scrollToSection = () => {}; // auto-scroll disabled
+
+
   
-  if (targetElement && header) {
-    const headerHeight = header.offsetHeight;
+
+
     const targetPosition = targetElement.offsetTop - headerHeight;
     
-    window.scrollTo({
-      top: targetPosition,
-      behavior: 'smooth'
+
+
+
     });
   }
 };
@@ -550,10 +550,10 @@ window.switchSeason = function(season) {
   if (window.seasonsGallery && typeof window.seasonsGallery.switchToSeason === 'function') {
     window.seasonsGallery.switchToSeason(season);
     
-    // Scroll to gallery section
-    const gallerySection = document.getElementById('gallery');
-    if (gallerySection) {
-      window.scrollToSection('gallery');
+    
+
+
+
     }
   }
 };
@@ -1838,5 +1838,16 @@ if (typeof window !== 'undefined') {
 
 // Export for module systems
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = DevelopmentTools;
+  // WINDSURF_START SeasonColor
+(function setSeason(){
+  const month = new Date().getMonth()+1;
+  let season = "spring";
+  if([6,7,8].includes(month)) season = "summer";
+  else if([9,10,11].includes(month)) season = "autumn";
+  else if([12,1,2].includes(month)) season = "winter";
+  document.body.dataset.season = season;
+})();
+// WINDSURF_END SeasonColor
+
+module.exports = DevelopmentTools;
 }
