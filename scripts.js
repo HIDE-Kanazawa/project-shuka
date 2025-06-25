@@ -94,8 +94,8 @@ class Navigation {
       const headerHeight = this.header.offsetHeight;
       const targetPosition = targetElement.offsetTop - headerHeight;
       
-      // Smooth scroll to target
-      this.smoothScrollTo(targetPosition);
+      // Smooth scroll to target (native for minimal delay)
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
       
       // Update URL without triggering scroll
       history.pushState(null, null, `#${targetId}`);
@@ -108,7 +108,7 @@ class Navigation {
   smoothScrollTo(targetPosition) {
     const startPosition = window.pageYOffset;
     const distance = targetPosition - startPosition;
-    const duration = 800;
+    const duration = 400;
     let start = null;
     
     const animation = (currentTime) => {
@@ -208,12 +208,6 @@ window.scrollToSection = function(sectionId) {
 };
 
 
-
-// Initialize navigation when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-  new Navigation();
-});
-
 // Export for module systems
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = Navigation;
@@ -226,7 +220,7 @@ class SeasonsGallery {
   constructor() {
     this.seasonButtons = document.querySelectorAll('.season-btn');
     this.seasonPanels = document.querySelectorAll('.season-panel');
-    this.currentSeason = 'spring';
+    this.currentSeason = 'tsuyu';
     this.audioElements = [];
     
     this.init();
@@ -265,17 +259,20 @@ class SeasonsGallery {
   loadInitialSeason() {
     // Set initial season based on current date or URL hash
     const urlSeason = this.getSeasonFromURL();
-    const dateSeason = this.getSeasonFromDate();
     
-    this.currentSeason = urlSeason || dateSeason || 'spring';
+    this.currentSeason = urlSeason || 'tsuyu';
     this.switchToSeason(this.currentSeason, false);
+
+    // Show summer gallery panel by default while keeping overall season as tsuyu
+    this.updateSeasonButtons('summer');
+    this.updateSeasonPanels('summer', false);
   }
   
   getSeasonFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
     const season = urlParams.get('season');
     
-    if (['spring', 'summer', 'autumn', 'winter'].includes(season)) {
+    if (['spring', 'summer', 'autumn', 'winter', 'tsuyu'].includes(season)) {
       return season;
     }
     
@@ -345,7 +342,7 @@ class SeasonsGallery {
   
   switchToSeason(season, animate = true) {
     // Validate season
-    if (!['spring', 'summer', 'autumn', 'winter'].includes(season)) {
+    if (!['spring', 'summer', 'autumn', 'winter', 'tsuyu'].includes(season)) {
       console.warn(`Invalid season: ${season}`);
       return;
     }
@@ -369,6 +366,17 @@ class SeasonsGallery {
     // Update hero background only when animate flag is true (i.e., user interaction)
     if (animate) {
       this.updateHeroBackground(season);
+    }
+
+    // Toggle rain effect depending on season
+    if (season === 'tsuyu') {
+      if (typeof window.enableRain === 'function') {
+        window.enableRain();
+      }
+    } else {
+      if (typeof window.disableRain === 'function') {
+        window.disableRain();
+      }
     }
     
     // Announce change for screen readers
@@ -430,11 +438,7 @@ class SeasonsGallery {
     // Update ARIA attributes
     panel.setAttribute('aria-hidden', 'false');
     
-    // Focus management
-    const firstFocusable = panel.querySelector('audio, button, a');
-    if (firstFocusable && document.activeElement === document.body) {
-      firstFocusable.focus();
-    }
+
   }
   
   hidePanel(panel, animate) {
@@ -473,7 +477,8 @@ class SeasonsGallery {
       spring: './img/秀歌-春.png',
       summer: './img/秀歌-夏.png',
       autumn: './img/秀歌-秋.png',
-      winter: './img/秀歌-冬.png'
+      winter: './img/秀歌-冬.png',
+      tsuyu: './img/秀歌-梅雨.png'
     };
     
     const imageUrl = seasonImages[season];
@@ -498,7 +503,8 @@ class SeasonsGallery {
       spring: '春',
       summer: '夏',
       autumn: '秋',
-      winter: '冬'
+      winter: '冬',
+      tsuyu: '梅雨'
     };
     
     const announcement = `${seasonNames[season]}の楽曲に切り替わりました`;
@@ -552,7 +558,7 @@ class SeasonsGallery {
   }
   
   getAvailableSeasons() {
-    return ['spring', 'summer', 'autumn', 'winter'];
+    return ['spring', 'summer', 'autumn', 'winter', 'tsuyu'];
   }
 }
 
@@ -2218,12 +2224,21 @@ class RainEffect {
   }
 }
 
-// Initialize rain effect when DOM is loaded
+// Rain effect will be toggled based on the active season
 let rainEffect;
-document.addEventListener('DOMContentLoaded', () => {
-  rainEffect = new RainEffect();
-  window.rainEffect = rainEffect;
-});
+window.enableRain = function() {
+  if (!rainEffect) {
+    rainEffect = new RainEffect();
+    window.rainEffect = rainEffect;
+  } else {
+    rainEffect.canvas.style.display = '';
+  }
+};
+window.disableRain = function() {
+  if (rainEffect) {
+    rainEffect.canvas.style.display = 'none';
+  }
+};
 
 // Export for module systems
 if (typeof module !== 'undefined' && module.exports) {
