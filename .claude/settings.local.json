@@ -10,7 +10,10 @@
       "Bash(cwebp:*)",
       "Bash(rm:*)",
       "Bash(ls:*)",
-      "Bash(rg:*)"
+      "Bash(rg:*)",
+      "Bash(for file in *.png)",
+      "Bash(do echo \"Converting $file to $file%.png.webp\")",
+      "Bash(done)"
     ],
     "deny": []
   }
