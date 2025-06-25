@@ -192,18 +192,22 @@ class Navigation {
 }
 
 // Utility functions for external use
-window.scrollToSection = () => {}; // auto-scroll disabled
-
-
+window.scrollToSection = function(sectionId) {
+  const targetElement = document.getElementById(sectionId);
+  const header = document.getElementById('header');
   
-
-
+  if (targetElement && header) {
+    const headerHeight = header.offsetHeight;
     const targetPosition = targetElement.offsetTop - headerHeight;
     
+    window.scrollTo({
+      top: targetPosition,
+      behavior: 'smooth'
+    });
+  }
+};
 
 
-
-    ;
 
 // Initialize navigation when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
@@ -1840,9 +1844,7 @@ if (typeof window !== 'undefined') {
   });
 }
 
-// Export for module systems
-if (typeof module !== 'undefined' && module.exports) {
-  // WINDSURF_START SeasonColor
+// WINDSURF_START SeasonColor
 (function setSeason(){
   const month = new Date().getMonth()+1;
   let season = "spring";
@@ -1853,5 +1855,227 @@ if (typeof module !== 'undefined' && module.exports) {
 })();
 // WINDSURF_END SeasonColor
 
-module.exports = DevelopmentTools;
+/**
+ * Water Ripple Effect Module
+ * Creates beautiful water-like ripples on mouse movement and clicks
+ */
+class WaterRippleEffect {
+  constructor() {
+    this.container = document.getElementById('ripple-container');
+    this.isActive = true;
+    this.lastRippleTime = 0;
+    this.throttleDelay = 100; // ms
+    this.maxRipples = 20;
+    this.ripples = [];
+    
+    this.init();
+  }
+  
+  init() {
+    if (!this.container) {
+      console.warn('Ripple container not found');
+      return;
+    }
+    
+    this.checkUserPreferences();
+    this.bindEvents();
+  }
+  
+  checkUserPreferences() {
+    // Respect user's motion preferences
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      this.isActive = false;
+      this.container.style.display = 'none';
+      return;
+    }
+    
+    // Check for low-end device
+    if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) {
+      this.throttleDelay = 200;
+      this.maxRipples = 10;
+    }
+  }
+  
+  bindEvents() {
+    if (!this.isActive) return;
+    
+    // Mouse move ripples (throttled)
+    document.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+    
+    // Click ripples (immediate)
+    document.addEventListener('click', (e) => this.handleClick(e));
+    
+    // Touch ripples for mobile
+    document.addEventListener('touchstart', (e) => this.handleTouch(e), { passive: true });
+    
+    // Listen for preference changes
+    window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', (e) => {
+      if (e.matches) {
+        this.disable();
+      } else {
+        this.enable();
+      }
+    });
+    
+    // Clean up old ripples periodically
+    setInterval(() => this.cleanupRipples(), 2000);
+  }
+  
+  handleMouseMove(e) {
+    if (!this.isActive || !this.shouldCreateRipple()) return;
+    
+    // Create small ripple on mouse move
+    this.createRipple(e.clientX, e.clientY, 'small');
+    this.lastRippleTime = Date.now();
+  }
+  
+  handleClick(e) {
+    if (!this.isActive) return;
+    
+    // Create large ripple on click
+    this.createRipple(e.clientX, e.clientY, 'large');
+  }
+  
+  handleTouch(e) {
+    if (!this.isActive || !e.touches[0]) return;
+    
+    const touch = e.touches[0];
+    this.createRipple(touch.clientX, touch.clientY, 'medium');
+  }
+  
+  shouldCreateRipple() {
+    const now = Date.now();
+    return (now - this.lastRippleTime) > this.throttleDelay;
+  }
+  
+  createRipple(x, y, size = 'medium') {
+    if (!this.isActive || this.ripples.length >= this.maxRipples) return;
+    
+    const ripple = document.createElement('div');
+    ripple.className = `ripple ${size}`;
+    
+    // Calculate ripple size based on type
+    const sizeMap = {
+      small: Math.random() * 100 + 50,    // 50-150px
+      medium: Math.random() * 150 + 100,  // 100-250px
+      large: Math.random() * 200 + 150    // 150-350px
+    };
+    
+    const rippleSize = sizeMap[size];
+    
+    // Position the ripple
+    ripple.style.width = `${rippleSize}px`;
+    ripple.style.height = `${rippleSize}px`;
+    ripple.style.left = `${x - rippleSize / 2}px`;
+    ripple.style.top = `${y - rippleSize / 2}px`;
+    
+    // Add random rotation for more natural effect
+    const rotation = Math.random() * 360;
+    ripple.style.transform = `scale(0) rotate(${rotation}deg)`;
+    
+    // Add to container and track
+    this.container.appendChild(ripple);
+    this.ripples.push({
+      element: ripple,
+      createdAt: Date.now()
+    });
+    
+    // Remove after animation completes
+    const animationDuration = size === 'large' ? 2500 : size === 'small' ? 1000 : 1500;
+    setTimeout(() => {
+      this.removeRipple(ripple);
+    }, animationDuration);
+  }
+  
+  removeRipple(rippleElement) {
+    if (rippleElement && rippleElement.parentNode) {
+      rippleElement.parentNode.removeChild(rippleElement);
+    }
+    
+    // Remove from tracking array
+    this.ripples = this.ripples.filter(ripple => ripple.element !== rippleElement);
+  }
+  
+  cleanupRipples() {
+    const now = Date.now();
+    const oldRipples = this.ripples.filter(ripple => {
+      return (now - ripple.createdAt) > 3000; // Remove ripples older than 3 seconds
+    });
+    
+    oldRipples.forEach(ripple => {
+      this.removeRipple(ripple.element);
+    });
+  }
+  
+  enable() {
+    this.isActive = true;
+    if (this.container) {
+      this.container.style.display = 'block';
+    }
+  }
+  
+  disable() {
+    this.isActive = false;
+    if (this.container) {
+      this.container.style.display = 'none';
+    }
+    
+    // Clear all existing ripples
+    this.ripples.forEach(ripple => {
+      this.removeRipple(ripple.element);
+    });
+  }
+  
+  // Public methods for external control
+  toggle() {
+    if (this.isActive) {
+      this.disable();
+    } else {
+      this.enable();
+    }
+  }
+  
+  createCustomRipple(x, y, color, size = 200) {
+    if (!this.isActive) return;
+    
+    const ripple = document.createElement('div');
+    ripple.className = 'ripple';
+    ripple.style.background = `radial-gradient(circle, ${color}40 0%, ${color}20 20%, ${color}10 40%, transparent 80%)`;
+    ripple.style.width = `${size}px`;
+    ripple.style.height = `${size}px`;
+    ripple.style.left = `${x - size / 2}px`;
+    ripple.style.top = `${y - size / 2}px`;
+    
+    this.container.appendChild(ripple);
+    
+    setTimeout(() => {
+      this.removeRipple(ripple);
+    }, 1500);
+  }
+}
+
+// Initialize ripple effect when DOM is loaded
+let waterRipples;
+document.addEventListener('DOMContentLoaded', () => {
+  waterRipples = new WaterRippleEffect();
+  window.waterRipples = waterRipples; // Make globally accessible
+});
+
+// Global functions for external use
+window.toggleRipples = function() {
+  if (window.waterRipples) {
+    window.waterRipples.toggle();
+  }
+};
+
+window.createCustomRipple = function(x, y, color, size) {
+  if (window.waterRipples) {
+    window.waterRipples.createCustomRipple(x, y, color, size);
+  }
+};
+
+// Export for module systems
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = DevelopmentTools;
 }

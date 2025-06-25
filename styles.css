@@ -2174,3 +2174,192 @@ legend {
     font-style: italic;
   }
 }
+
+/* ===== Water Ripple Effect ===== */
+.ripple-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+  mix-blend-mode: multiply;
+}
+
+[data-theme="dark"] .ripple-container {
+  mix-blend-mode: screen;
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(99, 102, 241, 0.3) 0%,
+    rgba(99, 102, 241, 0.2) 20%,
+    rgba(99, 102, 241, 0.1) 40%,
+    rgba(99, 102, 241, 0.05) 60%,
+    transparent 80%
+  );
+  transform: scale(0);
+  animation: rippleEffect 1.5s ease-out forwards;
+  pointer-events: none;
+}
+
+.ripple.large {
+  background: radial-gradient(
+    circle,
+    rgba(99, 102, 241, 0.4) 0%,
+    rgba(99, 102, 241, 0.25) 15%,
+    rgba(99, 102, 241, 0.15) 30%,
+    rgba(99, 102, 241, 0.08) 50%,
+    rgba(99, 102, 241, 0.03) 70%,
+    transparent 90%
+  );
+  animation: rippleEffectLarge 2.5s ease-out forwards;
+}
+
+.ripple.small {
+  background: radial-gradient(
+    circle,
+    rgba(99, 102, 241, 0.25) 0%,
+    rgba(99, 102, 241, 0.15) 30%,
+    rgba(99, 102, 241, 0.08) 60%,
+    transparent 90%
+  );
+  animation: rippleEffectSmall 1s ease-out forwards;
+}
+
+/* Seasonal ripple colors */
+body[data-season="spring"] .ripple {
+  background: radial-gradient(
+    circle,
+    rgba(255, 183, 197, 0.3) 0%,
+    rgba(255, 183, 197, 0.2) 20%,
+    rgba(255, 183, 197, 0.1) 40%,
+    rgba(255, 183, 197, 0.05) 60%,
+    transparent 80%
+  );
+}
+
+body[data-season="summer"] .ripple {
+  background: radial-gradient(
+    circle,
+    rgba(111, 220, 194, 0.3) 0%,
+    rgba(111, 220, 194, 0.2) 20%,
+    rgba(111, 220, 194, 0.1) 40%,
+    rgba(111, 220, 194, 0.05) 60%,
+    transparent 80%
+  );
+}
+
+body[data-season="autumn"] .ripple {
+  background: radial-gradient(
+    circle,
+    rgba(249, 175, 75, 0.3) 0%,
+    rgba(249, 175, 75, 0.2) 20%,
+    rgba(249, 175, 75, 0.1) 40%,
+    rgba(249, 175, 75, 0.05) 60%,
+    transparent 80%
+  );
+}
+
+body[data-season="winter"] .ripple {
+  background: radial-gradient(
+    circle,
+    rgba(173, 200, 255, 0.3) 0%,
+    rgba(173, 200, 255, 0.2) 20%,
+    rgba(173, 200, 255, 0.1) 40%,
+    rgba(173, 200, 255, 0.05) 60%,
+    transparent 80%
+  );
+}
+
+@keyframes rippleEffect {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes rippleEffectLarge {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  30% {
+    opacity: 0.9;
+  }
+  70% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes rippleEffectSmall {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  40% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+/* Performance optimizations */
+.ripple {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .ripple-container {
+    display: none;
+  }
+  
+  .ripple {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+/* High contrast mode adjustments */
+@media (prefers-contrast: high) {
+  .ripple {
+    background: radial-gradient(
+      circle,
+      rgba(0, 0, 0, 0.5) 0%,
+      rgba(0, 0, 0, 0.3) 30%,
+      rgba(0, 0, 0, 0.1) 60%,
+      transparent 90%
+    );
+  }
+  
+  [data-theme="dark"] .ripple {
+    background: radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.5) 0%,
+      rgba(255, 255, 255, 0.3) 30%,
+      rgba(255, 255, 255, 0.1) 60%,
+      transparent 90%
+    );
+  }
+}
