@@ -1974,8 +1974,8 @@ class WaterRippleEffect {
     if (!this.isActive) return;
     
     const { clientX: x, clientY: y } = e;
-    // Create spectacular multi-layer click effect
-    this.createSpectacularClick(x, y);
+    // Create gold foil sparkle effect instead of ripples
+    this.createGoldFoilEffect(x, y);
   }
   
   handleTouch(e) {
@@ -2083,58 +2083,95 @@ class WaterRippleEffect {
   }
 
   /**
-   * Create zen garden click effect - like a stone thrown into a still pond
+   * Create gold foil sparkle effect - 金箔の煌めき演出
    */
-  createSpectacularClick(x, y) {
-    // Initial impact ripple - strongest and most visible
-    this.createRipple(x, y, 'large', 'elegant');
+  createGoldFoilEffect(x, y) {
+    // Central gold sparkle
+    this.createGoldSparkle(x, y, 40);
     
-    // Secondary concentric waves with sumi-e effect
+    // Radiating gold particles
+    this.createGoldParticles(x, y, 12);
+    
+    // Background shimmer effect
     setTimeout(() => {
-      this.createRipple(x, y, 'medium', 'elegant');
+      this.createGoldShimmer(x, y, 80);
+    }, 100);
+    
+    // Secondary sparkle wave
+    setTimeout(() => {
+      this.createGoldSparkle(x, y, 25);
     }, 200);
-    
-    setTimeout(() => {
-      this.createRipple(x, y, 'small', 'subtle');
-    }, 450);
-    
-    // Very subtle tertiary wave for depth
-    setTimeout(() => {
-      this.createRipple(x, y, 'small', 'subtle');
-    }, 750);
-    
-    // Minimal floating elements like flower petals on water
-    this.createFloatingElements(x, y, 6);
-    
-    // Gentle ink-like glow at center
-    this.createInkGlow(x, y);
   }
 
   /**
-   * Create sumi-e ink glow effect at click center
+   * Create central gold sparkle - メイン金箔煌めき
    */
-  createInkGlow(x, y) {
+  createGoldSparkle(x, y, size) {
     if (!this.container) return;
     
-    const glow = document.createElement('div');
-    glow.className = 'gentle-glow';
-    const size = 45; // Smaller, more subtle
-    glow.style.width = `${size}px`;
-    glow.style.height = `${size}px`;
-    glow.style.left = `${x - size / 2}px`;
-    glow.style.top = `${y - size / 2}px`;
+    const sparkle = document.createElement('div');
+    sparkle.className = 'gold-sparkle';
+    sparkle.style.width = `${size}px`;
+    sparkle.style.height = `${size}px`;
+    sparkle.style.left = `${x - size / 2}px`;
+    sparkle.style.top = `${y - size / 2}px`;
     
-    // Add sumi-e ink aesthetic
-    glow.style.background = `radial-gradient(
-      circle,
-      rgba(47, 63, 79, 0.15) 0%,
-      rgba(75, 85, 99, 0.08) 30%,
-      rgba(107, 114, 128, 0.04) 60%,
-      transparent 100%
-    )`;
+    this.container.appendChild(sparkle);
+    setTimeout(() => sparkle.remove(), 800);
+  }
+
+  /**
+   * Create floating gold particles - 金箔粒子
+   */
+  createGoldParticles(x, y, count) {
+    if (!this.container) return;
     
-    this.container.appendChild(glow);
-    setTimeout(() => glow.remove(), 1500);
+    for (let i = 0; i < count; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'gold-particle';
+      
+      // Random size for natural look
+      const size = Math.random() * 4 + 3; // 3-7px
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      particle.style.left = `${x - size / 2}px`;
+      particle.style.top = `${y - size / 2}px`;
+      
+      // Random direction and distance
+      const angle = (360 / count) * i + (Math.random() * 60 - 30);
+      const distance = 50 + Math.random() * 80;
+      const dx = Math.cos(angle * Math.PI / 180) * distance;
+      const dy = Math.sin(angle * Math.PI / 180) * distance;
+      const duration = (Math.random() * 0.8 + 1).toFixed(2);
+      
+      particle.style.setProperty('--dx', `${dx}px`);
+      particle.style.setProperty('--dy', `${dy}px`);
+      particle.style.animationDuration = `${duration}s`;
+      
+      // Add random rotation for sparkle effect
+      const rotation = Math.random() * 360;
+      particle.style.transform = `rotate(${rotation}deg)`;
+      
+      this.container.appendChild(particle);
+      setTimeout(() => particle.remove(), duration * 1000);
+    }
+  }
+
+  /**
+   * Create gold shimmer background - 金箔シマー背景
+   */
+  createGoldShimmer(x, y, size) {
+    if (!this.container) return;
+    
+    const shimmer = document.createElement('div');
+    shimmer.className = 'gold-shimmer';
+    shimmer.style.width = `${size}px`;
+    shimmer.style.height = `${size}px`;
+    shimmer.style.left = `${x - size / 2}px`;
+    shimmer.style.top = `${y - size / 2}px`;
+    
+    this.container.appendChild(shimmer);
+    setTimeout(() => shimmer.remove(), 1200);
   }
 
   /**

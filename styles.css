@@ -1506,20 +1506,111 @@ body[data-season="summer"] .ripple{ border-color: var(--accent-summer); }
 body[data-season="autumn"] .ripple{ border-color: var(--accent-autumn); }
 body[data-season="winter"] .ripple{ border-color: var(--accent-winter); }
 
-/* Gold flake burst */
-.click-flash{
-  position:absolute;
-  pointer-events:none;
-  background: radial-gradient(circle, rgba(255,215,0,0.9) 0%, rgba(255,215,0,0.6) 40%, transparent 70%);
-  border-radius:50%;
-  transform:scale(0);
-  animation: flashPop 0.6s ease-out forwards;
+/* Gold foil sparkle effect - 金箔の煌めき */
+.gold-sparkle {
+  position: absolute;
+  pointer-events: none;
+  background: radial-gradient(
+    circle,
+    rgba(255, 215, 0, 0.9) 0%,
+    rgba(255, 223, 0, 0.8) 20%,
+    rgba(255, 193, 7, 0.6) 40%,
+    rgba(255, 175, 0, 0.3) 60%,
+    transparent 80%
+  );
+  border-radius: 50%;
+  transform: scale(0) rotate(0deg);
+  animation: goldSparkle 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  box-shadow: 
+    0 0 20px rgba(255, 215, 0, 0.6),
+    0 0 40px rgba(255, 215, 0, 0.3),
+    inset 0 0 10px rgba(255, 235, 59, 0.4);
 }
 
-@keyframes flashPop{
-  0%{transform:scale(0);opacity:1;}
-  80%{opacity:0.6;}
-  100%{transform:scale(6);opacity:0;}
+.gold-particle {
+  position: absolute;
+  pointer-events: none;
+  background: linear-gradient(45deg, 
+    rgba(255, 215, 0, 0.9) 0%,
+    rgba(255, 235, 59, 0.8) 30%,
+    rgba(255, 193, 7, 0.6) 60%,
+    transparent 100%
+  );
+  transform: scale(0) rotate(0deg);
+  animation: goldParticleFloat ease-out forwards;
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+}
+
+.gold-shimmer {
+  position: absolute;
+  pointer-events: none;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(255, 215, 0, 0.4) 60deg,
+    rgba(255, 235, 59, 0.6) 120deg,
+    rgba(255, 193, 7, 0.4) 180deg,
+    transparent 240deg,
+    rgba(255, 215, 0, 0.3) 300deg,
+    transparent 360deg
+  );
+  border-radius: 50%;
+  transform: scale(0) rotate(0deg);
+  animation: goldShimmer 1.2s ease-out forwards;
+  mix-blend-mode: screen;
+}
+
+@keyframes goldSparkle {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  30% {
+    transform: scale(0.8) rotate(90deg);
+    opacity: 0.9;
+  }
+  70% {
+    transform: scale(1.2) rotate(180deg);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(2) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes goldParticleFloat {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1) rotate(180deg) translate(var(--dx), var(--dy));
+  }
+  100% {
+    transform: scale(0.2) rotate(360deg) translate(calc(var(--dx) * 1.5), calc(var(--dy) * 1.5));
+    opacity: 0;
+  }
+}
+
+@keyframes goldShimmer {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 0.7;
+  }
+  40% {
+    transform: scale(1.5) rotate(120deg);
+    opacity: 0.5;
+  }
+  80% {
+    transform: scale(2.5) rotate(240deg);
+    opacity: 0.2;
+  }
+  100% {
+    transform: scale(3.5) rotate(360deg);
+    opacity: 0;
+  }
 }
 
 /* Gold flake burst */
@@ -2840,13 +2931,25 @@ body[data-season="winter"] .ripple:not(.elegant):not(.subtle) {
   contain: layout style paint;
 }
 
+.gold-sparkle,
+.gold-particle,
+.gold-shimmer {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  contain: layout style paint;
+}
+
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   .ripple-container {
     display: none;
   }
   
-  .ripple {
+  .ripple,
+  .gold-sparkle,
+  .gold-particle,
+  .gold-shimmer {
     animation: none;
     opacity: 0;
   }
