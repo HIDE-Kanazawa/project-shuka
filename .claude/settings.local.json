@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(git merge:*)",
+      "Bash(git add:*)"
     ],
     "deny": []
   }
