@@ -286,6 +286,82 @@ body {
   background-color: var(--background);
   overflow-x: hidden;
   min-height: 100dvh;
+  position: relative;
+}
+
+/* 季節に合わせた和紙背景 */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('./img/和紙-春.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  opacity: 0.08;
+  z-index: -2;
+  pointer-events: none;
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* 季節別和紙背景 */
+body[data-season="spring"]::before {
+  background-image: url('./img/和紙-春.webp');
+}
+
+body[data-season="summer"]::before {
+  background-image: url('./img/和紙-夏.webp');
+}
+
+body[data-season="autumn"]::before {
+  background-image: url('./img/和紙-秋.webp');
+}
+
+body[data-season="winter"]::before {
+  background-image: url('./img/和紙-冬.webp');
+}
+
+body[data-season="tsuyu"]::before {
+  background-image: url('./img/和紙-梅雨.webp');
+  opacity: 0.12; /* 梅雨の季節は少し濃く */
+}
+
+/* ダークテーマ時の和紙背景調整 */
+[data-theme="dark"] body::before {
+  opacity: 0.04; /* ダークテーマでは薄く */
+  mix-blend-mode: overlay;
+}
+
+[data-theme="dark"] body[data-season="tsuyu"]::before {
+  opacity: 0.06; /* 梅雨は少し濃く */
+}
+
+/* レスポンシブ対応 - モバイルでのパフォーマンス最適化 */
+@media (max-width: 768px) {
+  body::before {
+    background-attachment: scroll; /* モバイルでfixedを避ける */
+    background-size: cover;
+  }
+}
+
+/* 低性能デバイス対応 */
+@media (prefers-reduced-motion: reduce) {
+  body::before {
+    transition: none;
+    background-attachment: scroll;
+  }
+}
+
+/* 高解像度ディスプレイ対応 */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  body::before {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
 }
 
 /* ===== Typography ===== */
@@ -742,11 +818,13 @@ a:focus {
 /* ===== About Section ===== */
 .about {
   padding: var(--space-24) 0;
-  background: var(--neutral-50);
+  background: rgba(249, 250, 251, 0.85); /* 和紙背景を透かすため半透明に */
+  backdrop-filter: blur(1px);
 }
 
 [data-theme="dark"] .about {
-  background: var(--neutral-900);
+  background: rgba(17, 24, 39, 0.85);
+  backdrop-filter: blur(1px);
 }
 
 .about-content {
@@ -805,6 +883,12 @@ a:focus {
 /* ===== Gallery Section ===== */
 .gallery {
   padding: var(--space-24) 0;
+  background: rgba(255, 255, 255, 0.6); /* 和紙をうっすら透かす */
+  backdrop-filter: blur(0.5px);
+}
+
+[data-theme="dark"] .gallery {
+  background: rgba(31, 41, 55, 0.6);
 }
 
 .season-nav {
@@ -1006,11 +1090,13 @@ a:focus {
 /* ===== Contact Section ===== */
 .contact {
   padding: var(--space-24) 0;
-  background: var(--neutral-50);
+  background: rgba(249, 250, 251, 0.85);
+  backdrop-filter: blur(1px);
 }
 
 [data-theme="dark"] .contact {
-  background: var(--neutral-900);
+  background: rgba(17, 24, 39, 0.85);
+  backdrop-filter: blur(1px);
 }
 
 .contact-content {

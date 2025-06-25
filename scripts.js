@@ -229,6 +229,7 @@ class SeasonsGallery {
   init() {
     this.bindEvents();
     this.setupAudioElements();
+    this.preloadWashiBackgrounds(); // 和紙背景をプリロード
     this.loadInitialSeason();
   }
   
@@ -255,13 +256,30 @@ class SeasonsGallery {
       audio.setAttribute('aria-label', `${trackTitle}の音楽プレーヤー`);
     });
   }
+
+  preloadWashiBackgrounds() {
+    // Preload all washi background images for smooth transitions
+    const washiImages = [
+      './img/和紙-春.webp',
+      './img/和紙-夏.webp',
+      './img/和紙-秋.webp',
+      './img/和紙-冬.webp',
+      './img/和紙-梅雨.webp'
+    ];
+
+    washiImages.forEach(src => {
+      const img = new Image();
+      img.src = src;
+      // Images will be cached by browser
+    });
+  }
   
   loadInitialSeason() {
     // Always set initial season to tsuyu (rainy season)
     this.currentSeason = 'tsuyu';
     
-    // Update body season for styling
-    document.body.setAttribute('data-season', 'tsuyu');
+    // Update body season for styling and washi background
+    this.updateSeasonBackground('tsuyu');
     
     // Enable rain effect for tsuyu
     if (typeof window.enableRain === 'function') {
@@ -376,6 +394,9 @@ class SeasonsGallery {
       this.updateHeroBackground(season);
     }
 
+    // Update body season for styling (includes washi background)
+    this.updateSeasonBackground(season);
+
     // Toggle rain effect depending on season
     if (season === 'tsuyu') {
       if (typeof window.enableRain === 'function') {
@@ -475,6 +496,31 @@ class SeasonsGallery {
     
     // Update URL without triggering navigation
     history.replaceState(null, '', url.toString());
+  }
+
+  updateSeasonBackground(season) {
+    // Preload washi background for smooth transition
+    const washiImages = {
+      spring: './img/和紙-春.webp',
+      summer: './img/和紙-夏.webp', 
+      autumn: './img/和紙-秋.webp',
+      winter: './img/和紙-冬.webp',
+      tsuyu: './img/和紙-梅雨.webp'
+    };
+
+    const imageUrl = washiImages[season];
+    if (imageUrl) {
+      // Preload the washi image
+      const img = new Image();
+      img.onload = () => {
+        // Update body season attribute for CSS styling
+        document.body.setAttribute('data-season', season);
+      };
+      img.src = imageUrl;
+    } else {
+      // Fallback to direct update
+      document.body.setAttribute('data-season', season);
+    }
   }
   
   updateHeroBackground(season) {
