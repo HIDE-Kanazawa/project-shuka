@@ -366,7 +366,10 @@ class SeasonsGallery {
     this.updateURL(season);
     
     // Update hero background if needed
-    this.updateHeroBackground(season);
+    // Update hero background only when animate flag is true (i.e., user interaction)
+    if (animate) {
+      this.updateHeroBackground(season);
+    }
     
     // Announce change for screen readers
     this.announceSeasonChange(season);

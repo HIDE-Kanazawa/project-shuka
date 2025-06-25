@@ -481,7 +481,8 @@ body {
 .hero {
   /* Prevent header overlap */
   --header-height: 80px;
-  margin-top: var(--header-height);
+  /* Remove top gap; background should start behind fixed header */
+  margin-top: 0;
   height: calc(85vh - var(--header-height));
   min-height: 480px;
   background: linear-gradient(
@@ -515,6 +516,7 @@ body {
 }
 
 .hero-content {
+  padding-top: var(--header-height);
   max-width: 800px;
   padding: var(--space-4);
   z-index: 2;
@@ -1220,39 +1222,44 @@ body {
 }
 
 /* WINDSURF_START RippleEnhancement */
-.ripple{
-  position:absolute;
+.ripple {
+  position: absolute;
   background: transparent !important;
   border: 1.5px solid currentColor;
-  border-radius:50%;
+  border-radius: 50%;
   box-shadow: 0 0 8px currentColor;
   filter: blur(0.2px);
   transform: scale(0);
-  opacity:0.85;
-  animation: rippleRing 6s cubic-bezier(0.25,0.65,0.35,1) forwards !important;
-}
-.ripple::after{
-  content:'';
-  position:absolute;
-  inset:0;
-  border: inherit;
-  border-radius:50%;
-  opacity:0.3; filter: blur(1px);
-  transform:scale(0);
-  animation: rippleRing 7s cubic-bezier(0.25,0.65,0.35,1) 0.4s forwards !important;
+  opacity: 0.85;
+  animation: rippleRing 6s cubic-bezier(0.25, 0.65, 0.35, 1) forwards !important;
 }
 
-@keyframes rippleRing{
-  0%{transform:scale(0);opacity:1;}
-  60%{opacity:0.5;}
-  100%{transform:scale(7);opacity:0;}
-  0%{transform:scale(0);opacity:0.9;}
-  50%{opacity:0.6;}
-  100%{transform:scale(6);opacity:0;}
-  0%{transform:scale(0);opacity:1;}
-  70%{opacity:0.4;}
-  100%{transform:scale(5);opacity:0;}
+.ripple::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: inherit;
+  border-radius: 50%;
+  opacity: 0.3;
+  filter: blur(1px);
+  transform: scale(0);
+  animation: rippleRing 7s cubic-bezier(0.25, 0.65, 0.35, 1) 0.4s forwards !important;
 }
+
+@keyframes rippleRing {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(7); 
+    opacity: 0;
+  }
+}
+
 
 
 body[data-season="spring"] .ripple{ border-color: var(--accent-spring); }
