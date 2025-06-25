@@ -2083,24 +2083,38 @@ class WaterRippleEffect {
   }
 
   /**
-   * Create gold foil sparkle effect - 金箔の煌めき演出
+   * Create intense gold foil sparkle effect - キラン！金箔の煌めき演出
    */
   createGoldFoilEffect(x, y) {
-    // Central gold sparkle
-    this.createGoldSparkle(x, y, 40);
+    // メイン中央スパークル - より大きく強烈に
+    this.createGoldSparkle(x, y, 60);
     
-    // Radiating gold particles
-    this.createGoldParticles(x, y, 12);
+    // 瞬間爆発エフェクト
+    this.createGoldBurst(x, y, 20);
     
-    // Background shimmer effect
+    // 金箔粒子の舞い散り - より多く
+    this.createGoldParticles(x, y, 18);
+    
+    // 金箔のかけら
     setTimeout(() => {
-      this.createGoldShimmer(x, y, 80);
-    }, 100);
+      this.createGoldFlakes(x, y, 15);
+    }, 50);
     
-    // Secondary sparkle wave
+    // 背景シマー - より強烈に
     setTimeout(() => {
-      this.createGoldSparkle(x, y, 25);
-    }, 200);
+      this.createGoldShimmer(x, y, 120);
+    }, 80);
+    
+    // セカンドウェーブ
+    setTimeout(() => {
+      this.createGoldSparkle(x, y, 35);
+      this.createGoldParticles(x, y, 10);
+    }, 150);
+    
+    // サードウェーブ - 余韻
+    setTimeout(() => {
+      this.createGoldFlakes(x, y, 8);
+    }, 300);
   }
 
   /**
@@ -2117,11 +2131,11 @@ class WaterRippleEffect {
     sparkle.style.top = `${y - size / 2}px`;
     
     this.container.appendChild(sparkle);
-    setTimeout(() => sparkle.remove(), 800);
+    setTimeout(() => sparkle.remove(), 600);
   }
 
   /**
-   * Create floating gold particles - 金箔粒子
+   * Create floating gold particles - 金箔粒子 - 強化版
    */
   createGoldParticles(x, y, count) {
     if (!this.container) return;
@@ -2130,27 +2144,27 @@ class WaterRippleEffect {
       const particle = document.createElement('div');
       particle.className = 'gold-particle';
       
-      // Random size for natural look
-      const size = Math.random() * 4 + 3; // 3-7px
+      // より大きな粒子でキラキラ感アップ
+      const size = Math.random() * 6 + 4; // 4-10px
       particle.style.width = `${size}px`;
       particle.style.height = `${size}px`;
       particle.style.left = `${x - size / 2}px`;
       particle.style.top = `${y - size / 2}px`;
       
-      // Random direction and distance
-      const angle = (360 / count) * i + (Math.random() * 60 - 30);
-      const distance = 50 + Math.random() * 80;
+      // より広範囲に散る
+      const angle = (360 / count) * i + (Math.random() * 90 - 45);
+      const distance = 80 + Math.random() * 120; // より遠くまで飛ぶ
       const dx = Math.cos(angle * Math.PI / 180) * distance;
       const dy = Math.sin(angle * Math.PI / 180) * distance;
-      const duration = (Math.random() * 0.8 + 1).toFixed(2);
+      const duration = (Math.random() * 0.6 + 1.2).toFixed(2); // 1.2-1.8秒
       
       particle.style.setProperty('--dx', `${dx}px`);
       particle.style.setProperty('--dy', `${dy}px`);
       particle.style.animationDuration = `${duration}s`;
       
-      // Add random rotation for sparkle effect
-      const rotation = Math.random() * 360;
-      particle.style.transform = `rotate(${rotation}deg)`;
+      // ランダムなグラデーション角度
+      const gradientAngle = Math.random() * 360;
+      particle.style.setProperty('--particle-angle', `${gradientAngle}deg`);
       
       this.container.appendChild(particle);
       setTimeout(() => particle.remove(), duration * 1000);
@@ -2158,7 +2172,7 @@ class WaterRippleEffect {
   }
 
   /**
-   * Create gold shimmer background - 金箔シマー背景
+   * Create gold shimmer background - 金箔シマー背景 - 強化版
    */
   createGoldShimmer(x, y, size) {
     if (!this.container) return;
@@ -2171,7 +2185,73 @@ class WaterRippleEffect {
     shimmer.style.top = `${y - size / 2}px`;
     
     this.container.appendChild(shimmer);
-    setTimeout(() => shimmer.remove(), 1200);
+    setTimeout(() => shimmer.remove(), 1000);
+  }
+
+  /**
+   * Create gold flakes - 金箔のかけら
+   */
+  createGoldFlakes(x, y, count) {
+    if (!this.container) return;
+    
+    for (let i = 0; i < count; i++) {
+      const flake = document.createElement('div');
+      flake.className = 'gold-flake';
+      
+      // 不規則なサイズの金箔
+      const width = Math.random() * 8 + 3; // 3-11px
+      const height = Math.random() * 6 + 2; // 2-8px
+      flake.style.width = `${width}px`;
+      flake.style.height = `${height}px`;
+      flake.style.left = `${x - width / 2}px`;
+      flake.style.top = `${y - height / 2}px`;
+      
+      // ゆっくりと舞い散る
+      const angle = Math.random() * 360;
+      const distance = 60 + Math.random() * 100;
+      const dx = Math.cos(angle * Math.PI / 180) * distance;
+      const dy = Math.sin(angle * Math.PI / 180) * distance;
+      const duration = (Math.random() * 1 + 1.5).toFixed(2); // 1.5-2.5秒
+      
+      flake.style.setProperty('--dx', `${dx}px`);
+      flake.style.setProperty('--dy', `${dy}px`);
+      flake.style.animationDuration = `${duration}s`;
+      
+      // ランダムなグラデーション角度
+      const flakeAngle = Math.random() * 360;
+      flake.style.setProperty('--flake-angle', `${flakeAngle}deg`);
+      
+      this.container.appendChild(flake);
+      setTimeout(() => flake.remove(), duration * 1000);
+    }
+  }
+
+  /**
+   * Create gold burst explosion - 金箔爆発エフェクト
+   */
+  createGoldBurst(x, y, count) {
+    if (!this.container) return;
+    
+    for (let i = 0; i < count; i++) {
+      const burst = document.createElement('div');
+      burst.className = 'gold-burst';
+      burst.style.left = `${x - 2}px`;
+      burst.style.top = `${y - 2}px`;
+      
+      // 放射状に爆発
+      const angle = (360 / count) * i;
+      const distance = 40 + Math.random() * 60;
+      const dx = Math.cos(angle * Math.PI / 180) * distance;
+      const dy = Math.sin(angle * Math.PI / 180) * distance;
+      const duration = (Math.random() * 0.3 + 0.4).toFixed(2); // 0.4-0.7秒
+      
+      burst.style.setProperty('--dx', `${dx}px`);
+      burst.style.setProperty('--dy', `${dy}px`);
+      burst.style.animationDuration = `${duration}s`;
+      
+      this.container.appendChild(burst);
+      setTimeout(() => burst.remove(), duration * 1000);
+    }
   }
 
   /**
