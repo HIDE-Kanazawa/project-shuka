@@ -482,51 +482,84 @@
     </main>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer" id="footer" role="contentinfo">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">
                     <h3 class="footer-logo">shuka <span class="logo-jp">– 秀歌</span></h3>
-                    <p class="footer-tagline">四季を奏でる AI 音楽アーティスト</p>
+                    <p class="footer-description">
+                        四季をテーマにしたAI×和楽器サウンドで<br>
+                        新しい音楽体験をお届けします
+                    </p>
                 </div>
                 
                 <div class="footer-links">
                     <div class="footer-section">
-                        <h4>Navigation</h4>
-                        <ul>
-                            <li><a href="#home">Home</a></li>
-                            <li><a href="#about">About</a></li>
-                            <li><a href="#gallery">Gallery</a></li>
-                            
-                        </ul>
+                        <h4 class="footer-section-title">ナビゲーション</h4>
+                        <nav class="footer-nav" aria-label="フッターナビゲーション">
+                            <ul class="footer-nav-list">
+                                <li><a href="#home" class="footer-nav-link">Home</a></li>
+                                <li><a href="#about" class="footer-nav-link">About</a></li>
+                                <li><a href="#gallery" class="footer-nav-link">Gallery</a></li>
+                            </ul>
+                        </nav>
                     </div>
                     
                     <div class="footer-section">
-                        <h4>Seasons</h4>
-                        <ul>
-                            <li><a href="#gallery" onclick="switchSeason('spring')">春 - Spring</a></li>
-                            <li><a href="#gallery" onclick="switchSeason('summer')">夏 - Summer</a></li>
-                            <li><a href="#gallery" onclick="switchSeason('autumn')">秋 - Autumn</a></li>
-                            <li><a href="#gallery" onclick="switchSeason('winter')">冬 - Winter</a></li>
-                        </ul>
+                        <h4 class="footer-section-title">季節のテーマ</h4>
+                        <div class="footer-seasons">
+                            <button class="footer-season-btn" data-season="spring" aria-label="春のテーマに切り替え">
+                                <span class="season-icon" aria-hidden="true">🌸</span>
+                                <span>春</span>
+                            </button>
+                            <button class="footer-season-btn" data-season="summer" aria-label="夏のテーマに切り替え">
+                                <span class="season-icon" aria-hidden="true">🌻</span>
+                                <span>夏</span>
+                            </button>
+                            <button class="footer-season-btn" data-season="autumn" aria-label="秋のテーマに切り替え">
+                                <span class="season-icon" aria-hidden="true">🍁</span>
+                                <span>秋</span>
+                            </button>
+                            <button class="footer-season-btn" data-season="winter" aria-label="冬のテーマに切り替え">
+                                <span class="season-icon" aria-hidden="true">❄️</span>
+                                <span>冬</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4 class="footer-section-title">SNS</h4>
+                        <div class="footer-social">
+                            <a href="#" class="social-link" aria-label="YouTube チャンネル" rel="noopener noreferrer" target="_blank">
+                                <span class="social-icon" aria-hidden="true">🎵</span>
+                                <span class="sr-only">YouTube</span>
+                            </a>
+                            <a href="#" class="social-link" aria-label="Twitter アカウント" rel="noopener noreferrer" target="_blank">
+                                <span class="social-icon" aria-hidden="true">🐦</span>
+                                <span class="sr-only">Twitter</span>
+                            </a>
+                            <a href="#" class="social-link" aria-label="Instagram アカウント" rel="noopener noreferrer" target="_blank">
+                                <span class="social-icon" aria-hidden="true">📷</span>
+                                <span class="sr-only">Instagram</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2024 shuka – 秀歌. All rights reserved.</p>
-                <p class="footer-credit">Powered by AI ♪ Created with ❤️</p>
+                <div class="footer-bottom-content">
+                    <p class="copyright">
+                        © 2024 shuka – 秀歌. All rights reserved.
+                    </p>
+                    <div class="footer-bottom-links">
+                        <a href="#" class="footer-bottom-link">プライバシーポリシー</a>
+                        <a href="#" class="footer-bottom-link">利用規約</a>
+                    </div>
+                </div>
             </div>
         </div>
-        <!-- WINDSURF_START FooterIcons -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <div class="social-links">
-          <a href="https://open.spotify.com/artist/XXXX" aria-label="Spotify"><i class="fa-brands fa-spotify"></i></a>
-          <a href="https://www.youtube.com/@shuka" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-          <a href="https://x.com/shuka" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
-        </div>
-    <!-- WINDSURF_END FooterIcons -->
-</footer>
+    </footer>
 
     <!-- Load non-critical CSS -->
     <link rel="stylesheet" href="./styles.css">

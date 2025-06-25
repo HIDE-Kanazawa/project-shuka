@@ -547,18 +547,24 @@ class SeasonsGallery {
 window.switchSeason = function(season) {
   if (window.seasonsGallery && typeof window.seasonsGallery.switchToSeason === 'function') {
     window.seasonsGallery.switchToSeason(season);
-    
-    
-
-
-
-    }
   }
-;
+};
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
   window.seasonsGallery = new SeasonsGallery();
+  
+  // Setup footer season buttons
+  const footerSeasonButtons = document.querySelectorAll('.footer-season-btn');
+  footerSeasonButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      const season = button.getAttribute('data-season');
+      if (season && window.switchSeason) {
+        window.switchSeason(season);
+      }
+    });
+  });
 });
 
 // Export for module systems
