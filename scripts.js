@@ -1898,10 +1898,12 @@ class WaterRippleEffect {
     this.container = document.getElementById('ripple-container');
     this.isActive = true;
     this.lastRippleTime = 0;
-    this.throttleDelay = 300; // ms (slower ripple frequency)
+    this.throttleDelay = 400; // ms (tranquil, slow ripple frequency for Japanese aesthetic)
     this.maxRipples = 12;
     this.ripples = [];
     this.petalLimit = 100; // max active petals
+    this.frameTime = 0;
+    this.performanceOptimized = false;
     
     this.init();
   }
@@ -1925,10 +1927,10 @@ class WaterRippleEffect {
       return;
     }
     
-    // Check for low-end device
+    // Check for low-end device - maintain tranquil aesthetic while optimizing
     if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) {
-      this.throttleDelay = 200;
-      this.maxRipples = 10;
+      this.throttleDelay = 600; // Even slower for performance
+      this.maxRipples = 8;
     }
   }
   
@@ -1955,13 +1957,16 @@ class WaterRippleEffect {
     
     // Clean up old ripples periodically
     setInterval(() => this.cleanupRipples(), 2000);
+    
+    // Monitor performance and adjust if needed
+    this.monitorPerformance();
   }
   
   handleMouseMove(e) {
     if (!this.isActive || !this.shouldCreateRipple()) return;
     
-    // Create small ripple on mouse move
-    this.createRipple(e.clientX, e.clientY, 'small');
+    // Create tranquil koi pond ripples with minimal overlapping
+    this.createTranquilRipples(e.clientX, e.clientY);
     this.lastRippleTime = Date.now();
   }
   
@@ -1969,10 +1974,8 @@ class WaterRippleEffect {
     if (!this.isActive) return;
     
     const { clientX: x, clientY: y } = e;
-    // Create central golden flash
-    this.createClickFlash(x, y);
-    // Create gold flakes burst
-    this.createGoldBurst(x, y);
+    // Create spectacular multi-layer click effect
+    this.createSpectacularClick(x, y);
   }
   
   handleTouch(e) {
@@ -1984,23 +1987,24 @@ class WaterRippleEffect {
   
   shouldCreateRipple() {
     const now = Date.now();
-    return (now - this.lastRippleTime) > this.throttleDelay;
+    return (now - this.lastRippleTime) > this.throttleDelay; // Gentle, tranquil timing
   }
   
-  createRipple(x, y, size = 'medium') {
+  createRipple(x, y, size = 'medium', color = 'default') {
     if (!this.isActive || this.ripples.length >= this.maxRipples) return;
     
     const ripple = document.createElement('div');
-    ripple.className = `ripple ${size}`;
+    ripple.className = `ripple ${size} ${color}`;
     
     // Calculate ripple size based on type
     const sizeMap = {
-      small: Math.random() * 100 + 50,    // 50-150px
-      medium: Math.random() * 150 + 100,  // 100-250px
-      large: Math.random() * 200 + 150    // 150-350px
+      small: Math.random() * 120 + 80,     // 80-200px (larger)
+      medium: Math.random() * 200 + 150,   // 150-350px
+      large: Math.random() * 300 + 200,    // 200-500px (much larger)
+      huge: Math.random() * 400 + 300      // 300-700px (spectacular)
     };
     
-    const rippleSize = sizeMap[size];
+    const rippleSize = sizeMap[size] || sizeMap.medium;
     
     // Position the ripple
     ripple.style.width = `${rippleSize}px`;
@@ -2008,9 +2012,17 @@ class WaterRippleEffect {
     ripple.style.left = `${x - rippleSize / 2}px`;
     ripple.style.top = `${y - rippleSize / 2}px`;
     
-    // Add random rotation for more natural effect
+    // Add rotation and initial scale
     const rotation = Math.random() * 360;
     ripple.style.transform = `scale(0) rotate(${rotation}deg)`;
+    
+    // Add color effects
+    if (color === 'rainbow') {
+      const hue = Math.random() * 360;
+      ripple.style.background = `radial-gradient(circle, hsla(${hue}, 80%, 70%, 0.8) 0%, hsla(${hue + 60}, 70%, 60%, 0.4) 40%, transparent 80%)`;
+    } else if (color === 'gold') {
+      ripple.style.background = 'radial-gradient(circle, rgba(255, 215, 0, 0.9) 0%, rgba(255, 165, 0, 0.6) 30%, rgba(255, 140, 0, 0.3) 60%, transparent 90%)';
+    }
     
     // Add to container and track
     this.container.appendChild(ripple);
@@ -2020,7 +2032,7 @@ class WaterRippleEffect {
     });
     
     // Remove after animation completes
-    const animationDuration = size === 'large' ? 2500 : size === 'small' ? 1000 : 1500;
+    const animationDuration = size === 'huge' ? 3500 : size === 'large' ? 2800 : size === 'small' ? 1200 : 1800;
     setTimeout(() => {
       this.removeRipple(ripple);
     }, animationDuration);
@@ -2047,35 +2059,123 @@ class WaterRippleEffect {
   }
 
   /**
-   * Create a burst of petals at (x, y)
+   * Create tranquil koi pond ripples for mouse movement - Japanese aesthetic
    */
-  createGoldBurst(x, y, count = 24) {
+  createTranquilRipples(x, y) {
+    // Primary gentle ripple - like a stone dropped in still water
+    this.createRipple(x, y, 'small', 'elegant');
+    
+    // Occasional secondary ripple with sumi-e ink bleeding effect
+    if (Math.random() < 0.12) { // Less frequent for more tranquility
+      setTimeout(() => {
+        const offsetX = (Math.random() * 20 - 10); // Smaller offset for subtlety
+        const offsetY = (Math.random() * 20 - 10);
+        this.createRipple(x + offsetX, y + offsetY, 'small', 'subtle');
+      }, Math.random() * 500 + 200); // Delayed for natural feel
+    }
+    
+    // Very rare larger ripple for depth variation
+    if (Math.random() < 0.05) {
+      setTimeout(() => {
+        this.createRipple(x, y, 'medium', 'subtle');
+      }, Math.random() * 800 + 400);
+    }
+  }
+
+  /**
+   * Create zen garden click effect - like a stone thrown into a still pond
+   */
+  createSpectacularClick(x, y) {
+    // Initial impact ripple - strongest and most visible
+    this.createRipple(x, y, 'large', 'elegant');
+    
+    // Secondary concentric waves with sumi-e effect
+    setTimeout(() => {
+      this.createRipple(x, y, 'medium', 'elegant');
+    }, 200);
+    
+    setTimeout(() => {
+      this.createRipple(x, y, 'small', 'subtle');
+    }, 450);
+    
+    // Very subtle tertiary wave for depth
+    setTimeout(() => {
+      this.createRipple(x, y, 'small', 'subtle');
+    }, 750);
+    
+    // Minimal floating elements like flower petals on water
+    this.createFloatingElements(x, y, 6);
+    
+    // Gentle ink-like glow at center
+    this.createInkGlow(x, y);
+  }
+
+  /**
+   * Create sumi-e ink glow effect at click center
+   */
+  createInkGlow(x, y) {
     if (!this.container) return;
-    const activeFlakes = this.container.querySelectorAll('.gold-flake').length;
-    if (activeFlakes >= this.petalLimit) return;
+    
+    const glow = document.createElement('div');
+    glow.className = 'gentle-glow';
+    const size = 45; // Smaller, more subtle
+    glow.style.width = `${size}px`;
+    glow.style.height = `${size}px`;
+    glow.style.left = `${x - size / 2}px`;
+    glow.style.top = `${y - size / 2}px`;
+    
+    // Add sumi-e ink aesthetic
+    glow.style.background = `radial-gradient(
+      circle,
+      rgba(47, 63, 79, 0.15) 0%,
+      rgba(75, 85, 99, 0.08) 30%,
+      rgba(107, 114, 128, 0.04) 60%,
+      transparent 100%
+    )`;
+    
+    this.container.appendChild(glow);
+    setTimeout(() => glow.remove(), 1500);
+  }
+
+  /**
+   * Create floating elements like cherry blossom petals on water
+   */
+  createFloatingElements(x, y, count = 6) {
+    if (!this.container) return;
+    const activeParticles = this.container.querySelectorAll('.refined-particle').length;
+    if (activeParticles >= 15) return; // Lower limit for tranquility
 
     for (let i = 0; i < count; i++) {
-      const flake = document.createElement('div');
-      flake.className = 'gold-flake';
-      const size = Math.random() * 6 + 6; // 6-12px
-      flake.style.width = `${size}px`;
-      flake.style.height = `${size}px`;
-      flake.style.left = `${x - size / 2}px`;
-      flake.style.top = `${y - size / 2}px`;
+      const particle = document.createElement('div');
+      particle.className = 'refined-particle';
+      const size = Math.random() * 3 + 2; // 2-5px - very small and delicate
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      particle.style.left = `${x - size / 2}px`;
+      particle.style.top = `${y - size / 2}px`;
 
-      const dx = (Math.random() * 160 - 80).toFixed(0); // horizontal drift
-      const dy = (Math.random() * -160 - 60).toFixed(0); // upward drift
-      const rot = (Math.random() * 360).toFixed(0);
-      const dur = (Math.random() * 0.8 + 1.6).toFixed(2); // 1.6 - 2.4s
-      flake.style.setProperty('--dx', `${dx}px`);
-      flake.style.setProperty('--dy', `${dy}px`);
-      flake.style.setProperty('--rot', `${rot}deg`);
-      flake.style.animationDuration = `${dur}s`;
-      // subtle shimmer
-      flake.style.filter = 'drop-shadow(0 0 4px rgba(255,215,0,0.8))';
+      // More organic, less organized spread pattern
+      const angle = Math.random() * 360; // Completely random direction
+      const distance = 60 + Math.random() * 60; // Gentler spread
+      const dx = Math.cos(angle * Math.PI / 180) * distance;
+      const dy = Math.sin(angle * Math.PI / 180) * distance;
+      const dur = (Math.random() * 1.2 + 2).toFixed(2); // 2-3.2s - very slow and graceful
+      
+      particle.style.setProperty('--dx', `${dx}px`);
+      particle.style.setProperty('--dy', `${dy}px`);
+      particle.style.animationDuration = `${dur}s`;
 
-      this.container.appendChild(flake);
-      setTimeout(() => flake.remove(), dur * 1000);
+      // Add subtle color variation for naturalism
+      const opacity = 0.3 + Math.random() * 0.3; // 0.3-0.6 opacity
+      particle.style.background = `radial-gradient(
+        circle,
+        rgba(75, 85, 99, ${opacity}) 0%,
+        rgba(107, 114, 128, ${opacity * 0.6}) 50%,
+        transparent 100%
+      )`;
+
+      this.container.appendChild(particle);
+      setTimeout(() => particle.remove(), dur * 1000);
     }
   }
 
@@ -2139,6 +2239,50 @@ class WaterRippleEffect {
     setTimeout(() => {
       this.removeRipple(ripple);
     }, 1500);
+  }
+  
+  /**
+   * Monitor performance and dynamically optimize for 60fps
+   */
+  monitorPerformance() {
+    let frameCount = 0;
+    let lastTime = performance.now();
+    
+    const checkPerformance = (currentTime) => {
+      frameCount++;
+      
+      if (currentTime - lastTime >= 1000) { // Check every second
+        const fps = Math.round((frameCount * 1000) / (currentTime - lastTime));
+        
+        // If FPS drops below 50, optimize
+        if (fps < 50 && !this.performanceOptimized) {
+          this.optimizeForPerformance();
+          console.log('Ripple effect optimized for performance');
+        }
+        
+        frameCount = 0;
+        lastTime = currentTime;
+      }
+      
+      requestAnimationFrame(checkPerformance);
+    };
+    
+    requestAnimationFrame(checkPerformance);
+  }
+  
+  /**
+   * Optimize settings for better performance
+   */
+  optimizeForPerformance() {
+    this.performanceOptimized = true;
+    this.throttleDelay = Math.max(this.throttleDelay * 1.5, 600); // Slower ripples
+    this.maxRipples = Math.max(this.maxRipples - 3, 6); // Fewer ripples
+    
+    // Reduce existing ripples
+    while (this.ripples.length > this.maxRipples) {
+      const oldestRipple = this.ripples.shift();
+      this.removeRipple(oldestRipple.element);
+    }
   }
 }
 
