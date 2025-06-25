@@ -478,7 +478,7 @@ a:focus {
   background: linear-gradient(
     rgba(0, 0, 0, 0.4), 
     rgba(0, 0, 0, 0.4)
-  ), url('./img/秀歌-メインビジュアル.png');
+  ), url('./img/秀歌-メインビジュアル.webp');
   background-size: cover;
   background-position: left top;
   background-attachment: fixed;
@@ -2630,7 +2630,7 @@ body {
 .hero {
     height: 100vh;
     min-height: 600px;
-    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('./img/秀歌-メインビジュアル.png');
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('./img/秀歌-メインビジュアル.webp');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;

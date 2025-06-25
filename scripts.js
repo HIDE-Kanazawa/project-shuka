@@ -474,11 +474,11 @@ class SeasonsGallery {
     if (!hero) return;
     
     const seasonImages = {
-      spring: './img/秀歌-春.png',
-      summer: './img/秀歌-夏.png',
-      autumn: './img/秀歌-秋.png',
-      winter: './img/秀歌-冬.png',
-      tsuyu: './img/秀歌-梅雨.png'
+      spring: './img/秀歌-春.webp',
+      summer: './img/秀歌-夏.webp',
+      autumn: './img/秀歌-秋.webp',
+      winter: './img/秀歌-冬.webp',
+      tsuyu: './img/秀歌-梅雨.webp'
     };
     
     const imageUrl = seasonImages[season];
@@ -1108,10 +1108,10 @@ class ShukaApp {
   preloadOnHover() {
     // Preload seasonal images
     const seasonImages = [
-      './img/秀歌-春.png',
-      './img/秀歌-夏.png',
-      './img/秀歌-秋.png',
-      './img/秀歌-冬.png'
+      './img/秀歌-春.webp',
+      './img/秀歌-夏.webp',
+      './img/秀歌-秋.webp',
+      './img/秀歌-冬.webp'
     ];
     
     seasonImages.forEach(src => {
