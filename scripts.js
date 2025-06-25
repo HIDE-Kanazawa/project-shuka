@@ -2174,7 +2174,8 @@ class RainEffect {
     window.addEventListener('resize', () => this.resize());
 
     this.drops = [];
-    this.dropCount = Math.floor(window.innerWidth / 4); // density based on viewport width
+    // Increase rain density for more immersive tsuyu effect
+    this.dropCount = Math.floor(window.innerWidth / 2.5); // More dense rain
     for (let i = 0; i < this.dropCount; i++) {
       this.drops.push(this.createDrop(true));
     }
@@ -2196,45 +2197,59 @@ class RainEffect {
     return {
       x: Math.random() * this.canvas.width,
       y: randomY ? Math.random() * this.canvas.height : -20,
-      length: 10 + Math.random() * 20,
-      speed: 4 + Math.random() * 4,
-      opacity: 0.2 + Math.random() * 0.5
+      length: 15 + Math.random() * 25, // Longer raindrops for tsuyu
+      speed: 3 + Math.random() * 5, // Varied speed for more natural feel
+      opacity: 0.3 + Math.random() * 0.4, // Slightly more visible
+      thickness: 0.8 + Math.random() * 0.7 // Variable thickness
     };
   }
 
   animate() {
     const ctx = this.ctx;
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    ctx.strokeStyle = 'rgba(255,255,255,0.8)';
-    ctx.lineWidth = 1;
     ctx.lineCap = 'round';
 
     // Update wind every few seconds
     const now = performance.now();
     if (now - this.lastWindChange > 3000) {
-      this.windTarget = (Math.random() * 2 - 1) * 1.5; // -1.5px to 1.5px per frame
+      this.windTarget = (Math.random() * 2 - 1) * 2; // Stronger wind for tsuyu
       this.lastWindChange = now;
     }
     // Ease current wind toward target for smoother gusts
-    this.wind += (this.windTarget - this.wind) * 0.01;
+    this.wind += (this.windTarget - this.wind) * 0.015;
 
     for (const d of this.drops) {
       ctx.globalAlpha = d.opacity;
+      ctx.lineWidth = d.thickness;
+      
+      // Bluish-white rain for tsuyu atmosphere
+      ctx.strokeStyle = `rgba(200, 220, 255, ${d.opacity})`;
+      
       ctx.beginPath();
       ctx.moveTo(d.x, d.y);
-      ctx.lineTo(d.x + this.wind * 2, d.y + d.length); // small slant for visual effect
+      ctx.lineTo(d.x + this.wind * 3, d.y + d.length); // More pronounced slant
       ctx.stroke();
 
+      // Add occasional water splash effect at bottom
+      if (d.y > this.canvas.height - 50 && Math.random() < 0.02) {
+        ctx.globalAlpha = d.opacity * 0.5;
+        ctx.strokeStyle = `rgba(123, 167, 212, ${d.opacity * 0.5})`;
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        ctx.arc(d.x, this.canvas.height - 10, 2 + Math.random() * 3, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
       // Update drop position
-      d.x += this.wind * (d.speed / 3);
+      d.x += this.wind * (d.speed / 4);
       d.y += d.speed;
 
       // Wrap around horizontally
-      if (d.x < -20) d.x = this.canvas.width + 20;
-      if (d.x > this.canvas.width + 20) d.x = -20;
+      if (d.x < -30) d.x = this.canvas.width + 30;
+      if (d.x > this.canvas.width + 30) d.x = -30;
 
       // Reset drop when it falls below viewport
-      if (d.y > this.canvas.height) {
+      if (d.y > this.canvas.height + 10) {
         Object.assign(d, this.createDrop());
       }
     }
