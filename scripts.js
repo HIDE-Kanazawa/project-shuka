@@ -482,6 +482,12 @@ class SeasonsGallery {
       const img = new Image();
       img.onload = () => {
         hero.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('${imageUrl}')`;
+        // Align background to top when a seasonal image is applied
+        hero.style.backgroundPosition = 'top center';
+        const heroContent = hero.querySelector('.hero-content');
+        if (heroContent) {
+          heroContent.style.paddingTop = '35vh';
+        }
       };
       img.src = imageUrl;
     }

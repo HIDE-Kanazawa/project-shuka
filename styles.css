@@ -531,6 +531,30 @@ body {
   animation: fadeInUp 1s ease-out;
 }
 
+/* Emphasize artist name in hero */
+.artist-name {
+  display: inline-block;
+  margin-top: var(--space-4);
+  font-size: var(--text-6xl);
+  font-weight: 900;
+  line-height: 1.1;
+  background: linear-gradient(90deg, #fbc2eb 0%, #a6c1ee 50%, #fbc2eb 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 6s linear infinite;
+}
+
+@keyframes shine {
+  0% { background-position: 0 0; }
+  100% { background-position: -200% 0; }
+}
+
+.artist-name .jp {
+  font-size: 0.7em;
+  font-weight: 700;
+}
+
 .hero-subtitle {
   font-size: var(--text-xl);
   margin-bottom: var(--space-10);
@@ -672,17 +696,75 @@ body {
 }
 
 .season-btn {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--space-2);
-  padding: var(--space-4) var(--space-6);
-  background: var(--background);
-  border: 2px solid var(--border);
-  border-radius: var(--radius-lg);
+  padding: var(--space-6) var(--space-8);
+  min-width: 120px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  border: none;
+  border-radius: var(--radius-xl);
   cursor: pointer;
-  transition: all var(--transition-normal);
-  min-width: 100px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25), 0 2px 4px rgba(0, 0, 0, 0.15);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+  overflow: hidden;
+}
+
+.season-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.45), transparent 70%);
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.season-btn:hover,
+.season-btn:focus-visible {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35), 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.season-btn:hover::before,
+.season-btn:focus-visible::before {
+  opacity: 0.6;
+}
+
+.season-btn.active {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.3);
+  filter: brightness(1.1);
+}
+
+/* Season-specific gradients */
+.season-btn[data-season="spring"] {
+  background: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%);
+}
+
+.season-btn[data-season="summer"] {
+  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+}
+
+.season-btn[data-season="autumn"] {
+  background: linear-gradient(135deg, #fbc2eb 0%, #a18cd1 100%);
+}
+
+.season-btn[data-season="winter"] {
+  background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+}
+
+.season-icon {
+  font-size: var(--text-3xl);
+}
+
+.season-name {
+  font-size: var(--text-base);
+  font-weight: 700;
 }
 
 .season-btn:hover,
@@ -932,11 +1014,18 @@ body {
 
 /* ===== Footer ===== */
 .footer {
-  background: var(--neutral-900);
+  /* Wafu indigo base color */
+  background-color: #1f2937;
+  /* Subtle seigaiha wave pattern using inline SVG */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='60' viewBox='0 0 120 60'%3E%3Cpath d='M0 60c30-60 90-60 120 0H0z' fill='%232d3748'/%3E%3C/svg%3E");
+  background-size: 120px 60px;
+  background-repeat: repeat;
   color: var(--neutral-300);
-  padding: var(--space-16) 0 var(--space-8);
+  padding: var(--space-20) 0 var(--space-10);
+  position: relative;
 }
 
+/* Dark theme variant remains the same but keep pattern */
 [data-theme="dark"] .footer {
   background: var(--neutral-800);
 }
