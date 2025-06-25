@@ -55,7 +55,11 @@
         <nav class="navbar" role="navigation" aria-label="メインナビゲーション">
             <div class="nav-container">
                 <div class="nav-brand">
-                    <h1 class="logo">shuka <span class="logo-jp">– 秀歌</span></h1>
+                    <h1 class="logo">
+                        <a href="#home" id="logo-link" onclick="handleLogoClick(event)" aria-label="ホームに戻る">
+                            shuka <span class="logo-jp">– 秀歌</span>
+                        </a>
+                    </h1>
                 </div>
                 
                 <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="メニューを開く">

@@ -257,11 +257,19 @@ class SeasonsGallery {
   }
   
   loadInitialSeason() {
-    // Set initial season based on current date or URL hash
-    const urlSeason = this.getSeasonFromURL();
+    // Always set initial season to tsuyu (rainy season)
+    this.currentSeason = 'tsuyu';
     
-    this.currentSeason = urlSeason || 'tsuyu';
-    this.switchToSeason(this.currentSeason, false);
+    // Update body season for styling
+    document.body.setAttribute('data-season', 'tsuyu');
+    
+    // Enable rain effect for tsuyu
+    if (typeof window.enableRain === 'function') {
+      window.enableRain();
+    }
+    
+    // Update URL to reflect tsuyu season
+    this.updateURL('tsuyu');
 
     // Show summer gallery panel by default while keeping overall season as tsuyu
     this.updateSeasonButtons('summer');
@@ -618,7 +626,7 @@ class ThemeManager {
     }
     
     // Listen for system theme changes
-    this.prefersDarkScheme.addEventListener('change', (e) => this.handleSystemThemeChange(e));
+    this.prefersDarkScheme.addEventListener('change', () => this.handleSystemThemeChange());
     
     // Listen for storage changes (sync across tabs)
     window.addEventListener('storage', (e) => this.handleStorageChange(e));
@@ -758,7 +766,7 @@ class ThemeManager {
     }
   }
   
-  handleSystemThemeChange(e) {
+  handleSystemThemeChange() {
     // Only respond to system changes if theme is set to auto
     if (this.currentTheme === 'auto') {
       this.applyTheme('auto');
@@ -957,7 +965,6 @@ class ShukaApp {
     e.preventDefault();
     
     const form = e.target;
-    const formData = new FormData(form);
     
     // Validate form
     if (!this.validateForm(form)) {
@@ -1569,14 +1576,25 @@ class DevelopmentTools {
     // Monitor page load performance
     window.addEventListener('load', () => {
       setTimeout(() => {
-        const perfData = performance.timing;
-        const loadTime = perfData.loadEventEnd - perfData.navigationStart;
+        // Use modern Performance Observer API if available
+        let loadTime = 0;
+        if (performance.getEntriesByType) {
+          const navigationEntries = performance.getEntriesByType('navigation');
+          if (navigationEntries.length > 0) {
+            loadTime = navigationEntries[0].loadEventEnd - navigationEntries[0].startTime;
+          }
+        }
+        
         const domNodes = document.querySelectorAll('*').length;
         const images = document.querySelectorAll('img').length;
         
-        document.getElementById('load-time').textContent = loadTime;
-        document.getElementById('dom-count').textContent = domNodes;
-        document.getElementById('image-count').textContent = images;
+        const loadTimeElement = document.getElementById('load-time');
+        const domCountElement = document.getElementById('dom-count');
+        const imageCountElement = document.getElementById('image-count');
+        
+        if (loadTimeElement) loadTimeElement.textContent = Math.round(loadTime);
+        if (domCountElement) domCountElement.textContent = domNodes;
+        if (imageCountElement) imageCountElement.textContent = images;
         
         this.checkPerformanceIssues(loadTime, domNodes);
       }, 100);
@@ -1787,7 +1805,7 @@ class DevelopmentTools {
   checkContrast() {
     // Simple contrast checker (would need more sophisticated implementation for production)
     const elements = document.querySelectorAll('*');
-    const lowContrastElements = [];
+    let checkedElements = 0;
     
     elements.forEach(el => {
       const style = getComputedStyle(el);
@@ -1796,12 +1814,13 @@ class DevelopmentTools {
       
       // This is a simplified check - real implementation would calculate actual contrast ratios
       if (color && backgroundColor && color !== 'rgba(0, 0, 0, 0)' && backgroundColor !== 'rgba(0, 0, 0, 0)') {
+        checkedElements++;
         // Placeholder for contrast calculation
         // In reality, you'd need to parse RGB values and calculate luminance
       }
     });
     
-    console.log('Contrast check completed');
+    console.log(`Contrast check completed for ${checkedElements} elements`);
   }
   
   logEnvironmentInfo() {
@@ -2244,3 +2263,66 @@ window.disableRain = function() {
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { DevelopmentTools, RainEffect };
 }
+
+/**
+ * Handle logo click - scroll to home and set season to tsuyu
+ */
+window.handleLogoClick = function(event) {
+  event.preventDefault();
+  
+  // Scroll to home section
+  if (typeof scrollToSection === 'function') {
+    scrollToSection('home');
+  } else {
+    // Fallback scroll
+    const homeSection = document.getElementById('home');
+    if (homeSection) {
+      homeSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+  
+  // Set season to tsuyu but keep summer gallery visible
+  if (window.seasonsGallery && typeof window.seasonsGallery.switchToSeason === 'function') {
+    // Wait a bit for scroll to start, then change season
+    setTimeout(() => {
+      // Set the current season to tsuyu for rain effects and body attributes
+      window.seasonsGallery.currentSeason = 'tsuyu';
+      
+      // Update body season for styling
+      document.body.setAttribute('data-season', 'tsuyu');
+      
+      // Reset hero background to initial main visual
+      const hero = document.querySelector('.hero');
+      if (hero) {
+        hero.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('./img/秀歌-メインビジュアル.webp')`;
+        hero.style.backgroundPosition = 'left top';
+        const heroContent = hero.querySelector('.hero-content');
+        if (heroContent) {
+          heroContent.style.paddingTop = '';
+        }
+      }
+      
+      // Enable rain effect
+      if (typeof window.enableRain === 'function') {
+        window.enableRain();
+      }
+      
+      // Keep summer gallery panel visible
+      window.seasonsGallery.updateSeasonButtons('summer');
+      window.seasonsGallery.updateSeasonPanels('summer', false);
+      
+      // Update URL to reflect tsuyu season
+      window.seasonsGallery.updateURL('tsuyu');
+    }, 300);
+  }
+  
+  // Close mobile menu if open
+  const navMenu = document.getElementById('nav-menu');
+  const navToggle = document.getElementById('nav-toggle');
+  if (navMenu && navMenu.classList.contains('active')) {
+    navMenu.classList.remove('active');
+    navToggle.classList.remove('active');
+    navToggle.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+};

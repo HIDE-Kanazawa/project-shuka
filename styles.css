@@ -297,6 +297,19 @@ a:focus {
   margin: 0;
 }
 
+.logo a {
+  color: inherit;
+  text-decoration: none;
+  transition: opacity var(--transition-fast);
+}
+
+.logo a:hover,
+.logo a:focus {
+  opacity: 0.8;
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
 .logo-jp {
   font-family: var(--font-jp);
   color: var(--text);
