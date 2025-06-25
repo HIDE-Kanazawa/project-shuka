@@ -286,8 +286,8 @@ a:focus {
 }
 
 .logo {
-  font-size: var(--text-2xl);
-  font-weight: 800;
+  font-size: var(--text-xl);
+  font-weight: 700;
   color: var(--primary);
   margin: 0;
 }
@@ -403,7 +403,7 @@ body {
 
 
 /* Duplicate SeasonVars block removed */
-}
+
 
 .autumn {
   --primary: #FFC080;
@@ -482,7 +482,7 @@ body {
   /* Prevent header overlap */
   --header-height: 80px;
   margin-top: var(--header-height);
-  height: calc(80vh - var(--header-height));
+  height: calc(85vh - var(--header-height));
   min-height: 480px;
   background: linear-gradient(
     rgba(0, 0, 0, 0.4), 
@@ -499,8 +499,6 @@ body {
     background-position: left 20%;
     height: calc(90vh - var(--header-height));
   }
-
-
 }
 
 @media (prefers-reduced-motion: reduce) {

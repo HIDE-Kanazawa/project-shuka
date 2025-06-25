@@ -203,9 +203,7 @@ window.scrollToSection = () => {}; // auto-scroll disabled
 
 
 
-    });
-  }
-};
+    ;
 
 // Initialize navigation when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
@@ -556,7 +554,7 @@ window.switchSeason = function(season) {
 
     }
   }
-};
+;
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
