@@ -253,7 +253,7 @@ class SeasonsGallery {
     this.audioElements = Array.from(document.querySelectorAll('audio'));
     
     this.audioElements.forEach(audio => {
-      // Set preload to none for performance
+      // Set default volume to 50%\n      audio.volume = 0.5;\n      // Set preload to none for performance
       audio.preload = 'none';
       
       // Add accessibility attributes
@@ -1405,7 +1405,7 @@ class DevelopmentTools {
         font-family: monospace;
         font-size: 12px;
         z-index: 10000;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        box-shadow: 0 4px 20px rgba(255,215,0,0.3);
         overflow: hidden;
       }
       
@@ -1864,9 +1864,10 @@ class WaterRippleEffect {
     this.container = document.getElementById('ripple-container');
     this.isActive = true;
     this.lastRippleTime = 0;
-    this.throttleDelay = 100; // ms
-    this.maxRipples = 20;
+    this.throttleDelay = 300; // ms (slower ripple frequency)
+    this.maxRipples = 12;
     this.ripples = [];
+    this.petalLimit = 100; // max active petals
     
     this.init();
   }
@@ -1933,8 +1934,11 @@ class WaterRippleEffect {
   handleClick(e) {
     if (!this.isActive) return;
     
-    // Create large ripple on click
-    this.createRipple(e.clientX, e.clientY, 'large');
+    const { clientX: x, clientY: y } = e;
+    // Create central golden flash
+    this.createClickFlash(x, y);
+    // Create gold flakes burst
+    this.createGoldBurst(x, y);
   }
   
   handleTouch(e) {
@@ -2007,7 +2011,56 @@ class WaterRippleEffect {
       this.removeRipple(ripple.element);
     });
   }
-  
+
+  /**
+   * Create a burst of petals at (x, y)
+   */
+  createGoldBurst(x, y, count = 24) {
+    if (!this.container) return;
+    const activeFlakes = this.container.querySelectorAll('.gold-flake').length;
+    if (activeFlakes >= this.petalLimit) return;
+
+    for (let i = 0; i < count; i++) {
+      const flake = document.createElement('div');
+      flake.className = 'gold-flake';
+      const size = Math.random() * 6 + 6; // 6-12px
+      flake.style.width = `${size}px`;
+      flake.style.height = `${size}px`;
+      flake.style.left = `${x - size / 2}px`;
+      flake.style.top = `${y - size / 2}px`;
+
+      const dx = (Math.random() * 160 - 80).toFixed(0); // horizontal drift
+      const dy = (Math.random() * -160 - 60).toFixed(0); // upward drift
+      const rot = (Math.random() * 360).toFixed(0);
+      const dur = (Math.random() * 0.8 + 1.6).toFixed(2); // 1.6 - 2.4s
+      flake.style.setProperty('--dx', `${dx}px`);
+      flake.style.setProperty('--dy', `${dy}px`);
+      flake.style.setProperty('--rot', `${rot}deg`);
+      flake.style.animationDuration = `${dur}s`;
+      // subtle shimmer
+      flake.style.filter = 'drop-shadow(0 0 4px rgba(255,215,0,0.8))';
+
+      this.container.appendChild(flake);
+      setTimeout(() => flake.remove(), dur * 1000);
+    }
+  }
+
+  /**
+   * Creates a brief radial flash at click location
+   */
+  createClickFlash(x, y){
+    if(!this.container) return;
+    const flash=document.createElement('div');
+    flash.className='click-flash';
+    const size=20;
+    flash.style.width=`${size}px`;
+    flash.style.height=`${size}px`;
+    flash.style.left=`${x-size/2}px`;
+    flash.style.top=`${y-size/2}px`;
+    this.container.appendChild(flash);
+    setTimeout(()=>flash.remove(),600);
+  }
+
   enable() {
     this.isActive = true;
     if (this.container) {
@@ -2075,7 +2128,95 @@ window.createCustomRipple = function(x, y, color, size) {
   }
 };
 
+// Rain Effect Module
+class RainEffect {
+  constructor() {
+    this.canvas = document.createElement('canvas');
+    this.canvas.className = 'rain-canvas';
+    this.ctx = this.canvas.getContext('2d');
+    document.body.appendChild(this.canvas);
+
+    this.resize();
+    window.addEventListener('resize', () => this.resize());
+
+    this.drops = [];
+    this.dropCount = Math.floor(window.innerWidth / 4); // density based on viewport width
+    for (let i = 0; i < this.dropCount; i++) {
+      this.drops.push(this.createDrop(true));
+    }
+
+    // Wind variables
+    this.wind = 0;
+    this.windTarget = 0;
+    this.lastWindChange = performance.now();
+    this.animate = this.animate.bind(this);
+    requestAnimationFrame(this.animate);
+  }
+
+  resize() {
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+  }
+
+  createDrop(randomY = false) {
+    return {
+      x: Math.random() * this.canvas.width,
+      y: randomY ? Math.random() * this.canvas.height : -20,
+      length: 10 + Math.random() * 20,
+      speed: 4 + Math.random() * 4,
+      opacity: 0.2 + Math.random() * 0.5
+    };
+  }
+
+  animate() {
+    const ctx = this.ctx;
+    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    ctx.strokeStyle = 'rgba(255,255,255,0.8)';
+    ctx.lineWidth = 1;
+    ctx.lineCap = 'round';
+
+    // Update wind every few seconds
+    const now = performance.now();
+    if (now - this.lastWindChange > 3000) {
+      this.windTarget = (Math.random() * 2 - 1) * 1.5; // -1.5px to 1.5px per frame
+      this.lastWindChange = now;
+    }
+    // Ease current wind toward target for smoother gusts
+    this.wind += (this.windTarget - this.wind) * 0.01;
+
+    for (const d of this.drops) {
+      ctx.globalAlpha = d.opacity;
+      ctx.beginPath();
+      ctx.moveTo(d.x, d.y);
+      ctx.lineTo(d.x + this.wind * 2, d.y + d.length); // small slant for visual effect
+      ctx.stroke();
+
+      // Update drop position
+      d.x += this.wind * (d.speed / 3);
+      d.y += d.speed;
+
+      // Wrap around horizontally
+      if (d.x < -20) d.x = this.canvas.width + 20;
+      if (d.x > this.canvas.width + 20) d.x = -20;
+
+      // Reset drop when it falls below viewport
+      if (d.y > this.canvas.height) {
+        Object.assign(d, this.createDrop());
+      }
+    }
+
+    requestAnimationFrame(this.animate);
+  }
+}
+
+// Initialize rain effect when DOM is loaded
+let rainEffect;
+document.addEventListener('DOMContentLoaded', () => {
+  rainEffect = new RainEffect();
+  window.rainEffect = rainEffect;
+});
+
 // Export for module systems
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = DevelopmentTools;
+  module.exports = { DevelopmentTools, RainEffect };
 }
