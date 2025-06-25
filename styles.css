@@ -1,11 +1,16 @@
 /* WINDSURF_START Fonts */
-:root{
-  --ff-heading: "Zen Antique Soft", serif;
-  --ff-body: "Noto Sans JP", sans-serif;
+:root {
+  --ff-heading: "Noto Serif JP", serif;
+  --ff-body:    "Noto Serif JP", serif;
 }
-body{ font-family: var(--ff-body); }
-h1,h2,h3{ font-family: var(--ff-heading); }
+body {
+  font-family: var(--ff-body);
+}
+h1, h2, h3 {
+  font-family: var(--ff-heading);
+}
 /* WINDSURF_END Fonts */
+  
 
 /* ===== CSS Variables ===== */
 
@@ -168,7 +173,7 @@ body {
 
 /* ===== Typography ===== */
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-jp);
+  font-family: var(--ff-heading);
   font-weight: 700;
   line-height: 1.2;
   margin-bottom: var(--space-4);
@@ -389,21 +394,6 @@ a:focus {
 [data-theme="dark"] .theme-toggle:focus {
   background-color: var(--neutral-800);
 }
-
-/* Duplicate FontsVariables block removed */
-:root {
-  --font-en: 'Inter', sans-serif;
-  --font-jp: 'Noto Sans JP', sans-serif;
-  --font-season: 'Great Vibes', cursive;
-}
-
-body {
-  font-family: var(--font-en);
-}
-
-
-/* Duplicate SeasonVars block removed */
-
 
 .autumn {
   --primary: #FFC080;
