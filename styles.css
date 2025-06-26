@@ -105,11 +105,6 @@ body[data-season="tsuyu"] .track:hover {
 }
 
 /* Tsuyu season button styling */
-body[data-season="tsuyu"] .season-btn {
-  /* background: linear-gradient(135deg, #7BA7D4 0%, #4A90B8 100%);
-  border: 1px solid rgba(123, 167, 212, 0.3); */
-}
-
 body[data-season="tsuyu"] .season-btn:hover,
 body[data-season="tsuyu"] .season-btn:focus-visible {
   box-shadow: 0 12px 32px rgba(74, 144, 184, 0.25), 
@@ -912,6 +907,7 @@ a:focus {
   background-repeat: no-repeat;
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
+  filter: brightness(1.2) contrast(1.1);
   border: 3px solid rgba(255, 255, 255, 0.8);
   border-radius: 8px;
   cursor: pointer;
@@ -929,8 +925,8 @@ a:focus {
   inset: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.6) 0%,
-    rgba(0, 0, 0, 0.2) 60%,
+    rgba(0, 0, 0, 0.4) 0%,
+    rgba(0, 0, 0, 0.1) 60%,
     transparent 100%
   );
   transition: opacity 0.3s ease;
@@ -978,19 +974,19 @@ a:focus {
 
 /* Season-specific background images */
 .season-btn[data-season="spring"] {
-  background-image: url('./img/秀歌-春.webp');
+  background-image: url('./img/秀歌-春-btn.webp');
 }
 
 .season-btn[data-season="summer"] {
-  background-image: url('./img/秀歌-夏.webp');
+  background-image: url('./img/秀歌-夏-btn.webp');
 }
 
 .season-btn[data-season="autumn"] {
-  background-image: url('./img/秀歌-秋.webp');
+  background-image: url('./img/秀歌-秋-btn.webp');
 }
 
 .season-btn[data-season="winter"] {
-  background-image: url('./img/秀歌-冬.webp');
+  background-image: url('./img/秀歌-冬-btn.webp');
 }
 
 .season-btn::before { opacity: 0.35; }
@@ -1015,17 +1011,64 @@ a:focus {
 
 /* Responsive adjustments for season buttons */
 @media (max-width: 768px) {
+  .season-nav {
+    gap: var(--space-2);
+    padding: var(--space-2);
+    justify-content: center;
+  }
+  
+  
   .season-btn {
-    width: 140px;
-    height: 180px;
+    width: 80px;
+    height: 120px;
+    padding: var(--space-2);
   }
   
   .season-name {
-    font-size: var(--text-lg);
+    font-size: var(--text-sm);
+    letter-spacing: 0.1em;
+    padding: 2px 6px;
+    font-weight: 800;
+  }
+}
+
+@media (max-width: 480px) {
+  .season-btn {
+    width: 70px;
+    height: 100px;
+    padding: var(--space-1);
+  }
+  
+  .season-name {
+    font-size: var(--text-xs);
+    padding: 1px 4px;
+    font-weight: 800;
   }
   
   .season-nav {
-    gap: var(--space-4);
+    gap: var(--space-1);
+  }
+}
+
+/* 超小型デバイス用 - ヒーロータイトル追加調整 */
+@media (max-width: 360px) {
+  .hero-title {
+    font-size: clamp(1rem, 6vw, 1.5rem);
+    line-height: 1.4;
+    margin-bottom: var(--space-2);
+  }
+  
+  .hero-title br {
+    display: none;
+  }
+  
+  .hero-subtitle {
+    font-size: clamp(0.75rem, 3vw, 1rem);
+    margin-bottom: var(--space-3);
+  }
+  
+  .hero-content {
+    padding: var(--space-1);
   }
 }
 
@@ -1037,20 +1080,17 @@ a:focus {
   position: relative;
   z-index: 10;
   font-size: var(--text-xl);
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.15em;
+  color: white;
   text-shadow: 
-    2px 2px 4px rgba(0, 0, 0, 0.8),
-    0 0 8px rgba(0, 0, 0, 0.6);
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.95) 0%,
-    rgba(255, 255, 255, 0.85) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+    2px 2px 6px rgba(0, 0, 0, 0.9),
+    0 0 12px rgba(0, 0, 0, 0.8),
+    0 0 4px rgba(0, 0, 0, 1);
+  background: rgba(0, 0, 0, 0.4);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius);
+  backdrop-filter: blur(4px);
 }
 
 .season-content {
@@ -2331,8 +2371,13 @@ legend {
   }
   
   .hero-title {
-    font-size: clamp(2rem, 8vw, 3rem);
-    line-height: 1.1;
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+    line-height: 1.2;
+    margin-bottom: var(--space-4);
+  }
+  
+  .hero-title br {
+    display: none;
   }
   
   .hero-subtitle {
@@ -2720,8 +2765,9 @@ legend {
   }
   
   .hero-title {
-    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-size: clamp(1.25rem, 5vw, 2rem);
     margin-bottom: var(--space-3);
+    line-height: 1.3;
   }
   
   .hero-subtitle {
@@ -2774,6 +2820,10 @@ legend {
   
   .hero-title {
     font-size: clamp(1.25rem, 8vw, 1.75rem);
+  }
+  
+  .hero-title br {
+    display: none;
   }
   
   .hero-subtitle {

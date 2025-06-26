@@ -16,7 +16,9 @@
       "Bash(done)",
       "Bash(grep:*)",
       "Bash(git switch:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(for:*)",
+      "Bash(do cwebp:*)"
     ],
     "deny": []
   }
