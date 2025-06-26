@@ -12,7 +12,7 @@
     <!-- Open Graph -->
     <meta property="og:title" content="shuka – 秀歌 | AI音楽アーティスト 公式サイト">
     <meta property="og:description" content="四季をテーマにしたAI×和楽器サウンドで新しい音楽体験を">
-    <meta property="og:image" content="/Users/yamazaki/Downloads/Development/project-shuka3/img/秀歌.webp">
+    <meta property="og:image" content="./img/秀歌.webp">
     <meta property="og:url" content="">
     <meta property="og:type" content="website">
     
@@ -20,12 +20,12 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="shuka – 秀歌 | AI音楽アーティスト">
     <meta name="twitter:description" content="四季をテーマにしたAI×和楽器サウンドで新しい音楽体験を">
-    <meta name="twitter:image" content="/Users/yamazaki/Downloads/Development/project-shuka3/img/秀歌.webp">
+    <meta name="twitter:image" content="./img/秀歌.webp">
     
     <!-- Preload critical resources -->
     <link rel="preload" href="./img/秀歌-メインビジュアル.webp" as="image">
     <link rel="preload" href="./styles.css" as="style">
-    <link rel="preload" href="./scripts.js" as="script">
+    <link rel="preload" href="./js/main.js" as="script">
 
     
     <!-- DNS prefetch for external resources if any -->
@@ -177,8 +177,8 @@
                         <div class="season-tracks">
                             <h3 class="season-title">春の調べ</h3>
                             <p class="season-description">桜咲く季節の温かな希望と新しい始まりを表現した楽曲集</p>
-                            <div class="track-list">
-                                <div class="track">
+                            <ul class="track-list">
+                                <li class="track">
                                     <audio controls preload="none" aria-label="ひかりのあと - 春の楽曲">
                                         <source src="./audio/ひかりのあと.mp3" type="audio/mpeg">
                                         お使いのブラウザは音声再生に対応していません。
@@ -187,8 +187,8 @@
                                         <h4 class="track-title">ひかりのあと</h4>
                                         <p class="track-description">春の陽だまりで感じる穏やかな時間</p>
                                     </div>
-                                </div>
-                                <div class="track">
+                                </li>
+                                <li class="track">
                                     <audio controls preload="none" aria-label="光のほうへ - 春の楽曲">
                                         <source src="./audio/光のほうへ.mp3" type="audio/mpeg">
                                         お使いのブラウザは音声再生に対応していません。
@@ -197,8 +197,8 @@
                                         <h4 class="track-title">光のほうへ</h4>
                                         <p class="track-description">新緑に向かって歩む希望の旋律</p>
                                     </div>
-                                </div>
-                            </div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                     
@@ -213,8 +213,8 @@
                         <div class="season-tracks">
                             <h3 class="season-title">夏の響き</h3>
                             <p class="season-description">青い空と緑陰の涼しさを表現した夏の楽曲</p>
-                            <div class="track-list">
-                                <div class="track">
+                            <ul class="track-list">
+                                <li class="track">
                                     <audio controls preload="none" aria-label="夏庭園の詩 - 夏の楽曲">
                                         <source src="./audio/夏庭園の詩.mp3" type="audio/mpeg">
                                         お使いのブラウザは音声再生に対応していません。
@@ -223,8 +223,8 @@
                                         <h4 class="track-title">夏庭園の詩</h4>
                                         <p class="track-description">日本庭園の静寂と夏の情趣</p>
                                     </div>
-                                </div>
-                                <div class="track">
+                                </li>
+                                <li class="track">
                                     <audio controls preload="none" aria-label="緑の中のひととき - 夏の楽曲">
                                         <source src="./audio/緑の中のひととき.mp3" type="audio/mpeg">
                                         お使いのブラウザは音声再生に対応していません。
@@ -233,8 +233,8 @@
                                         <h4 class="track-title">緑の中のひととき</h4>
                                         <p class="track-description">木陰で過ごす涼やかな夏のひととき</p>
                                     </div>
-                                </div>
-                            </div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                     
@@ -249,8 +249,8 @@
                         <div class="season-tracks">
                             <h3 class="season-title">秋の歌</h3>
                             <p class="season-description">紅葉と落ち葉が奏でる秋の美しさを音楽で表現</p>
-                            <div class="track-list">
-                                <div class="track">
+                            <ul class="track-list">
+                                <li class="track">
                                     <audio controls preload="none" aria-label="風の庭にて - 秋の楽曲">
                                         <source src="./audio/風の庭にて.mp3" type="audio/mpeg">
                                         お使いのブラウザは音声再生に対応していません。
@@ -259,8 +259,8 @@
                                         <h4 class="track-title">風の庭にて</h4>
                                         <p class="track-description">秋風が運ぶ懐かしい記憶</p>
                                     </div>
-                                </div>
-                            </div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                     
@@ -275,8 +275,8 @@
                         <div class="season-tracks">
                             <h3 class="season-title">冬の調べ</h3>
                             <p class="season-description">雪景色と静寂の美しさを表現した冬の楽曲</p>
-                            <div class="track-list">
-                                <div class="track">
+                            <ul class="track-list">
+                                <li class="track">
                                     <audio controls preload="none" aria-label="白のなかで - 冬の楽曲">
                                         <source src="./audio/白のなかで.mp3" type="audio/mpeg">
                                         お使いのブラウザは音声再生に対応していません。
@@ -285,8 +285,8 @@
                                         <h4 class="track-title">白のなかで</h4>
                                         <p class="track-description">雪に包まれた静寂な世界</p>
                                     </div>
-                                </div>
-                            </div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -356,7 +356,7 @@
     <link rel="stylesheet" href="./styles.css">
     
     <!-- Load JavaScript with defer for optimal performance -->
-    <script src="./scripts.js" defer></script>
+    <script type="module" src="./js/main.js"></script>
     
     <!-- Add loading completion script -->
     <script>
