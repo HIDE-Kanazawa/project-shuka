@@ -57,8 +57,17 @@
 }
 
 .about-image {
-  width: 100%;
+  width: 400px;
+  max-width: 100%;
   height: auto;
+  object-fit: cover;
   border-radius: var(--radius-xl);
   box-shadow: 0 10px 30px var(--shadow-lg);
+}
+
+@media (max-width: 767px) {
+  .about-image {
+    width: 100%;
+    height: auto;
+  }
 }

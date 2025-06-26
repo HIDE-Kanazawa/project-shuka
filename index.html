@@ -4,23 +4,35 @@
     <meta charset="UTF-8">
     <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2214%22 font-size=%2216%22>🌸</text></svg>">
+    <link rel="apple-touch-icon" href="./img/秀歌.webp">
+    <link rel="manifest" href="./manifest.json">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="AI音楽アーティスト「Shuka – 秀歌」の公式サイト。四季をテーマにしたAI×和楽器サウンドで、日本の情緒と現代音楽を融合した新しい音楽体験をお届けします。">
     <meta name="keywords" content="AI音楽, 和楽器, 四季, Shuka, 秀歌, 日本音楽, アーティスト">
     <meta name="author" content="Shuka - 秀歌">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="format-detection" content="telephone=no">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://shuka-ai.com/">
     
     <!-- Open Graph -->
     <meta property="og:title" content="Shuka – 秀歌 | AI音楽アーティスト 公式サイト">
     <meta property="og:description" content="四季をテーマにしたAI×和楽器サウンドで新しい音楽体験を">
-    <meta property="og:image" content="/Users/yamazaki/Downloads/Development/project-shuka3/img/秀歌.webp">
-    <meta property="og:url" content="">
+    <meta property="og:image" content="./img/秀歌.webp">
+    <meta property="og:url" content="https://shuka-ai.com/">
     <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Shuka – 秀歌">
+    <meta property="og:locale" content="ja_JP">
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Shuka – 秀歌 | AI音楽アーティスト">
     <meta name="twitter:description" content="四季をテーマにしたAI×和楽器サウンドで新しい音楽体験を">
-    <meta name="twitter:image" content="/Users/yamazaki/Downloads/Development/project-shuka3/img/秀歌.webp">
+    <meta name="twitter:image" content="./img/秀歌.webp">
+    <meta name="twitter:creator" content="@shuka_artist">
+    <meta name="twitter:site" content="@shuka_artist">
     
     <!-- Preload critical resources -->
     <link rel="preload" href="./img/秀歌-メインビジュアル.webp" as="image">
@@ -72,8 +84,6 @@
                     <li role="none"><a href="#home" role="menuitem">Home</a></li>
                     <li role="none"><a href="#about" role="menuitem">About</a></li>
                     <li role="none"><a href="#gallery" role="menuitem">Gallery</a></li>
-                    
-
                 </ul>
             </div>
         </nav>
@@ -86,7 +96,7 @@
                 <h2 id="hero-title" class="hero-title">四季を奏でる<br>AI 音楽アーティスト<br><span class="artist-name">Shuka <span class="jp">– 秀歌</span></span></h2>
                 <p class="hero-subtitle">日本の情緒と現代サウンドデザインが織りなす<br>新しい音楽体験</p>
                 <div class="hero-actions">
-                    <button class="cta-button primary" onclick="scrollToSection('gallery')" aria-label="季節のギャラリーを見る">
+                    <button class="cta-button primary" data-scroll-target="gallery" aria-label="季節のギャラリーを見る">
                         季節のギャラリーを体験する
                     </button>
                     <button class="cta-button secondary" aria-label="アーティストについて詳しく見る">
@@ -99,39 +109,35 @@
         <!-- About Section -->
         <section class="about" id="about" aria-labelledby="about-title">
             <div class="container">
-                <h2 id="about-title" class="section-title">About Shuka – 秀歌</h2>
-                
                 <div class="about-content">
                     <div class="about-text">
+                        <h2 id="about-title" class="section-title">About Shuka</h2>
                         <p class="about-intro">
-                            AI技術と日本の伝統的な和楽器サウンドを融合させた、革新的な音楽アーティスト「Shuka – 秀歌」。<br>
-                            四季の移ろいを音楽で表現し、聴く人の心に深く響く楽曲を創造しています。
+                            AI技術と日本の伝統的な美意識を融合させ、四季の移ろいを音楽で表現するアーティスト「Shuka – 秀歌」。
+                            現代のサウンドデザインと和楽器の音色が織りなす、新しい音楽体験をお届けします。
                         </p>
                         
                         <div class="features">
                             <div class="feature">
-                                <h3 class="feature-title">🌸 季節感あふれる楽曲</h3>
-                                <p>春夏秋冬それぞれの美しさを音楽で表現。日本の四季の情緒を現代的にアレンジした独特な世界観を創造しています。</p>
+                                <h3 class="feature-title">AI × 和楽器</h3>
+                                <p>最先端のAI技術と伝統的な和楽器の音色を融合し、新しい音楽の可能性を探求しています。</p>
                             </div>
-                            
                             <div class="feature">
-                                <h3 class="feature-title">🎋 和と洋の融合</h3>
-                                <p>伝統的な和楽器の音色と現代的なサウンドデザインを組み合わせ、東西の音楽文化が調和した新しいサウンドを生み出しています。</p>
+                                <h3 class="feature-title">四季の表現</h3>
+                                <p>日本の美しい四季の移ろいを音楽で表現し、季節ごとの情感豊かな楽曲を制作しています。</p>
                             </div>
-                            
                             <div class="feature">
-                                <h3 class="feature-title">🤖 AI技術の活用</h3>
-                                <p>最先端のAI技術を駆使して楽曲制作を行い、人間の感性とAIの創造性が融合した、これまでにない音楽体験を提供します。</p>
+                                <h3 class="feature-title">現代と伝統の調和</h3>
+                                <p>現代のサウンドデザインと日本の伝統美が調和した、唯一無二の音楽世界を創造しています。</p>
                             </div>
                         </div>
                     </div>
-                    
                     <div class="about-visual">
                         <picture>
                             <!-- WebP format for modern browsers -->
                             <source srcset="./img/秀歌.webp" type="image/webp">
                             <!-- Fallback to original format -->
-                            <img src="./img/秀歌.webp" alt="shuka – 秀歌のアーティスト画像" loading="lazy" class="about-image" width="400" height="600">
+                            <img src="./img/秀歌.webp" alt="shuka – 秀歌のアーティスト画像" loading="lazy" class="about-image">
                         </picture>
                     </div>
                 </div>
@@ -145,152 +151,16 @@
                 <p class="section-subtitle">四季それぞれの美しさを音楽と映像で体験してください</p>
                 
                 <!-- Season Navigation -->
-                <div class="season-nav" role="tablist" aria-label="季節選択">
-                    <button class="season-btn active" data-season="spring" role="tab" aria-controls="spring-content" aria-selected="true" aria-label="春の楽曲を再生">
-                        <span class="season-icon" aria-hidden="true">🌸</span>
-                        <span class="season-name">春</span>
-                    </button>
-                    <button class="season-btn" data-season="summer" role="tab" aria-controls="summer-content" aria-selected="false" aria-label="夏の楽曲を再生">
-                        <span class="season-icon" aria-hidden="true">🌻</span>
-                        <span class="season-name">夏</span>
-                    </button>
-                    <button class="season-btn" data-season="autumn" role="tab" aria-controls="autumn-content" aria-selected="false" aria-label="秋の楽曲を再生">
-                        <span class="season-icon" aria-hidden="true">🍁</span>
-                        <span class="season-name">秋</span>
-                    </button>
-                    <button class="season-btn" data-season="winter" role="tab" aria-controls="winter-content" aria-selected="false" aria-label="冬の楽曲を再生">
-                        <span class="season-icon" aria-hidden="true">❄️</span>
-                        <span class="season-name">冬</span>
-                    </button>
+                <div class="season-nav" role="tablist" aria-label="季節選択" id="season-nav">
+                    <!-- Generated by JavaScript -->
                 </div>
                 
                 <!-- Season Content -->
-                <div class="season-content">
-                    <!-- Spring Content -->
-                    <div class="season-panel active" id="spring-content" role="tabpanel" aria-labelledby="spring-tab" data-season="spring">
-                        <div class="season-visual">
-                            <picture>
-                                <source srcset="./img/秀歌-春.webp" type="image/webp">
-                                <img src="./img/秀歌-春.webp" alt="春をテーマにした秀歌の画像" loading="lazy" class="season-image" width="600" height="400">
-                            </picture>
-                        </div>
-                        <div class="season-tracks">
-                            <h3 class="season-title">春の調べ</h3>
-                            <p class="season-description">桜咲く季節の温かな希望と新しい始まりを表現した楽曲集</p>
-                            <div class="track-list">
-                                <div class="track">
-                                    <audio controls preload="none" aria-label="ひかりのあと - 春の楽曲">
-                                        <source src="./audio/ひかりのあと.mp3" type="audio/mpeg">
-                                        お使いのブラウザは音声再生に対応していません。
-                                    </audio>
-                                    <div class="track-info">
-                                        <h4 class="track-title">ひかりのあと</h4>
-                                        <p class="track-description">春の陽だまりで感じる穏やかな時間</p>
-                                    </div>
-                                </div>
-                                <div class="track">
-                                    <audio controls preload="none" aria-label="光のほうへ - 春の楽曲">
-                                        <source src="./audio/光のほうへ.mp3" type="audio/mpeg">
-                                        お使いのブラウザは音声再生に対応していません。
-                                    </audio>
-                                    <div class="track-info">
-                                        <h4 class="track-title">光のほうへ</h4>
-                                        <p class="track-description">新緑に向かって歩む希望の旋律</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Summer Content -->
-                    <div class="season-panel" id="summer-content" role="tabpanel" aria-labelledby="summer-tab" data-season="summer">
-                        <div class="season-visual">
-                            <picture>
-                                <source srcset="./img/秀歌-夏.webp" type="image/webp">
-                                <img src="./img/秀歌-夏.webp" alt="夏をテーマにした秀歌の画像" loading="lazy" class="season-image" width="600" height="400">
-                            </picture>
-                        </div>
-                        <div class="season-tracks">
-                            <h3 class="season-title">夏の響き</h3>
-                            <p class="season-description">青い空と緑陰の涼しさを表現した夏の楽曲</p>
-                            <div class="track-list">
-                                <div class="track">
-                                    <audio controls preload="none" aria-label="夏庭園の詩 - 夏の楽曲">
-                                        <source src="./audio/夏庭園の詩.mp3" type="audio/mpeg">
-                                        お使いのブラウザは音声再生に対応していません。
-                                    </audio>
-                                    <div class="track-info">
-                                        <h4 class="track-title">夏庭園の詩</h4>
-                                        <p class="track-description">日本庭園の静寂と夏の情趣</p>
-                                    </div>
-                                </div>
-                                <div class="track">
-                                    <audio controls preload="none" aria-label="緑の中のひととき - 夏の楽曲">
-                                        <source src="./audio/緑の中のひととき.mp3" type="audio/mpeg">
-                                        お使いのブラウザは音声再生に対応していません。
-                                    </audio>
-                                    <div class="track-info">
-                                        <h4 class="track-title">緑の中のひととき</h4>
-                                        <p class="track-description">木陰で過ごす涼やかな夏のひととき</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Autumn Content -->
-                    <div class="season-panel" id="autumn-content" role="tabpanel" aria-labelledby="autumn-tab" data-season="autumn">
-                        <div class="season-visual">
-                            <picture>
-                                <source srcset="./img/秀歌-秋.webp" type="image/webp">
-                                <img src="./img/秀歌-秋.webp" alt="秋をテーマにした秀歌の画像" loading="lazy" class="season-image" width="600" height="400">
-                            </picture>
-                        </div>
-                        <div class="season-tracks">
-                            <h3 class="season-title">秋の歌</h3>
-                            <p class="season-description">紅葉と落ち葉が奏でる秋の美しさを音楽で表現</p>
-                            <div class="track-list">
-                                <div class="track">
-                                    <audio controls preload="none" aria-label="風の庭にて - 秋の楽曲">
-                                        <source src="./audio/風の庭にて.mp3" type="audio/mpeg">
-                                        お使いのブラウザは音声再生に対応していません。
-                                    </audio>
-                                    <div class="track-info">
-                                        <h4 class="track-title">風の庭にて</h4>
-                                        <p class="track-description">秋風が運ぶ懐かしい記憶</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Winter Content -->
-                    <div class="season-panel" id="winter-content" role="tabpanel" aria-labelledby="winter-tab" data-season="winter">
-                        <div class="season-visual">
-                            <picture>
-                                <source srcset="./img/秀歌-冬.webp" type="image/webp">
-                                <img src="./img/秀歌-冬.webp" alt="冬をテーマにした秀歌の画像" loading="lazy" class="season-image" width="600" height="400">
-                            </picture>
-                        </div>
-                        <div class="season-tracks">
-                            <h3 class="season-title">冬の調べ</h3>
-                            <p class="season-description">雪景色と静寂の美しさを表現した冬の楽曲</p>
-                            <div class="track-list">
-                                <div class="track">
-                                    <audio controls preload="none" aria-label="白のなかで - 冬の楽曲">
-                                        <source src="./audio/白のなかで.mp3" type="audio/mpeg">
-                                        お使いのブラウザは音声再生に対応していません。
-                                    </audio>
-                                    <div class="track-info">
-                                        <h4 class="track-title">白のなかで</h4>
-                                        <p class="track-description">雪に包まれた静寂な世界</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="season-content" id="season-content">
+                    <!-- Generated by JavaScript -->
                 </div>
             </div>
+        </section>
     </main>
 
     <!-- Footer -->
@@ -300,40 +170,14 @@
                 <div class="footer-brand">
                     <h3 class="footer-logo">Shuka <span class="logo-jp">– 秀歌</span></h3>
                     <p class="footer-description">
-                        四季をテーマにしたAI×和楽器サウンドで<br>
-                        新しい音楽体験をお届けします
+                        四季を奏でるAI音楽アーティスト
                     </p>
                 </div>
                 
-                <div class="footer-links">
-                    <div class="footer-section">
-                        <h4 class="footer-section-title">FOLLOW ME</h4>
-                        <div class="footer-social">
-                            <a href="https://x.com/shuka_artist" class="social-link" aria-label="X (Twitter) アカウント" rel="noopener noreferrer" target="_blank">
-                                <svg class="social-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                                </svg>
-                                <span class="sr-only">X (Twitter)</span>
-                            </a>
-                            <a href="https://instagram.com/shuka_artist" class="social-link" aria-label="Instagram アカウント" rel="noopener noreferrer" target="_blank">
-                                <svg class="social-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                                </svg>
-                                <span class="sr-only">Instagram</span>
-                            </a>
-                            <a href="https://youtube.com/@shuka_artist" class="social-link" aria-label="YouTube チャンネル" rel="noopener noreferrer" target="_blank">
-                                <svg class="social-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                                </svg>
-                                <span class="sr-only">YouTube</span>
-                            </a>
-                            <a href="https://tiktok.com/@shuka_artist" class="social-link" aria-label="TikTok アカウント" rel="noopener noreferrer" target="_blank">
-                                <svg class="social-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                    <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
-                                </svg>
-                                <span class="sr-only">TikTok</span>
-                            </a>
-                        </div>
+                <div class="footer-section">
+                    <h4 class="footer-section-title">フォローする</h4>
+                    <div class="social-links" id="social-links">
+                        <!-- Generated by JavaScript -->
                     </div>
                 </div>
             </div>
@@ -357,97 +201,6 @@
     
     <!-- Load JavaScript with defer for optimal performance -->
     <script src="./scripts.js" defer></script>
-    
-    <!-- Add loading completion script -->
-    <script>
-        // Mark page as loaded to enable transitions
-        document.addEventListener('DOMContentLoaded', () => {
-            document.body.classList.add('loaded');
-            
-            // Initialize accessibility features
-            initAccessibilityFeatures();
-        });
-        
-        // Accessibility enhancement functions
-        function initAccessibilityFeatures() {
-            // Track mouse usage for focus management
-            document.addEventListener('mousedown', () => document.body.classList.add('using-mouse'));
-            document.addEventListener('keydown', () => document.body.classList.remove('using-mouse'));
-            
-            // Enhanced keyboard navigation
-            document.addEventListener('keydown', handleGlobalKeyboard);
-            
-            // ARIA live region setup
-            if (!document.getElementById('aria-live-region')) {
-                const liveRegion = document.createElement('div');
-                liveRegion.id = 'aria-live-region';
-                liveRegion.setAttribute('aria-live', 'polite');
-                liveRegion.setAttribute('aria-atomic', 'true');
-                liveRegion.className = 'sr-only';
-                document.body.appendChild(liveRegion);
-            }
-        }
-        
-        // Global keyboard event handler
-        function handleGlobalKeyboard(e) {
-            // Add keyboard shortcuts
-            if (e.altKey) {
-                switch(e.key) {
-                    case '1':
-                        e.preventDefault();
-                        document.getElementById('home')?.focus();
-                        break;
-                    case '2':
-                        e.preventDefault();
-                        document.getElementById('about')?.focus();
-                        break;
-                    case '3':
-                        e.preventDefault();
-                        document.getElementById('gallery')?.focus();
-                        break;
-                    case '4':
-                        e.preventDefault();
-                        document.getElementById('contact')?.focus();
-                        break;
-                }
-            }
-            
-            // ESC key to close any open overlays
-            if (e.key === 'Escape') {
-                // Close mobile menu if open
-                const navMenu = document.getElementById('nav-menu');
-                const navToggle = document.getElementById('nav-toggle');
-                if (navMenu?.classList.contains('active')) {
-                    navMenu.classList.remove('active');
-                    navToggle?.classList.remove('active');
-                    navToggle?.focus();
-                }
-            }
-        }
-        
-        // Optimize loading with requestIdleCallback
-        if ('requestIdleCallback' in window) {
-            requestIdleCallback(() => {
-                // Prefetch additional resources during idle time
-                const additionalResources = [
-                    './audio/ひかりのあと.mp3',
-                    './audio/光のほうへ.mp3',
-                    './audio/夏庭園の詩.mp3',
-                    './audio/緑の中のひととき.mp3',
-                    './audio/風の庭にて.mp3',
-                    './audio/白のなかで.mp3'
-                ];
-                
-                additionalResources.forEach(src => {
-                    const link = document.createElement('link');
-                    link.rel = 'prefetch';
-                    link.href = src;
-                    document.head.appendChild(link);
-                });
-            });
-        }
-    </script>
-    
     
 </body>
 </html>

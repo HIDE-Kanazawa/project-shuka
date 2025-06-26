@@ -1,34 +1,34 @@
-import { Navigation, scrollToSection } from './navigation.js';
-import { SeasonsGallery, switchSeason } from './seasons.js';
-import { ThemeManager, setTheme, toggleTheme, getCurrentTheme } from './theme.js';
-import { ShukaApp } from './app.js';
-import { DevelopmentTools } from './dev-tools.js';
-import { WaterRippleEffect, toggleRipples, createCustomRipple } from './water-ripple.js';
-import { enableRain, disableRain, handleLogoClick } from './rain-effect.js';
-
-// Instantiate core modules on DOM ready
+// Main application initialization
 window.addEventListener('DOMContentLoaded', () => {
-  window.navigation = new Navigation();
-  window.seasonsGallery = new SeasonsGallery();
-  window.themeManager = new ThemeManager();
-  window.shukaApp = new ShukaApp();
-  window.waterRipples = new WaterRippleEffect();
-  window.devTools = new DevelopmentTools();
+  // Initialize core modules (classes should be available from other script files)
+  if (typeof Navigation !== 'undefined') {
+    window.navigation = new Navigation();
+  }
+  
+  if (typeof SeasonsGallery !== 'undefined') {
+    window.seasonsGallery = new SeasonsGallery();
+  }
+  
+  if (typeof ThemeManager !== 'undefined') {
+    window.themeManager = new ThemeManager();
+  }
+  
+  if (typeof WaterRippleEffect !== 'undefined') {
+    window.waterRipples = new WaterRippleEffect();
+  }
+  
+  // Initialize other modules if they exist
+  if (typeof ShukaApp !== 'undefined') {
+    window.shukaApp = new ShukaApp();
+  }
+  
+  if (typeof DevelopmentTools !== 'undefined') {
+    window.devTools = new DevelopmentTools();
+  }
 
+  // Logo click handler
   const logoLink = document.getElementById('logo-link');
-  if (logoLink) {
+  if (logoLink && typeof handleLogoClick === 'function') {
     logoLink.addEventListener('click', handleLogoClick);
   }
 });
-
-// Re-export utilities to global scope for inline scripts
-window.scrollToSection = scrollToSection;
-window.switchSeason = switchSeason;
-window.setTheme = setTheme;
-window.toggleTheme = toggleTheme;
-window.getCurrentTheme = getCurrentTheme;
-window.toggleRipples = toggleRipples;
-window.createCustomRipple = createCustomRipple;
-window.enableRain = enableRain;
-window.disableRain = disableRain;
-window.handleLogoClick = handleLogoClick;

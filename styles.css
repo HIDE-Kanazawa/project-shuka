@@ -990,6 +990,7 @@ a:focus {
 }
 
 .season-btn::before { opacity: 0.35; }
+SURF_END SeasonTextColor */
 
 /* Dark theme adjustments */
 [data-theme="dark"] .season-btn {

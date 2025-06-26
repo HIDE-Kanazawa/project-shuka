@@ -489,4 +489,7 @@ function createCustomRipple(x, y, color, size) {
 }
 
 
-export { WaterRippleEffect, toggleRipples, createCustomRipple };
+// Make functions globally available
+window.WaterRippleEffect = WaterRippleEffect;
+window.toggleRipples = toggleRipples;
+window.createCustomRipple = createCustomRipple;
