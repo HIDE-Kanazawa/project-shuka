@@ -25,7 +25,12 @@
       "Bash(brew install:*)",
       "mcp__ide__getDiagnostics",
       "Bash(mv:*)",
-      "Bash(node:*)"
+      "Bash(node:*)",
+      "Bash(pkill:*)",
+      "Bash(true)",
+      "Bash(open http://localhost:8000/debug_sakura.html)",
+      "Bash(convert:*)",
+      "Bash(open /Users/yamazaki/Downloads/Development/project-shuka3/optimize-petals.html)"
     ],
     "deny": []
   }

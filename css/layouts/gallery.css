@@ -311,9 +311,15 @@
   overflow: hidden;
   border-radius: var(--radius-xl);
   box-shadow: 0 10px 30px var(--shadow-lg);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  min-width: 0;
+}
+
+.season-visual > .season-image,
+.season-visual > .season-video {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
 }
 
 .season-image,
@@ -497,4 +503,14 @@
   color: var(--text-muted);
   line-height: 1.6;
   font-style: italic;
+}
+
+/* Ensure Season Gallery videos always fit within the visual container */
+.season-visual {
+  aspect-ratio: 16 / 9; /* Maintain 16:9 container */
+}
+.season-video {
+  height: 100%;
+  max-height: 100%;
+  object-fit: cover;
 }
