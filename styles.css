@@ -111,15 +111,6 @@ body[data-season="tsuyu"] .season-btn:focus-visible {
               0 6px 12px rgba(123, 167, 212, 0.2);
 }
 
-/* Footer with rain-like pattern enhancement */
-body[data-season="tsuyu"] .footer {
-  background-color: #2a3f5f;
-  background-image: 
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='60' viewBox='0 0 120 60'%3E%3Cpath d='M0 60c30-60 90-60 120 0H0z' fill='%233a4f6f'/%3E%3C/svg%3E"),
-    linear-gradient(45deg, transparent 30%, rgba(123, 167, 212, 0.05) 50%, transparent 70%);
-  background-size: 120px 60px, 100% 100%;
-}
-
 /* Add subtle water droplet animation to text elements */
 body[data-season="tsuyu"] .hero-title {
   text-shadow: 
@@ -3471,10 +3462,6 @@ body:not(.loaded) * {
     color: var(--neutral-300);
 }
 
-body[data-season="tsuyu"] .footer {
-    background-color: #24364b; /* deep indigo for rainy season */
-    background-image: url("./img/washi-footer-dark.png");
-}
 
 .footer-content {
     display: flex;
