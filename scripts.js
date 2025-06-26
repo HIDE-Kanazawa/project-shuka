@@ -275,19 +275,19 @@ class SeasonsGallery {
   }
   
   loadInitialSeason() {
-    // Always set initial season to tsuyu (rainy season)
+    // Always set initial season to tsuyu on site reload
     this.currentSeason = 'tsuyu';
-    
-    // Update body season for styling and washi background
+
+    // Update URL to reflect tsuyu season
+    this.updateURL('tsuyu');
+
+    // Update styling / background
     this.updateSeasonBackground('tsuyu');
-    
+
     // Enable rain effect for tsuyu
     if (typeof window.enableRain === 'function') {
       window.enableRain();
     }
-    
-    // Update URL to reflect tsuyu season
-    this.updateURL('tsuyu');
 
     // Show summer gallery panel by default while keeping overall season as tsuyu
     this.updateSeasonButtons('summer');
@@ -302,6 +302,18 @@ class SeasonsGallery {
       return season;
     }
     
+    return null;
+  }
+
+  getSeasonFromStorage() {
+    try {
+      const s = localStorage.getItem('lastSeason');
+      if (['spring','summer','autumn','winter','tsuyu'].includes(s)) {
+        return s;
+      }
+    } catch (e) {
+      console.warn('Could not access storage:', e);
+    }
     return null;
   }
   
@@ -384,14 +396,20 @@ class SeasonsGallery {
     
     // Update current season
     this.currentSeason = season;
+
+    // Persist selection
+    try {
+      localStorage.setItem('lastSeason', season);
+    } catch (e) {
+      console.warn('Could not save season:', e);
+    }
     
     // Update URL without page reload
     this.updateURL(season);
     
-    // Update hero background if needed
-    // Update hero background only when animate flag is true (i.e., user interaction)
+    // Update about image when user interacts with season buttons
     if (animate) {
-      this.updateHeroBackground(season);
+      this.updateAboutImage(season);
     }
 
     // Update body season for styling (includes washi background)
@@ -467,7 +485,10 @@ class SeasonsGallery {
     // Update ARIA attributes
     panel.setAttribute('aria-hidden', 'false');
     
-
+    // Lazy-preload audio in the newly visible panel
+    panel.querySelectorAll('audio[preload="none"]').forEach(aud => {
+      aud.preload = 'metadata';
+    });
   }
   
   hidePanel(panel, animate) {
@@ -523,15 +544,15 @@ class SeasonsGallery {
     }
   }
   
-  updateHeroBackground(season) {
-    const hero = document.querySelector('.hero');
-    if (!hero) return;
+  updateAboutImage(season) {
+    const aboutImage = document.querySelector('.about-image');
+    if (!aboutImage) return;
     
     const seasonImages = {
-      spring: './img/秀歌-春.webp',
-      summer: './img/秀歌-夏.webp',
-      autumn: './img/秀歌-秋.webp',
-      winter: './img/秀歌-冬.webp',
+      spring: './img/秀歌-春-btn.webp',
+      summer: './img/秀歌-夏-btn.webp',
+      autumn: './img/秀歌-秋-btn.webp',
+      winter: './img/秀歌-冬-btn.webp',
       tsuyu: './img/秀歌-梅雨.webp'
     };
     
@@ -540,12 +561,13 @@ class SeasonsGallery {
       // Preload image before changing
       const img = new Image();
       img.onload = () => {
-        hero.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('${imageUrl}')`;
-        // Align background to top when a seasonal image is applied
-        hero.style.backgroundPosition = 'top center';
-        const heroContent = hero.querySelector('.hero-content');
-        if (heroContent) {
-          heroContent.style.paddingTop = '35vh';
+        aboutImage.src = imageUrl;
+        aboutImage.srcset = imageUrl;
+        
+        // Update picture source as well
+        const pictureSource = aboutImage.parentElement.querySelector('source');
+        if (pictureSource) {
+          pictureSource.srcset = imageUrl;
         }
       };
       img.src = imageUrl;
@@ -2592,50 +2614,38 @@ if (typeof module !== 'undefined' && module.exports) {
 window.handleLogoClick = function(event) {
   event.preventDefault();
   
-  // Scroll to home section
-  if (typeof scrollToSection === 'function') {
-    scrollToSection('home');
-  } else {
-    // Fallback scroll
-    const homeSection = document.getElementById('home');
-    if (homeSection) {
-      homeSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  }
-  
-  // Set season to tsuyu but keep summer gallery visible
+  // Set season to tsuyu but keep summer gallery visible (no scrolling)
   if (window.seasonsGallery && typeof window.seasonsGallery.switchToSeason === 'function') {
-    // Wait a bit for scroll to start, then change season
-    setTimeout(() => {
-      // Set the current season to tsuyu for rain effects and body attributes
-      window.seasonsGallery.currentSeason = 'tsuyu';
+    // Set the current season to tsuyu for rain effects and body attributes
+    window.seasonsGallery.currentSeason = 'tsuyu';
+    
+    // Update body season for styling
+    document.body.setAttribute('data-season', 'tsuyu');
+    
+    // Reset about image to main image
+    const aboutImage = document.querySelector('.about-image');
+    if (aboutImage) {
+      aboutImage.src = './img/秀歌.webp';
+      aboutImage.srcset = './img/秀歌.webp';
       
-      // Update body season for styling
-      document.body.setAttribute('data-season', 'tsuyu');
-      
-      // Reset hero background to initial main visual
-      const hero = document.querySelector('.hero');
-      if (hero) {
-        hero.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('./img/秀歌-メインビジュアル.webp')`;
-        hero.style.backgroundPosition = 'left top';
-        const heroContent = hero.querySelector('.hero-content');
-        if (heroContent) {
-          heroContent.style.paddingTop = '';
-        }
+      // Update picture source as well
+      const pictureSource = aboutImage.parentElement.querySelector('source');
+      if (pictureSource) {
+        pictureSource.srcset = './img/秀歌.webp';
       }
-      
-      // Enable rain effect
-      if (typeof window.enableRain === 'function') {
-        window.enableRain();
-      }
-      
-      // Keep summer gallery panel visible
-      window.seasonsGallery.updateSeasonButtons('summer');
-      window.seasonsGallery.updateSeasonPanels('summer', false);
-      
-      // Update URL to reflect tsuyu season
-      window.seasonsGallery.updateURL('tsuyu');
-    }, 300);
+    }
+    
+    // Enable rain effect
+    if (typeof window.enableRain === 'function') {
+      window.enableRain();
+    }
+    
+    // Keep summer gallery panel visible
+    window.seasonsGallery.updateSeasonButtons('summer');
+    window.seasonsGallery.updateSeasonPanels('summer', false);
+    
+    // Update URL to reflect tsuyu season
+    window.seasonsGallery.updateURL('tsuyu');
   }
   
   // Close mobile menu if open

@@ -70,6 +70,8 @@
 
 .season-btn:hover,
 .season-btn:focus-visible {
+  outline: 3px solid var(--accent, #ffd700);
+  outline-offset: 2px;
   transform: translateY(-8px) scale(1.05);
   border-color: rgba(255, 255, 255, 1);
   box-shadow: 
