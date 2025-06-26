@@ -44,188 +44,171 @@ body[data-season="summer"] .ripple{ border-color: var(--accent-summer); }
 body[data-season="autumn"] .ripple{ border-color: var(--accent-autumn); }
 body[data-season="winter"] .ripple{ border-color: var(--accent-winter); }
 
-/* Gold foil sparkle effect - 金箔の煌めき - 強化版 */
-.gold-sparkle {
+/* Zen circle - 禅円の美学 */
+.zen-circle {
+  position: absolute;
+  pointer-events: none;
+  border: 1px solid rgba(139, 69, 19, 0.3);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(245, 245, 220, 0.1) 0%,
+    rgba(210, 180, 140, 0.08) 30%,
+    rgba(160, 82, 45, 0.05) 60%,
+    transparent 100%
+  );
+  transform: scale(0);
+  animation: zenExpand 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  box-shadow: 0 0 20px rgba(139, 69, 19, 0.1);
+}
+
+.ink-drop {
   position: absolute;
   pointer-events: none;
   background: radial-gradient(
     circle,
-    rgba(255, 215, 0, 1) 0%,
-    rgba(255, 235, 59, 0.95) 15%,
-    rgba(255, 193, 7, 0.8) 35%,
-    rgba(255, 175, 0, 0.4) 60%,
-    transparent 85%
-  );
-  border-radius: 50%;
-  transform: scale(0) rotate(0deg);
-  animation: goldSparkleIntense 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
-  box-shadow: 
-    0 0 30px rgba(255, 215, 0, 0.9),
-    0 0 60px rgba(255, 215, 0, 0.6),
-    0 0 100px rgba(255, 235, 59, 0.3),
-    inset 0 0 15px rgba(255, 235, 59, 0.7);
-}
-
-.gold-particle {
-  position: absolute;
-  pointer-events: none;
-  background: linear-gradient(var(--particle-angle, 45deg), 
-    rgba(255, 215, 0, 1) 0%,
-    rgba(255, 235, 59, 0.95) 25%,
-    rgba(255, 193, 7, 0.8) 50%,
-    rgba(255, 175, 0, 0.4) 75%,
+    rgba(47, 79, 79, 0.4) 0%,
+    rgba(105, 105, 105, 0.25) 40%,
+    rgba(128, 128, 128, 0.1) 70%,
     transparent 100%
   );
-  border-radius: 2px;
-  transform: scale(0) rotate(0deg);
-  animation: goldParticleFloatIntense ease-out forwards;
-  box-shadow: 
-    0 0 12px rgba(255, 215, 0, 0.8),
-    0 0 24px rgba(255, 235, 59, 0.4);
-}
-
-.gold-flake {
-  position: absolute;
-  pointer-events: none;
-  background: linear-gradient(var(--flake-angle, 60deg),
-    rgba(255, 215, 0, 0.95) 0%,
-    rgba(255, 235, 59, 0.9) 30%,
-    rgba(255, 193, 7, 0.7) 60%,
-    transparent 100%
-  );
-  border-radius: 50% 10% 50% 10%;
-  transform: scale(0) rotate(0deg);
-  animation: goldFlakeScatter ease-out forwards;
-  box-shadow: 
-    0 0 8px rgba(255, 215, 0, 0.6),
-    inset 0 0 4px rgba(255, 235, 59, 0.5);
-}
-
-.gold-shimmer {
-  position: absolute;
-  pointer-events: none;
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg,
-    rgba(255, 215, 0, 0.8) 45deg,
-    rgba(255, 235, 59, 1) 90deg,
-    rgba(255, 193, 7, 0.8) 135deg,
-    transparent 180deg,
-    rgba(255, 215, 0, 0.6) 225deg,
-    rgba(255, 235, 59, 0.9) 270deg,
-    rgba(255, 193, 7, 0.6) 315deg,
-    transparent 360deg
-  );
-  border-radius: 50%;
-  transform: scale(0) rotate(0deg);
-  animation: goldShimmerIntense 1s ease-out forwards;
-  mix-blend-mode: screen;
-  box-shadow: 
-    0 0 40px rgba(255, 215, 0, 0.5),
-    0 0 80px rgba(255, 235, 59, 0.3);
-}
-
-.gold-burst {
-  position: absolute;
-  pointer-events: none;
-  width: 4px;
-  height: 4px;
-  background: rgba(255, 215, 0, 1);
   border-radius: 50%;
   transform: scale(0);
-  animation: goldBurstExplosion ease-out forwards;
-  box-shadow: 
-    0 0 20px rgba(255, 215, 0, 1),
-    0 0 40px rgba(255, 235, 59, 0.6);
+  animation: inkSpread ease-out forwards;
+  filter: blur(0.8px);
 }
 
-@keyframes goldSparkleIntense {
+.floating-leaf {
+  position: absolute;
+  pointer-events: none;
+  background: linear-gradient(var(--leaf-angle, 45deg),
+    rgba(34, 139, 34, 0.3) 0%,
+    rgba(107, 142, 35, 0.25) 30%,
+    rgba(85, 107, 47, 0.15) 60%,
+    transparent 100%
+  );
+  border-radius: 50% 0 50% 0;
+  transform: scale(0) rotate(0deg);
+  animation: leafFloat ease-out forwards;
+  filter: blur(0.3px);
+}
+
+.subtle-glow {
+  position: absolute;
+  pointer-events: none;
+  background: radial-gradient(
+    circle,
+    rgba(240, 248, 255, 0.12) 0%,
+    rgba(230, 230, 250, 0.08) 30%,
+    rgba(211, 211, 211, 0.04) 60%,
+    transparent 100%
+  );
+  border-radius: 50%;
+  transform: scale(0);
+  animation: subtleGlowExpand 2s ease-out forwards;
+  mix-blend-mode: overlay;
+  filter: blur(3px);
+}
+
+.tranquil-dot {
+  position: absolute;
+  pointer-events: none;
+  width: 2px;
+  height: 2px;
+  background: rgba(105, 105, 105, 0.6);
+  border-radius: 50%;
+  transform: scale(0);
+  animation: tranquilDotExpand ease-out forwards;
+  filter: blur(0.2px);
+}
+
+@keyframes zenExpand {
   0% {
-    transform: scale(0) rotate(0deg);
-    opacity: 1;
-  }
-  15% {
-    transform: scale(1.2) rotate(60deg);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.8) rotate(180deg);
+    transform: scale(0);
     opacity: 0.8;
   }
+  30% {
+    transform: scale(0.8);
+    opacity: 0.4;
+  }
+  70% {
+    transform: scale(1.5);
+    opacity: 0.2;
+  }
   100% {
-    transform: scale(3) rotate(720deg);
+    transform: scale(2.2);
     opacity: 0;
   }
 }
 
-@keyframes goldParticleFloatIntense {
+@keyframes inkSpread {
+  0% {
+    transform: scale(0);
+    opacity: 0.6;
+  }
+  40% {
+    transform: scale(1.2) translate(calc(var(--dx) * 0.3), calc(var(--dy) * 0.3));
+    opacity: 0.4;
+  }
+  80% {
+    transform: scale(0.8) translate(calc(var(--dx) * 0.8), calc(var(--dy) * 0.8));
+    opacity: 0.1;
+  }
+  100% {
+    transform: scale(0.3) translate(var(--dx), var(--dy));
+    opacity: 0;
+  }
+}
+
+@keyframes leafFloat {
   0% {
     transform: scale(0) rotate(0deg);
-    opacity: 1;
+    opacity: 0.5;
   }
-  20% {
-    transform: scale(1.2) rotate(90deg) translate(calc(var(--dx) * 0.2), calc(var(--dy) * 0.2));
-    opacity: 0.9;
+  25% {
+    transform: scale(1) rotate(45deg) translate(calc(var(--dx) * 0.2), calc(var(--dy) * 0.2));
+    opacity: 0.4;
   }
   60% {
-    opacity: 0.7;
-    transform: scale(1) rotate(270deg) translate(var(--dx), var(--dy));
+    transform: scale(0.8) rotate(90deg) translate(calc(var(--dx) * 0.6), calc(var(--dy) * 0.6));
+    opacity: 0.2;
   }
   100% {
-    transform: scale(0.1) rotate(540deg) translate(calc(var(--dx) * 1.8), calc(var(--dy) * 1.8));
+    transform: scale(0.4) rotate(180deg) translate(var(--dx), var(--dy));
     opacity: 0;
   }
 }
 
-@keyframes goldFlakeScatter {
+@keyframes subtleGlowExpand {
   0% {
-    transform: scale(0) rotate(0deg);
-    opacity: 1;
+    transform: scale(0);
+    opacity: 0.15;
   }
-  30% {
-    transform: scale(1.5) rotate(180deg) translate(calc(var(--dx) * 0.3), calc(var(--dy) * 0.3));
-    opacity: 0.8;
+  40% {
+    transform: scale(1.8);
+    opacity: 0.08;
   }
-  70% {
-    transform: scale(1) rotate(360deg) translate(calc(var(--dx) * 0.8), calc(var(--dy) * 0.8));
-    opacity: 0.4;
+  80% {
+    transform: scale(2.5);
+    opacity: 0.03;
   }
   100% {
-    transform: scale(0.3) rotate(720deg) translate(calc(var(--dx) * 1.5), calc(var(--dy) * 1.5));
+    transform: scale(3);
     opacity: 0;
   }
 }
 
-@keyframes goldShimmerIntense {
-  0% {
-    transform: scale(0) rotate(0deg);
-    opacity: 0.8;
-  }
-  30% {
-    transform: scale(2) rotate(180deg);
-    opacity: 0.9;
-  }
-  70% {
-    transform: scale(3.5) rotate(360deg);
-    opacity: 0.4;
-  }
-  100% {
-    transform: scale(5) rotate(540deg);
-    opacity: 0;
-  }
-}
-
-@keyframes goldBurstExplosion {
+@keyframes tranquilDotExpand {
   0% {
     transform: scale(0) translate(0, 0);
-    opacity: 1;
+    opacity: 0.8;
   }
-  10% {
-    transform: scale(3) translate(0, 0);
-    opacity: 1;
+  30% {
+    transform: scale(2) translate(calc(var(--dx) * 0.3), calc(var(--dy) * 0.3));
+    opacity: 0.4;
   }
   100% {
-    transform: scale(1) translate(var(--dx), var(--dy));
+    transform: scale(0.8) translate(var(--dx), var(--dy));
     opacity: 0;
   }
 }
