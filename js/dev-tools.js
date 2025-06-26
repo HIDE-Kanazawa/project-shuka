@@ -1,3 +1,4 @@
+/**
  * Development and Testing Utilities
  * Tools for browser testing, debugging, and quality assurance
  */
@@ -551,7 +552,6 @@ let devTools;
   else if([9,10,11].includes(month)) season = "autumn";
   else if([12,1,2].includes(month)) season = "winter";
   document.body.dataset.season = season;
-})();
 // WINDSURF_END SeasonColor
 
 

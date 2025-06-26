@@ -1,3 +1,4 @@
+/**
  * Theme Module
  * Handles dark/light theme switching with system preference detection
  */

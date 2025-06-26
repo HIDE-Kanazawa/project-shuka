@@ -1,3 +1,4 @@
+/**
  * Water Ripple Effect Module
  * Creates beautiful water-like ripples on mouse movement and clicks
  */

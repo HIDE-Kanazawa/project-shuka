@@ -1,3 +1,4 @@
+/**
  * Main JavaScript Module
  * Coordinates all site functionality and provides utility functions
  */

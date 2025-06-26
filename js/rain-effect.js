@@ -109,7 +109,7 @@ function disableRain() {
     rainEffect.canvas.style.display = 'none';
   }
 }
-
+/**
  * Handle logo click - scroll to home and set season to tsuyu
  */
 window.handleLogoClick = function(event) {

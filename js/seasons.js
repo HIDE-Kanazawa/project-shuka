@@ -1,3 +1,4 @@
+/**
  * Seasons Module
  * Handles seasonal gallery switching with animations and accessibility
  */
