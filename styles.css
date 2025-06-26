@@ -5,6 +5,18 @@
 }
 body {
   font-family: var(--ff-body);
+  margin: 0;
+}
+
+/* Three.js canvas styling */
+.three-js-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
 }
 h1, h2, h3 {
   font-family: var(--ff-heading);
