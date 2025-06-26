@@ -255,10 +255,6 @@
     font-size: var(--text-2xl);
   }
   
-  .season-video {
-    height: 180px;
-    max-height: 180px;
-  }
 }
 
 @media (min-width: 768px) {
@@ -306,19 +302,31 @@
   }
 }
 
+
 .season-visual {
   position: relative;
   overflow: hidden;
   border-radius: var(--radius-xl);
   box-shadow: 0 10px 30px var(--shadow-lg);
   min-width: 0;
+  aspect-ratio: 16 / 9; /* Maintain 16:9 container */
 }
 
 .season-visual > .season-image,
 .season-visual > .season-video {
   width: 100%;
-  height: auto;
   display: block;
+}
+
+.season-visual > .season-image {
+  height: auto;
+  object-fit: contain;
+}
+
+.season-visual > .season-video {
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
   object-fit: contain;
 }
 
@@ -505,12 +513,3 @@
   font-style: italic;
 }
 
-/* Ensure Season Gallery videos always fit within the visual container */
-.season-visual {
-  aspect-ratio: 16 / 9; /* Maintain 16:9 container */
-}
-.season-video {
-  height: 100%;
-  max-height: 100%;
-  object-fit: cover;
-}
