@@ -39,13 +39,16 @@
 .season-nav {
   display: flex;
   justify-content: center;
-  gap: var(--space-8);
-  margin-bottom: var(--space-20);
+  gap: var(--space-12);
+  margin-bottom: var(--space-24);
   flex-wrap: wrap;
-  padding: var(--space-6);
-  max-width: 800px;
+  padding: var(--space-8) var(--space-12);
+  max-width: 900px;
   margin-left: auto;
   margin-right: auto;
+  /* Japanese asymmetrical balance */
+  padding-left: var(--space-16);
+  padding-right: var(--space-8);
 }
 
 .season-btn {
@@ -54,24 +57,26 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  padding: var(--space-4);
-  width: 160px;
-  height: 200px;
+  padding: var(--space-5);
+  width: 168px;
+  height: 210px;
   color: white;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
-  border: 3px solid rgba(255, 255, 255, 0.8);
-  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  border-radius: 12px;
   cursor: pointer;
   font-family: "Yuji Syuku", "Noto Serif JP", serif;
   box-shadow: 
-    0 8px 24px rgba(0, 0, 0, 0.25),
-    0 4px 8px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    0 12px 32px rgba(0, 0, 0, 0.2),
+    0 6px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
   overflow: hidden;
+  /* Japanese golden ratio proportions */
+  aspect-ratio: 1 / 1.618;
 }
 
 .season-btn::before {
@@ -172,17 +177,19 @@
 
 .season-content {
   position: relative;
-  min-height: 500px;
-  max-height: 700px;
-  margin-top: var(--space-12);
+  min-height: 520px;
+  max-height: 720px;
+  margin-top: var(--space-16);
+  /* Japanese ma (negative space) principle */
+  padding: 0 var(--space-8);
 }
 
 .season-panel {
   display: none;
   grid-template-columns: 1fr;
-  gap: var(--space-16);
+  gap: var(--space-20);
   align-items: start;
-  padding: var(--space-8);
+  padding: var(--space-10) var(--space-12);
   background: rgba(255, 255, 255, 0.03);
   border-radius: var(--radius-2xl);
   backdrop-filter: blur(10px);
@@ -190,8 +197,11 @@
   box-shadow: 
     0 20px 40px rgba(0, 0, 0, 0.1),
     0 8px 20px rgba(0, 0, 0, 0.08);
-  max-height: 600px;
+  max-height: 620px;
   overflow: hidden;
+  /* Japanese asymmetrical spacing */
+  margin-left: var(--space-4);
+  margin-right: var(--space-8);
 }
 
 .season-panel.active {
@@ -205,8 +215,10 @@
   }
   
   .season-btn {
-    width: 140px;
-    height: 180px;
+    width: 148px;
+    height: 190px;
+    /* Maintain golden ratio on mobile */
+    aspect-ratio: 1 / 1.618;
   }
   
   .season-name {
@@ -214,9 +226,12 @@
   }
   
   .season-nav {
-    gap: var(--space-6);
-    margin-bottom: var(--space-16);
-    padding: var(--space-4);
+    gap: var(--space-8);
+    margin-bottom: var(--space-18);
+    padding: var(--space-6);
+    /* Maintain Japanese asymmetry on mobile */
+    padding-left: var(--space-8);
+    padding-right: var(--space-4);
   }
   
   .season-content {
@@ -246,9 +261,11 @@
 
 @media (min-width: 768px) {
   .season-panel {
-    grid-template-columns: 1.2fr 1fr;
+    grid-template-columns: 1.618fr 1fr;
     align-items: start;
-    max-height: 480px;
+    max-height: 500px;
+    /* Japanese asymmetrical grid using golden ratio */
+    gap: var(--space-24);
   }
   
   .season-visual {
@@ -359,13 +376,15 @@
 }
 
 .season-title {
-  margin-bottom: var(--space-6);
+  margin-bottom: var(--space-8);
   color: var(--text);
   font-size: var(--text-3xl);
   font-weight: 700;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.05em;
   position: relative;
-  padding-bottom: var(--space-3);
+  padding-bottom: var(--space-4);
+  /* Japanese typography spacing */
+  line-height: 1.4;
 }
 
 .season-title::after {

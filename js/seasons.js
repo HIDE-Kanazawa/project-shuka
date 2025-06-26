@@ -1,3 +1,4 @@
+/**
  * Seasons Module
  * Handles seasonal gallery switching with animations and accessibility
  */
@@ -228,45 +229,27 @@ class SeasonsGallery {
   }
   
   showPanel(panel, animate) {
+    panel.style.display = 'grid';
+    panel.classList.add('active');
+    
     if (animate) {
-      // Fade in animation
-      panel.style.opacity = '0';
-      panel.style.display = 'grid';
-      panel.classList.add('active');
-      
-      // Trigger reflow
-      panel.offsetHeight;
-      
-      panel.style.transition = 'opacity 0.3s ease-in-out';
-      panel.style.opacity = '1';
-      
-      // Clean up after animation
-      setTimeout(() => {
-        panel.style.transition = '';
-        panel.style.opacity = '';
-      }, 300);
-    } else {
-      panel.style.display = 'grid';
-      panel.classList.add('active');
+      // Animate children elements with staggered delays
+      this.animatePanelChildren(panel, true);
     }
     
     // Update ARIA attributes
     panel.setAttribute('aria-hidden', 'false');
-    
-
   }
   
   hidePanel(panel, animate) {
     if (animate) {
-      panel.style.transition = 'opacity 0.3s ease-in-out';
-      panel.style.opacity = '0';
+      // Animate children elements out first
+      this.animatePanelChildren(panel, false);
       
       setTimeout(() => {
         panel.style.display = 'none';
         panel.classList.remove('active');
-        panel.style.transition = '';
-        panel.style.opacity = '';
-      }, 300);
+      }, 400);
     } else {
       panel.style.display = 'none';
       panel.classList.remove('active');
@@ -384,6 +367,115 @@ class SeasonsGallery {
     }
   }
   
+  animatePanelChildren(panel, isEntering) {
+    const videoElement = panel.querySelector('.season-visual');
+    const trackList = panel.querySelector('.season-tracks');
+    const seasonTitle = panel.querySelector('.season-title');
+    const seasonDesc = panel.querySelector('.season-description');
+    
+    if (isEntering) {
+      // Left side elements (video/visual) - enter from left
+      if (videoElement) {
+        videoElement.style.opacity = '0';
+        videoElement.style.transform = 'translateX(-80px)';
+        videoElement.style.transition = 'opacity 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) 0.1s, transform 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) 0.1s';
+        
+        requestAnimationFrame(() => {
+          videoElement.style.opacity = '1';
+          videoElement.style.transform = 'translateX(0)';
+        });
+        
+        setTimeout(() => {
+          videoElement.style.transition = '';
+          videoElement.style.opacity = '';
+          videoElement.style.transform = '';
+        }, 800);
+      }
+      
+      // Right side elements (tracks) - enter from right
+      if (trackList) {
+        // Title and description slide in from right
+        [seasonTitle, seasonDesc].forEach((element, index) => {
+          if (element) {
+            element.style.opacity = '0';
+            element.style.transform = 'translateX(60px)';
+            element.style.transition = `opacity 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) ${0.2 + (index * 0.1)}s, transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) ${0.2 + (index * 0.1)}s`;
+            
+            requestAnimationFrame(() => {
+              element.style.opacity = '1';
+              element.style.transform = 'translateX(0)';
+            });
+            
+            setTimeout(() => {
+              element.style.transition = '';
+              element.style.opacity = '';
+              element.style.transform = '';
+            }, 700 + (index * 100));
+          }
+        });
+        
+        // Track list container slides in from right
+        trackList.style.opacity = '0';
+        trackList.style.transform = 'translateX(100px)';
+        trackList.style.transition = 'opacity 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) 0.3s, transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) 0.3s';
+        
+        requestAnimationFrame(() => {
+          trackList.style.opacity = '1';
+          trackList.style.transform = 'translateX(0)';
+        });
+        
+        setTimeout(() => {
+          trackList.style.transition = '';
+          trackList.style.opacity = '';
+          trackList.style.transform = '';
+        }, 1100);
+        
+        // Individual tracks cascade from right with stagger
+        const tracks = trackList.querySelectorAll('.track');
+        tracks.forEach((track, trackIndex) => {
+          track.style.opacity = '0';
+          track.style.transform = 'translateX(40px)';
+          track.style.transition = `opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) ${0.5 + (trackIndex * 0.08)}s, transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) ${0.5 + (trackIndex * 0.08)}s`;
+          
+          requestAnimationFrame(() => {
+            track.style.opacity = '1';
+            track.style.transform = 'translateX(0)';
+          });
+          
+          setTimeout(() => {
+            track.style.transition = '';
+            track.style.opacity = '';
+            track.style.transform = '';
+          }, 1000 + (trackIndex * 80));
+        });
+      }
+    } else {
+      // Exit animations - opposite directions
+      if (videoElement) {
+        videoElement.style.transition = 'opacity 0.4s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1)';
+        videoElement.style.opacity = '0';
+        videoElement.style.transform = 'translateX(-60px)';
+      }
+      
+      if (trackList) {
+        const tracks = trackList.querySelectorAll('.track');
+        tracks.forEach((track, trackIndex) => {
+          track.style.transition = `opacity 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) ${trackIndex * 0.03}s, transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) ${trackIndex * 0.03}s`;
+          track.style.opacity = '0';
+          track.style.transform = 'translateX(30px)';
+        });
+        
+        [seasonTitle, seasonDesc, trackList].forEach((element, index) => {
+          if (element) {
+            element.style.transition = `opacity 0.4s cubic-bezier(0.25, 0.1, 0.25, 1) ${0.1 + (index * 0.05)}s, transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1) ${0.1 + (index * 0.05)}s`;
+            element.style.opacity = '0';
+            element.style.transform = 'translateX(50px)';
+          }
+        });
+      }
+    }
+  }
+
   stopAllAudio() {
     this.audioElements.forEach(audio => {
       if (!audio.paused) {
