@@ -256,4 +256,8 @@ function getCurrentTheme() {
 }
 
 
-export { ThemeManager, setTheme, toggleTheme, getCurrentTheme };
+// Make functions globally available
+window.ThemeManager = ThemeManager;
+window.setTheme = setTheme;
+window.toggleTheme = toggleTheme;
+window.getCurrentTheme = getCurrentTheme;

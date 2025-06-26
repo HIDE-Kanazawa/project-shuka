@@ -409,4 +409,6 @@ window.switchSeason = function(season) {
   }
 };
 
-export { SeasonsGallery, switchSeason };
+// Make functions globally available
+window.SeasonsGallery = SeasonsGallery;
+window.switchSeason = switchSeason;

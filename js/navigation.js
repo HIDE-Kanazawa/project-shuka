@@ -207,4 +207,6 @@ window.scrollToSection = function(sectionId) {
   }
 };
 
-export { Navigation, scrollToSection };
+// Make functions globally available
+window.Navigation = Navigation;
+window.scrollToSection = scrollToSection;
