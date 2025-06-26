@@ -277,22 +277,11 @@
     max-height: 400px;
   }
   
-  .season-video {
-    max-width: 520px;
-    height: auto;
-    max-height: 292px;
-    margin: 0 auto;
-  }
+  /* Video sizing handled by parent container */
 }
 
 @media (max-width: 767px) {
-  .season-video {
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    max-height: 200px;
-    margin: 0 auto var(--space-6);
-  }
+
   
   .season-visual {
     margin-bottom: var(--space-8);
@@ -314,7 +303,10 @@
 
 .season-visual > .season-image,
 .season-visual > .season-video {
+  position: absolute;
+  inset: 0;
   width: 100%;
+  height: 100%;
   display: block;
 }
 
@@ -345,19 +337,13 @@
 .season-video {
   border-radius: var(--radius-xl);
   background: var(--surface);
-  object-fit: cover;
-  width: 100%;
-  max-width: 800px;
-  height: auto;
-  max-height: 450px;
-  box-shadow: 
+  box-shadow:
     0 12px 30px rgba(0, 0, 0, 0.15),
     0 6px 15px rgba(0, 0, 0, 0.1);
   border: 2px solid rgba(255, 255, 255, 0.1);
   cursor: pointer;
   transition: all var(--transition-normal);
   display: block;
-  margin: 0 auto;
 }
 
 .season-video:hover {
