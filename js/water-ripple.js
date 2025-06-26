@@ -1,6 +1,4 @@
- * Water Ripple Effect Module
- * Creates beautiful water-like ripples on mouse movement and clicks
- */
+
 class WaterRippleEffect {
   constructor() {
     this.container = document.getElementById('ripple-container');
@@ -82,8 +80,8 @@ class WaterRippleEffect {
     if (!this.isActive) return;
     
     const { clientX: x, clientY: y } = e;
-    // Create gold foil sparkle effect instead of ripples
-    this.createGoldFoilEffect(x, y);
+    // Create zen-inspired subtle effect instead of flashy sparkles
+    this.createZenClickEffect(x, y);
   }
   
   handleTouch(e) {
@@ -191,174 +189,140 @@ class WaterRippleEffect {
   }
 
   /**
-   * Create intense gold foil sparkle effect - キラン！金箔の煌めき演出
+   * Create zen-inspired subtle click effect - 禅の美学に基づく上品なクリックエフェクト
    */
-  createGoldFoilEffect(x, y) {
-    // メイン中央スパークル - より大きく強烈に
-    this.createGoldSparkle(x, y, 60);
+  createZenClickEffect(x, y) {
+    // 墨滴の滲み
+    this.createInkDrops(x, y, 6);
     
-    // 瞬間爆発エフェクト
-    this.createGoldBurst(x, y, 20);
-    
-    // 金箔粒子の舞い散り - より多く
-    this.createGoldParticles(x, y, 18);
-    
-    // 金箔のかけら
+    // 浮遊する葉
     setTimeout(() => {
-      this.createGoldFlakes(x, y, 15);
-    }, 50);
+      this.createFloatingLeaves(x, y, 4);
+    }, 200);
     
-    // 背景シマー - より強烈に
+    // 微かな光の滲み
     setTimeout(() => {
-      this.createGoldShimmer(x, y, 120);
-    }, 80);
+      this.createSubtleGlow(x, y, 120);
+    }, 100);
     
-    // セカンドウェーブ
-    setTimeout(() => {
-      this.createGoldSparkle(x, y, 35);
-      this.createGoldParticles(x, y, 10);
-    }, 150);
-    
-    // サードウェーブ - 余韻
-    setTimeout(() => {
-      this.createGoldFlakes(x, y, 8);
-    }, 300);
+    // 静寂の点
+    this.createTranquilDots(x, y, 8);
   }
 
-  /**
-   * Create central gold sparkle - メイン金箔煌めき
-   */
-  createGoldSparkle(x, y, size) {
-    if (!this.container) return;
-    
-    const sparkle = document.createElement('div');
-    sparkle.className = 'gold-sparkle';
-    sparkle.style.width = `${size}px`;
-    sparkle.style.height = `${size}px`;
-    sparkle.style.left = `${x - size / 2}px`;
-    sparkle.style.top = `${y - size / 2}px`;
-    
-    this.container.appendChild(sparkle);
-    setTimeout(() => sparkle.remove(), 600);
-  }
 
   /**
-   * Create floating gold particles - 金箔粒子 - 強化版
+   * Create ink drops - 墨滴の滲み
    */
-  createGoldParticles(x, y, count) {
+  createInkDrops(x, y, count) {
     if (!this.container) return;
     
     for (let i = 0; i < count; i++) {
-      const particle = document.createElement('div');
-      particle.className = 'gold-particle';
+      const drop = document.createElement('div');
+      drop.className = 'ink-drop';
       
-      // より大きな粒子でキラキラ感アップ
-      const size = Math.random() * 6 + 4; // 4-10px
-      particle.style.width = `${size}px`;
-      particle.style.height = `${size}px`;
-      particle.style.left = `${x - size / 2}px`;
-      particle.style.top = `${y - size / 2}px`;
+      // 控えめなサイズ
+      const size = Math.random() * 4 + 3; // 3-7px
+      drop.style.width = `${size}px`;
+      drop.style.height = `${size}px`;
+      drop.style.left = `${x - size / 2}px`;
+      drop.style.top = `${y - size / 2}px`;
       
-      // より広範囲に散る
-      const angle = (360 / count) * i + (Math.random() * 90 - 45);
-      const distance = 80 + Math.random() * 120; // より遠くまで飛ぶ
+      // 穏やかな拡散
+      const angle = (360 / count) * i + (Math.random() * 60 - 30);
+      const distance = 30 + Math.random() * 50; // 控えめな距離
       const dx = Math.cos(angle * Math.PI / 180) * distance;
       const dy = Math.sin(angle * Math.PI / 180) * distance;
-      const duration = (Math.random() * 0.6 + 1.2).toFixed(2); // 1.2-1.8秒
+      const duration = (Math.random() * 0.8 + 1.5).toFixed(2); // 1.5-2.3秒
       
-      particle.style.setProperty('--dx', `${dx}px`);
-      particle.style.setProperty('--dy', `${dy}px`);
-      particle.style.animationDuration = `${duration}s`;
+      drop.style.setProperty('--dx', `${dx}px`);
+      drop.style.setProperty('--dy', `${dy}px`);
+      drop.style.animationDuration = `${duration}s`;
       
-      // ランダムなグラデーション角度
-      const gradientAngle = Math.random() * 360;
-      particle.style.setProperty('--particle-angle', `${gradientAngle}deg`);
-      
-      this.container.appendChild(particle);
-      setTimeout(() => particle.remove(), duration * 1000);
+      this.container.appendChild(drop);
+      setTimeout(() => drop.remove(), duration * 1000);
     }
   }
 
   /**
-   * Create gold shimmer background - 金箔シマー背景 - 強化版
+   * Create subtle glow - 微かな光の滲み
    */
-  createGoldShimmer(x, y, size) {
+  createSubtleGlow(x, y, size) {
     if (!this.container) return;
     
-    const shimmer = document.createElement('div');
-    shimmer.className = 'gold-shimmer';
-    shimmer.style.width = `${size}px`;
-    shimmer.style.height = `${size}px`;
-    shimmer.style.left = `${x - size / 2}px`;
-    shimmer.style.top = `${y - size / 2}px`;
+    const glow = document.createElement('div');
+    glow.className = 'subtle-glow';
+    glow.style.width = `${size}px`;
+    glow.style.height = `${size}px`;
+    glow.style.left = `${x - size / 2}px`;
+    glow.style.top = `${y - size / 2}px`;
     
-    this.container.appendChild(shimmer);
-    setTimeout(() => shimmer.remove(), 1000);
+    this.container.appendChild(glow);
+    setTimeout(() => glow.remove(), 2000);
   }
 
   /**
-   * Create gold flakes - 金箔のかけら
+   * Create floating leaves - 浮遊する葉
    */
-  createGoldFlakes(x, y, count) {
+  createFloatingLeaves(x, y, count) {
     if (!this.container) return;
     
     for (let i = 0; i < count; i++) {
-      const flake = document.createElement('div');
-      flake.className = 'gold-flake';
+      const leaf = document.createElement('div');
+      leaf.className = 'floating-leaf';
       
-      // 不規則なサイズの金箔
-      const width = Math.random() * 8 + 3; // 3-11px
-      const height = Math.random() * 6 + 2; // 2-8px
-      flake.style.width = `${width}px`;
-      flake.style.height = `${height}px`;
-      flake.style.left = `${x - width / 2}px`;
-      flake.style.top = `${y - height / 2}px`;
+      // 自然なサイズの葉
+      const width = Math.random() * 4 + 2; // 2-6px
+      const height = Math.random() * 3 + 2; // 2-5px
+      leaf.style.width = `${width}px`;
+      leaf.style.height = `${height}px`;
+      leaf.style.left = `${x - width / 2}px`;
+      leaf.style.top = `${y - height / 2}px`;
       
       // ゆっくりと舞い散る
       const angle = Math.random() * 360;
-      const distance = 60 + Math.random() * 100;
+      const distance = 40 + Math.random() * 60; // 控えめな距離
       const dx = Math.cos(angle * Math.PI / 180) * distance;
       const dy = Math.sin(angle * Math.PI / 180) * distance;
-      const duration = (Math.random() * 1 + 1.5).toFixed(2); // 1.5-2.5秒
+      const duration = (Math.random() * 1.5 + 2).toFixed(2); // 2-3.5秒
       
-      flake.style.setProperty('--dx', `${dx}px`);
-      flake.style.setProperty('--dy', `${dy}px`);
-      flake.style.animationDuration = `${duration}s`;
+      leaf.style.setProperty('--dx', `${dx}px`);
+      leaf.style.setProperty('--dy', `${dy}px`);
+      leaf.style.animationDuration = `${duration}s`;
       
       // ランダムなグラデーション角度
-      const flakeAngle = Math.random() * 360;
-      flake.style.setProperty('--flake-angle', `${flakeAngle}deg`);
+      const leafAngle = Math.random() * 360;
+      leaf.style.setProperty('--leaf-angle', `${leafAngle}deg`);
       
-      this.container.appendChild(flake);
-      setTimeout(() => flake.remove(), duration * 1000);
+      this.container.appendChild(leaf);
+      setTimeout(() => leaf.remove(), duration * 1000);
     }
   }
 
   /**
-   * Create gold burst explosion - 金箔爆発エフェクト
+   * Create tranquil dots - 静寂の点
    */
-  createGoldBurst(x, y, count) {
+  createTranquilDots(x, y, count) {
     if (!this.container) return;
     
     for (let i = 0; i < count; i++) {
-      const burst = document.createElement('div');
-      burst.className = 'gold-burst';
-      burst.style.left = `${x - 2}px`;
-      burst.style.top = `${y - 2}px`;
+      const dot = document.createElement('div');
+      dot.className = 'tranquil-dot';
+      dot.style.left = `${x - 1}px`;
+      dot.style.top = `${y - 1}px`;
       
-      // 放射状に爆発
+      // 静かに放射状に拡散
       const angle = (360 / count) * i;
-      const distance = 40 + Math.random() * 60;
+      const distance = 20 + Math.random() * 40; // 控えめな距離
       const dx = Math.cos(angle * Math.PI / 180) * distance;
       const dy = Math.sin(angle * Math.PI / 180) * distance;
-      const duration = (Math.random() * 0.3 + 0.4).toFixed(2); // 0.4-0.7秒
+      const duration = (Math.random() * 0.5 + 1).toFixed(2); // 1-1.5秒
       
-      burst.style.setProperty('--dx', `${dx}px`);
-      burst.style.setProperty('--dy', `${dy}px`);
-      burst.style.animationDuration = `${duration}s`;
+      dot.style.setProperty('--dx', `${dx}px`);
+      dot.style.setProperty('--dy', `${dy}px`);
+      dot.style.animationDuration = `${duration}s`;
       
-      this.container.appendChild(burst);
-      setTimeout(() => burst.remove(), duration * 1000);
+      this.container.appendChild(dot);
+      setTimeout(() => dot.remove(), duration * 1000);
     }
   }
 

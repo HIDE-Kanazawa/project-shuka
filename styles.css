@@ -105,11 +105,6 @@ body[data-season="tsuyu"] .track:hover {
 }
 
 /* Tsuyu season button styling */
-body[data-season="tsuyu"] .season-btn {
-  background: linear-gradient(135deg, #7BA7D4 0%, #4A90B8 100%);
-  border: 1px solid rgba(123, 167, 212, 0.3);
-}
-
 body[data-season="tsuyu"] .season-btn:hover,
 body[data-season="tsuyu"] .season-btn:focus-visible {
   box-shadow: 0 12px 32px rgba(74, 144, 184, 0.25), 
@@ -891,9 +886,10 @@ a:focus {
 .season-nav {
   display: flex;
   justify-content: center;
-  gap: var(--space-4);
+  gap: var(--space-6);
   margin-bottom: var(--space-16);
   flex-wrap: wrap;
+  padding: var(--space-4);
 }
 
 .season-btn {
@@ -901,16 +897,25 @@ a:focus {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-6) var(--space-8);
-  min-width: 120px;
-  color: #fff;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-  border: none;
-  border-radius: var(--radius-xl);
+  justify-content: flex-end;
+  padding: var(--space-4);
+  width: 160px;
+  height: 200px;
+  color: white;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  filter: brightness(1.2) contrast(1.1);
+  border: 3px solid rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
   cursor: pointer;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25), 0 2px 4px rgba(0, 0, 0, 0.15);
-  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+  font-family: "Yuji Syuku", "Noto Serif JP", serif;
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.25),
+    0 4px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
 }
 
@@ -918,76 +923,174 @@ a:focus {
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.45), transparent 70%);
-  mix-blend-mode: overlay;
-  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.4) 0%,
+    rgba(0, 0, 0, 0.1) 60%,
+    transparent 100%
+  );
   transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
 .season-btn:hover,
 .season-btn:focus-visible {
-  transform: translateY(-6px) scale(1.03);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35), 0 6px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-8px) scale(1.05);
+  border-color: rgba(255, 255, 255, 1);
+  box-shadow: 
+    0 16px 40px rgba(0, 0, 0, 0.3),
+    0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-.season-btn:hover::before,
-.season-btn:focus-visible::before {
-  opacity: 0.6;
+.season-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.season-btn:hover::after,
+.season-btn:focus-visible::after {
+  opacity: 1;
 }
 
 .season-btn.active {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.3);
-  filter: brightness(1.1);
+  transform: translateY(-4px) scale(1.02);
+  border-color: #ffd700;
+  border-width: 4px;
+  box-shadow: 
+    0 0 20px rgba(255, 215, 0, 0.4),
+    0 12px 32px rgba(0, 0, 0, 0.3),
+    0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Season-specific gradients */
+/* Season-specific background images */
 .season-btn[data-season="spring"] {
-  background: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%);
+  background-image: url('./img/秀歌-春-btn.webp');
 }
 
 .season-btn[data-season="summer"] {
-  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+  background-image: url('./img/秀歌-夏-btn.webp');
 }
 
 .season-btn[data-season="autumn"] {
-  background: linear-gradient(135deg, #fbc2eb 0%, #a18cd1 100%);
+  background-image: url('./img/秀歌-秋-btn.webp');
 }
 
 .season-btn[data-season="winter"] {
-  background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+  background-image: url('./img/秀歌-冬-btn.webp');
+}
+
+.season-btn::before { opacity: 0.35; }
+
+/* Dark theme adjustments */
+[data-theme="dark"] .season-btn {
+  border-color: rgba(150, 150, 150, 0.6);
+}
+
+[data-theme="dark"] .season-btn::before {
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.4) 60%,
+    transparent 100%
+  );
+}
+
+[data-theme="dark"] .season-btn.active {
+  border-color: #ffd700;
+}
+
+/* Responsive adjustments for season buttons */
+@media (max-width: 768px) {
+  .season-nav {
+    gap: var(--space-2);
+    padding: var(--space-2);
+    justify-content: center;
+  }
+  
+  
+  .season-btn {
+    width: 80px;
+    height: 120px;
+    padding: var(--space-2);
+  }
+  
+  .season-name {
+    font-size: var(--text-sm);
+    letter-spacing: 0.1em;
+    padding: 2px 6px;
+    font-weight: 800;
+  }
+}
+
+@media (max-width: 480px) {
+  .season-btn {
+    width: 70px;
+    height: 100px;
+    padding: var(--space-1);
+  }
+  
+  .season-name {
+    font-size: var(--text-xs);
+    padding: 1px 4px;
+    font-weight: 800;
+  }
+  
+  .season-nav {
+    gap: var(--space-1);
+  }
+}
+
+/* 超小型デバイス用 - ヒーロータイトル追加調整 */
+@media (max-width: 360px) {
+  .hero-title {
+    font-size: clamp(1rem, 6vw, 1.5rem);
+    line-height: 1.4;
+    margin-bottom: var(--space-2);
+  }
+  
+  .hero-title br {
+    display: none;
+  }
+  
+  .hero-subtitle {
+    font-size: clamp(0.75rem, 3vw, 1rem);
+    margin-bottom: var(--space-3);
+  }
+  
+  .hero-content {
+    padding: var(--space-1);
+  }
 }
 
 .season-icon {
-  font-size: var(--text-3xl);
+  display: none;
 }
 
 .season-name {
-  font-size: var(--text-base);
+  position: relative;
+  z-index: 10;
+  font-size: var(--text-xl);
   font-weight: 700;
-}
-
-.season-btn:hover,
-.season-btn:focus {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px var(--shadow);
-  outline: 2px solid var(--primary);
-}
-
-.season-btn.active {
-  background: var(--primary);
+  letter-spacing: 0.15em;
   color: white;
-  border-color: var(--primary);
-}
-
-.season-icon {
-  font-size: var(--text-2xl);
-}
-
-.season-name {
-  font-weight: 600;
-  font-size: var(--text-sm);
+  text-shadow: 
+    2px 2px 6px rgba(0, 0, 0, 0.9),
+    0 0 12px rgba(0, 0, 0, 0.8),
+    0 0 4px rgba(0, 0, 0, 1);
+  background: rgba(0, 0, 0, 0.4);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius);
+  backdrop-filter: blur(4px);
 }
 
 .season-content {
@@ -2268,8 +2371,13 @@ legend {
   }
   
   .hero-title {
-    font-size: clamp(2rem, 8vw, 3rem);
-    line-height: 1.1;
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+    line-height: 1.2;
+    margin-bottom: var(--space-4);
+  }
+  
+  .hero-title br {
+    display: none;
   }
   
   .hero-subtitle {
@@ -2657,8 +2765,9 @@ legend {
   }
   
   .hero-title {
-    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-size: clamp(1.25rem, 5vw, 2rem);
     margin-bottom: var(--space-3);
+    line-height: 1.3;
   }
   
   .hero-subtitle {
@@ -2711,6 +2820,10 @@ legend {
   
   .hero-title {
     font-size: clamp(1.25rem, 8vw, 1.75rem);
+  }
+  
+  .hero-title br {
+    display: none;
   }
   
   .hero-subtitle {
@@ -3336,4 +3449,124 @@ body {
 /* Loading state to prevent FOUC */
 body:not(.loaded) * {
     transition: none !important;
+}
+
+/* ===== Pro Washi Footer 2025 ===== */
+.footer {
+    background-color: #faf8f5;
+    background-image: url("./img/washi-footer-light.png"); /* provide your own texture */
+    background-size: 480px 480px;
+    background-repeat: repeat;
+    border-top: 3px double rgba(0,0,0,0.12);
+    box-shadow: 0 -3px 5px rgba(0,0,0,0.06);
+    color: #3a3532; /* sumi-iro */
+    line-height: 1.8;
+}
+
+[data-theme="dark"] .footer {
+    background-color: #14181d;
+    background-image: url("./img/washi-footer-dark.png");
+    background-size: 480px 480px;
+    color: var(--neutral-300);
+}
+
+body[data-season="tsuyu"] .footer {
+    background-color: #24364b; /* deep indigo for rainy season */
+    background-image: url("./img/washi-footer-dark.png");
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-12);
+}
+
+.footer-brand {
+    flex: 1 1 260px;
+}
+
+.footer-links {
+    flex: 1 1 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-logo {
+    font-family: "Yuji Syuku", "Noto Serif JP", serif;
+    font-size: 1.5rem;
+    letter-spacing: .04em;
+    margin-bottom: var(--space-4);
+}
+
+.footer-description {
+    color: inherit;
+}
+
+.footer-section-title {
+    font-family: "Yuji Syuku", "Noto Serif JP", serif;
+    font-size: 1.125rem;
+    letter-spacing: .05em;
+    color: currentColor;
+    position: relative;
+    margin-bottom: var(--space-6);
+}
+
+.footer-section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent, #8c3d08), transparent);
+}
+
+/* Social icons */
+.footer-social {
+    display: flex;
+    gap: var(--space-4);
+}
+
+.footer-social .social-link {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid currentColor;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(6px);
+    transition: transform 0.2s ease-in-out, color 0.2s ease-in-out, background 0.2s ease-in-out;
+}
+
+[data-theme="dark"] .footer-social .social-link {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.footer-social .social-link:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.footer a {
+    color: currentColor;
+    transition: color 0.2s ease-in-out;
+}
+
+.footer a:hover,
+.footer a:focus {
+    color: #8c3d08; /* koge-cha accent */
+}
+
+.footer-bottom {
+    margin-top: var(--space-12);
+    border-top: 1px solid rgba(0,0,0,0.1);
+    padding-top: var(--space-6);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--text-sm);
 }
