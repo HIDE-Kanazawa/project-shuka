@@ -3243,7 +3243,7 @@ function generateSeasonGallery() {
                  preload="metadata"
                  loading="lazy"
                  tabindex="0"
-                 poster="${season.poster}"
+                 
                  aria-label="${season.name}をテーマにしたデモ動画 - クリックまたはEnterキーで再生">
             <source src="${season.video.webm}" type="video/webm">
             <source src="${season.video.mp4}" type="video/mp4">

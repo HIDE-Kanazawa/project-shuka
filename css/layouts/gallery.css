@@ -311,9 +311,15 @@
   overflow: hidden;
   border-radius: var(--radius-xl);
   box-shadow: 0 10px 30px var(--shadow-lg);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  min-width: 0;
+}
+
+.season-visual > .season-image,
+.season-visual > .season-video {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
 }
 
 .season-image,
