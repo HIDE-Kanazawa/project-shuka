@@ -26,7 +26,7 @@ const SEASON_DATA = {
     ]
   },
   summer: {
-    icon: '🌿',
+    icon: '🌻',
     name: '夏',
     title: '夏の響き',
     description: '緑豊かな季節の生命力と情熱を込めた楽曲集',
@@ -49,7 +49,7 @@ const SEASON_DATA = {
     ]
   },
   autumn: {
-    icon: '🍂',
+    icon: '🍁',
     name: '秋',
     title: '秋の詩',
     description: '色づく季節の深い情感と静寂を表現した楽曲集',
@@ -447,6 +447,16 @@ class SeasonsGallery {
       const seasonTitle = video.closest('.season-panel')?.querySelector('.season-title')?.textContent || 'Video';
       video.setAttribute('aria-label', `${seasonTitle}のデモ動画`);
     });
+  }
+  
+  refresh() {
+    // Re-query DOM elements after dynamic generation
+    this.seasonButtons = document.querySelectorAll('.season-btn');
+    this.seasonPanels = document.querySelectorAll('.season-panel');
+    
+    // Re-bind events
+    this.bindEvents();
+    this.setupAudioElements();
   }
 
   preloadWashiBackgrounds() {
@@ -913,11 +923,8 @@ window.switchSeason = function(season) {
   }
 };
 
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-  window.seasonsGallery = new SeasonsGallery();
-  
-  // Setup footer season buttons
+// Setup footer season buttons helper function
+function setupFooterSeasonButtons() {
   const footerSeasonButtons = document.querySelectorAll('.footer-season-btn');
   footerSeasonButtons.forEach(button => {
     button.addEventListener('click', (e) => {
@@ -928,7 +935,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
-});
+}
 
 // Export for module systems
 if (typeof module !== 'undefined' && module.exports) {
@@ -2943,9 +2950,20 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize scroll button handlers
   initScrollButtons();
   
-  // Generate dynamic content
-  generateSeasonGallery();
+  // Generate dynamic content first
   generateSocialLinks();
+  generateSeasonGallery();
+  
+  // Initialize SeasonsGallery class after DOM elements are generated
+  window.seasonsGallery = new SeasonsGallery();
+  
+  // Re-bind events after dynamic generation
+  if (window.seasonsGallery && typeof window.seasonsGallery.refresh === 'function') {
+    window.seasonsGallery.refresh();
+  }
+  
+  // Setup footer season buttons
+  setupFooterSeasonButtons();
 });
 
 /**

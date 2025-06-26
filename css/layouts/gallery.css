@@ -152,7 +152,9 @@
 }
 
 .season-icon {
-  display: none;
+  display: inline-block;
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-2);
 }
 
 .season-name {
