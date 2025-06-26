@@ -82,8 +82,8 @@ body[data-season="tsuyu"] .track:hover {
 
 /* Tsuyu season button styling */
 body[data-season="tsuyu"] .season-btn {
-  background: linear-gradient(135deg, #7BA7D4 0%, #4A90B8 100%);
-  border: 1px solid rgba(123, 167, 212, 0.3);
+  /* background: linear-gradient(135deg, #7BA7D4 0%, #4A90B8 100%); */
+  /* border: 1px solid rgba(123, 167, 212, 0.3); */
 }
 
 body[data-season="tsuyu"] .season-btn:hover,

@@ -1,6 +1,4 @@
- * Water Ripple Effect Module
- * Creates beautiful water-like ripples on mouse movement and clicks
- */
+
 class WaterRippleEffect {
   constructor() {
     this.container = document.getElementById('ripple-container');
