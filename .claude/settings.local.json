@@ -16,7 +16,16 @@
       "Bash(done)",
       "Bash(grep:*)",
       "Bash(git switch:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(for:*)",
+      "Bash(do cwebp:*)",
+      "Bash(git branch:*)",
+      "Bash(git stash:*)",
+      "Bash(ffmpeg:*)",
+      "Bash(brew install:*)",
+      "mcp__ide__getDiagnostics",
+      "Bash(mv:*)",
+      "Bash(node:*)"
     ],
     "deny": []
   }
