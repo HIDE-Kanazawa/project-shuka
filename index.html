@@ -56,7 +56,7 @@
             <div class="nav-container">
                 <div class="nav-brand">
                     <h1 class="logo">
-                        <a href="#home" id="logo-link" onclick="handleLogoClick(event)" aria-label="ホームに戻る">
+                        <a href="#home" id="logo-link" aria-label="ホームに戻る">
                             shuka <span class="logo-jp">– 秀歌</span>
                         </a>
                     </h1>
@@ -89,7 +89,7 @@
                     <button class="cta-button primary" onclick="scrollToSection('gallery')" aria-label="季節のギャラリーを見る">
                         季節のギャラリーを体験する
                     </button>
-                    <button class="cta-button secondary" onclick="scrollToSection('about')" aria-label="アーティストについて詳しく見る">
+                    <button class="cta-button secondary" aria-label="アーティストについて詳しく見る">
                         アーティストについて
                     </button>
                 </div>
@@ -448,14 +448,6 @@
         }
     </script>
     
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(registration => console.log('SW registered'))
-                    .catch(registrationError => console.log('SW registration failed'));
-            });
-        }
-    </script>
+    
 </body>
 </html>

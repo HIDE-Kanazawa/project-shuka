@@ -738,7 +738,7 @@ a:focus {
   line-height: 1.1;
   background: linear-gradient(90deg, #fbc2eb 0%, #a6c1ee 50%, #fbc2eb 100%);
   background-size: 200% 100%;
-  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: shine 6s linear infinite;
 }

@@ -1,0 +1,48 @@
+/* ===== Buttons ===== */
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-6);
+  border: none;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-base);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+/* WINDSURF_START CTA_Gradient */
+.cta-button.primary{
+  background: linear-gradient(120deg,var(--accent) 0%,var(--primary) 100%);
+  background-size: 200% 100%;
+  color: white;
+  box-shadow: 0 4px 15px var(--shadow-lg);
+  transition: background-position .4s ease;
+}
+.cta-button.primary:hover{
+  background-position: 100% 0;
+}
+/* WINDSURF_END CTA_Gradient */
+
+.cta-button.primary:hover,
+.cta-button.primary:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px var(--shadow-lg);
+}
+
+.cta-button.secondary {
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+}
+
+.cta-button.secondary:hover,
+.cta-button.secondary:focus {
+  background: white;
+  color: var(--primary);
+  transform: translateY(-2px);
+}

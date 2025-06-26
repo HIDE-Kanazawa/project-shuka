@@ -1,0 +1,412 @@
+ * Seasons Module
+ * Handles seasonal gallery switching with animations and accessibility
+ */
+
+class SeasonsGallery {
+  constructor() {
+    this.seasonButtons = document.querySelectorAll('.season-btn');
+    this.seasonPanels = document.querySelectorAll('.season-panel');
+    this.currentSeason = 'tsuyu';
+    this.audioElements = [];
+    
+    this.init();
+  }
+  
+  init() {
+    this.bindEvents();
+    this.setupAudioElements();
+    this.preloadWashiBackgrounds(); // 和紙背景をプリロード
+    this.loadInitialSeason();
+  }
+  
+  bindEvents() {
+    this.seasonButtons.forEach(button => {
+      button.addEventListener('click', (e) => this.handleSeasonChange(e));
+      button.addEventListener('keydown', (e) => this.handleKeyboardNavigation(e));
+    });
+    
+    // Handle audio events for better UX
+    document.addEventListener('play', (e) => this.handleAudioPlay(e), true);
+    document.addEventListener('pause', (e) => this.handleAudioPause(e), true);
+  }
+  
+  setupAudioElements() {
+    this.audioElements = Array.from(document.querySelectorAll('audio'));
+    
+    this.audioElements.forEach(audio => {
+      // Set default volume to 50%\n      audio.volume = 0.5;\n      // Set preload to none for performance
+      audio.preload = 'none';
+      
+      // Add accessibility attributes
+      const trackTitle = audio.parentElement.querySelector('.track-title')?.textContent || 'Track';
+      audio.setAttribute('aria-label', `${trackTitle}の音楽プレーヤー`);
+    });
+  }
+
+  preloadWashiBackgrounds() {
+    // Preload all washi background images for smooth transitions
+    const washiImages = [
+      './img/和紙-春.webp',
+      './img/和紙-夏.webp',
+      './img/和紙-秋.webp',
+      './img/和紙-冬.webp',
+      './img/和紙-梅雨.webp'
+    ];
+
+    washiImages.forEach(src => {
+      const img = new Image();
+      img.src = src;
+      // Images will be cached by browser
+    });
+  }
+  
+  loadInitialSeason() {
+    // Always set initial season to tsuyu (rainy season)
+    this.currentSeason = 'tsuyu';
+    
+    // Update body season for styling and washi background
+    this.updateSeasonBackground('tsuyu');
+    
+    // Enable rain effect for tsuyu
+    if (typeof window.enableRain === 'function') {
+      window.enableRain();
+    }
+    
+    // Update URL to reflect tsuyu season
+    this.updateURL('tsuyu');
+
+    // Show summer gallery panel by default while keeping overall season as tsuyu
+    this.updateSeasonButtons('summer');
+    this.updateSeasonPanels('summer', false);
+  }
+  
+  getSeasonFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const season = urlParams.get('season');
+    
+    if (['spring', 'summer', 'autumn', 'winter', 'tsuyu'].includes(season)) {
+      return season;
+    }
+    
+    return null;
+  }
+  
+  getSeasonFromDate() {
+    const now = new Date();
+    const month = now.getMonth() + 1; // 1-12
+    
+    if (month >= 3 && month <= 5) return 'spring';
+    if (month >= 6 && month <= 8) return 'summer';
+    if (month >= 9 && month <= 11) return 'autumn';
+    return 'winter';
+  }
+  
+  handleSeasonChange(e) {
+    e.preventDefault();
+    
+    const button = e.currentTarget;
+    const season = button.getAttribute('data-season');
+    
+    if (season && season !== this.currentSeason) {
+      this.switchToSeason(season);
+    }
+  }
+  
+  handleKeyboardNavigation(e) {
+    const currentIndex = Array.from(this.seasonButtons).indexOf(e.currentTarget);
+    let nextIndex = currentIndex;
+    
+    switch (e.key) {
+      case 'ArrowRight':
+      case 'ArrowDown':
+        e.preventDefault();
+        nextIndex = (currentIndex + 1) % this.seasonButtons.length;
+        break;
+        
+      case 'ArrowLeft':
+      case 'ArrowUp':
+        e.preventDefault();
+        nextIndex = (currentIndex - 1 + this.seasonButtons.length) % this.seasonButtons.length;
+        break;
+        
+      case 'Home':
+        e.preventDefault();
+        nextIndex = 0;
+        break;
+        
+      case 'End':
+        e.preventDefault();
+        nextIndex = this.seasonButtons.length - 1;
+        break;
+        
+      case 'Enter':
+      case ' ':
+        e.preventDefault();
+        this.handleSeasonChange(e);
+        return;
+        
+      default:
+        return;
+    }
+    
+    this.seasonButtons[nextIndex].focus();
+  }
+  
+  switchToSeason(season, animate = true) {
+    // Validate season
+    if (!['spring', 'summer', 'autumn', 'winter', 'tsuyu'].includes(season)) {
+      console.warn(`Invalid season: ${season}`);
+      return;
+    }
+    
+    // Stop all currently playing audio
+    this.stopAllAudio();
+    
+    // Update button states
+    this.updateSeasonButtons(season);
+    
+    // Update panel states with animation
+    this.updateSeasonPanels(season, animate);
+    
+    // Update current season
+    this.currentSeason = season;
+    
+    // Update URL without page reload
+    this.updateURL(season);
+    
+    // Update hero background if needed
+    // Update hero background only when animate flag is true (i.e., user interaction)
+    if (animate) {
+      this.updateHeroBackground(season);
+    }
+
+    // Update body season for styling (includes washi background)
+    this.updateSeasonBackground(season);
+
+    // Toggle rain effect depending on season
+    if (season === 'tsuyu') {
+      if (typeof window.enableRain === 'function') {
+        window.enableRain();
+      }
+    } else {
+      if (typeof window.disableRain === 'function') {
+        window.disableRain();
+      }
+    }
+    
+    // Announce change for screen readers
+    this.announceSeasonChange(season);
+  }
+  
+  updateSeasonButtons(activeSeason) {
+    this.seasonButtons.forEach(button => {
+      const buttonSeason = button.getAttribute('data-season');
+      const isActive = buttonSeason === activeSeason;
+      
+      button.classList.toggle('active', isActive);
+      button.setAttribute('aria-selected', isActive.toString());
+      
+      if (isActive) {
+        button.setAttribute('tabindex', '0');
+      } else {
+        button.setAttribute('tabindex', '-1');
+      }
+    });
+  }
+  
+  updateSeasonPanels(activeSeason, animate) {
+    this.seasonPanels.forEach(panel => {
+      const panelSeason = panel.getAttribute('data-season');
+      const isActive = panelSeason === activeSeason;
+      
+      if (isActive) {
+        this.showPanel(panel, animate);
+      } else {
+        this.hidePanel(panel, animate);
+      }
+    });
+  }
+  
+  showPanel(panel, animate) {
+    if (animate) {
+      // Fade in animation
+      panel.style.opacity = '0';
+      panel.style.display = 'grid';
+      panel.classList.add('active');
+      
+      // Trigger reflow
+      panel.offsetHeight;
+      
+      panel.style.transition = 'opacity 0.3s ease-in-out';
+      panel.style.opacity = '1';
+      
+      // Clean up after animation
+      setTimeout(() => {
+        panel.style.transition = '';
+        panel.style.opacity = '';
+      }, 300);
+    } else {
+      panel.style.display = 'grid';
+      panel.classList.add('active');
+    }
+    
+    // Update ARIA attributes
+    panel.setAttribute('aria-hidden', 'false');
+    
+
+  }
+  
+  hidePanel(panel, animate) {
+    if (animate) {
+      panel.style.transition = 'opacity 0.3s ease-in-out';
+      panel.style.opacity = '0';
+      
+      setTimeout(() => {
+        panel.style.display = 'none';
+        panel.classList.remove('active');
+        panel.style.transition = '';
+        panel.style.opacity = '';
+      }, 300);
+    } else {
+      panel.style.display = 'none';
+      panel.classList.remove('active');
+    }
+    
+    // Update ARIA attributes
+    panel.setAttribute('aria-hidden', 'true');
+  }
+  
+  updateURL(season) {
+    const url = new URL(window.location);
+    url.searchParams.set('season', season);
+    
+    // Update URL without triggering navigation
+    history.replaceState(null, '', url.toString());
+  }
+
+  updateSeasonBackground(season) {
+    // Preload washi background for smooth transition
+    const washiImages = {
+      spring: './img/和紙-春.webp',
+      summer: './img/和紙-夏.webp', 
+      autumn: './img/和紙-秋.webp',
+      winter: './img/和紙-冬.webp',
+      tsuyu: './img/和紙-梅雨.webp'
+    };
+
+    const imageUrl = washiImages[season];
+    if (imageUrl) {
+      // Preload the washi image
+      const img = new Image();
+      img.onload = () => {
+        // Update body season attribute for CSS styling
+        document.body.setAttribute('data-season', season);
+      };
+      img.src = imageUrl;
+    } else {
+      // Fallback to direct update
+      document.body.setAttribute('data-season', season);
+    }
+  }
+  
+  updateHeroBackground(season) {
+    const hero = document.querySelector('.hero');
+    if (!hero) return;
+    
+    const seasonImages = {
+      spring: './img/秀歌-春.webp',
+      summer: './img/秀歌-夏.webp',
+      autumn: './img/秀歌-秋.webp',
+      winter: './img/秀歌-冬.webp',
+      tsuyu: './img/秀歌-梅雨.webp'
+    };
+    
+    const imageUrl = seasonImages[season];
+    if (imageUrl) {
+      // Preload image before changing
+      const img = new Image();
+      img.onload = () => {
+        hero.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('${imageUrl}')`;
+        // Align background to top when a seasonal image is applied
+        hero.style.backgroundPosition = 'top center';
+        const heroContent = hero.querySelector('.hero-content');
+        if (heroContent) {
+          heroContent.style.paddingTop = '35vh';
+        }
+      };
+      img.src = imageUrl;
+    }
+  }
+  
+  announceSeasonChange(season) {
+    const seasonNames = {
+      spring: '春',
+      summer: '夏',
+      autumn: '秋',
+      winter: '冬',
+      tsuyu: '梅雨'
+    };
+    
+    const announcement = `${seasonNames[season]}の楽曲に切り替わりました`;
+    
+    // Create or update live region for screen readers
+    let liveRegion = document.getElementById('season-announcer');
+    if (!liveRegion) {
+      liveRegion = document.createElement('div');
+      liveRegion.id = 'season-announcer';
+      liveRegion.setAttribute('aria-live', 'polite');
+      liveRegion.setAttribute('aria-atomic', 'true');
+      liveRegion.className = 'visually-hidden';
+      document.body.appendChild(liveRegion);
+    }
+    
+    liveRegion.textContent = announcement;
+  }
+  
+  handleAudioPlay(e) {
+    // Pause other audio elements when one starts playing
+    if (e.target.tagName === 'AUDIO') {
+      this.audioElements.forEach(audio => {
+        if (audio !== e.target && !audio.paused) {
+          audio.pause();
+        }
+      });
+      
+      // Add playing state class
+      e.target.closest('.track')?.classList.add('playing');
+    }
+  }
+  
+  handleAudioPause(e) {
+    if (e.target.tagName === 'AUDIO') {
+      // Remove playing state class
+      e.target.closest('.track')?.classList.remove('playing');
+    }
+  }
+  
+  stopAllAudio() {
+    this.audioElements.forEach(audio => {
+      if (!audio.paused) {
+        audio.pause();
+      }
+    });
+  }
+  
+  // Public methods for external access
+  getCurrentSeason() {
+    return this.currentSeason;
+  }
+  
+  getAvailableSeasons() {
+    return ['spring', 'summer', 'autumn', 'winter', 'tsuyu'];
+  }
+}
+
+// Global function for external use (e.g., footer links)
+window.switchSeason = function(season) {
+  if (window.seasonsGallery && typeof window.seasonsGallery.switchToSeason === 'function') {
+    window.seasonsGallery.switchToSeason(season);
+  }
+};
+
+export { SeasonsGallery, switchSeason };

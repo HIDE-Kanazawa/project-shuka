@@ -1,0 +1,64 @@
+/* ===== About Section ===== */
+.about {
+  padding: var(--space-24) 0;
+  background: rgba(249, 250, 251, 0.85); /* 和紙背景を透かすため半透明に */
+  backdrop-filter: blur(1px);
+}
+
+[data-theme="dark"] .about {
+  background: rgba(17, 24, 39, 0.85);
+  backdrop-filter: blur(1px);
+}
+
+.about-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-12);
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .about-content {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
+.about-intro {
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-8);
+  color: var(--text);
+}
+
+.features {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.feature {
+  padding: var(--space-6);
+  background: var(--background);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 2px 10px var(--shadow);
+  transition: transform var(--transition-normal);
+}
+
+.feature:hover {
+  transform: translateY(-4px);
+}
+
+.feature-title {
+  margin-bottom: var(--space-3);
+  color: var(--text);
+  font-size: var(--text-xl);
+}
+
+.feature p {
+  margin: 0;
+}
+
+.about-image {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-xl);
+  box-shadow: 0 10px 30px var(--shadow-lg);
+}
