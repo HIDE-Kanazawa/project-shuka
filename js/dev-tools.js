@@ -1,6 +1,8 @@
+/**
  * Development and Testing Utilities
  * Tools for browser testing, debugging, and quality assurance
  */
+'use strict';
 
 class DevelopmentTools {
   constructor() {
@@ -545,11 +547,13 @@ class DevelopmentTools {
 
 // Initialize development tools
 let devTools;
-  const month = new Date().getMonth()+1;
-  let season = "spring";
-  if([6,7,8].includes(month)) season = "summer";
-  else if([9,10,11].includes(month)) season = "autumn";
-  else if([12,1,2].includes(month)) season = "winter";
+
+(function setSeason() {
+  const month = new Date().getMonth() + 1;
+  let season = 'spring';
+  if ([6, 7, 8].includes(month)) season = 'summer';
+  else if ([9, 10, 11].includes(month)) season = 'autumn';
+  else if ([12, 1, 2].includes(month)) season = 'winter';
   document.body.dataset.season = season;
 })();
 // WINDSURF_END SeasonColor
