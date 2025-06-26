@@ -194,9 +194,6 @@ class WaterRippleEffect {
    * Create zen-inspired subtle click effect - 禅の美学に基づく上品なクリックエフェクト
    */
   createZenClickEffect(x, y) {
-    // メイン禅円 - 静寂の中の波紋
-    this.createZenCircle(x, y, 80);
-    
     // 墨滴の滲み
     this.createInkDrops(x, y, 6);
     
@@ -212,29 +209,8 @@ class WaterRippleEffect {
     
     // 静寂の点
     this.createTranquilDots(x, y, 8);
-    
-    // 余韻の波紋
-    setTimeout(() => {
-      this.createZenCircle(x, y, 40);
-    }, 600);
   }
 
-  /**
-   * Create zen circle - 禅円の創造
-   */
-  createZenCircle(x, y, size) {
-    if (!this.container) return;
-    
-    const circle = document.createElement('div');
-    circle.className = 'zen-circle';
-    circle.style.width = `${size}px`;
-    circle.style.height = `${size}px`;
-    circle.style.left = `${x - size / 2}px`;
-    circle.style.top = `${y - size / 2}px`;
-    
-    this.container.appendChild(circle);
-    setTimeout(() => circle.remove(), 1800);
-  }
 
   /**
    * Create ink drops - 墨滴の滲み

@@ -44,23 +44,6 @@ body[data-season="summer"] .ripple{ border-color: var(--accent-summer); }
 body[data-season="autumn"] .ripple{ border-color: var(--accent-autumn); }
 body[data-season="winter"] .ripple{ border-color: var(--accent-winter); }
 
-/* Zen circle - 禅円の美学 */
-.zen-circle {
-  position: absolute;
-  pointer-events: none;
-  border: 1px solid rgba(139, 69, 19, 0.3);
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(245, 245, 220, 0.1) 0%,
-    rgba(210, 180, 140, 0.08) 30%,
-    rgba(160, 82, 45, 0.05) 60%,
-    transparent 100%
-  );
-  transform: scale(0);
-  animation: zenExpand 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-  box-shadow: 0 0 20px rgba(139, 69, 19, 0.1);
-}
 
 .ink-drop {
   position: absolute;
@@ -122,24 +105,6 @@ body[data-season="winter"] .ripple{ border-color: var(--accent-winter); }
   filter: blur(0.2px);
 }
 
-@keyframes zenExpand {
-  0% {
-    transform: scale(0);
-    opacity: 0.8;
-  }
-  30% {
-    transform: scale(0.8);
-    opacity: 0.4;
-  }
-  70% {
-    transform: scale(1.5);
-    opacity: 0.2;
-  }
-  100% {
-    transform: scale(2.2);
-    opacity: 0;
-  }
-}
 
 @keyframes inkSpread {
   0% {
