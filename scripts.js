@@ -9,8 +9,8 @@ const SEASON_DATA = {
     description: '桜咲く季節の温かな希望と新しい始まりを表現した楽曲集',
     poster: './img/秀歌-春.webp',
     video: {
-      webm: './video/夏庭園の詩.webm',
-      mp4: './video/夏庭園の詩.mp4'
+      webm: './video/夏庭園の歌.webm',
+      mp4: './video/夏庭園の歌.mp4'
     },
     tracks: [
       {
@@ -32,8 +32,8 @@ const SEASON_DATA = {
     description: '緑豊かな季節の生命力と情熱を込めた楽曲集',
     poster: './img/秀歌-夏.webp',
     video: {
-      webm: './video/夏庭園の詩.webm',
-      mp4: './video/夏庭園の詩.mp4'
+      webm: './video/夏庭園の歌.webm',
+      mp4: './video/夏庭園の歌.mp4'
     },
     tracks: [
       {
@@ -55,8 +55,8 @@ const SEASON_DATA = {
     description: '色づく季節の深い情感と静寂を表現した楽曲集',
     poster: './img/秀歌-秋.webp',
     video: {
-      webm: './video/夏庭園の詩.webm',
-      mp4: './video/夏庭園の詩.mp4'
+      webm: './video/夏庭園の歌.webm',
+      mp4: './video/夏庭園の歌.mp4'
     },
     tracks: [
       {
@@ -78,8 +78,8 @@ const SEASON_DATA = {
     description: '雪景色の中の静けさと内省を込めた楽曲集',
     poster: './img/秀歌-冬.webp',
     video: {
-      webm: './video/夏庭園の詩.webm',
-      mp4: './video/夏庭園の詩.mp4'
+      webm: './video/白のなかで.webm',
+      mp4: './video/白のなかで.mp4'
     },
     tracks: [
       {
@@ -398,6 +398,9 @@ if (typeof module !== 'undefined' && module.exports) {
  * Seasons Module
  * Handles seasonal gallery switching with animations and accessibility
  */
+
+// Set winter season gallery video to "白のなかで"
+SEASON_DATA.winter.video.mp4 = './video/白のなかで.mp4';
 
 class SeasonsGallery {
   constructor() {

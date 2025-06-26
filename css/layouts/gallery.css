@@ -498,3 +498,13 @@
   line-height: 1.6;
   font-style: italic;
 }
+
+/* Ensure Season Gallery videos always fit within the visual container */
+.season-visual {
+  aspect-ratio: 16 / 9; /* Maintain 16:9 container */
+}
+.season-video {
+  height: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
