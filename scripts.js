@@ -1,4 +1,175 @@
 /**
+ * Season Data Configuration
+ */
+const SEASON_DATA = {
+  spring: {
+    icon: '🌸',
+    name: '春',
+    title: '春の調べ',
+    description: '桜咲く季節の温かな希望と新しい始まりを表現した楽曲集',
+    poster: './img/秀歌-春.webp',
+    video: {
+      webm: './video/夏庭園の詩.webm',
+      mp4: './video/夏庭園の詩.mp4'
+    },
+    tracks: [
+      {
+        title: 'ひかりのあと',
+        description: '春の陽だまりで感じる穏やかな時間',
+        src: './audio/ひかりのあと.mp3'
+      },
+      {
+        title: '光のほうへ',
+        description: '新緑の季節に響く希望のメロディー',
+        src: './audio/光のほうへ.mp3'
+      }
+    ]
+  },
+  summer: {
+    icon: '🌿',
+    name: '夏',
+    title: '夏の響き',
+    description: '緑豊かな季節の生命力と情熱を込めた楽曲集',
+    poster: './img/秀歌-夏.webp',
+    video: {
+      webm: './video/夏庭園の詩.webm',
+      mp4: './video/夏庭園の詩.mp4'
+    },
+    tracks: [
+      {
+        title: '夏庭園の詩',
+        description: '緑陰の中で感じる夏の情景',
+        src: './audio/夏庭園の詩.mp3'
+      },
+      {
+        title: '緑の中のひととき',
+        description: '木陰で過ごす静寂な時間',
+        src: './audio/緑の中のひととき.mp3'
+      }
+    ]
+  },
+  autumn: {
+    icon: '🍂',
+    name: '秋',
+    title: '秋の詩',
+    description: '色づく季節の深い情感と静寂を表現した楽曲集',
+    poster: './img/秀歌-秋.webp',
+    video: {
+      webm: './video/夏庭園の詩.webm',
+      mp4: './video/夏庭園の詩.mp4'
+    },
+    tracks: [
+      {
+        title: '風の庭にて',
+        description: '秋風に舞う葉音のハーモニー',
+        src: './audio/風の庭にて.mp3'
+      }
+    ]
+  },
+  winter: {
+    icon: '❄️',
+    name: '冬',
+    title: '冬の静寂',
+    description: '雪景色の中の静けさと内省を込めた楽曲集',
+    poster: './img/秀歌-冬.webp',
+    video: {
+      webm: './video/夏庭園の詩.webm',
+      mp4: './video/夏庭園の詩.mp4'
+    },
+    tracks: [
+      {
+        title: '白のなかで',
+        description: '雪に包まれた世界の静寂',
+        src: './audio/白のなかで.mp3'
+      }
+    ]
+  }
+};
+
+/**
+ * Accessibility enhancement functions
+ */
+function initAccessibilityFeatures() {
+  // Track mouse usage for focus management
+  document.addEventListener('mousedown', () => document.body.classList.add('using-mouse'));
+  document.addEventListener('keydown', () => document.body.classList.remove('using-mouse'));
+  
+  // Enhanced keyboard navigation
+  document.addEventListener('keydown', handleGlobalKeyboard);
+  
+  // ARIA live region setup
+  if (!document.getElementById('aria-live-region')) {
+    const liveRegion = document.createElement('div');
+    liveRegion.id = 'aria-live-region';
+    liveRegion.setAttribute('aria-live', 'polite');
+    liveRegion.setAttribute('aria-atomic', 'true');
+    liveRegion.className = 'sr-only';
+    document.body.appendChild(liveRegion);
+  }
+}
+
+// Global keyboard event handler
+function handleGlobalKeyboard(e) {
+  // Add keyboard shortcuts
+  if (e.altKey) {
+    switch(e.key) {
+      case '1':
+        e.preventDefault();
+        document.getElementById('home')?.focus();
+        break;
+      case '2':
+        e.preventDefault();
+        document.getElementById('about')?.focus();
+        break;
+      case '3':
+        e.preventDefault();
+        document.getElementById('gallery')?.focus();
+        break;
+      case '4':
+        e.preventDefault();
+        document.getElementById('contact')?.focus();
+        break;
+    }
+  }
+  
+  // ESC key to close any open overlays
+  if (e.key === 'Escape') {
+    // Close mobile menu if open
+    const navMenu = document.getElementById('nav-menu');
+    const navToggle = document.getElementById('nav-toggle');
+    if (navMenu?.classList.contains('active')) {
+      navMenu.classList.remove('active');
+      navToggle?.classList.remove('active');
+      navToggle?.focus();
+    }
+  }
+}
+
+// Optimize loading with requestIdleCallback
+function initResourcePrefetching() {
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(() => {
+      // Prefetch additional resources during idle time
+      const additionalResources = [
+        './audio/ひかりのあと.mp3',
+        './audio/光のほうへ.mp3',
+        './audio/夏庭園の詩.mp3',
+        './audio/緑の中のひととき.mp3',
+        './audio/風の庭にて.mp3',
+        './audio/白のなかで.mp3'
+      ];
+      
+      additionalResources.forEach(src => {
+        const link = document.createElement('link');
+        link.rel = 'prefetch';
+        link.href = src;
+        document.head.appendChild(link);
+      });
+    });
+  }
+}
+
+/**
  * Navigation Module
  * Handles mobile menu toggle and smooth scrolling
  */
@@ -2755,3 +2926,158 @@ window.handleLogoClick = function(event) {
     document.body.style.overflow = '';
   }
 };
+
+/**
+ * Initialize application on DOM ready
+ */
+document.addEventListener('DOMContentLoaded', () => {
+  // Mark page as loaded to enable transitions
+  document.body.classList.add('loaded');
+  
+  // Initialize accessibility features
+  initAccessibilityFeatures();
+  
+  // Initialize resource prefetching
+  initResourcePrefetching();
+  
+  // Initialize scroll button handlers
+  initScrollButtons();
+  
+  // Generate dynamic content
+  generateSeasonGallery();
+  generateSocialLinks();
+});
+
+/**
+ * Initialize scroll button handlers
+ */
+function initScrollButtons() {
+  document.querySelectorAll('[data-scroll-target]').forEach(button => {
+    button.addEventListener('click', (e) => {
+      const target = e.currentTarget.getAttribute('data-scroll-target');
+      scrollToSection(target);
+    });
+  });
+}
+
+/**
+ * Generate Season Gallery Navigation and Content
+ */
+function generateSeasonGallery() {
+  const seasonNav = document.getElementById('season-nav');
+  const seasonContent = document.getElementById('season-content');
+  
+  if (!seasonNav || !seasonContent) return;
+  
+  // Generate navigation buttons
+  let navHTML = '';
+  let contentHTML = '';
+  let isFirst = true;
+  
+  for (const [key, season] of Object.entries(SEASON_DATA)) {
+    // Generate navigation button
+    navHTML += `
+      <button class="season-btn ${isFirst ? 'active' : ''}" 
+              data-season="${key}" 
+              role="tab" 
+              aria-controls="${key}-content" 
+              aria-selected="${isFirst ? 'true' : 'false'}" 
+              aria-label="${season.name}の楽曲を再生">
+        <span class="season-icon" aria-hidden="true">${season.icon}</span>
+        <span class="season-name">${season.name}</span>
+      </button>
+    `;
+    
+    // Generate content panel
+    contentHTML += `
+      <div class="season-panel ${isFirst ? 'active' : ''}" 
+           id="${key}-content" 
+           role="tabpanel" 
+           aria-labelledby="${key}-tab" 
+           data-season="${key}">
+        <div class="season-visual">
+          <video class="season-video" 
+                 controls 
+                 preload="metadata"
+                 loading="lazy"
+                 tabindex="0"
+                 poster="${season.poster}"
+                 aria-label="${season.name}をテーマにしたデモ動画 - クリックまたはEnterキーで再生">
+            <source src="${season.video.webm}" type="video/webm">
+            <source src="${season.video.mp4}" type="video/mp4">
+            お使いのブラウザは動画再生に対応していません。
+          </video>
+        </div>
+        <div class="season-tracks">
+          <h3 class="season-title">${season.title}</h3>
+          <p class="season-description">${season.description}</p>
+          <div class="track-list">
+            ${season.tracks.map(track => `
+              <div class="track">
+                <audio controls preload="none" aria-label="${track.title} - ${season.name}の楽曲">
+                  <source src="${track.src}" type="audio/mpeg">
+                  お使いのブラウザは音声再生に対応していません。
+                </audio>
+                <div class="track-info">
+                  <h4 class="track-title">${track.title}</h4>
+                  <p class="track-description">${track.description}</p>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+    
+    isFirst = false;
+  }
+  
+  seasonNav.innerHTML = navHTML;
+  seasonContent.innerHTML = contentHTML;
+}
+
+/**
+ * Generate Social Links
+ */
+function generateSocialLinks() {
+  const socialContainer = document.getElementById('social-links');
+  if (!socialContainer) return;
+  
+  const socialLinks = [
+    {
+      url: 'https://x.com/shuka_artist',
+      label: 'X (Twitter) アカウント',
+      name: 'X (Twitter)',
+      icon: '<path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>'
+    },
+    {
+      url: 'https://instagram.com/shuka_artist',
+      label: 'Instagram アカウント',
+      name: 'Instagram',
+      icon: '<path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>'
+    },
+    {
+      url: 'https://youtube.com/@shuka_artist',
+      label: 'YouTube チャンネル',
+      name: 'YouTube',
+      icon: '<path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>'
+    },
+    {
+      url: 'https://tiktok.com/@shuka_artist',
+      label: 'TikTok アカウント',
+      name: 'TikTok',
+      icon: '<path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>'
+    }
+  ];
+  
+  const socialHTML = socialLinks.map(link => `
+    <a href="${link.url}" class="social-link" aria-label="${link.label}" rel="noopener noreferrer" target="_blank">
+      <svg class="social-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        ${link.icon}
+      </svg>
+      <span class="sr-only">${link.name}</span>
+    </a>
+  `).join('');
+  
+  socialContainer.innerHTML = socialHTML;
+}

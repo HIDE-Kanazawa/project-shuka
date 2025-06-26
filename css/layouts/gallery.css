@@ -281,7 +281,9 @@
   
   .season-video {
     max-width: 520px;
-    height: 292px;
+    height: auto;
+    max-height: 292px;
+    margin: 0 auto;
   }
 }
 
@@ -289,14 +291,16 @@
   .season-video {
     width: 100%;
     max-width: 100%;
-    height: 200px;
-    margin-bottom: var(--space-6);
+    height: auto;
+    max-height: 200px;
+    margin: 0 auto var(--space-6);
   }
   
   .season-visual {
     margin-bottom: var(--space-8);
     justify-content: center;
     align-items: center;
+    text-align: center;
   }
 }
 
@@ -326,18 +330,18 @@
   border-radius: var(--radius-xl);
   background: var(--surface);
   object-fit: cover;
-  width: auto;
-  max-width: 480px;
-  height: 270px;
-  max-height: 270px;
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  max-height: 450px;
   box-shadow: 
     0 12px 30px rgba(0, 0, 0, 0.15),
     0 6px 15px rgba(0, 0, 0, 0.1);
   border: 2px solid rgba(255, 255, 255, 0.1);
   cursor: pointer;
   transition: all var(--transition-normal);
-  flex-shrink: 0;
   display: block;
+  margin: 0 auto;
 }
 
 .season-video:hover {
