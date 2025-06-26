@@ -1,4 +1,7 @@
-// Rain Effect Module
+/**
+ * Rain Effect Module
+ * Generates an animated tsuyu rain effect for the hero section
+ */
 class RainEffect {
   constructor() {
     this.canvas = document.createElement('canvas');
