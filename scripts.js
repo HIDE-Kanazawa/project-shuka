@@ -63,6 +63,11 @@ const SEASON_DATA = {
         title: '風の庭にて',
         description: '秋風に舞う葉音のハーモニー',
         src: './audio/風の庭にて.mp3'
+      },
+      {
+        title: '洛陽の宵（よい）',
+        description: '秋の夜に響く古都の響き',
+        src: './audio/落葉の宵(よい).mp3'
       }
     ]
   },
@@ -81,6 +86,11 @@ const SEASON_DATA = {
         title: '白のなかで',
         description: '雪に包まれた世界の静寂',
         src: './audio/白のなかで.mp3'
+      },
+      {
+        title: 'しろのことば',
+        description: '雪降る夜の静寂な語らい',
+        src: './audio/しろのことば.mp3'
       }
     ]
   }
@@ -156,7 +166,9 @@ function initResourcePrefetching() {
         './audio/夏庭園の詩.mp3',
         './audio/緑の中のひととき.mp3',
         './audio/風の庭にて.mp3',
-        './audio/白のなかで.mp3'
+        './audio/落葉の宵(よい).mp3',
+        './audio/白のなかで.mp3',
+        './audio/しろのことば.mp3'
       ];
       
       additionalResources.forEach(src => {
