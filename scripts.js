@@ -246,14 +246,35 @@ class SeasonsGallery {
   
   setupAudioElements() {
     this.audioElements = Array.from(document.querySelectorAll('audio'));
+    this.videoElements = Array.from(document.querySelectorAll('video'));
     
     this.audioElements.forEach(audio => {
-      // Set default volume to 50%\n      audio.volume = 0.5;\n      // Set preload to none for performance
+      // Set default volume to 50%
+      audio.volume = 0.5;
+      // Set preload to none for performance
       audio.preload = 'none';
       
       // Add accessibility attributes
       const trackTitle = audio.parentElement.querySelector('.track-title')?.textContent || 'Track';
       audio.setAttribute('aria-label', `${trackTitle}の音楽プレーヤー`);
+    });
+
+    // Setup video elements
+    this.videoElements.forEach(video => {
+      // Set default volume to 50%
+      video.volume = 0.5;
+      // Ensure videos don't autoplay with sound
+      video.muted = false;
+      
+      // Add click to play functionality
+      video.addEventListener('click', (e) => this.handleVideoClick(e));
+      
+      // Add keyboard support for video
+      video.addEventListener('keydown', (e) => this.handleVideoKeydown(e));
+      
+      // Add accessibility attributes
+      const seasonTitle = video.closest('.season-panel')?.querySelector('.season-title')?.textContent || 'Video';
+      video.setAttribute('aria-label', `${seasonTitle}のデモ動画`);
     });
   }
 
@@ -600,7 +621,7 @@ class SeasonsGallery {
   }
   
   handleAudioPlay(e) {
-    // Pause other audio elements when one starts playing
+    // Pause other audio and video elements when one starts playing
     if (e.target.tagName === 'AUDIO') {
       this.audioElements.forEach(audio => {
         if (audio !== e.target && !audio.paused) {
@@ -608,8 +629,35 @@ class SeasonsGallery {
         }
       });
       
+      // Pause all videos when audio starts
+      this.videoElements.forEach(video => {
+        if (!video.paused) {
+          video.pause();
+        }
+      });
+      
       // Add playing state class
       e.target.closest('.track')?.classList.add('playing');
+    }
+    
+    // Handle video play events
+    if (e.target.tagName === 'VIDEO') {
+      // Pause all audio when video starts
+      this.audioElements.forEach(audio => {
+        if (!audio.paused) {
+          audio.pause();
+        }
+      });
+      
+      // Pause other videos
+      this.videoElements.forEach(video => {
+        if (video !== e.target && !video.paused) {
+          video.pause();
+        }
+      });
+      
+      // Add playing state class
+      e.target.closest('.season-panel')?.classList.add('video-playing');
     }
   }
   
@@ -618,12 +666,61 @@ class SeasonsGallery {
       // Remove playing state class
       e.target.closest('.track')?.classList.remove('playing');
     }
+    
+    if (e.target.tagName === 'VIDEO') {
+      // Remove playing state class
+      e.target.closest('.season-panel')?.classList.remove('video-playing');
+    }
+  }
+  
+  handleVideoClick(e) {
+    const video = e.target;
+    
+    // Toggle play/pause
+    if (video.paused) {
+      video.play().catch(error => {
+        console.log('Video play failed:', error);
+      });
+    } else {
+      video.pause();
+    }
+    
+    // Prevent default to avoid any browser default behavior
+    e.preventDefault();
+  }
+  
+  handleVideoKeydown(e) {
+    const video = e.target;
+    
+    // Space bar or Enter to toggle play/pause
+    if (e.code === 'Space' || e.code === 'Enter') {
+      e.preventDefault();
+      this.handleVideoClick(e);
+    }
+    
+    // Arrow keys for seeking (5 seconds)
+    if (e.code === 'ArrowLeft') {
+      e.preventDefault();
+      video.currentTime = Math.max(0, video.currentTime - 5);
+    }
+    
+    if (e.code === 'ArrowRight') {
+      e.preventDefault();
+      video.currentTime = Math.min(video.duration, video.currentTime + 5);
+    }
   }
   
   stopAllAudio() {
     this.audioElements.forEach(audio => {
       if (!audio.paused) {
         audio.pause();
+      }
+    });
+    
+    // Also stop all videos
+    this.videoElements.forEach(video => {
+      if (!video.paused) {
+        video.pause();
       }
     });
   }

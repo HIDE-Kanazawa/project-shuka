@@ -20,7 +20,9 @@
       "Bash(for:*)",
       "Bash(do cwebp:*)",
       "Bash(git branch:*)",
-      "Bash(git stash:*)"
+      "Bash(git stash:*)",
+      "Bash(ffmpeg:*)",
+      "Bash(brew install:*)"
     ],
     "deny": []
   }

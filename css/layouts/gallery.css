@@ -1,16 +1,51 @@
 /* ===== Gallery Section ===== */
 .gallery {
-  padding: var(--space-24) 0;
+  padding: var(--space-32) 0;
   backdrop-filter: blur(0.5px);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.02) 0%,
+    rgba(255, 255, 255, 0.005) 100%
+  );
+  position: relative;
+}
+
+.gallery .section-title {
+  font-size: var(--text-5xl);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-6);
+  background: linear-gradient(
+    135deg,
+    var(--text) 0%,
+    var(--text-muted) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+}
+
+.gallery .section-subtitle {
+  font-size: var(--text-xl);
+  color: var(--text-muted);
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto var(--space-16);
+  line-height: 1.6;
+  font-weight: 400;
 }
 
 .season-nav {
   display: flex;
   justify-content: center;
-  gap: var(--space-6);
-  margin-bottom: var(--space-16);
+  gap: var(--space-8);
+  margin-bottom: var(--space-20);
   flex-wrap: wrap;
-  padding: var(--space-4);
+  padding: var(--space-6);
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .season-btn {
@@ -137,14 +172,26 @@
 
 .season-content {
   position: relative;
-  min-height: 600px;
+  min-height: 500px;
+  max-height: 700px;
+  margin-top: var(--space-12);
 }
 
 .season-panel {
   display: none;
   grid-template-columns: 1fr;
-  gap: var(--space-12);
+  gap: var(--space-16);
   align-items: start;
+  padding: var(--space-8);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--radius-2xl);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.1),
+    0 8px 20px rgba(0, 0, 0, 0.08);
+  max-height: 600px;
+  overflow: hidden;
 }
 
 .season-panel.active {
@@ -153,6 +200,10 @@
 
 /* Responsive adjustments for season buttons */
 @media (max-width: 768px) {
+  .gallery {
+    padding: var(--space-20) 0;
+  }
+  
   .season-btn {
     width: 140px;
     height: 180px;
@@ -163,13 +214,72 @@
   }
   
   .season-nav {
-    gap: var(--space-4);
+    gap: var(--space-6);
+    margin-bottom: var(--space-16);
+    padding: var(--space-4);
+  }
+  
+  .season-content {
+    max-height: 800px;
+  }
+  
+  .season-panel {
+    padding: var(--space-6);
+    gap: var(--space-12);
+    max-height: 700px;
+  }
+  
+  .season-tracks {
+    padding: var(--space-6);
+    max-height: 400px;
+  }
+  
+  .season-title {
+    font-size: var(--text-2xl);
+  }
+  
+  .season-video {
+    height: 180px;
+    max-height: 180px;
   }
 }
 
 @media (min-width: 768px) {
   .season-panel {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.2fr 1fr;
+    align-items: start;
+    max-height: 480px;
+  }
+  
+  .season-visual {
+    order: 2;
+    max-height: 320px;
+    overflow: hidden;
+  }
+  
+  .season-tracks {
+    order: 1;
+    max-height: 400px;
+  }
+  
+  .season-video {
+    max-width: 520px;
+    height: 292px;
+  }
+}
+
+@media (max-width: 767px) {
+  .season-video {
+    width: 100%;
+    max-width: 100%;
+    height: 200px;
+    margin-bottom: var(--space-6);
+  }
+  
+  .season-visual {
+    margin-bottom: var(--space-8);
+    justify-content: center;
+    align-items: center;
   }
 }
 
@@ -178,9 +288,13 @@
   overflow: hidden;
   border-radius: var(--radius-xl);
   box-shadow: 0 10px 30px var(--shadow-lg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.season-image {
+.season-image,
+.season-video {
   width: 100%;
   height: auto;
   display: block;
@@ -191,32 +305,102 @@
   transform: scale(1.05);
 }
 
+.season-video {
+  border-radius: var(--radius-xl);
+  background: var(--surface);
+  object-fit: cover;
+  width: auto;
+  max-width: 480px;
+  height: 270px;
+  max-height: 270px;
+  box-shadow: 
+    0 12px 30px rgba(0, 0, 0, 0.15),
+    0 6px 15px rgba(0, 0, 0, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  flex-shrink: 0;
+  display: block;
+}
+
+.season-video:hover {
+  transform: scale(1.02);
+  box-shadow: 
+    0 16px 40px rgba(0, 0, 0, 0.2),
+    0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
 .season-tracks {
-  padding: var(--space-6);
+  padding: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  max-height: 500px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.season-tracks::-webkit-scrollbar {
+  width: 6px;
+}
+
+.season-tracks::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.season-tracks::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.season-tracks::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .season-title {
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-6);
   color: var(--text);
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  position: relative;
+  padding-bottom: var(--space-3);
+}
+
+.season-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent) 0%, transparent 100%);
+  border-radius: 2px;
 }
 
 .season-description {
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-10);
   font-size: var(--text-lg);
   color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 600px;
 }
 
 .track-list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);
+  gap: var(--space-8);
+  padding-right: var(--space-2);
 }
 
 .track {
-  padding: var(--space-4);
-  background: var(--neutral-50);
-  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-xl);
   transition: all var(--transition-normal);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
 }
 
 /* Dark theme adjustments */
@@ -238,27 +422,54 @@
 }
 
 [data-theme="dark"] .track {
-  background: var(--neutral-800);
+  background: rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .track:hover {
+  background: rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+[data-theme="dark"] .season-panel {
+  background: rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
 .track:hover {
-  box-shadow: 0 4px 15px var(--shadow);
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.15),
+    0 4px 10px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .track audio {
   width: 100%;
-  margin-bottom: var(--space-3);
-  border-radius: var(--radius);
+  margin-bottom: var(--space-4);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.track-info {
+  margin-top: var(--space-2);
 }
 
 .track-title {
-  margin-bottom: var(--space-2);
-  font-size: var(--text-lg);
+  margin-bottom: var(--space-3);
+  font-size: var(--text-xl);
+  font-weight: 600;
   color: var(--text);
+  letter-spacing: 0.01em;
 }
 
 .track-description {
   margin: 0;
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   color: var(--text-muted);
+  line-height: 1.6;
+  font-style: italic;
 }
