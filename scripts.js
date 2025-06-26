@@ -489,23 +489,30 @@ class SeasonsGallery {
   }
   
   loadInitialSeason() {
-    // Always set initial season to spring on site reload
-    this.currentSeason = 'spring';
+    // Always set initial season to tsuyu (rainy season) on site reload
+    this.currentSeason = 'tsuyu';
 
-    // Update URL to reflect spring season
-    this.updateURL('spring');
+    // Update URL to reflect tsuyu season
+    this.updateURL('tsuyu');
 
     // Update styling / background
-    this.updateSeasonBackground('spring');
+    this.updateSeasonBackground('tsuyu');
 
-    // Enable sakura effect for spring (no burst on initial load)
-    if (typeof window.enableSakura === 'function') {
+    // Enable rain effect for tsuyu season
+    if (typeof window.enableRain === 'function') {
+      window.enableRain();
+    }
+    // Ensure sakura effect is disabled
+    window.disableSakura?.();
+
+    // Enable sakura effect only for spring (no burst on initial load)
+    if (typeof window.enableSakura === 'function' && this.currentSeason === 'spring') {
       window.enableSakura(false);
     }
 
-    // Show spring gallery panel by default
-    this.updateSeasonButtons('spring');
-    this.updateSeasonPanels('spring', false);
+    // Show tsuyu gallery panel by default
+    this.updateSeasonButtons('tsuyu');
+    this.updateSeasonPanels('tsuyu', false);
   }
   
   getSeasonFromURL() {
