@@ -3458,18 +3458,16 @@ body:not(.loaded) * {
 /* ===== Pro Washi Footer 2025 ===== */
 .footer {
     background-color: #faf8f5;
-    background-image: url("./img/washi-footer-light.png"); /* provide your own texture */
     background-size: 480px 480px;
     background-repeat: repeat;
     border-top: 3px double rgba(0,0,0,0.12);
     box-shadow: 0 -3px 5px rgba(0,0,0,0.06);
-    color: #3a3532; /* sumi-iro */
+    color: #3a3532;
     line-height: 1.8;
 }
 
 [data-theme="dark"] .footer {
     background-color: #14181d;
-    background-image: url("./img/washi-footer-dark.png");
     background-size: 480px 480px;
     color: var(--neutral-300);
 }

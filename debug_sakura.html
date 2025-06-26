@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sakura Debug Test</title>
+    <link rel="stylesheet" href="./css/base/variables.css">
+    <link rel="stylesheet" href="./css/components/sakura.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #111827;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        .debug-info {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 9999;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+        .test-button {
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .test-container {
+            height: 100vh;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-info" id="debugInfo">
+        Debug Info:<br>
+        Container created: <span id="containerStatus">No</span><br>
+        Petals created: <span id="petalCount">0</span><br>
+        Container z-index: <span id="zIndex">N/A</span><br>
+        Container display: <span id="display">N/A</span><br>
+        WebP Support: <span id="webpSupport">N/A</span><br>
+        Computed z-index var: <span id="zVar">N/A</span>
+    </div>
+    
+    <div class="test-container">
+        <button class="test-button" onclick="testSakura()">Enable Sakura (Gentle)</button>
+        <button class="test-button" onclick="testSakuraBurst()">Enable Sakura (with Burst)</button>
+        <button class="test-button" onclick="inspectSakura()">Inspect Sakura</button>
+        <button class="test-button" onclick="createTestPetal()">Create Test Petal</button>
+        
+        <h1>Sakura Effect Debug Test</h1>
+        <p>Click "Enable Sakura" to test the sakura effect.</p>
+        <p>Check the debug info in the top-left corner.</p>
+    </div>
+
+    <script>
+        // Sakura Effect Test Implementation
+        class SakuraEffect {
+            constructor() {
+                this.container = document.createElement('div');
+                this.container.className = 'sakura-container';
+                document.body.appendChild(this.container);
+                
+                console.log('SakuraEffect constructor called');
+                console.log('Container element:', this.container);
+                console.log('Container computed styles:', window.getComputedStyle(this.container));
+
+                this.petalCount = Math.floor(window.innerWidth / 25);
+                console.log('Petal count:', this.petalCount);
+                
+                for (let i = 0; i < this.petalCount; i++) {
+                    this.spawnPetal();
+                }
+                
+                this.updateDebugInfo();
+            }
+
+            spawnPetal() {
+                const petal = document.createElement('div');
+                
+                // Test the new petal variations
+                const sizes = ['tiny', 'small', 'medium', 'large'];
+                const types = ['a', 'b', 'c'];
+                const layers = ['back', 'mid', 'front'];
+                
+                const sizeClass = sizes[Math.floor(Math.random() * sizes.length)];
+                const typeClass = types[Math.floor(Math.random() * types.length)];
+                const layerClass = layers[Math.floor(Math.random() * layers.length)];
+                
+                petal.className = `sakura-petal size-${sizeClass} type-${typeClass} layer-${layerClass}`;
+                petal.style.left = Math.random() * 100 + 'vw';
+                petal.style.animationDelay = Math.random() * 5 + 's';
+                petal.style.animationDuration = 8 + Math.random() * 6 + 's';
+                
+                console.log('Spawning petal:', petal.className, petal);
+                console.log('Petal computed styles:', window.getComputedStyle(petal));
+                
+                this.container.appendChild(petal);
+            }
+            
+            updateDebugInfo() {
+                const containerStyles = window.getComputedStyle(this.container);
+                const rootStyles = window.getComputedStyle(document.documentElement);
+                
+                document.getElementById('containerStatus').textContent = 'Yes';
+                document.getElementById('petalCount').textContent = this.container.children.length;
+                document.getElementById('zIndex').textContent = containerStyles.zIndex;
+                document.getElementById('display').textContent = containerStyles.display;
+                document.getElementById('webpSupport').textContent = this.checkWebPSupport() ? 'Yes' : 'No';
+                document.getElementById('zVar').textContent = rootStyles.getPropertyValue('--z-sticky');
+            }
+            
+            checkWebPSupport() {
+                const canvas = document.createElement('canvas');
+                canvas.width = 1;
+                canvas.height = 1;
+                return canvas.toDataURL('image/webp').indexOf('image/webp') === 5;
+            }
+        }
+
+        let sakuraEffect;
+        
+        function testSakura() {
+            console.log('Testing sakura effect (gentle)...');
+            if (!sakuraEffect) {
+                sakuraEffect = new SakuraEffect(false);
+            }
+        }
+        
+        function testSakuraBurst() {
+            console.log('Testing sakura effect with burst...');
+            if (sakuraEffect) {
+                sakuraEffect.destroy();
+            }
+            sakuraEffect = new SakuraEffect(true);
+        }
+        
+        function inspectSakura() {
+            console.log('=== SAKURA INSPECTION ===');
+            if (sakuraEffect) {
+                console.log('Container:', sakuraEffect.container);
+                console.log('Container in DOM:', document.body.contains(sakuraEffect.container));
+                console.log('Container children:', sakuraEffect.container.children.length);
+                console.log('Container styles:', window.getComputedStyle(sakuraEffect.container));
+                
+                const petals = sakuraEffect.container.querySelectorAll('.sakura-petal');
+                console.log('Petals found:', petals.length);
+                petals.forEach((petal, i) => {
+                    console.log(`Petal ${i}:`, petal);
+                    console.log(`Petal ${i} styles:`, window.getComputedStyle(petal));
+                    console.log(`Petal ${i} rect:`, petal.getBoundingClientRect());
+                });
+                
+                sakuraEffect.updateDebugInfo();
+            } else {
+                console.log('No sakura effect instance found');
+            }
+        }
+        
+        function createTestPetal() {
+            // Create a test petal directly in body to see if it's a CSS issue
+            const testPetal = document.createElement('div');
+            testPetal.className = 'sakura-petal';
+            testPetal.style.position = 'fixed';
+            testPetal.style.top = '50px';
+            testPetal.style.left = '50px';
+            testPetal.style.zIndex = '9999';
+            testPetal.style.background = 'red'; // Override to make it visible
+            document.body.appendChild(testPetal);
+            
+            console.log('Test petal created:', testPetal);
+            console.log('Test petal styles:', window.getComputedStyle(testPetal));
+        }
+        
+        // Auto-update debug info
+        setInterval(() => {
+            if (sakuraEffect) {
+                sakuraEffect.updateDebugInfo();
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

@@ -489,23 +489,23 @@ class SeasonsGallery {
   }
   
   loadInitialSeason() {
-    // Always set initial season to tsuyu on site reload
-    this.currentSeason = 'tsuyu';
+    // Always set initial season to spring on site reload
+    this.currentSeason = 'spring';
 
-    // Update URL to reflect tsuyu season
-    this.updateURL('tsuyu');
+    // Update URL to reflect spring season
+    this.updateURL('spring');
 
     // Update styling / background
-    this.updateSeasonBackground('tsuyu');
+    this.updateSeasonBackground('spring');
 
-    // Enable rain effect for tsuyu
-    if (typeof window.enableRain === 'function') {
-      window.enableRain();
+    // Enable sakura effect for spring (no burst on initial load)
+    if (typeof window.enableSakura === 'function') {
+      window.enableSakura(false);
     }
 
-    // Show summer gallery panel by default while keeping overall season as tsuyu
-    this.updateSeasonButtons('summer');
-    this.updateSeasonPanels('summer', false);
+    // Show spring gallery panel by default
+    this.updateSeasonButtons('spring');
+    this.updateSeasonPanels('spring', false);
   }
   
   getSeasonFromURL() {
@@ -629,15 +629,19 @@ class SeasonsGallery {
     // Update body season for styling (includes washi background)
     this.updateSeasonBackground(season);
 
-    // Toggle rain effect depending on season
-    if (season === 'tsuyu') {
-      if (typeof window.enableRain === 'function') {
-        window.enableRain();
-      }
+    // Toggle visual effects depending on season
+    console.log('[SeasonsGallery] switchToSeason', season);
+    if (season === 'spring') {
+      // Check if this is a fresh switch to spring (not initial page load)
+      const isSeasonChange = this.currentSeason !== season && this.currentSeason !== null;
+      window.enableSakura?.(isSeasonChange); // Pass true for burst if switching to spring
+      window.disableRain?.();
+    } else if (season === 'tsuyu') {
+      window.enableRain?.();
+      window.disableSakura?.();
     } else {
-      if (typeof window.disableRain === 'function') {
-        window.disableRain();
-      }
+      window.disableRain?.();
+      window.disableSakura?.();
     }
     
     // Announce change for screen readers
@@ -2874,9 +2878,206 @@ class RainEffect {
   }
 }
 
+// Sakura Effect Module with Initial Burst Feature
+class SakuraEffect {
+  constructor(withBurst = false) {
+    this.container = document.createElement('div');
+    this.container.className = 'sakura-container';
+    document.body.appendChild(this.container);
+
+    // Refined petal density for elegant, sophisticated effect - reduced for larger petals
+    this.petalCount = Math.floor(window.innerWidth / 22);
+    this.activePetals = new Set();
+    this.isInBurstPhase = withBurst;
+    
+    if (withBurst) {
+      this.startBurstPhase();
+    } else {
+      this.startGentlePhase();
+    }
+  }
+  
+  startBurstPhase() {
+    console.log('[SakuraEffect] Starting dramatic spring burst phase');
+    
+    // Dramatic initial burst - higher density but adjusted for larger petals
+    const burstCount = Math.floor(window.innerWidth / 12); // Increased but balanced for larger petals
+    
+    // Create waves of petals for dramatic effect - faster waves
+    for (let wave = 0; wave < 3; wave++) {
+      setTimeout(() => {
+        for (let i = 0; i < burstCount / 3; i++) {
+          setTimeout(() => this.spawnPetal(true), Math.random() * 400);
+        }
+      }, wave * 300);
+    }
+    
+    // Transition to normal phase after burst - faster transition
+    setTimeout(() => {
+      this.isInBurstPhase = false;
+      this.startGentlePhase();
+      console.log('[SakuraEffect] Transitioning to normal phase');
+    }, 2500); // Faster transition
+  }
+  
+  startGentlePhase() {
+    // Clear any existing interval
+    if (this.spawnInterval) {
+      clearInterval(this.spawnInterval);
+    }
+    
+    if (!this.isInBurstPhase) {
+      // Normal dynamic density for ongoing effect
+      for (let i = 0; i < this.petalCount; i++) {
+        setTimeout(() => this.spawnPetal(), Math.random() * 2000);
+      }
+    }
+    
+    // Faster, more dynamic spawning for continuous flow
+    this.spawnInterval = setInterval(() => {
+      if (!this.isInBurstPhase && this.activePetals.size < this.petalCount * 1.5) {
+        this.spawnPetal();
+        // More frequent clusters for dynamic variation
+        if (Math.random() < 0.25) {
+          setTimeout(() => this.spawnPetal(), 150 + Math.random() * 300);
+        }
+      }
+    }, 800 + Math.random() * 600); // Faster, more dynamic timing
+  }
+
+  spawnPetal(isBurst = false) {
+    const petal = document.createElement('div');
+    
+    // Elegant petal size distribution - favor medium/large for sophistication
+    const sizes = ['tiny', 'small', 'medium', 'large'];
+    let weights;
+    
+    if (isBurst) {
+      // During burst phase, include more varied sizes for dramatic effect
+      weights = [20, 25, 35, 20]; // Balanced with focus on medium/large
+    } else {
+      weights = [10, 20, 35, 35]; // Heavily favor medium/large petals for prominence
+    }
+    
+    const sizeClass = this.weightedRandom(sizes, weights);
+    
+    // Petal type variations (3 different petal images)
+    const types = ['a', 'b', 'c'];
+    const typeClass = this.weightedRandom(types, [33, 33, 34]);
+    
+    // Depth layers for 3D atmospheric effect
+    const layers = ['back', 'mid', 'front'];
+    const layerWeights = [30, 50, 20];
+    const layerClass = this.weightedRandom(layers, layerWeights);
+    
+    petal.className = `sakura-petal size-${sizeClass} type-${typeClass} layer-${layerClass}`;
+    
+    // Sophisticated positioning and faster timing
+    petal.style.left = (Math.random() * 105 - 5) + 'vw'; // Start slightly off-screen
+    petal.style.animationDelay = Math.random() * 1.5 + 's'; // Faster start
+    
+    // Graceful, contemplative durations for serene elegance
+    let baseDuration;
+    
+    if (isBurst) {
+      // Very fast fall during burst for dramatic effect
+      baseDuration = sizeClass === 'large' ? 6 : 
+                     sizeClass === 'medium' ? 5 : 
+                     sizeClass === 'small' ? 4 : 3;
+      petal.style.animationDuration = (baseDuration + Math.random() * 2) + 's';
+    } else {
+      // Faster normal timing for dynamic flow
+      baseDuration = sizeClass === 'large' ? 8 : 
+                     sizeClass === 'medium' ? 7 : 
+                     sizeClass === 'small' ? 6 : 5;
+      petal.style.animationDuration = (baseDuration + Math.random() * 3) + 's';
+    }
+    
+    // Set refined opacity for sophisticated depth effect - higher for larger petals
+    const opacities = { tiny: 0.45, small: 0.65, medium: 0.8, large: 0.9 };
+    petal.style.setProperty('--petal-opacity', opacities[sizeClass]);
+    
+    this.container.appendChild(petal);
+    this.activePetals.add(petal);
+    
+    // Clean up completed animations
+    petal.addEventListener('animationiteration', () => {
+      if (Math.random() < 0.1) { // 10% chance to remove and respawn
+        this.removePetal(petal);
+      }
+    });
+    
+    // Ensure cleanup after faster animation completes
+    setTimeout(() => {
+      if (petal.parentNode) {
+        this.removePetal(petal);
+      }
+    }, (baseDuration + 2) * 1000 + 500); // Faster cleanup for dynamic flow
+  }
+  
+  removePetal(petal) {
+    if (petal && petal.parentNode) {
+      this.activePetals.delete(petal);
+      petal.remove();
+    }
+  }
+  
+  weightedRandom(items, weights) {
+    const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
+    let random = Math.random() * totalWeight;
+    
+    for (let i = 0; i < items.length; i++) {
+      random -= weights[i];
+      if (random <= 0) {
+        return items[i];
+      }
+    }
+    return items[items.length - 1];
+  }
+  
+  destroy() {
+    if (this.spawnInterval) {
+      clearInterval(this.spawnInterval);
+    }
+    this.activePetals.clear();
+    if (this.container && this.container.parentNode) {
+      this.container.remove();
+    }
+  }
+}
+
+// Sakura effect will be toggled based on the active season
+let sakuraEffect;
+window.enableSakura = function(withBurst = false) {
+  console.log('[SakuraEffect] enableSakura called', withBurst ? 'with burst' : 'gentle');
+  if (!sakuraEffect) {
+    console.log('[SakuraEffect] Creating new SakuraEffect instance');
+    sakuraEffect = new SakuraEffect(withBurst);
+    window.sakuraEffect = sakuraEffect;
+    console.log('[SakuraEffect] Created with', sakuraEffect.petalCount, 'petals');
+    console.log('[SakuraEffect] Active petals:', sakuraEffect.activePetals.size);
+  } else {
+    console.log('[SakuraEffect] Showing existing sakura effect');
+    sakuraEffect.container.style.display = '';
+    
+    // If requesting burst on existing effect, trigger burst
+    if (withBurst && !sakuraEffect.isInBurstPhase) {
+      sakuraEffect.startBurstPhase();
+    }
+  }
+};
+window.disableSakura = function() {
+  console.log('[SakuraEffect] disableSakura called');
+  if (sakuraEffect) {
+    sakuraEffect.destroy();
+    sakuraEffect = null;
+  }
+};
+
 // Rain effect will be toggled based on the active season
 let rainEffect;
 window.enableRain = function() {
+  console.log('[RainEffect] enableRain called');
   if (!rainEffect) {
     rainEffect = new RainEffect();
     window.rainEffect = rainEffect;
@@ -2885,6 +3086,7 @@ window.enableRain = function() {
   }
 };
 window.disableRain = function() {
+  console.log('[RainEffect] disableRain called');
   if (rainEffect) {
     rainEffect.canvas.style.display = 'none';
   }
@@ -2892,7 +3094,7 @@ window.disableRain = function() {
 
 // Export for module systems
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { DevelopmentTools, RainEffect };
+  module.exports = { DevelopmentTools, RainEffect, SakuraEffect };
 }
 
 /**
