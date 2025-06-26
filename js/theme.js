@@ -1,7 +1,3 @@
- * Theme Module
- * Handles dark/light theme switching with system preference detection
- */
-
 class ThemeManager {
   constructor() {
     this.themeToggle = document.getElementById('theme-toggle');
