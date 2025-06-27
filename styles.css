@@ -487,6 +487,8 @@ a:focus {
 .logo a:hover,
 .logo a:focus {
   color: var(--accent);
+  outline: none;
+  outline-offset: 0;
 }
 
 .logo a:hover::after,
