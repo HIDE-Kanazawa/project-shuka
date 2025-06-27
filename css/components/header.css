@@ -35,10 +35,8 @@
   display: inline-block;
   color: inherit;
   text-decoration: none;
-  background-image: linear-gradient(120deg, var(--primary) 0%, var(--accent) 100%);
-  background-size: 200% 100%;
-  background-position: 0 0;
-  transition: background-position var(--transition-fast), color var(--transition-fast);
+  background: none;
+  transition: color var(--transition-fast);
 }
 
 .logo a::after {
@@ -57,10 +55,7 @@
 
 .logo a:hover,
 .logo a:focus {
-  background-position: 100% 0;
-  color: transparent;
-  -webkit-background-clip: text;
-  background-clip: text;
+  color: var(--accent);
 }
 
 .logo a:hover::after,
