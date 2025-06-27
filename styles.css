@@ -1322,7 +1322,7 @@ SURF_END SeasonTextColor */
 
 /* ===== Footer ===== */
 .footer {
-  background: var(--neutral-800) url('./img/和紙_黒.png');
+  background: var(--background) url('./img/和紙_黒.png');
   background-size: cover;
   background-repeat: repeat;
   color: var(--neutral-300);
@@ -3580,7 +3580,7 @@ body:not(.loaded) * {
 
 /* ===== Pro Washi Footer 2025 ===== */
 .footer {
-    background: var(--neutral-800);
+    background: var(--background);
     border-top: 3px double rgba(0,0,0,0.12);
     box-shadow: 0 -4px 6px rgba(0,0,0,0.4);
     color: var(--neutral-300);

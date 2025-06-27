@@ -1,6 +1,6 @@
 /* ===== Footer ===== */
 .footer {
-  background: var(--neutral-800);
+  background: var(--background);
   color: var(--neutral-300);
   padding: var(--space-20) 0 var(--space-10);
   position: relative;
