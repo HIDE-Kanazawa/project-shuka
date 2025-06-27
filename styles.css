@@ -612,7 +612,7 @@ a:focus {
   }
 
   .nav-container {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: var(--space-4);
   }
 
@@ -627,11 +627,10 @@ a:focus {
   }
 
   .season-select {
-    width: 100%;
+    width: auto;
     display: flex;
-    justify-content: center;
-    margin: var(--space-2) 0 0;
-    margin-left: 0 !important;
+    justify-content: flex-end;
+    margin: 0 0 0 auto;
   }
 }
 
