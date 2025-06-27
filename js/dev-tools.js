@@ -481,7 +481,7 @@ class DevelopmentTools {
       reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
       highContrast: window.matchMedia('(prefers-contrast: high)').matches,
       touchDevice: 'ontouchstart' in window,
-      connection: navigator.connection?.effectiveType || 'unknown'
+      connection: (navigator.connection && navigator.connection.effectiveType) ? navigator.connection.effectiveType : 'unknown'
     };
     
     console.log('Environment Info:', info);
