@@ -1,3 +1,4 @@
+/**
  * Main JavaScript Module
  * Coordinates all site functionality and provides utility functions
  */
@@ -441,12 +442,8 @@ const additionalCSS = `
   }
   
   .track.playing {
-    background: var(--primary);
-    color: white;
-  }
-  
-  [data-theme="dark"] .track.playing {
     background: var(--primary-light);
+    color: white;
   }
 `;
 
