@@ -390,7 +390,8 @@ window.scrollToSection = function(sectionId) {
 // Export for module systems
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = Navigation;
-}/**
+}
+/**
  * Seasons Module
  * Handles seasonal gallery switching with animations and accessibility
  */
@@ -404,6 +405,7 @@ class SeasonsGallery {
     this.seasonPanels = document.querySelectorAll('.season-panel');
     this.currentSeason = 'tsuyu';
     this.audioElements = [];
+    this.videoElements = [];
     
     this.init();
   }
@@ -428,7 +430,7 @@ class SeasonsGallery {
   
   setupAudioElements() {
     this.audioElements = Array.from(document.querySelectorAll('audio'));
-    this.videoElements = Array.from(document.querySelectorAll('video'));
+    this.videoElements = Array.from(document.querySelectorAll('.season-video'));
     
     this.audioElements.forEach(audio => {
       // Set default volume to 50%
@@ -455,6 +457,7 @@ class SeasonsGallery {
 
       // Add keyboard support for video
       video.addEventListener('keydown', (e) => this.handleVideoKeydown(e));
+
 
       // Allow clicking the surrounding visual container to start playback
       const container = video.closest('.season-visual');
@@ -945,7 +948,45 @@ class SeasonsGallery {
       video.currentTime = Math.min(video.duration, video.currentTime + 5);
     }
   }
-  
+
+  showPlayNote(e) {
+    const video = e.currentTarget;
+    if (video._playNote) return;
+
+    const note = document.createElement('div');
+    note.className = 'play-note';
+    note.innerHTML = '♪<span class="visually-hidden">クリックで再生</span>';
+    document.body.appendChild(note);
+    note.style.left = `${e.clientX}px`;
+    note.style.top = `${e.clientY}px`;
+
+    video._playNote = note;
+
+    if (typeof window.createCustomRipple === 'function') {
+      window.createCustomRipple(e.clientX, e.clientY, getComputedStyle(note).color);
+    }
+  }
+
+  movePlayNote(e) {
+    const note = e.currentTarget._playNote;
+    if (note) {
+      note.style.left = `${e.clientX}px`;
+      note.style.top = `${e.clientY}px`;
+    }
+  }
+
+  hidePlayNote(e) {
+    this.removePlayNote(e.currentTarget);
+  }
+
+  removePlayNote(video) {
+    const note = video._playNote;
+    if (note) {
+      note.remove();
+      video._playNote = null;
+    }
+  }
+
   stopAllAudio() {
     this.audioElements.forEach(audio => {
       if (!audio.paused) {
@@ -972,11 +1013,12 @@ class SeasonsGallery {
 }
 
 // Global function for external use (e.g., footer links)
-window.switchSeason = function(season) {
+function switchSeason(season) {
   if (window.seasonsGallery && typeof window.seasonsGallery.switchToSeason === 'function') {
     window.seasonsGallery.switchToSeason(season);
   }
-};
+}
+window.switchSeason = switchSeason;
 
 // Setup footer season buttons helper function
 function setupFooterSeasonButtons() {
@@ -995,7 +1037,9 @@ function setupFooterSeasonButtons() {
 // Export for module systems
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = SeasonsGallery;
-}/**
+}
+window.SeasonsGallery = SeasonsGallery;
+/**
  * Main JavaScript Module
  * Coordinates all site functionality and provides utility functions
  */

@@ -9,6 +9,7 @@ class SeasonsGallery {
     this.seasonPanels = document.querySelectorAll('.season-panel');
     this.currentSeason = 'tsuyu';
     this.audioElements = [];
+    this.videoElements = [];
     
     this.init();
   }
@@ -33,18 +34,21 @@ class SeasonsGallery {
   
   setupAudioElements() {
     this.audioElements = Array.from(document.querySelectorAll('audio'));
+
     this.videoElements = Array.from(document.querySelectorAll('video'));
+
 
     this.audioElements.forEach(audio => {
       // Set default volume to 50%\n      audio.volume = 0.5;\n      // Set preload to none for performance
       audio.preload = 'none';
-      
+
       // Add accessibility attributes
       const trackTitle = audio.parentElement.querySelector('.track-title')?.textContent || 'Track';
       audio.setAttribute('aria-label', `${trackTitle}の音楽プレーヤー`);
     });
 
-    // Setup video elements
+
+  // Setup video elements
     this.videoElements.forEach(video => {
       video.volume = 0.5;
       video.preload = 'none';
@@ -66,6 +70,7 @@ class SeasonsGallery {
 
       const seasonTitle = video.closest('.season-panel')?.querySelector('.season-title')?.textContent || 'Video';
       video.setAttribute('aria-label', `${seasonTitle}のデモ動画`);
+
     });
   }
 
@@ -584,6 +589,7 @@ class SeasonsGallery {
     }
   }
 
+
   fadeOutAndPause(audio, duration = 500) {
     const start = audio.volume;
     const step = start / (duration / 50);
@@ -610,6 +616,7 @@ class SeasonsGallery {
         clearInterval(fade);
       }
     }, 50);
+
   }
 
   stopAllAudio() {
@@ -631,11 +638,11 @@ class SeasonsGallery {
 }
 
 // Global function for external use (e.g., footer links)
-window.switchSeason = function(season) {
+function switchSeason(season) {
   if (window.seasonsGallery && typeof window.seasonsGallery.switchToSeason === 'function') {
     window.seasonsGallery.switchToSeason(season);
   }
-};
+}
 
 // Make functions globally available
 window.SeasonsGallery = SeasonsGallery;

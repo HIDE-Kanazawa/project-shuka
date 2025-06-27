@@ -271,6 +271,19 @@ body[data-season="winter"] .ripple{ border-color: var(--accent-winter); }
   }
 }
 
+/* Floating musical note for video hover */
+.play-note {
+  position: absolute;
+  pointer-events: none;
+  font-size: 2.5rem;
+  line-height: 1;
+  transform: scale(0);
+  opacity: 0.9;
+  animation: rippleElegant 0.8s forwards;
+  color: currentColor;
+  text-shadow: 0 0 4px currentColor;
+}
+
 
 
 /* WINDSURF_END RippleEnhancement */
