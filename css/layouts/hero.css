@@ -2,9 +2,9 @@
 .hero {
   /* Prevent header overlap */
   --header-height: 80px;
-  /* Remove top gap; background should start behind fixed header */
-  margin-top: 0;
-  height: calc(85vh - var(--header-height));
+  /* Push section below the fixed header */
+  margin-top: var(--header-height);
+  height: 85vh;
   min-height: 480px;
   background: linear-gradient(
     rgba(0, 0, 0, 0.4), 
@@ -19,7 +19,7 @@
 @media (max-width: 600px) {
   .hero {
     background-position: left 20%;
-    height: calc(90vh - var(--header-height));
+    height: 90vh;
   }
 }
 
