@@ -198,7 +198,9 @@ function enableSummerWillow() {
 function disableSummerWillow() {
   console.log('[SummerWillowEffect] disableSummerWillow called');
   if (summerWillowEffect) {
-    summerWillowEffect.canvas.style.display = 'none';
+    summerWillowEffect.canvas.remove();
+    summerWillowEffect = null;
+    window.summerWillowEffect = null;
   }
 }
 

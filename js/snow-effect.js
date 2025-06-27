@@ -159,7 +159,9 @@ function enableSnow() {
 
 function disableSnow() {
   if (snowEffect) {
-    snowEffect.canvas.style.display = 'none';
+    snowEffect.canvas.remove();
+    snowEffect = null;
+    window.snowEffect = null;
   }
 }
 

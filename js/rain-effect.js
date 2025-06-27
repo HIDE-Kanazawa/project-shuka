@@ -121,7 +121,9 @@ function enableRain() {
 }
 function disableRain() {
   if (rainEffect) {
-    rainEffect.canvas.style.display = 'none';
+    rainEffect.canvas.remove();
+    rainEffect = null;
+    window.rainEffect = null;
   }
 }
 
