@@ -55,6 +55,13 @@
     <link rel="prefetch" href="./img/秀歌-秋.webp" as="image">
     <link rel="prefetch" href="./img/秀歌-冬.webp" as="image">
     <title>Shuka – 秀歌 | AI音楽アーティスト 公式サイト</title>
+    <script>
+        // Prevent automatic scrolling caused by login redirects containing a hash
+        if (window.location.hash && /(access_token|id_token|login)/.test(window.location.hash)) {
+            history.replaceState(null, '', window.location.pathname);
+            window.scrollTo(0, 0);
+        }
+    </script>
 </head>
 <body>
     <!-- Skip link for accessibility -->
