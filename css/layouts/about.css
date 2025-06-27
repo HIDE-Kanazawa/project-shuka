@@ -1,11 +1,6 @@
 /* ===== About Section ===== */
 .about {
   padding: var(--space-24) 0;
-  background: rgba(249, 250, 251, 0.85); /* 和紙背景を透かすため半透明に */
-  backdrop-filter: blur(1px);
-}
-
-[data-theme="dark"] .about {
   background: rgba(17, 24, 39, 0.85);
   backdrop-filter: blur(1px);
 }

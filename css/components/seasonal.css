@@ -6,17 +6,6 @@ body[data-season="tsuyu"]{ --primary:var(--primary-tsuyu); --accent:var(--accent
 
 /* Tsuyu (Rainy Season) Special Styling */
 body[data-season="tsuyu"] {
-  --background: #f7f9fc;
-  --surface: #eef3f8;
-  --text: #2a3f5f;
-  --text-secondary: #4a5f7f;
-  --text-muted: #6b7b9a;
-  --border: #c5d4e3;
-  --shadow: rgba(74, 144, 184, 0.15);
-  --shadow-lg: rgba(74, 144, 184, 0.25);
-}
-
-[data-theme="dark"] body[data-season="tsuyu"] {
   --background: #1a2332;
   --surface: #253142;
   --text: #d1dae6;
@@ -126,6 +115,7 @@ body::before {
   transition: opacity 0.5s ease-in-out;
 
   z-index: -1;
+  mix-blend-mode: normal;
 }
 
 /* 季節別和紙背景 */
@@ -150,15 +140,6 @@ body[data-season="tsuyu"]::before {
   opacity: 1;
 }
 
-/* ダークテーマ時の和紙背景調整 */
-[data-theme="dark"] body::before {
-  opacity: 1;
-  mix-blend-mode: normal;
-}
-
-[data-theme="dark"] body[data-season="tsuyu"]::before {
-  opacity: 1;
-}
 
 /* レスポンシブ対応 - モバイルでのパフォーマンス最適化 */
 @media (max-width: 768px) {

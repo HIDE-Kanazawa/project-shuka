@@ -9,9 +9,6 @@ window.addEventListener('DOMContentLoaded', () => {
     window.seasonsGallery = new SeasonsGallery();
   }
   
-  if (typeof ThemeManager !== 'undefined') {
-    window.themeManager = new ThemeManager();
-  }
   
   if (typeof WaterRippleEffect !== 'undefined') {
     window.waterRipples = new WaterRippleEffect();
