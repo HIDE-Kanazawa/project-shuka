@@ -58,8 +58,8 @@ class SeasonsGallery {
 
       const container = video.closest('.season-visual');
       if (container && !container.dataset.playHandlerAdded) {
-        container.addEventListener('click', evt => {
-          if (evt.target !== video && video.paused) {
+        container.addEventListener('click', () => {
+          if (video.paused) {
             video.play().catch(err => {
               console.log('Video play failed:', err);
             });
