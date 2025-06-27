@@ -3899,13 +3899,13 @@ class AutumnLeavesEffect {
 
   getLeafColor(type) {
     if (type === 'maple') {
-      // もみじの色 - 赤、オレンジ、黄色
+      // もみじの色 - 赤や深いオレンジを中心に
       const colors = [
-        { r: 220, g: 20, b: 20 },   // 赤
+        { r: 200, g: 30, b: 30 },   // 深い赤
+        { r: 220, g: 20, b: 60 },   // クリムゾン
         { r: 255, g: 69, b: 0 },    // オレンジ赤
-        { r: 255, g: 140, b: 0 },   // オレンジ
-        { r: 255, g: 165, b: 0 },   // 明るいオレンジ
-        { r: 255, g: 215, b: 0 }    // 黄色
+        { r: 255, g: 120, b: 0 },   // 鮮やかなオレンジ
+        { r: 255, g: 160, b: 0 }    // オレンジ
       ];
       return colors[Math.floor(Math.random() * colors.length)];
     } else {
@@ -3983,19 +3983,23 @@ class AutumnLeavesEffect {
 
   // Draw a maple leaf shape (もみじ)
   drawMapleLeaf(ctx, cx, cy, size) {
-    const scale = size / 20;
-    
+    const s = size / 15;
+
       ctx.beginPath();
-
-      // Stylized maple leaf using curves for a softer shape
-      ctx.moveTo(cx, cy - 10 * scale);
-      ctx.bezierCurveTo(cx - 2 * scale, cy - 12 * scale, cx - 8 * scale, cy - 8 * scale, cx - 4 * scale, cy - 4 * scale);
-      ctx.bezierCurveTo(cx - 8 * scale, cy - 2 * scale, cx - 10 * scale, cy + 4 * scale, cx - 5 * scale, cy + 4 * scale);
-      ctx.bezierCurveTo(cx - 8 * scale, cy + 8 * scale, cx - 2 * scale, cy + 8 * scale, cx, cy + 10 * scale);
-      ctx.bezierCurveTo(cx + 2 * scale, cy + 8 * scale, cx + 8 * scale, cy + 8 * scale, cx + 5 * scale, cy + 4 * scale);
-      ctx.bezierCurveTo(cx + 10 * scale, cy + 4 * scale, cx + 8 * scale, cy - 2 * scale, cx + 4 * scale, cy - 4 * scale);
-      ctx.bezierCurveTo(cx + 8 * scale, cy - 8 * scale, cx + 2 * scale, cy - 12 * scale, cx, cy - 10 * scale);
-
+      ctx.moveTo(cx, cy - 9 * s);
+      ctx.lineTo(cx - 2 * s, cy - 6 * s);
+      ctx.lineTo(cx - 7 * s, cy - 8 * s);
+      ctx.lineTo(cx - 4 * s, cy - 3 * s);
+      ctx.lineTo(cx - 9 * s, cy - 2 * s);
+      ctx.lineTo(cx - 5 * s, cy + 1 * s);
+      ctx.lineTo(cx - 7 * s, cy + 6 * s);
+      ctx.lineTo(cx, cy + 3 * s);
+      ctx.lineTo(cx + 7 * s, cy + 6 * s);
+      ctx.lineTo(cx + 5 * s, cy + 1 * s);
+      ctx.lineTo(cx + 9 * s, cy - 2 * s);
+      ctx.lineTo(cx + 4 * s, cy - 3 * s);
+      ctx.lineTo(cx + 7 * s, cy - 8 * s);
+      ctx.lineTo(cx + 2 * s, cy - 6 * s);
       ctx.closePath();
       ctx.fill();
   }
