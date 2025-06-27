@@ -420,7 +420,7 @@ class SeasonsGallery {
         const header = document.getElementById('header');
         if (header) header.setAttribute('data-season', season);
         const selector = document.getElementById('season-selector');
-        if (selector) selector.value = season;
+        if (selector && typeof selector.updateActive === 'function') selector.updateActive(season);
       };
       img.src = imageUrl;
     } else {
@@ -428,7 +428,7 @@ class SeasonsGallery {
       const header = document.getElementById('header');
       if (header) header.setAttribute('data-season', season);
       const selector = document.getElementById('season-selector');
-      if (selector) selector.value = season;
+      if (selector && typeof selector.updateActive === 'function') selector.updateActive(season);
     }
 
     this.updateFavicon(season);
@@ -737,12 +737,24 @@ function initSeasonSelector() {
   const selector = document.getElementById('season-selector');
   if (!selector) return;
 
+  const buttons = selector.querySelectorAll('button[data-season]');
+
+  selector.updateActive = (season) => {
+    buttons.forEach(btn => {
+      const isActive = btn.getAttribute('data-season') === season;
+      btn.classList.toggle('active', isActive);
+      btn.setAttribute('aria-checked', isActive);
+    });
+  };
+
   if (window.seasonsGallery && typeof window.seasonsGallery.getCurrentSeason === 'function') {
-    selector.value = window.seasonsGallery.getCurrentSeason();
+    selector.updateActive(window.seasonsGallery.getCurrentSeason());
   }
 
-  selector.addEventListener('change', (e) => {
-    const season = e.target.value;
+  selector.addEventListener('click', (e) => {
+    const button = e.target.closest('button[data-season]');
+    if (!button) return;
+    const season = button.getAttribute('data-season');
     if (typeof window.switchSeason === 'function') {
       window.switchSeason(season);
     }
