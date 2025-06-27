@@ -4,7 +4,6 @@
   top: 0;
   left: 0;
   right: 0;
-  background: var(--background);
   background-image: url('../img/和紙_黒.png');
   background-size: cover;
   background-repeat: repeat;
@@ -194,7 +193,6 @@
 /* Header seasonal backgrounds */
 body[data-season="spring"] .header,
 .header[data-season="spring"] {
-  background: var(--primary-spring);
   background-image: url('../img/和紙_黒.png');
   background-size: cover;
   background-repeat: repeat;
@@ -202,7 +200,6 @@ body[data-season="spring"] .header,
 
 body[data-season="tsuyu"] .header,
 .header[data-season="tsuyu"] {
-  background: var(--primary-tsuyu);
   background-image: url('../img/和紙_黒.png');
   background-size: cover;
   background-repeat: repeat;
@@ -210,7 +207,6 @@ body[data-season="tsuyu"] .header,
 
 body[data-season="summer"] .header,
 .header[data-season="summer"] {
-  background: var(--primary-summer);
   background-image: url('../img/和紙_黒.png');
   background-size: cover;
   background-repeat: repeat;
@@ -218,7 +214,6 @@ body[data-season="summer"] .header,
 
 body[data-season="autumn"] .header,
 .header[data-season="autumn"] {
-  background: var(--primary-autumn);
   background-image: url('../img/和紙_黒.png');
   background-size: cover;
   background-repeat: repeat;
@@ -226,7 +221,6 @@ body[data-season="autumn"] .header,
 
 body[data-season="winter"] .header,
 .header[data-season="winter"] {
-  background: var(--primary-winter);
   background-image: url('../img/和紙_黒.png');
   background-size: cover;
   background-repeat: repeat;
