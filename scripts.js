@@ -2878,6 +2878,7 @@ class RainEffect {
     document.body.appendChild(this.canvas);
 
     this.resize();
+    this.sizeMultiplier = this.getSizeMultiplier();
     window.addEventListener('resize', () => this.resize());
 
     this.drops = [];
@@ -2906,6 +2907,12 @@ class RainEffect {
   resize() {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
+    this.sizeMultiplier = this.getSizeMultiplier();
+  }
+
+  getSizeMultiplier() {
+    const ratio = window.innerWidth / 768;
+    return Math.min(Math.max(ratio, 0.6), 1.2);
   }
 
   createDrop(randomY = false) {
@@ -2988,6 +2995,7 @@ class SakuraEffect {
     document.body.appendChild(this.canvas);
 
     this.resize();
+    this.sizeMultiplier = this.getSizeMultiplier();
     window.addEventListener('resize', () => this.resize());
 
     this.petals = [];
@@ -3015,6 +3023,12 @@ class SakuraEffect {
   resize() {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
+    this.sizeMultiplier = this.getSizeMultiplier();
+  }
+
+  getSizeMultiplier() {
+    const ratio = window.innerWidth / 768;
+    return Math.min(Math.max(ratio, 0.6), 1.2);
   }
 
   initializePetals(withBurst) {
@@ -3028,7 +3042,7 @@ class SakuraEffect {
     return {
       x: Math.random() * this.canvas.width,
       y: randomY ? Math.random() * this.canvas.height : -20,
-      size: 6 + Math.random() * 11, // Slightly larger sakura petals
+      size: (6 + Math.random() * 11) * this.sizeMultiplier, // Responsive petal size
       speed: 0.3 + Math.random() * 0.7, // Gentle falling speed
       opacity: 0.7 + Math.random() * 0.3, // Higher opacity for better visibility
       drift: Math.random() * 1.5 - 0.75, // Side-to-side motion
@@ -3558,6 +3572,7 @@ class SnowEffect {
     document.body.appendChild(this.canvas);
 
     this.resize();
+    this.sizeMultiplier = this.getSizeMultiplier();
     window.addEventListener('resize', () => this.resize());
 
     this.flakes = [];
@@ -3586,13 +3601,19 @@ class SnowEffect {
   resize() {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
+    this.sizeMultiplier = this.getSizeMultiplier();
+  }
+
+  getSizeMultiplier() {
+    const ratio = window.innerWidth / 768;
+    return Math.min(Math.max(ratio, 0.6), 1.2);
   }
 
   createFlake(randomY = false) {
     return {
       x: Math.random() * this.canvas.width,
       y: randomY ? Math.random() * this.canvas.height : -20,
-      size: 2 + Math.random() * 6, // Varied snowflake sizes
+      size: (2 + Math.random() * 6) * this.sizeMultiplier, // Responsive snowflake size
       speed: 0.5 + Math.random() * 1.5, // Slower than rain
       opacity: 0.4 + Math.random() * 0.6, // More visible than rain
       drift: Math.random() * 0.5 - 0.25, // Side-to-side motion
@@ -3738,6 +3759,7 @@ class AutumnLeavesEffect {
     document.body.appendChild(this.canvas);
 
     this.resize();
+    this.sizeMultiplier = this.getSizeMultiplier();
     window.addEventListener('resize', () => this.resize());
 
     this.leaves = [];
@@ -3766,6 +3788,12 @@ class AutumnLeavesEffect {
   resize() {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
+    this.sizeMultiplier = this.getSizeMultiplier();
+  }
+
+  getSizeMultiplier() {
+    const ratio = window.innerWidth / 768;
+    return Math.min(Math.max(ratio, 0.6), 1.2);
   }
 
   createLeaf(randomY = false) {
@@ -3776,7 +3804,7 @@ class AutumnLeavesEffect {
       x: Math.random() * this.canvas.width,
       y: randomY ? Math.random() * this.canvas.height : -50,
       type: type,
-      size: 8 + Math.random() * 16, // Varied leaf sizes
+      size: (8 + Math.random() * 16) * this.sizeMultiplier, // Responsive leaf size
       speed: 0.8 + Math.random() * 1.2, // Natural falling speed
       opacity: 0.6 + Math.random() * 0.4, // More visible
       drift: Math.random() * 1 - 0.5, // Side-to-side motion

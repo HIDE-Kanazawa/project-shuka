@@ -8,6 +8,7 @@ class AutumnLeavesEffect {
     document.body.appendChild(this.canvas);
 
     this.resize();
+    this.sizeMultiplier = this.getSizeMultiplier();
     window.addEventListener('resize', () => this.resize());
 
     this.leaves = [];
@@ -36,6 +37,12 @@ class AutumnLeavesEffect {
   resize() {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
+    this.sizeMultiplier = this.getSizeMultiplier();
+  }
+
+  getSizeMultiplier() {
+    const ratio = window.innerWidth / 768;
+    return Math.min(Math.max(ratio, 0.6), 1.2);
   }
 
   createLeaf(randomY = false) {
@@ -46,7 +53,7 @@ class AutumnLeavesEffect {
       x: Math.random() * this.canvas.width,
       y: randomY ? Math.random() * this.canvas.height : -50,
       type: type,
-      size: 8 + Math.random() * 16, // Varied leaf sizes
+      size: (8 + Math.random() * 16) * this.sizeMultiplier, // Responsive leaf size
       speed: 0.8 + Math.random() * 1.2, // Natural falling speed
       opacity: 0.6 + Math.random() * 0.4, // More visible
       drift: Math.random() * 1 - 0.5, // Side-to-side motion

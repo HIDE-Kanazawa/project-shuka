@@ -8,6 +8,7 @@ class SnowEffect {
     document.body.appendChild(this.canvas);
 
     this.resize();
+    this.sizeMultiplier = this.getSizeMultiplier();
     window.addEventListener('resize', () => this.resize());
 
     this.flakes = [];
@@ -36,13 +37,19 @@ class SnowEffect {
   resize() {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
+    this.sizeMultiplier = this.getSizeMultiplier();
+  }
+
+  getSizeMultiplier() {
+    const ratio = window.innerWidth / 768;
+    return Math.min(Math.max(ratio, 0.6), 1.2);
   }
 
   createFlake(randomY = false) {
     return {
       x: Math.random() * this.canvas.width,
       y: randomY ? Math.random() * this.canvas.height : -20,
-      size: 2 + Math.random() * 6, // Varied snowflake sizes
+      size: (2 + Math.random() * 6) * this.sizeMultiplier, // Responsive snowflake size
       speed: 0.5 + Math.random() * 1.5, // Slower than rain
       opacity: 0.4 + Math.random() * 0.6, // More visible than rain
       drift: Math.random() * 0.5 - 0.25, // Side-to-side motion
