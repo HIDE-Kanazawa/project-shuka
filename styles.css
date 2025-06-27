@@ -731,14 +731,14 @@ body[data-season="winter"] .footer,
     rgba(0, 0, 0, 0.4)
   ), url('./img/秀歌-メインビジュアル.webp');
   background-size: cover;
-  background-position: left top;
+  background-position: center top;
   background-attachment: fixed;
 }
 
 /* Mobile adjustments to keep subject visible */
 @media (max-width: 600px) {
   .hero {
-    background-position: left 20%;
+    background-position: center top;
     height: 90vh;
   }
 }
@@ -3560,7 +3560,7 @@ body {
     min-height: 600px;
     background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('./img/秀歌-メインビジュアル.webp');
     background-size: cover;
-    background-position: center;
+    background-position: center top;
     background-attachment: fixed;
     display: flex;
     align-items: center;
