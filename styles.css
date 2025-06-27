@@ -435,9 +435,14 @@ a:focus {
   top: 0;
   left: 0;
   right: 0;
-  background: rgba(17, 24, 39, 0.95);
+  background:
+    linear-gradient(to bottom, rgba(17, 24, 39, 0.9), rgba(17, 24, 39, 0.7)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='60' viewBox='0 0 120 60'%3E%3Cpath d='M0 60c30-60 90-60 120 0H0z' fill='%23131833'/%3E%3C/svg%3E");
+  background-size: 120px 60px;
+  background-repeat: repeat;
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
   z-index: var(--z-fixed);
   transition: all var(--transition-normal);
 }
@@ -529,6 +534,8 @@ a:focus {
   transition: color var(--transition-fast);
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius);
+  font-family: "Yuji Syuku", "Noto Serif JP", serif;
+  letter-spacing: 0.05em;
 }
 
 .nav-menu a:hover,
@@ -603,6 +610,8 @@ a:focus {
     display: block;
     padding: var(--space-4);
     border-bottom: 1px solid var(--border);
+    font-family: "Yuji Syuku", "Noto Serif JP", serif;
+    letter-spacing: 0.05em;
   }
   
   .nav-menu a:last-child {
@@ -1122,6 +1131,17 @@ SURF_END SeasonTextColor */
   color: var(--text-muted);
 }
 
+/* Ensure Season Gallery videos always fit within the visual container */
+.season-visual {
+  aspect-ratio: 16 / 9; /* Maintain 16:9 container */
+}
+.season-visual > .season-video {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
 /* ===== Contact Section ===== */
 .contact {
   padding: var(--space-24) 0;
@@ -1250,15 +1270,15 @@ SURF_END SeasonTextColor */
 
 /* ===== Footer ===== */
 .footer {
-  /* Wafu indigo base color */
-  background: var(--neutral-800);
-  /* Subtle seigaiha wave pattern using inline SVG */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='60' viewBox='0 0 120 60'%3E%3Cpath d='M0 60c30-60 90-60 120 0H0z' fill='%232d3748'/%3E%3C/svg%3E");
+  background:
+    linear-gradient(to bottom, #1f2937, #111827),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='60' viewBox='0 0 120 60'%3E%3Cpath d='M0 60c30-60 90-60 120 0H0z' fill='%23213643'/%3E%3C/svg%3E");
   background-size: 120px 60px;
   background-repeat: repeat;
   color: var(--neutral-300);
   padding: var(--space-20) 0 var(--space-10);
   position: relative;
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.4);
 }
 
 .footer-content {
@@ -1289,6 +1309,8 @@ SURF_END SeasonTextColor */
   margin-bottom: var(--space-4);
   font-size: var(--text-xl);
   font-weight: 700;
+  font-family: "Yuji Syuku", "Noto Serif JP", serif;
+  letter-spacing: 0.05em;
 }
 
 .footer-description {
@@ -1302,6 +1324,8 @@ SURF_END SeasonTextColor */
   margin-bottom: var(--space-4);
   font-size: var(--text-lg);
   font-weight: 600;
+  font-family: "Yuji Syuku", "Noto Serif JP", serif;
+  letter-spacing: 0.05em;
 }
 
 .footer-nav-list {
@@ -2050,6 +2074,8 @@ audio:focus-visible {
   
   .nav-menu a {
     border: 1px solid transparent;
+    font-family: "Yuji Syuku", "Noto Serif JP", serif;
+    letter-spacing: 0.05em;
   }
   
   .nav-menu a:hover,
@@ -2363,6 +2389,8 @@ legend {
     display: block;
     padding: var(--space-4);
     text-align: center;
+    font-family: "Yuji Syuku", "Noto Serif JP", serif;
+    letter-spacing: 0.05em;
     border: 1px solid var(--border);
     border-radius: var(--radius);
     margin-bottom: var(--space-2);
@@ -3213,9 +3241,14 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    background: rgba(17, 24, 39, 0.95);
+    background:
+        linear-gradient(to bottom, rgba(17, 24, 39, 0.9), rgba(17, 24, 39, 0.7)),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='60' viewBox='0 0 120 60'%3E%3Cpath d='M0 60c30-60 90-60 120 0H0z' fill='%23131833'/%3E%3C/svg%3E");
+    background-size: 120px 60px;
+    background-repeat: repeat;
     backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(229, 231, 235, 0.8);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
     z-index: 1020;
     transition: all var(--transition-normal);
 }
@@ -3356,11 +3389,13 @@ body:not(.loaded) * {
 
 /* ===== Pro Washi Footer 2025 ===== */
 .footer {
-    background-color: #14181d;
-    background-size: 480px 480px;
+    background:
+        linear-gradient(to bottom, #1f2937, #111827),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='60' viewBox='0 0 120 60'%3E%3Cpath d='M0 60c30-60 90-60 120 0H0z' fill='%23213643'/%3E%3C/svg%3E");
+    background-size: 120px 60px;
     background-repeat: repeat;
     border-top: 3px double rgba(0,0,0,0.12);
-    box-shadow: 0 -3px 5px rgba(0,0,0,0.06);
+    box-shadow: 0 -4px 6px rgba(0,0,0,0.4);
     color: var(--neutral-300);
     line-height: 1.8;
 }

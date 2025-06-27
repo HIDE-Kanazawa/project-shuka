@@ -33,7 +33,8 @@ class SeasonsGallery {
   
   setupAudioElements() {
     this.audioElements = Array.from(document.querySelectorAll('audio'));
-    
+    this.videoElements = Array.from(document.querySelectorAll('video'));
+
     this.audioElements.forEach(audio => {
       // Set default volume to 50%\n      audio.volume = 0.5;\n      // Set preload to none for performance
       audio.preload = 'none';
@@ -41,6 +42,30 @@ class SeasonsGallery {
       // Add accessibility attributes
       const trackTitle = audio.parentElement.querySelector('.track-title')?.textContent || 'Track';
       audio.setAttribute('aria-label', `${trackTitle}の音楽プレーヤー`);
+    });
+
+    // Setup video elements
+    this.videoElements.forEach(video => {
+      video.volume = 0.5;
+      video.preload = 'none';
+      video.muted = false;
+      video.addEventListener('click', (e) => this.handleVideoClick(e));
+      video.addEventListener('keydown', (e) => this.handleVideoKeydown(e));
+
+      const container = video.closest('.season-visual');
+      if (container && !container.dataset.playHandlerAdded) {
+        container.addEventListener('click', evt => {
+          if (evt.target !== video && video.paused) {
+            video.play().catch(err => {
+              console.log('Video play failed:', err);
+            });
+          }
+        });
+        container.dataset.playHandlerAdded = 'true';
+      }
+
+      const seasonTitle = video.closest('.season-panel')?.querySelector('.season-title')?.textContent || 'Video';
+      video.setAttribute('aria-label', `${seasonTitle}のデモ動画`);
     });
   }
 
@@ -245,8 +270,20 @@ class SeasonsGallery {
   showPanel(panel, animate) {
     panel.style.display = 'grid';
     panel.classList.add('active');
-    
+
     if (animate) {
+      panel.style.opacity = '0';
+      panel.style.transform = 'scale(0.97)';
+      panel.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+      requestAnimationFrame(() => {
+        panel.style.opacity = '1';
+        panel.style.transform = 'scale(1)';
+      });
+      setTimeout(() => {
+        panel.style.transition = '';
+        panel.style.opacity = '';
+        panel.style.transform = '';
+      }, 400);
       // Animate children elements with staggered delays
       this.animatePanelChildren(panel, true);
     }
@@ -257,13 +294,18 @@ class SeasonsGallery {
   
   hidePanel(panel, animate) {
     if (animate) {
-      // Animate children elements out first
       this.animatePanelChildren(panel, false);
-      
+      panel.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+      panel.style.opacity = '0';
+      panel.style.transform = 'scale(0.97)';
+
       setTimeout(() => {
+        panel.style.transition = '';
         panel.style.display = 'none';
         panel.classList.remove('active');
-      }, 400);
+        panel.style.opacity = '';
+        panel.style.transform = '';
+      }, 300);
     } else {
       panel.style.display = 'none';
       panel.classList.remove('active');
@@ -285,23 +327,40 @@ class SeasonsGallery {
     // Preload washi background for smooth transition
     const washiImages = {
       spring: './img/和紙-春.webp',
-      summer: './img/和紙-夏.webp', 
+      summer: './img/和紙-夏.webp',
       autumn: './img/和紙-秋.webp',
       winter: './img/和紙-冬.webp',
       tsuyu: './img/和紙-梅雨.webp'
     };
+
+    // Update primary/accent colors with fade
+    const colorVars = {
+      spring: ['--primary-spring', '--accent-spring'],
+      summer: ['--primary-summer', '--accent-summer'],
+      autumn: ['--primary-autumn', '--accent-autumn'],
+      winter: ['--primary-winter', '--accent-winter'],
+      tsuyu: ['--primary-tsuyu', '--accent-tsuyu']
+    };
+
+    const root = document.documentElement;
+    const computed = getComputedStyle(root);
+    const vars = colorVars[season];
+    if (vars) {
+      const primaryColor = computed.getPropertyValue(vars[0]).trim();
+      const accentColor = computed.getPropertyValue(vars[1]).trim();
+      root.style.setProperty('--primary', primaryColor);
+      root.style.setProperty('--accent', accentColor);
+    }
 
     const imageUrl = washiImages[season];
     if (imageUrl) {
       // Preload the washi image
       const img = new Image();
       img.onload = () => {
-        // Update body season attribute for CSS styling
         document.body.setAttribute('data-season', season);
       };
       img.src = imageUrl;
     } else {
-      // Fallback to direct update
       document.body.setAttribute('data-season', season);
     }
   }
@@ -365,10 +424,12 @@ class SeasonsGallery {
     if (e.target.tagName === 'AUDIO') {
       this.audioElements.forEach(audio => {
         if (audio !== e.target && !audio.paused) {
-          audio.pause();
+          this.fadeOutAndPause(audio);
         }
       });
-      
+
+      this.fadeInAudio(e.target);
+
       // Add playing state class
       e.target.closest('.track')?.classList.add('playing');
     }
@@ -378,6 +439,39 @@ class SeasonsGallery {
     if (e.target.tagName === 'AUDIO') {
       // Remove playing state class
       e.target.closest('.track')?.classList.remove('playing');
+    }
+  }
+
+  handleVideoClick(e) {
+    const video = e.target;
+
+    if (video.paused) {
+      video.play().catch(error => {
+        console.log('Video play failed:', error);
+      });
+    } else {
+      video.pause();
+    }
+
+    e.preventDefault();
+  }
+
+  handleVideoKeydown(e) {
+    const video = e.target;
+
+    if (e.code === 'Space' || e.code === 'Enter') {
+      e.preventDefault();
+      this.handleVideoClick(e);
+    }
+
+    if (e.code === 'ArrowLeft') {
+      e.preventDefault();
+      video.currentTime = Math.max(0, video.currentTime - 5);
+    }
+
+    if (e.code === 'ArrowRight') {
+      e.preventDefault();
+      video.currentTime = Math.min(video.duration, video.currentTime + 5);
     }
   }
   
@@ -490,10 +584,38 @@ class SeasonsGallery {
     }
   }
 
+  fadeOutAndPause(audio, duration = 500) {
+    const start = audio.volume;
+    const step = start / (duration / 50);
+    const fade = setInterval(() => {
+      if (audio.volume > step) {
+        audio.volume = Math.max(0, audio.volume - step);
+      } else {
+        clearInterval(fade);
+        audio.pause();
+        audio.currentTime = 0;
+        audio.volume = start;
+      }
+    }, 50);
+  }
+
+  fadeInAudio(audio, target = 0.5, duration = 500) {
+    audio.volume = 0;
+    const step = target / (duration / 50);
+    const fade = setInterval(() => {
+      if (audio.volume < target - step) {
+        audio.volume = Math.min(target, audio.volume + step);
+      } else {
+        audio.volume = target;
+        clearInterval(fade);
+      }
+    }, 50);
+  }
+
   stopAllAudio() {
     this.audioElements.forEach(audio => {
       if (!audio.paused) {
-        audio.pause();
+        this.fadeOutAndPause(audio);
       }
     });
   }
