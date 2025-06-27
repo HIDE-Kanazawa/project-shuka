@@ -646,12 +646,34 @@ class SeasonsGallery {
       const isSeasonChange = this.currentSeason !== season && this.currentSeason !== null;
       window.enableSakura?.(isSeasonChange); // Pass true for burst if switching to spring
       window.disableRain?.();
+      window.disableSnow?.();
     } else if (season === 'tsuyu') {
       window.enableRain?.();
       window.disableSakura?.();
+      window.disableSnow?.();
+    } else if (season === 'winter') {
+      window.enableSnow?.();
+      window.disableRain?.();
+      window.disableSakura?.();
+      window.disableAutumnLeaves?.();
+    } else if (season === 'autumn') {
+      window.enableAutumnLeaves?.();
+      window.disableRain?.();
+      window.disableSakura?.();
+      window.disableSnow?.();
+      window.disableSummerWillow?.();
+    } else if (season === 'summer') {
+      window.enableSummerWillow?.();
+      window.disableRain?.();
+      window.disableSakura?.();
+      window.disableSnow?.();
+      window.disableAutumnLeaves?.();
     } else {
       window.disableRain?.();
       window.disableSakura?.();
+      window.disableSnow?.();
+      window.disableAutumnLeaves?.();
+      window.disableSummerWillow?.();
     }
     
     // Announce change for screen readers
@@ -2590,167 +2612,268 @@ class RainEffect {
 // Sakura Effect Module with Initial Burst Feature
 class SakuraEffect {
   constructor(withBurst = false) {
-    this.container = document.createElement('div');
-    this.container.className = 'sakura-container';
-    document.body.appendChild(this.container);
+    this.canvas = document.createElement('canvas');
+    this.canvas.className = 'sakura-canvas';
+    this.ctx = this.canvas.getContext('2d');
+    document.body.appendChild(this.canvas);
 
-    // Refined petal density for elegant, sophisticated effect - reduced for larger petals
-    this.petalCount = Math.floor(window.innerWidth / 22);
-    this.activePetals = new Set();
+    this.resize();
+    window.addEventListener('resize', () => this.resize());
+
+    this.petals = [];
+    // Sakura petal density for elegant spring effect
+    this.petalCount = Math.floor(window.innerWidth / 15);
     this.isInBurstPhase = withBurst;
     
-    if (withBurst) {
-      this.startBurstPhase();
-    } else {
-      this.startGentlePhase();
-    }
-  }
-  
-  startBurstPhase() {
-    console.log('[SakuraEffect] Starting dramatic spring burst phase');
+    // Wind variables for spring breeze
+    this.wind = 0;
+    this.windTarget = 0;
+    this.lastWindChange = performance.now();
     
-    // Dramatic initial burst - higher density but adjusted for larger petals
-    const burstCount = Math.floor(window.innerWidth / 12); // Increased but balanced for larger petals
-    
-    // Create waves of petals for dramatic effect - faster waves
-    for (let wave = 0; wave < 3; wave++) {
-      setTimeout(() => {
-        for (let i = 0; i < burstCount / 3; i++) {
-          setTimeout(() => this.spawnPetal(true), Math.random() * 400);
-        }
-      }, wave * 300);
-    }
-    
-    // Transition to normal phase after burst - faster transition
-    setTimeout(() => {
-      this.isInBurstPhase = false;
-      this.startGentlePhase();
-      console.log('[SakuraEffect] Transitioning to normal phase');
-    }, 2500); // Faster transition
-  }
-  
-  startGentlePhase() {
-    // Clear any existing interval
-    if (this.spawnInterval) {
-      clearInterval(this.spawnInterval);
-    }
-    
-    if (!this.isInBurstPhase) {
-      // Normal dynamic density for ongoing effect
-      for (let i = 0; i < this.petalCount; i++) {
-        setTimeout(() => this.spawnPetal(), Math.random() * 2000);
-      }
-    }
-    
-    // Faster, more dynamic spawning for continuous flow
-    this.spawnInterval = setInterval(() => {
-      if (!this.isInBurstPhase && this.activePetals.size < this.petalCount * 1.5) {
-        this.spawnPetal();
-        // More frequent clusters for dynamic variation
-        if (Math.random() < 0.25) {
-          setTimeout(() => this.spawnPetal(), 150 + Math.random() * 300);
-        }
-      }
-    }, 800 + Math.random() * 600); // Faster, more dynamic timing
+    this.initializePetals(withBurst);
+    this.animate = this.animate.bind(this);
+    requestAnimationFrame(this.animate);
   }
 
-  spawnPetal(isBurst = false) {
-    const petal = document.createElement('div');
-    
-    // Elegant petal size distribution - favor medium/large for sophistication
-    const sizes = ['tiny', 'small', 'medium', 'large'];
-    let weights;
-    
-    if (isBurst) {
-      // During burst phase, include more varied sizes for dramatic effect
-      weights = [20, 25, 35, 20]; // Balanced with focus on medium/large
-    } else {
-      weights = [10, 20, 35, 35]; // Heavily favor medium/large petals for prominence
+  resize() {
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+  }
+
+  initializePetals(withBurst) {
+    const count = withBurst ? this.petalCount * 2 : this.petalCount;
+    for (let i = 0; i < count; i++) {
+      this.petals.push(this.createPetal(true, withBurst));
     }
-    
-    const sizeClass = this.weightedRandom(sizes, weights);
-    
-    // Petal type variations (3 different petal images)
-    const types = ['a', 'b', 'c'];
-    const typeClass = this.weightedRandom(types, [33, 33, 34]);
-    
-    // Depth layers for 3D atmospheric effect
-    const layers = ['back', 'mid', 'front'];
-    const layerWeights = [30, 50, 20];
-    const layerClass = this.weightedRandom(layers, layerWeights);
-    
-    petal.className = `sakura-petal size-${sizeClass} type-${typeClass} layer-${layerClass}`;
-    
-    // Sophisticated positioning and faster timing
-    petal.style.left = (Math.random() * 105 - 5) + 'vw'; // Start slightly off-screen
-    petal.style.animationDelay = Math.random() * 1.5 + 's'; // Faster start
-    
-    // Graceful, contemplative durations for serene elegance
-    let baseDuration;
-    
-    if (isBurst) {
-      // Very fast fall during burst for dramatic effect
-      baseDuration = sizeClass === 'large' ? 6 : 
-                     sizeClass === 'medium' ? 5 : 
-                     sizeClass === 'small' ? 4 : 3;
-      petal.style.animationDuration = (baseDuration + Math.random() * 2) + 's';
-    } else {
-      // Faster normal timing for dynamic flow
-      baseDuration = sizeClass === 'large' ? 8 : 
-                     sizeClass === 'medium' ? 7 : 
-                     sizeClass === 'small' ? 6 : 5;
-      petal.style.animationDuration = (baseDuration + Math.random() * 3) + 's';
+  }
+
+  createPetal(randomY = false, isBurst = false) {
+    return {
+      x: Math.random() * this.canvas.width,
+      y: randomY ? Math.random() * this.canvas.height : -20,
+      size: 5 + Math.random() * 10, // Larger, more visible sakura petals
+      speed: 0.3 + Math.random() * 0.7, // Gentle falling speed
+      opacity: 0.7 + Math.random() * 0.3, // Higher opacity for better visibility
+      drift: Math.random() * 1.5 - 0.75, // Side-to-side motion
+      rotationSpeed: (Math.random() - 0.5) * 2, // Gentle rotation
+      rotation: Math.random() * Math.PI * 2,
+      swayAmplitude: 40 + Math.random() * 50, // Graceful sway for sakura
+      swaySpeed: 0.01 + Math.random() * 0.02, // Slow, elegant sway
+      swayOffset: Math.random() * Math.PI * 2,
+      windResistance: 0.4 + Math.random() * 0.6, // Spring breeze responsiveness
+      turbulence: Math.random() * 0.4, // Gentle turbulence
+      petalType: Math.floor(Math.random() * 3), // Different petal shapes
+      color: this.getSakuraColor(),
+      isBurst: isBurst
+    };
+  }
+
+  getSakuraColor() {
+    // Traditional sakura colors - soft pinks and whites
+    const colors = [
+      { r: 255, g: 182, b: 193 }, // Light pink
+      { r: 255, g: 192, b: 203 }, // Pink
+      { r: 255, g: 240, b: 245 }, // Lavender blush
+      { r: 255, g: 228, b: 225 }, // Misty rose
+      { r: 255, g: 255, b: 255 }, // Pure white
+      { r: 250, g: 218, b: 221 }, // Very light pink
+      { r: 255, g: 235, b: 238 }  // Soft pink
+    ];
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
+  
+  animate() {
+    const ctx = this.ctx;
+    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    // Update wind every few seconds - gentle spring breeze
+    const now = performance.now();
+    if (now - this.lastWindChange > 4000) {
+      this.windTarget = (Math.random() * 2 - 1) * 2.5; // Moderate spring wind
+      this.lastWindChange = now;
     }
-    
-    // Set refined opacity for sophisticated depth effect - higher for larger petals
-    const opacities = { tiny: 0.45, small: 0.65, medium: 0.8, large: 0.9 };
-    petal.style.setProperty('--petal-opacity', opacities[sizeClass]);
-    
-    this.container.appendChild(petal);
-    this.activePetals.add(petal);
-    
-    // Clean up completed animations
-    petal.addEventListener('animationiteration', () => {
-      if (Math.random() < 0.1) { // 10% chance to remove and respawn
-        this.removePetal(petal);
+    // Ease current wind toward target
+    this.wind += (this.windTarget - this.wind) * 0.015;
+
+    for (const petal of this.petals) {
+      ctx.globalAlpha = petal.opacity;
+      
+      const time = now * 0.001; // Convert to seconds
+      const swayX = Math.sin(time * petal.swaySpeed + petal.swayOffset) * petal.swayAmplitude;
+      
+      ctx.save();
+      ctx.translate(petal.x + swayX, petal.y);
+      
+      // Add wind-influenced rotation - petals tilt in wind direction
+      const windTilt = this.wind * 0.08;
+      ctx.rotate(petal.rotation + windTilt);
+      
+      // Set petal color
+      const { r, g, b } = petal.color;
+      ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${petal.opacity})`;
+      
+      // Draw sakura petal
+      this.drawSakuraPetal(ctx, 0, 0, petal.size, petal.petalType);
+      
+      ctx.restore();
+
+      // Update petal position - wind-blown movement
+      const windForce = this.wind * petal.windResistance;
+      const turbulenceX = Math.sin(now * 0.0008 * petal.turbulence) * 0.3;
+      const turbulenceY = Math.cos(now * 0.001 * petal.turbulence) * 0.2;
+      
+      petal.x += windForce + petal.drift + turbulenceX;
+      petal.y += petal.speed + Math.abs(windForce) * 0.05 + turbulenceY;
+      petal.rotation += petal.rotationSpeed * 0.015 + Math.abs(windForce) * 0.008;
+
+      // Wrap around horizontally
+      if (petal.x < -30) petal.x = this.canvas.width + 30;
+      if (petal.x > this.canvas.width + 30) petal.x = -30;
+
+      // Reset petal when it falls below viewport
+      if (petal.y > this.canvas.height + 30) {
+        Object.assign(petal, this.createPetal());
       }
-    });
+    }
+
+    requestAnimationFrame(this.animate);
+  }
+
+  // Draw a realistic sakura petal shape
+  drawSakuraPetal(ctx, cx, cy, size, type) {
+    const scale = size / 10;
     
-    // Ensure cleanup after faster animation completes
+    ctx.beginPath();
+    
+    if (type === 0) {
+      // Type A: Classic heart-shaped sakura petal (ソメイヨシノ風)
+      const width = 4 * scale;
+      const height = 6 * scale;
+      
+      // Start from bottom tip
+      ctx.moveTo(cx, cy + height * 0.4);
+      
+      // Left side curve - realistic sakura petal curve
+      ctx.bezierCurveTo(
+        cx - width * 0.3, cy + height * 0.1,
+        cx - width * 0.7, cy - height * 0.2,
+        cx - width * 0.4, cy - height * 0.4
+      );
+      
+      // Top left notch (characteristic sakura indent)
+      ctx.quadraticCurveTo(cx - width * 0.1, cy - height * 0.5, cx, cy - height * 0.3);
+      
+      // Top right notch
+      ctx.quadraticCurveTo(cx + width * 0.1, cy - height * 0.5, cx + width * 0.4, cy - height * 0.4);
+      
+      // Right side curve
+      ctx.bezierCurveTo(
+        cx + width * 0.7, cy - height * 0.2,
+        cx + width * 0.3, cy + height * 0.1,
+        cx, cy + height * 0.4
+      );
+      
+    } else if (type === 1) {
+      // Type B: Double-notched sakura petal (ヤマザクラ風)
+      const width = 3.5 * scale;
+      const height = 5.5 * scale;
+      
+      // Start from bottom
+      ctx.moveTo(cx, cy + height * 0.5);
+      
+      // Left side with double curve
+      ctx.bezierCurveTo(
+        cx - width * 0.4, cy + height * 0.1,
+        cx - width * 0.8, cy - height * 0.1,
+        cx - width * 0.5, cy - height * 0.3
+      );
+      
+      // Deep notch characteristic of some sakura varieties
+      ctx.quadraticCurveTo(cx - width * 0.2, cy - height * 0.4, cx - width * 0.1, cy - height * 0.2);
+      ctx.quadraticCurveTo(cx, cy - height * 0.5, cx + width * 0.1, cy - height * 0.2);
+      ctx.quadraticCurveTo(cx + width * 0.2, cy - height * 0.4, cx + width * 0.5, cy - height * 0.3);
+      
+      // Right side
+      ctx.bezierCurveTo(
+        cx + width * 0.8, cy - height * 0.1,
+        cx + width * 0.4, cy + height * 0.1,
+        cx, cy + height * 0.5
+      );
+      
+    } else {
+      // Type C: Simple rounded sakura petal (シダレザクラ風)
+      const width = 3 * scale;
+      const height = 5 * scale;
+      
+      // Start from bottom
+      ctx.moveTo(cx, cy + height * 0.5);
+      
+      // Gentle curved sides
+      ctx.bezierCurveTo(
+        cx - width * 0.5, cy + height * 0.2,
+        cx - width * 0.6, cy - height * 0.1,
+        cx - width * 0.3, cy - height * 0.4
+      );
+      
+      // Gentle top curve with slight notch
+      ctx.quadraticCurveTo(cx, cy - height * 0.45, cx + width * 0.3, cy - height * 0.4);
+      
+      // Right side
+      ctx.bezierCurveTo(
+        cx + width * 0.6, cy - height * 0.1,
+        cx + width * 0.5, cy + height * 0.2,
+        cx, cy + height * 0.5
+      );
+    }
+    
+    ctx.closePath();
+    ctx.fill();
+    
+    // Add subtle petal veins for realism
+    if (size > 6) { // Only add veins to larger petals
+      const width = type === 0 ? 4 * scale : type === 1 ? 3.5 * scale : 3 * scale;
+      const height = type === 0 ? 6 * scale : type === 1 ? 5.5 * scale : 5 * scale;
+      
+      ctx.strokeStyle = `rgba(255, 182, 193, 0.3)`;
+      ctx.lineWidth = 0.5 * scale;
+      
+      ctx.beginPath();
+      // Center vein
+      ctx.moveTo(cx, cy + height * 0.3);
+      ctx.lineTo(cx, cy - height * 0.2);
+      
+      // Side veins
+      ctx.moveTo(cx - width * 0.2, cy + height * 0.1);
+      ctx.quadraticCurveTo(cx - width * 0.1, cy, cx - width * 0.15, cy - height * 0.2);
+      
+      ctx.moveTo(cx + width * 0.2, cy + height * 0.1);
+      ctx.quadraticCurveTo(cx + width * 0.1, cy, cx + width * 0.15, cy - height * 0.2);
+      
+      ctx.stroke();
+    }
+  }
+
+  startBurstPhase() {
+    console.log('[SakuraEffect] Starting dramatic spring burst phase');
+    this.isInBurstPhase = true;
+    
+    // Add more petals for burst effect
+    const burstCount = Math.floor(window.innerWidth / 8);
+    for (let i = 0; i < burstCount; i++) {
+      this.petals.push(this.createPetal(false, true));
+    }
+    
+    // Transition to normal phase after burst
     setTimeout(() => {
-      if (petal.parentNode) {
-        this.removePetal(petal);
-      }
-    }, (baseDuration + 2) * 1000 + 500); // Faster cleanup for dynamic flow
-  }
-  
-  removePetal(petal) {
-    if (petal && petal.parentNode) {
-      this.activePetals.delete(petal);
-      petal.remove();
-    }
-  }
-  
-  weightedRandom(items, weights) {
-    const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
-    let random = Math.random() * totalWeight;
-    
-    for (let i = 0; i < items.length; i++) {
-      random -= weights[i];
-      if (random <= 0) {
-        return items[i];
-      }
-    }
-    return items[items.length - 1];
+      this.isInBurstPhase = false;
+      console.log('[SakuraEffect] Transitioning to normal phase');
+    }, 2500);
   }
   
   destroy() {
-    if (this.spawnInterval) {
-      clearInterval(this.spawnInterval);
-    }
-    this.activePetals.clear();
-    if (this.container && this.container.parentNode) {
-      this.container.remove();
+    console.log('[SakuraEffect] Destroying sakura effect');
+    if (this.canvas && this.canvas.parentNode) {
+      this.canvas.parentNode.removeChild(this.canvas);
     }
   }
 }
@@ -2764,10 +2887,9 @@ window.enableSakura = function(withBurst = false) {
     sakuraEffect = new SakuraEffect(withBurst);
     window.sakuraEffect = sakuraEffect;
     console.log('[SakuraEffect] Created with', sakuraEffect.petalCount, 'petals');
-    console.log('[SakuraEffect] Active petals:', sakuraEffect.activePetals.size);
   } else {
     console.log('[SakuraEffect] Showing existing sakura effect');
-    sakuraEffect.container.style.display = '';
+    sakuraEffect.canvas.style.display = '';
     
     // If requesting burst on existing effect, trigger burst
     if (withBurst && !sakuraEffect.isInBurstPhase) {
@@ -2778,10 +2900,28 @@ window.enableSakura = function(withBurst = false) {
 window.disableSakura = function() {
   console.log('[SakuraEffect] disableSakura called');
   if (sakuraEffect) {
-    sakuraEffect.destroy();
-    sakuraEffect = null;
+    sakuraEffect.canvas.style.display = 'none';
   }
 };
+
+// Add CSS for sakura canvas
+const sakuraCSS = `
+.sakura-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.9;
+}
+`;
+
+// Inject CSS
+const sakuraStyle = document.createElement('style');
+sakuraStyle.textContent = sakuraCSS;
+document.head.appendChild(sakuraStyle);
 
 // Rain effect will be toggled based on the active season
 let rainEffect;
@@ -3022,3 +3162,622 @@ function generateSocialLinks() {
   
   socialContainer.innerHTML = socialHTML;
 }
+
+/**
+ * Snow Effect Module
+ */
+class SnowEffect {
+  constructor() {
+    this.canvas = document.createElement('canvas');
+    this.canvas.className = 'snow-canvas';
+    this.ctx = this.canvas.getContext('2d');
+    document.body.appendChild(this.canvas);
+
+    this.resize();
+    window.addEventListener('resize', () => this.resize());
+
+    this.flakes = [];
+    // Snow density based on screen width
+    this.flakeCount = Math.floor(window.innerWidth / 8); // Less dense than rain
+    for (let i = 0; i < this.flakeCount; i++) {
+      this.flakes.push(this.createFlake(true));
+    }
+
+    // Wind variables for gentle drift
+    this.wind = 0;
+    this.windTarget = 0;
+    this.lastWindChange = performance.now();
+    this.animate = this.animate.bind(this);
+    requestAnimationFrame(this.animate);
+  }
+
+  resize() {
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+  }
+
+  createFlake(randomY = false) {
+    return {
+      x: Math.random() * this.canvas.width,
+      y: randomY ? Math.random() * this.canvas.height : -20,
+      size: 2 + Math.random() * 6, // Varied snowflake sizes
+      speed: 0.5 + Math.random() * 1.5, // Slower than rain
+      opacity: 0.4 + Math.random() * 0.6, // More visible than rain
+      drift: Math.random() * 0.5 - 0.25, // Side-to-side motion
+      rotationSpeed: (Math.random() - 0.5) * 2, // Rotation for realism
+      rotation: 0
+    };
+  }
+
+  animate() {
+    const ctx = this.ctx;
+    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    // Update wind every few seconds (gentler than rain)
+    const now = performance.now();
+    if (now - this.lastWindChange > 4000) {
+      this.windTarget = (Math.random() * 2 - 1) * 0.5; // Gentle wind
+      this.lastWindChange = now;
+    }
+    // Ease current wind toward target
+    this.wind += (this.windTarget - this.wind) * 0.01;
+
+    for (const flake of this.flakes) {
+      ctx.globalAlpha = flake.opacity;
+      
+      // White snow with slight blue tint
+      ctx.fillStyle = `rgba(255, 255, 255, ${flake.opacity})`;
+      
+      ctx.save();
+      ctx.translate(flake.x, flake.y);
+      ctx.rotate(flake.rotation);
+      
+      // Draw snowflake as a simple circle or star shape
+      if (flake.size > 4) {
+        // Larger flakes get a star shape
+        this.drawStar(ctx, 0, 0, flake.size / 2, flake.size / 4, 6);
+      } else {
+        // Smaller flakes are simple circles
+        ctx.beginPath();
+        ctx.arc(0, 0, flake.size / 2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      
+      ctx.restore();
+
+      // Update flake position
+      flake.x += this.wind + flake.drift;
+      flake.y += flake.speed;
+      flake.rotation += flake.rotationSpeed * 0.02;
+
+      // Wrap around horizontally
+      if (flake.x < -20) flake.x = this.canvas.width + 20;
+      if (flake.x > this.canvas.width + 20) flake.x = -20;
+
+      // Reset flake when it falls below viewport
+      if (flake.y > this.canvas.height + 20) {
+        Object.assign(flake, this.createFlake());
+      }
+    }
+
+    requestAnimationFrame(this.animate);
+  }
+
+  // Draw a simple star shape for larger snowflakes
+  drawStar(ctx, cx, cy, outerRadius, innerRadius, spikes) {
+    let rot = Math.PI / 2 * 3;
+    let x = cx;
+    let y = cy;
+    const step = Math.PI / spikes;
+
+    ctx.beginPath();
+    ctx.moveTo(cx, cy - outerRadius);
+
+    for (let i = 0; i < spikes; i++) {
+      x = cx + Math.cos(rot) * outerRadius;
+      y = cy + Math.sin(rot) * outerRadius;
+      ctx.lineTo(x, y);
+      rot += step;
+
+      x = cx + Math.cos(rot) * innerRadius;
+      y = cy + Math.sin(rot) * innerRadius;
+      ctx.lineTo(x, y);
+      rot += step;
+    }
+
+    ctx.lineTo(cx, cy - outerRadius);
+    ctx.closePath();
+    ctx.fill();
+  }
+}
+
+// Snow effect functions
+let snowEffect;
+window.enableSnow = function() {
+  console.log('[SnowEffect] enableSnow called');
+  if (!snowEffect) {
+    snowEffect = new SnowEffect();
+    window.snowEffect = snowEffect;
+  } else {
+    snowEffect.canvas.style.display = '';
+  }
+};
+
+window.disableSnow = function() {
+  console.log('[SnowEffect] disableSnow called');
+  if (snowEffect) {
+    snowEffect.canvas.style.display = 'none';
+  }
+};
+
+// Add CSS for snow canvas
+const snowCSS = `
+.snow-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.8;
+}
+`;
+
+// Inject CSS
+const snowStyle = document.createElement('style');
+snowStyle.textContent = snowCSS;
+document.head.appendChild(snowStyle);
+
+/**
+ * Autumn Leaves Effect Module
+ */
+class AutumnLeavesEffect {
+  constructor() {
+    this.canvas = document.createElement('canvas');
+    this.canvas.className = 'autumn-leaves-canvas';
+    this.ctx = this.canvas.getContext('2d');
+    document.body.appendChild(this.canvas);
+
+    this.resize();
+    window.addEventListener('resize', () => this.resize());
+
+    this.leaves = [];
+    // Leaf density based on screen width
+    this.leafCount = Math.floor(window.innerWidth / 12); // Moderate density
+    for (let i = 0; i < this.leafCount; i++) {
+      this.leaves.push(this.createLeaf(true));
+    }
+
+    // Wind variables for natural leaf movement
+    this.wind = 0;
+    this.windTarget = 0;
+    this.lastWindChange = performance.now();
+    this.animate = this.animate.bind(this);
+    requestAnimationFrame(this.animate);
+  }
+
+  resize() {
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+  }
+
+  createLeaf(randomY = false) {
+    const leafTypes = ['maple', 'ginkgo']; // もみじとイチョウ
+    const type = leafTypes[Math.floor(Math.random() * leafTypes.length)];
+    
+    return {
+      x: Math.random() * this.canvas.width,
+      y: randomY ? Math.random() * this.canvas.height : -50,
+      type: type,
+      size: 8 + Math.random() * 16, // Varied leaf sizes
+      speed: 0.8 + Math.random() * 1.2, // Natural falling speed
+      opacity: 0.6 + Math.random() * 0.4, // More visible
+      drift: Math.random() * 1 - 0.5, // Side-to-side motion
+      rotationSpeed: (Math.random() - 0.5) * 3, // Spinning motion
+      rotation: Math.random() * Math.PI * 2,
+      swayAmplitude: 20 + Math.random() * 30, // How much it sways
+      swaySpeed: 0.02 + Math.random() * 0.03, // Speed of swaying
+      swayOffset: Math.random() * Math.PI * 2, // Phase offset for varied movement
+      color: this.getLeafColor(type)
+    };
+  }
+
+  getLeafColor(type) {
+    if (type === 'maple') {
+      // もみじの色 - 赤、オレンジ、黄色
+      const colors = [
+        { r: 220, g: 20, b: 20 },   // 赤
+        { r: 255, g: 69, b: 0 },    // オレンジ赤
+        { r: 255, g: 140, b: 0 },   // オレンジ
+        { r: 255, g: 165, b: 0 },   // 明るいオレンジ
+        { r: 255, g: 215, b: 0 }    // 黄色
+      ];
+      return colors[Math.floor(Math.random() * colors.length)];
+    } else {
+      // イチョウの色 - 黄色系
+      const colors = [
+        { r: 255, g: 215, b: 0 },   // 金色
+        { r: 255, g: 223, b: 0 },   // 明るい金色
+        { r: 255, g: 255, b: 0 },   // 黄色
+        { r: 238, g: 221, b: 130 }, // 薄い黄色
+        { r: 255, g: 239, b: 145 }  // クリーム色
+      ];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+  }
+
+  animate() {
+    const ctx = this.ctx;
+    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    // Update wind every few seconds
+    const now = performance.now();
+    if (now - this.lastWindChange > 3500) {
+      this.windTarget = (Math.random() * 2 - 1) * 1.5; // Moderate wind
+      this.lastWindChange = now;
+    }
+    // Ease current wind toward target
+    this.wind += (this.windTarget - this.wind) * 0.015;
+
+    for (const leaf of this.leaves) {
+      ctx.globalAlpha = leaf.opacity;
+      
+      const time = now * 0.001; // Convert to seconds
+      const swayX = Math.sin(time * leaf.swaySpeed + leaf.swayOffset) * leaf.swayAmplitude;
+      
+      ctx.save();
+      ctx.translate(leaf.x + swayX, leaf.y);
+      ctx.rotate(leaf.rotation);
+      
+      // Set leaf color
+      const { r, g, b } = leaf.color;
+      ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${leaf.opacity})`;
+      
+      // Draw leaf shape based on type
+      if (leaf.type === 'maple') {
+        this.drawMapleLeaf(ctx, 0, 0, leaf.size);
+      } else {
+        this.drawGinkgoLeaf(ctx, 0, 0, leaf.size);
+      }
+      
+      ctx.restore();
+
+      // Update leaf position
+      leaf.x += this.wind + leaf.drift;
+      leaf.y += leaf.speed;
+      leaf.rotation += leaf.rotationSpeed * 0.02;
+
+      // Wrap around horizontally
+      if (leaf.x < -50) leaf.x = this.canvas.width + 50;
+      if (leaf.x > this.canvas.width + 50) leaf.x = -50;
+
+      // Reset leaf when it falls below viewport
+      if (leaf.y > this.canvas.height + 50) {
+        Object.assign(leaf, this.createLeaf());
+      }
+    }
+
+    requestAnimationFrame(this.animate);
+  }
+
+  // Draw a maple leaf shape (もみじ)
+  drawMapleLeaf(ctx, cx, cy, size) {
+    const scale = size / 20;
+    
+    ctx.beginPath();
+    
+    // Main body of maple leaf
+    ctx.moveTo(cx, cy - 10 * scale);
+    
+    // Top point
+    ctx.lineTo(cx - 3 * scale, cy - 6 * scale);
+    ctx.lineTo(cx - 8 * scale, cy - 4 * scale);
+    ctx.lineTo(cx - 6 * scale, cy - 1 * scale);
+    
+    // Left side
+    ctx.lineTo(cx - 10 * scale, cy + 2 * scale);
+    ctx.lineTo(cx - 6 * scale, cy + 3 * scale);
+    ctx.lineTo(cx - 4 * scale, cy + 6 * scale);
+    
+    // Bottom left
+    ctx.lineTo(cx - 2 * scale, cy + 4 * scale);
+    ctx.lineTo(cx, cy + 8 * scale);
+    
+    // Bottom right
+    ctx.lineTo(cx + 2 * scale, cy + 4 * scale);
+    ctx.lineTo(cx + 4 * scale, cy + 6 * scale);
+    
+    // Right side
+    ctx.lineTo(cx + 6 * scale, cy + 3 * scale);
+    ctx.lineTo(cx + 10 * scale, cy + 2 * scale);
+    ctx.lineTo(cx + 6 * scale, cy - 1 * scale);
+    
+    // Top right
+    ctx.lineTo(cx + 8 * scale, cy - 4 * scale);
+    ctx.lineTo(cx + 3 * scale, cy - 6 * scale);
+    
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  // Draw a ginkgo leaf shape (イチョウ)
+  drawGinkgoLeaf(ctx, cx, cy, size) {
+    const scale = size / 20;
+    
+    ctx.beginPath();
+    
+    // Fan-shaped ginkgo leaf
+    const startAngle = -Math.PI * 0.7;
+    const endAngle = Math.PI * 0.7;
+    const radius = 8 * scale;
+    
+    // Draw fan shape
+    ctx.arc(cx, cy + 2 * scale, radius, startAngle, endAngle);
+    
+    // Add stem
+    ctx.lineTo(cx, cy + 8 * scale);
+    ctx.lineTo(cx, cy + 2 * scale + radius * Math.cos(Math.PI * 0.7));
+    
+    ctx.closePath();
+    ctx.fill();
+    
+    // Add characteristic notch in the middle
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.beginPath();
+    ctx.moveTo(cx, cy + 2 * scale);
+    ctx.lineTo(cx - 2 * scale, cy - 3 * scale);
+    ctx.lineTo(cx + 2 * scale, cy - 3 * scale);
+    ctx.closePath();
+    ctx.fill();
+    ctx.globalCompositeOperation = 'source-over';
+  }
+}
+
+// Autumn leaves effect functions
+let autumnLeavesEffect;
+window.enableAutumnLeaves = function() {
+  console.log('[AutumnLeavesEffect] enableAutumnLeaves called');
+  if (!autumnLeavesEffect) {
+    autumnLeavesEffect = new AutumnLeavesEffect();
+    window.autumnLeavesEffect = autumnLeavesEffect;
+  } else {
+    autumnLeavesEffect.canvas.style.display = '';
+  }
+};
+
+window.disableAutumnLeaves = function() {
+  console.log('[AutumnLeavesEffect] disableAutumnLeaves called');
+  if (autumnLeavesEffect) {
+    autumnLeavesEffect.canvas.style.display = 'none';
+  }
+};
+
+// Add CSS for autumn leaves canvas
+const autumnLeavesCSS = `
+.autumn-leaves-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.9;
+}
+`;
+
+// Inject CSS
+const autumnLeavesStyle = document.createElement('style');
+autumnLeavesStyle.textContent = autumnLeavesCSS;
+document.head.appendChild(autumnLeavesStyle);
+
+/**
+ * Summer Willow Effect Module (青柳エフェクト)
+ */
+class SummerWillowEffect {
+  constructor() {
+    this.canvas = document.createElement('canvas');
+    this.canvas.className = 'summer-willow-canvas';
+    this.ctx = this.canvas.getContext('2d');
+    document.body.appendChild(this.canvas);
+
+    this.resize();
+    window.addEventListener('resize', () => this.resize());
+
+    this.willowLeaves = [];
+    // Willow leaf density - more delicate and flowing
+    this.leafCount = Math.floor(window.innerWidth / 10); // Moderate density
+    for (let i = 0; i < this.leafCount; i++) {
+      this.willowLeaves.push(this.createWillowLeaf(true));
+    }
+
+    // Wind variables for gentle summer breeze
+    this.wind = 0;
+    this.windTarget = 0;
+    this.lastWindChange = performance.now();
+    this.animate = this.animate.bind(this);
+    requestAnimationFrame(this.animate);
+  }
+
+  resize() {
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+  }
+
+  createWillowLeaf(randomY = false) {
+    return {
+      x: Math.random() * this.canvas.width,
+      y: randomY ? Math.random() * this.canvas.height : -30,
+      length: 15 + Math.random() * 25, // Willow leaves are long and narrow
+      width: 3 + Math.random() * 4, // Much narrower than other leaves
+      speed: 0.4 + Math.random() * 0.8, // Slower falling to emphasize horizontal movement
+      opacity: 0.5 + Math.random() * 0.4, // Subtle visibility
+      drift: Math.random() * 2 - 1, // Increased side-to-side motion
+      rotationSpeed: (Math.random() - 0.5) * 2.5, // More dynamic rotation
+      rotation: Math.random() * Math.PI * 2,
+      swayAmplitude: 50 + Math.random() * 60, // Much more pronounced sway
+      swaySpeed: 0.02 + Math.random() * 0.025, // Slightly faster sway
+      swayOffset: Math.random() * Math.PI * 2,
+      curvature: 0.1 + Math.random() * 0.3, // Natural curve of willow leaves
+      windResistance: 0.3 + Math.random() * 0.7, // How much the leaf responds to wind
+      turbulence: Math.random() * 0.5, // Random turbulence factor
+      color: this.getWillowColor()
+    };
+  }
+
+  getWillowColor() {
+    // 青柳 - various shades of green with blue tints
+    const colors = [
+      { r: 50, g: 150, b: 50 },   // 深い緑
+      { r: 60, g: 180, b: 60 },   // 明るい緑
+      { r: 40, g: 140, b: 80 },   // 青緑
+      { r: 70, g: 160, b: 70 },   // 柔らかい緑
+      { r: 80, g: 200, b: 80 },   // 新緑
+      { r: 45, g: 130, b: 90 },   // 深い青緑
+      { r: 90, g: 190, b: 90 }    // 薄い緑
+    ];
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
+
+  animate() {
+    const ctx = this.ctx;
+    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    // Update wind every few seconds - stronger summer wind
+    const now = performance.now();
+    if (now - this.lastWindChange > 3000) {
+      this.windTarget = (Math.random() * 2 - 1) * 3.5; // Stronger wind for flowing effect
+      this.lastWindChange = now;
+    }
+    // Ease current wind toward target
+    this.wind += (this.windTarget - this.wind) * 0.02;
+
+    for (const leaf of this.willowLeaves) {
+      ctx.globalAlpha = leaf.opacity;
+      
+      const time = now * 0.001; // Convert to seconds
+      const swayX = Math.sin(time * leaf.swaySpeed + leaf.swayOffset) * leaf.swayAmplitude;
+      
+      ctx.save();
+      ctx.translate(leaf.x + swayX, leaf.y);
+      
+      // Add wind-influenced rotation - leaves tilt in wind direction
+      const windTilt = this.wind * 0.1;
+      ctx.rotate(leaf.rotation + windTilt);
+      
+      // Set leaf color
+      const { r, g, b } = leaf.color;
+      ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${leaf.opacity})`;
+      ctx.strokeStyle = `rgba(${r - 20}, ${g - 20}, ${b - 10}, ${leaf.opacity * 0.8})`;
+      ctx.lineWidth = 0.5;
+      
+      // Draw willow leaf - long, narrow, and slightly curved
+      this.drawWillowLeaf(ctx, 0, 0, leaf.length, leaf.width, leaf.curvature);
+      
+      ctx.restore();
+
+      // Update leaf position - wind-blown movement
+      const windForce = this.wind * leaf.windResistance;
+      const turbulenceX = Math.sin(now * 0.001 * leaf.turbulence) * 0.5;
+      const turbulenceY = Math.cos(now * 0.0015 * leaf.turbulence) * 0.3;
+      
+      leaf.x += windForce + leaf.drift + turbulenceX;
+      leaf.y += leaf.speed + Math.abs(windForce) * 0.1 + turbulenceY; // Wind affects vertical movement too
+      leaf.rotation += leaf.rotationSpeed * 0.02 + Math.abs(windForce) * 0.01; // Wind affects rotation
+
+      // Wrap around horizontally
+      if (leaf.x < -60) leaf.x = this.canvas.width + 60;
+      if (leaf.x > this.canvas.width + 60) leaf.x = -60;
+
+      // Reset leaf when it falls below viewport
+      if (leaf.y > this.canvas.height + 60) {
+        Object.assign(leaf, this.createWillowLeaf());
+      }
+    }
+
+    requestAnimationFrame(this.animate);
+  }
+
+  // Draw a willow leaf shape (青柳の葉)
+  drawWillowLeaf(ctx, cx, cy, length, width, curvature) {
+    ctx.beginPath();
+    
+    // Create a curved, elongated leaf shape
+    const halfLength = length / 2;
+    const halfWidth = width / 2;
+    
+    // Control points for a curved willow leaf
+    ctx.moveTo(cx, cy - halfLength);
+    
+    // Right side curve
+    ctx.quadraticCurveTo(
+      cx + halfWidth + curvature * 10, cy - halfLength * 0.3,
+      cx + halfWidth, cy
+    );
+    ctx.quadraticCurveTo(
+      cx + halfWidth - curvature * 5, cy + halfLength * 0.3,
+      cx, cy + halfLength
+    );
+    
+    // Left side curve
+    ctx.quadraticCurveTo(
+      cx - halfWidth + curvature * 5, cy + halfLength * 0.3,
+      cx - halfWidth, cy
+    );
+    ctx.quadraticCurveTo(
+      cx - halfWidth - curvature * 10, cy - halfLength * 0.3,
+      cx, cy - halfLength
+    );
+    
+    ctx.closePath();
+    ctx.fill();
+    
+    // Add a subtle center line for realism
+    ctx.beginPath();
+    ctx.moveTo(cx, cy - halfLength * 0.8);
+    ctx.quadraticCurveTo(
+      cx + curvature * 3, cy,
+      cx, cy + halfLength * 0.8
+    );
+    ctx.stroke();
+  }
+}
+
+// Summer willow effect functions
+let summerWillowEffect;
+window.enableSummerWillow = function() {
+  console.log('[SummerWillowEffect] enableSummerWillow called');
+  if (!summerWillowEffect) {
+    summerWillowEffect = new SummerWillowEffect();
+    window.summerWillowEffect = summerWillowEffect;
+  } else {
+    summerWillowEffect.canvas.style.display = '';
+  }
+};
+
+window.disableSummerWillow = function() {
+  console.log('[SummerWillowEffect] disableSummerWillow called');
+  if (summerWillowEffect) {
+    summerWillowEffect.canvas.style.display = 'none';
+  }
+};
+
+// Add CSS for summer willow canvas
+const summerWillowCSS = `
+.summer-willow-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.85;
+}
+`;
+
+// Inject CSS
+const summerWillowStyle = document.createElement('style');
+summerWillowStyle.textContent = summerWillowCSS;
+document.head.appendChild(summerWillowStyle);

@@ -26,31 +26,10 @@ _Autonoums Development Guide for Claude Code_
 - `script.js` … ギャラリー切替・テーマ変更などのロジック  
 - `img/` … 画像ファイル
 - `audio/` … 音声ファイル
-
+   
 
 > **柔軟性重視**  
 > 適宜、この文書およびコードを**自律的に更新**して整合を保つこと。
-
----
-
-## 3. ワークフローと Git 運用
-### 3-1. 自動コミット & Push
-1. **マイルストーン or 主要ステップ完了ごと**に  
-   ```bash
-   git add -A
-   git commit -m "feat: <概要> #<Issue番号(任意)>"
-   git push origin main
-   ```
-2. コミットメッセージは **Conventional Commits** 形式を推奨  
-   - `feat:` … 新機能  
-   - `fix:` … バグ修正  
-   - `style:` … スタイル調整  
-   - `refactor:` … リファクタリング  
-   - `docs:` … ドキュメント更新
-
-### 3-2. ブランチ戦略
-- **main ブランチ** で直接開発（小規模プロジェクトのため）  
-- 大きな変更時は feature ブランチを作成しても可
 
 ---
 

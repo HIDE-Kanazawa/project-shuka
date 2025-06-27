@@ -62,23 +62,23 @@ class SeasonsGallery {
   }
   
   loadInitialSeason() {
-    // Always set initial season to tsuyu (rainy season)
-    this.currentSeason = 'tsuyu';
+    // Always set initial season to winter
+    this.currentSeason = 'winter';
     
     // Update body season for styling and washi background
-    this.updateSeasonBackground('tsuyu');
+    this.updateSeasonBackground('winter');
     
-    // Enable rain effect for tsuyu
-    if (typeof window.enableRain === 'function') {
-      window.enableRain();
+    // Enable snow effect for winter
+    if (typeof window.enableSnow === 'function') {
+      window.enableSnow();
     }
     
-    // Update URL to reflect tsuyu season
-    this.updateURL('tsuyu');
+    // Update URL to reflect winter season
+    this.updateURL('winter');
 
-    // Show summer gallery panel by default while keeping overall season as tsuyu
-    this.updateSeasonButtons('summer');
-    this.updateSeasonPanels('summer', false);
+    // Show winter gallery panel by default
+    this.updateSeasonButtons('winter');
+    this.updateSeasonPanels('winter', false);
   }
   
   getSeasonFromURL() {
@@ -184,14 +184,28 @@ class SeasonsGallery {
     // Update body season for styling (includes washi background)
     this.updateSeasonBackground(season);
 
-    // Toggle rain effect depending on season
+    // Toggle weather effects depending on season
     if (season === 'tsuyu') {
       if (typeof window.enableRain === 'function') {
         window.enableRain();
       }
-    } else {
+      if (typeof window.disableSnow === 'function') {
+        window.disableSnow();
+      }
+    } else if (season === 'winter') {
+      if (typeof window.enableSnow === 'function') {
+        window.enableSnow();
+      }
       if (typeof window.disableRain === 'function') {
         window.disableRain();
+      }
+    } else {
+      // Disable all weather effects for other seasons
+      if (typeof window.disableRain === 'function') {
+        window.disableRain();
+      }
+      if (typeof window.disableSnow === 'function') {
+        window.disableSnow();
       }
     }
     
