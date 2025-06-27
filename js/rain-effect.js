@@ -1,4 +1,5 @@
 // Rain Effect Module
+'use strict';
 class RainEffect {
   constructor() {
     this.canvas = document.createElement('canvas');
@@ -110,9 +111,8 @@ function disableRain() {
   }
 }
 
- * Handle logo click - scroll to home and set season to tsuyu
- */
-window.handleLogoClick = function(event) {
+/** Handle logo click - scroll to home and set season to tsuyu */
+window.handleLogoClick = (event) => {
   event.preventDefault();
   
   // Scroll to home section
