@@ -1504,7 +1504,8 @@ class ShukaApp {
     
     // Preload critical resources on interaction
     document.addEventListener('mouseover', this.preloadOnHover, { once: true });
-    document.addEventListener('touchstart', this.preloadOnTouch, { once: true });
+    // Ensure correct `this` context on touch devices
+    document.addEventListener('touchstart', () => this.preloadOnTouch(), { once: true });
   }
   
   preloadOnHover() {
