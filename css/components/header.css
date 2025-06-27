@@ -4,7 +4,7 @@
   top: 0;
   left: 0;
   right: 0;
-  background: rgba(17, 24, 39, 0.95);
+  background: var(--background);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
   z-index: var(--z-fixed);
