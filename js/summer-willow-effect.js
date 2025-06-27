@@ -186,7 +186,6 @@ class SummerWillowEffect {
 // Summer willow effect functions
 let summerWillowEffect;
 function enableSummerWillow() {
-  console.log('[SummerWillowEffect] enableSummerWillow called');
   if (!summerWillowEffect) {
     summerWillowEffect = new SummerWillowEffect();
     window.summerWillowEffect = summerWillowEffect;
@@ -196,7 +195,6 @@ function enableSummerWillow() {
 }
 
 function disableSummerWillow() {
-  console.log('[SummerWillowEffect] disableSummerWillow called');
   if (summerWillowEffect) {
     summerWillowEffect.canvas.remove();
     summerWillowEffect = null;

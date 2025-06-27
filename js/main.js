@@ -23,9 +23,6 @@ window.addEventListener('DOMContentLoaded', () => {
     window.shukaApp = new ShukaApp();
   }
   
-  if (typeof DevelopmentTools !== 'undefined') {
-    window.devTools = new DevelopmentTools();
-  }
 
   // Logo click handler
   const logoLink = document.getElementById('logo-link');

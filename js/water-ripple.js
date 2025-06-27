@@ -16,7 +16,7 @@ class WaterRippleEffect {
   
   init() {
     if (!this.container) {
-      console.warn('Ripple container not found');
+      console.error('Ripple container not found');
       return;
     }
     
@@ -511,7 +511,6 @@ class WaterRippleEffect {
         // If FPS drops below 50, optimize
         if (fps < 50 && !this.performanceOptimized) {
           this.optimizeForPerformance();
-          console.log('Ripple effect optimized for performance');
         }
         
         frameCount = 0;

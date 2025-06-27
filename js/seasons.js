@@ -65,7 +65,7 @@ class SeasonsGallery {
 
           if (video.paused) {
             video.play().catch(err => {
-              console.log('Video play failed:', err);
+              console.error('Video play failed:', err);
             });
           }
         });
@@ -192,7 +192,7 @@ class SeasonsGallery {
   switchToSeason(season, animate = true) {
     // Validate season
     if (!['spring', 'summer', 'autumn', 'winter', 'tsuyu'].includes(season)) {
-      console.warn(`Invalid season: ${season}`);
+        console.error(`Invalid season: ${season}`);
       return;
     }
     
@@ -545,7 +545,7 @@ class SeasonsGallery {
 
     if (video.paused) {
       video.play().catch(error => {
-        console.log('Video play failed:', error);
+        console.error('Video play failed:', error);
       });
     } else {
       video.pause();
