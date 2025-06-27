@@ -43,7 +43,8 @@ class SeasonsGallery {
       audio.preload = 'none';
 
       // Add accessibility attributes
-      const trackTitle = audio.parentElement.querySelector('.track-title')?.textContent || 'Track';
+      const trackTitleEl = audio.parentElement.querySelector('.track-title');
+      const trackTitle = trackTitleEl ? trackTitleEl.textContent : 'Track';
       audio.setAttribute('aria-label', `${trackTitle}の音楽プレーヤー`);
     });
 
@@ -71,7 +72,9 @@ class SeasonsGallery {
         container.dataset.playHandlerAdded = 'true';
       }
 
-      const seasonTitle = video.closest('.season-panel')?.querySelector('.season-title')?.textContent || 'Video';
+      const seasonPanel = video.closest('.season-panel');
+      const seasonTitleEl = seasonPanel ? seasonPanel.querySelector('.season-title') : null;
+      const seasonTitle = seasonTitleEl ? seasonTitleEl.textContent : 'Video';
       video.setAttribute('aria-label', `${seasonTitle}のデモ動画`);
 
     });
@@ -524,14 +527,16 @@ class SeasonsGallery {
       this.fadeInAudio(e.target);
 
       // Add playing state class
-      e.target.closest('.track')?.classList.add('playing');
+      const trackEl = e.target.closest('.track');
+      if (trackEl) trackEl.classList.add('playing');
     }
   }
   
   handleAudioPause(e) {
     if (e.target.tagName === 'AUDIO') {
       // Remove playing state class
-      e.target.closest('.track')?.classList.remove('playing');
+      const trackEl = e.target.closest('.track');
+      if (trackEl) trackEl.classList.remove('playing');
     }
   }
 

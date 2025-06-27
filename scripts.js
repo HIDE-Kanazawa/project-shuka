@@ -148,19 +148,23 @@ function handleGlobalKeyboard(e) {
     switch(e.key) {
       case '1':
         e.preventDefault();
-        document.getElementById('home')?.focus();
+        const homeEl = document.getElementById('home');
+        if (homeEl) homeEl.focus();
         break;
       case '2':
         e.preventDefault();
-        document.getElementById('about')?.focus();
+        const aboutEl = document.getElementById('about');
+        if (aboutEl) aboutEl.focus();
         break;
       case '3':
         e.preventDefault();
-        document.getElementById('gallery')?.focus();
+        const galleryEl = document.getElementById('gallery');
+        if (galleryEl) galleryEl.focus();
         break;
       case '4':
         e.preventDefault();
-        document.getElementById('contact')?.focus();
+        const contactEl = document.getElementById('contact');
+        if (contactEl) contactEl.focus();
         break;
     }
   }
@@ -170,10 +174,12 @@ function handleGlobalKeyboard(e) {
     // Close mobile menu if open
     const navMenu = document.getElementById('nav-menu');
     const navToggle = document.getElementById('nav-toggle');
-    if (navMenu?.classList.contains('active')) {
+    if (navMenu && navMenu.classList.contains('active')) {
       navMenu.classList.remove('active');
-      navToggle?.classList.remove('active');
-      navToggle?.focus();
+      if (navToggle) {
+        navToggle.classList.remove('active');
+        navToggle.focus();
+      }
     }
   }
 }
@@ -462,7 +468,8 @@ class SeasonsGallery {
       audio.preload = 'none';
       
       // Add accessibility attributes
-      const trackTitle = audio.parentElement.querySelector('.track-title')?.textContent || 'Track';
+      const trackTitleEl = audio.parentElement.querySelector('.track-title');
+      const trackTitle = trackTitleEl ? trackTitleEl.textContent : 'Track';
       audio.setAttribute('aria-label', `${trackTitle}の音楽プレーヤー`);
     });
 
@@ -499,7 +506,9 @@ class SeasonsGallery {
       }
 
       // Add accessibility attributes
-      const seasonTitle = video.closest('.season-panel')?.querySelector('.season-title')?.textContent || 'Video';
+      const seasonPanel = video.closest('.season-panel');
+      const seasonTitleEl = seasonPanel ? seasonPanel.querySelector('.season-title') : null;
+      const seasonTitle = seasonTitleEl ? seasonTitleEl.textContent : 'Video';
       video.setAttribute('aria-label', `${seasonTitle}のデモ動画`);
     });
   }
@@ -546,7 +555,9 @@ class SeasonsGallery {
       window.enableRain();
     }
     // Ensure sakura effect is disabled
-    window.disableSakura?.();
+    if (typeof window.disableSakura === 'function') {
+      window.disableSakura();
+    }
 
     // Enable sakura effect only for spring (no burst on initial load)
     if (typeof window.enableSakura === 'function' && this.currentSeason === 'spring') {
@@ -686,39 +697,41 @@ class SeasonsGallery {
     if (season === 'spring') {
       // Check if this is a fresh switch to spring (not initial page load)
       const isSeasonChange = previousSeason !== season && previousSeason !== null;
-      window.enableSakura?.(isSeasonChange); // Pass true for burst if switching to spring
+      if (typeof window.enableSakura === 'function') {
+        window.enableSakura(isSeasonChange); // Pass true for burst if switching to spring
+      }
       // Disable all other seasonal effects
-      window.disableRain?.();
-      window.disableSnow?.();
-      window.disableAutumnLeaves?.();
-      window.disableSummerWillow?.();
+      if (typeof window.disableRain === 'function') window.disableRain();
+      if (typeof window.disableSnow === 'function') window.disableSnow();
+      if (typeof window.disableAutumnLeaves === 'function') window.disableAutumnLeaves();
+      if (typeof window.disableSummerWillow === 'function') window.disableSummerWillow();
     } else if (season === 'tsuyu') {
-      window.enableRain?.();
-      window.disableSakura?.();
-      window.disableSnow?.();
+      if (typeof window.enableRain === 'function') window.enableRain();
+      if (typeof window.disableSakura === 'function') window.disableSakura();
+      if (typeof window.disableSnow === 'function') window.disableSnow();
     } else if (season === 'winter') {
-      window.enableSnow?.();
-      window.disableRain?.();
-      window.disableSakura?.();
-      window.disableAutumnLeaves?.();
+      if (typeof window.enableSnow === 'function') window.enableSnow();
+      if (typeof window.disableRain === 'function') window.disableRain();
+      if (typeof window.disableSakura === 'function') window.disableSakura();
+      if (typeof window.disableAutumnLeaves === 'function') window.disableAutumnLeaves();
     } else if (season === 'autumn') {
-      window.enableAutumnLeaves?.();
-      window.disableRain?.();
-      window.disableSakura?.();
-      window.disableSnow?.();
-      window.disableSummerWillow?.();
+      if (typeof window.enableAutumnLeaves === 'function') window.enableAutumnLeaves();
+      if (typeof window.disableRain === 'function') window.disableRain();
+      if (typeof window.disableSakura === 'function') window.disableSakura();
+      if (typeof window.disableSnow === 'function') window.disableSnow();
+      if (typeof window.disableSummerWillow === 'function') window.disableSummerWillow();
     } else if (season === 'summer') {
-      window.enableSummerWillow?.();
-      window.disableRain?.();
-      window.disableSakura?.();
-      window.disableSnow?.();
-      window.disableAutumnLeaves?.();
+      if (typeof window.enableSummerWillow === 'function') window.enableSummerWillow();
+      if (typeof window.disableRain === 'function') window.disableRain();
+      if (typeof window.disableSakura === 'function') window.disableSakura();
+      if (typeof window.disableSnow === 'function') window.disableSnow();
+      if (typeof window.disableAutumnLeaves === 'function') window.disableAutumnLeaves();
     } else {
-      window.disableRain?.();
-      window.disableSakura?.();
-      window.disableSnow?.();
-      window.disableAutumnLeaves?.();
-      window.disableSummerWillow?.();
+      if (typeof window.disableRain === 'function') window.disableRain();
+      if (typeof window.disableSakura === 'function') window.disableSakura();
+      if (typeof window.disableSnow === 'function') window.disableSnow();
+      if (typeof window.disableAutumnLeaves === 'function') window.disableAutumnLeaves();
+      if (typeof window.disableSummerWillow === 'function') window.disableSummerWillow();
     }
     
     // Announce change for screen readers
@@ -1052,7 +1065,8 @@ class SeasonsGallery {
       });
       
       // Add playing state class
-      e.target.closest('.track')?.classList.add('playing');
+      const trackEl = e.target.closest('.track');
+      if (trackEl) trackEl.classList.add('playing');
     }
     
     // Handle video play events
@@ -1072,19 +1086,22 @@ class SeasonsGallery {
       });
       
       // Add playing state class
-      e.target.closest('.season-panel')?.classList.add('video-playing');
+      const panelEl = e.target.closest('.season-panel');
+      if (panelEl) panelEl.classList.add('video-playing');
     }
   }
   
   handleAudioPause(e) {
     if (e.target.tagName === 'AUDIO') {
       // Remove playing state class
-      e.target.closest('.track')?.classList.remove('playing');
+      const trackEl = e.target.closest('.track');
+      if (trackEl) trackEl.classList.remove('playing');
     }
     
     if (e.target.tagName === 'VIDEO') {
       // Remove playing state class
-      e.target.closest('.season-panel')?.classList.remove('video-playing');
+      const panelEl = e.target.closest('.season-panel');
+      if (panelEl) panelEl.classList.remove('video-playing');
     }
   }
   
@@ -2179,7 +2196,7 @@ class DevelopmentTools {
       reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
       highContrast: window.matchMedia('(prefers-contrast: high)').matches,
       touchDevice: 'ontouchstart' in window,
-      connection: navigator.connection?.effectiveType || 'unknown'
+      connection: (navigator.connection && navigator.connection.effectiveType) ? navigator.connection.effectiveType : 'unknown'
     };
     
     console.log('Environment Info:', info);
