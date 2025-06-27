@@ -451,17 +451,27 @@ class SeasonsGallery {
       video.preload = 'none';
       // Ensure videos don't autoplay with sound
       video.muted = false;
-      
+
       // Add click to play functionality
       video.addEventListener('click', (e) => this.handleVideoClick(e));
-      
+
       // Add keyboard support for video
       video.addEventListener('keydown', (e) => this.handleVideoKeydown(e));
-      video.addEventListener('mouseenter', (e) => this.showPlayNote(e));
-      video.addEventListener('mousemove', (e) => this.movePlayNote(e));
-      video.addEventListener('mouseleave', (e) => this.hidePlayNote(e));
-      video.addEventListener('play', () => this.removePlayNote(video));
-      
+
+
+      // Allow clicking the surrounding visual container to start playback
+      const container = video.closest('.season-visual');
+      if (container && !container.dataset.playHandlerAdded) {
+        container.addEventListener('click', (evt) => {
+          if (evt.target !== video && video.paused) {
+            video.play().catch(err => {
+              console.log('Video play failed:', err);
+            });
+          }
+        });
+        container.dataset.playHandlerAdded = 'true';
+      }
+
       // Add accessibility attributes
       const seasonTitle = video.closest('.season-panel')?.querySelector('.season-title')?.textContent || 'Video';
       video.setAttribute('aria-label', `${seasonTitle}のデモ動画`);
