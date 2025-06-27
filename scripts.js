@@ -2651,9 +2651,9 @@ class SakuraEffect {
     return {
       x: Math.random() * this.canvas.width,
       y: randomY ? Math.random() * this.canvas.height : -20,
-      size: 3 + Math.random() * 8, // Sakura petal sizes
+      size: 5 + Math.random() * 10, // Larger, more visible sakura petals
       speed: 0.3 + Math.random() * 0.7, // Gentle falling speed
-      opacity: 0.6 + Math.random() * 0.4, // Elegant visibility
+      opacity: 0.7 + Math.random() * 0.3, // Higher opacity for better visibility
       drift: Math.random() * 1.5 - 0.75, // Side-to-side motion
       rotationSpeed: (Math.random() - 0.5) * 2, // Gentle rotation
       rotation: Math.random() * Math.PI * 2,
@@ -2739,45 +2739,118 @@ class SakuraEffect {
     requestAnimationFrame(this.animate);
   }
 
-  // Draw a sakura petal shape
+  // Draw a realistic sakura petal shape
   drawSakuraPetal(ctx, cx, cy, size, type) {
     const scale = size / 10;
     
     ctx.beginPath();
     
     if (type === 0) {
-      // Type A: Classic 5-petal sakura shape
-      for (let i = 0; i < 5; i++) {
-        const angle = (i * Math.PI * 2) / 5 - Math.PI / 2;
-        const outerRadius = 6 * scale;
-        const innerRadius = 3 * scale;
-        
-        const x1 = cx + Math.cos(angle) * outerRadius;
-        const y1 = cy + Math.sin(angle) * outerRadius;
-        
-        const nextAngle = ((i + 1) * Math.PI * 2) / 5 - Math.PI / 2;
-        const midAngle = angle + Math.PI / 5;
-        const x2 = cx + Math.cos(midAngle) * innerRadius;
-        const y2 = cy + Math.sin(midAngle) * innerRadius;
-        
-        if (i === 0) ctx.moveTo(x1, y1);
-        ctx.quadraticCurveTo(x2, y2, cx + Math.cos(nextAngle) * outerRadius, cy + Math.sin(nextAngle) * outerRadius);
-      }
-    } else if (type === 1) {
-      // Type B: Heart-shaped petal
+      // Type A: Classic heart-shaped sakura petal (ソメイヨシノ風)
       const width = 4 * scale;
+      const height = 6 * scale;
+      
+      // Start from bottom tip
+      ctx.moveTo(cx, cy + height * 0.4);
+      
+      // Left side curve - realistic sakura petal curve
+      ctx.bezierCurveTo(
+        cx - width * 0.3, cy + height * 0.1,
+        cx - width * 0.7, cy - height * 0.2,
+        cx - width * 0.4, cy - height * 0.4
+      );
+      
+      // Top left notch (characteristic sakura indent)
+      ctx.quadraticCurveTo(cx - width * 0.1, cy - height * 0.5, cx, cy - height * 0.3);
+      
+      // Top right notch
+      ctx.quadraticCurveTo(cx + width * 0.1, cy - height * 0.5, cx + width * 0.4, cy - height * 0.4);
+      
+      // Right side curve
+      ctx.bezierCurveTo(
+        cx + width * 0.7, cy - height * 0.2,
+        cx + width * 0.3, cy + height * 0.1,
+        cx, cy + height * 0.4
+      );
+      
+    } else if (type === 1) {
+      // Type B: Double-notched sakura petal (ヤマザクラ風)
+      const width = 3.5 * scale;
+      const height = 5.5 * scale;
+      
+      // Start from bottom
+      ctx.moveTo(cx, cy + height * 0.5);
+      
+      // Left side with double curve
+      ctx.bezierCurveTo(
+        cx - width * 0.4, cy + height * 0.1,
+        cx - width * 0.8, cy - height * 0.1,
+        cx - width * 0.5, cy - height * 0.3
+      );
+      
+      // Deep notch characteristic of some sakura varieties
+      ctx.quadraticCurveTo(cx - width * 0.2, cy - height * 0.4, cx - width * 0.1, cy - height * 0.2);
+      ctx.quadraticCurveTo(cx, cy - height * 0.5, cx + width * 0.1, cy - height * 0.2);
+      ctx.quadraticCurveTo(cx + width * 0.2, cy - height * 0.4, cx + width * 0.5, cy - height * 0.3);
+      
+      // Right side
+      ctx.bezierCurveTo(
+        cx + width * 0.8, cy - height * 0.1,
+        cx + width * 0.4, cy + height * 0.1,
+        cx, cy + height * 0.5
+      );
+      
+    } else {
+      // Type C: Simple rounded sakura petal (シダレザクラ風)
+      const width = 3 * scale;
       const height = 5 * scale;
       
-      ctx.moveTo(cx, cy + height);
-      ctx.bezierCurveTo(cx - width, cy, cx - width, cy - height/2, cx, cy - height/3);
-      ctx.bezierCurveTo(cx + width, cy - height/2, cx + width, cy, cx, cy + height);
-    } else {
-      // Type C: Simple oval petal
-      ctx.ellipse(cx, cy, 3 * scale, 5 * scale, 0, 0, Math.PI * 2);
+      // Start from bottom
+      ctx.moveTo(cx, cy + height * 0.5);
+      
+      // Gentle curved sides
+      ctx.bezierCurveTo(
+        cx - width * 0.5, cy + height * 0.2,
+        cx - width * 0.6, cy - height * 0.1,
+        cx - width * 0.3, cy - height * 0.4
+      );
+      
+      // Gentle top curve with slight notch
+      ctx.quadraticCurveTo(cx, cy - height * 0.45, cx + width * 0.3, cy - height * 0.4);
+      
+      // Right side
+      ctx.bezierCurveTo(
+        cx + width * 0.6, cy - height * 0.1,
+        cx + width * 0.5, cy + height * 0.2,
+        cx, cy + height * 0.5
+      );
     }
     
     ctx.closePath();
     ctx.fill();
+    
+    // Add subtle petal veins for realism
+    if (size > 6) { // Only add veins to larger petals
+      const width = type === 0 ? 4 * scale : type === 1 ? 3.5 * scale : 3 * scale;
+      const height = type === 0 ? 6 * scale : type === 1 ? 5.5 * scale : 5 * scale;
+      
+      ctx.strokeStyle = `rgba(255, 182, 193, 0.3)`;
+      ctx.lineWidth = 0.5 * scale;
+      
+      ctx.beginPath();
+      // Center vein
+      ctx.moveTo(cx, cy + height * 0.3);
+      ctx.lineTo(cx, cy - height * 0.2);
+      
+      // Side veins
+      ctx.moveTo(cx - width * 0.2, cy + height * 0.1);
+      ctx.quadraticCurveTo(cx - width * 0.1, cy, cx - width * 0.15, cy - height * 0.2);
+      
+      ctx.moveTo(cx + width * 0.2, cy + height * 0.1);
+      ctx.quadraticCurveTo(cx + width * 0.1, cy, cx + width * 0.15, cy - height * 0.2);
+      
+      ctx.stroke();
+    }
   }
 
   startBurstPhase() {
