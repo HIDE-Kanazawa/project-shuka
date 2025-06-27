@@ -485,7 +485,10 @@ class SeasonsGallery {
       // Allow clicking the surrounding visual container to start playback
       const container = video.closest('.season-visual');
       if (container && !container.dataset.playHandlerAdded) {
-        container.addEventListener('click', () => {
+        container.addEventListener('click', (ev) => {
+          // Avoid interfering with the video's own click handler
+          if (ev.target === video) return;
+
           if (video.paused) {
             video.play().catch(err => {
               console.log('Video play failed:', err);
