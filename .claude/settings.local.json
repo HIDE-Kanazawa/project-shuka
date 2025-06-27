@@ -32,7 +32,9 @@
       "Bash(convert:*)",
       "Bash(open /Users/yamazaki/Downloads/Development/project-shuka3/optimize-petals.html)",
       "Bash(git pull:*)",
-      "Bash(sed:*)"
+      "Bash(sed:*)",
+      "Bash(git fetch:*)",
+      "Bash(sips:*)"
     ],
     "deny": []
   }

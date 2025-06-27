@@ -461,6 +461,35 @@ class SeasonsGallery {
     // Handle audio events for better UX
     document.addEventListener('play', (e) => this.handleAudioPlay(e), true);
     document.addEventListener('pause', (e) => this.handleAudioPause(e), true);
+    
+    // Event delegation for dynamically generated video elements
+    document.addEventListener('click', (e) => {
+      // Direct video click
+      if (e.target.classList.contains('season-video')) {
+        e.preventDefault();
+        this.handleVideoClick(e);
+        return;
+      }
+      
+      // Container click (including poster image)
+      const visualContainer = e.target.closest('.season-visual');
+      if (visualContainer) {
+        const video = visualContainer.querySelector('.season-video');
+        if (video && e.target !== video) {
+          e.preventDefault();
+          // Create synthetic event for consistent handling
+          const syntheticEvent = { target: video, preventDefault: () => {} };
+          this.handleVideoClick(syntheticEvent);
+        }
+      }
+    });
+    
+    // Event delegation for keyboard events on videos
+    document.addEventListener('keydown', (e) => {
+      if (e.target.classList.contains('season-video')) {
+        this.handleVideoKeydown(e);
+      }
+    });
   }
   
   setupAudioElements() {
@@ -488,27 +517,7 @@ class SeasonsGallery {
       // Ensure videos don't autoplay with sound
       video.muted = false;
 
-      // Add click to play functionality
-      video.addEventListener('click', (e) => this.handleVideoClick(e));
-
-      // Add keyboard support for video
-      video.addEventListener('keydown', (e) => this.handleVideoKeydown(e));
-
-
-      // Allow clicking the surrounding visual container to start playback
-      const container = video.closest('.season-visual');
-      if (container && !container.dataset.playHandlerAdded) {
-        container.addEventListener('click', (ev) => {
-          // Avoid interfering with the video's own click handler
-          if (ev.target === video) return;
-
-          if (video.paused) {
-            video.play().catch(err => {
-            });
-          }
-        });
-        container.dataset.playHandlerAdded = 'true';
-      }
+      // Event handlers are now managed by event delegation in bindEvents()
 
       // Add accessibility attributes
       const seasonPanel = video.closest('.season-panel');
@@ -769,7 +778,7 @@ class SeasonsGallery {
   }
   
   showPanel(panel, animate) {
-    this.loadVideoForPanel(panel);
+    // Video loading is now deferred to user interaction for better performance
     panel.style.display = 'grid';
     panel.classList.add('active');
 
@@ -912,16 +921,51 @@ class SeasonsGallery {
     }
   }
 
-  loadVideoForPanel(panel) {
+  loadVideoForPanel(panel, autoPlay = false) {
     const video = panel.querySelector('.season-video');
-    if (!video || video.dataset.loaded === 'true') return;
+    if (!video || video.dataset.loaded === 'true') {
+      // If already loaded and autoPlay requested, play immediately
+      if (autoPlay && video && video.paused) {
+        video.play().catch(error => {
+          console.error('Video play failed:', error);
+        });
+      }
+      return;
+    }
 
+    // Show loading state
+    video.style.opacity = '0.7';
+    
     const sources = video.querySelectorAll('source[data-src]');
     sources.forEach(source => {
       const src = source.getAttribute('data-src');
       if (src) source.src = src;
     });
 
+    // Add loading event listeners
+    const onLoad = () => {
+      video.style.opacity = '1';
+      video.removeEventListener('loadeddata', onLoad);
+      video.removeEventListener('error', onError);
+      
+      // Auto-play if requested
+      if (autoPlay) {
+        video.play().catch(error => {
+          console.error('Video play failed:', error);
+        });
+      }
+    };
+    
+    const onError = () => {
+      console.error('Video loading failed');
+      video.style.opacity = '1';
+      video.removeEventListener('loadeddata', onLoad);
+      video.removeEventListener('error', onError);
+    };
+    
+    video.addEventListener('loadeddata', onLoad);
+    video.addEventListener('error', onError);
+    
     video.load();
     video.dataset.loaded = 'true';
   }
@@ -1109,16 +1153,43 @@ class SeasonsGallery {
   handleVideoClick(e) {
     const video = e.target;
     
-    // Toggle play/pause
-    if (video.paused) {
-      video.play().catch(error => {
-      });
+    // Ensure we have a valid video element
+    if (!video || !video.tagName || video.tagName.toLowerCase() !== 'video') {
+      console.warn('handleVideoClick called without valid video element');
+      return;
+    }
+    
+    console.log('Video clicked:', {
+      loaded: video.dataset.loaded,
+      paused: video.paused,
+      currentTime: video.currentTime
+    });
+    
+    // Load video on first interaction if not already loaded
+    if (video.dataset.loaded !== 'true') {
+      const panel = video.closest('.season-panel');
+      if (panel) {
+        console.log('Loading video and auto-playing...');
+        // Load video and auto-play immediately
+        this.loadVideoForPanel(panel, true);
+      }
     } else {
-      video.pause();
+      // Toggle play/pause for already loaded videos
+      if (video.paused) {
+        console.log('Playing video...');
+        video.play().catch(error => {
+          console.error('Video play failed:', error);
+        });
+      } else {
+        console.log('Pausing video...');
+        video.pause();
+      }
     }
     
     // Prevent default to avoid any browser default behavior
-    e.preventDefault();
+    if (e.preventDefault) {
+      e.preventDefault();
+    }
   }
   
   handleVideoKeydown(e) {
@@ -3066,6 +3137,7 @@ function generateSeasonGallery() {
                  controls
                  preload="none"
                  loading="lazy"
+                 poster="${season.poster}"
                  tabindex="0"
                  aria-label="${season.name}をテーマにしたデモ動画 - クリックまたはEnterキーで再生">
             <source data-src="${season.video.webm}" type="video/webm">
@@ -3099,6 +3171,11 @@ function generateSeasonGallery() {
   
   seasonNav.innerHTML = navHTML;
   seasonContent.innerHTML = contentHTML;
+  
+  // Re-setup video and audio elements after dynamic generation
+  if (window.seasonsGallery && typeof window.seasonsGallery.setupAudioElements === 'function') {
+    window.seasonsGallery.setupAudioElements();
+  }
 }
 
 /**
