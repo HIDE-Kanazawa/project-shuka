@@ -363,10 +363,18 @@ class SeasonsGallery {
       const img = new Image();
       img.onload = () => {
         document.body.setAttribute('data-season', season);
+        const header = document.getElementById('header');
+        if (header) header.setAttribute('data-season', season);
+        const selector = document.getElementById('season-selector');
+        if (selector) selector.value = season;
       };
       img.src = imageUrl;
     } else {
       document.body.setAttribute('data-season', season);
+      const header = document.getElementById('header');
+      if (header) header.setAttribute('data-season', season);
+      const selector = document.getElementById('season-selector');
+      if (selector) selector.value = season;
     }
   }
   
@@ -647,3 +655,21 @@ function switchSeason(season) {
 // Make functions globally available
 window.SeasonsGallery = SeasonsGallery;
 window.switchSeason = switchSeason;
+
+function initSeasonSelector() {
+  const selector = document.getElementById('season-selector');
+  if (!selector) return;
+
+  if (window.seasonsGallery && typeof window.seasonsGallery.getCurrentSeason === 'function') {
+    selector.value = window.seasonsGallery.getCurrentSeason();
+  }
+
+  selector.addEventListener('change', (e) => {
+    const season = e.target.value;
+    if (typeof window.switchSeason === 'function') {
+      window.switchSeason(season);
+    }
+  });
+}
+
+window.initSeasonSelector = initSeasonSelector;
