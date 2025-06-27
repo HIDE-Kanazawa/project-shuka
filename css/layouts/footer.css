@@ -1,6 +1,9 @@
 /* ===== Footer ===== */
 .footer {
   background: var(--background);
+  background-image: url('../img/和紙_黒.png');
+  background-size: cover;
+  background-repeat: repeat;
   color: var(--neutral-300);
   padding: var(--space-20) 0 var(--space-10);
   position: relative;

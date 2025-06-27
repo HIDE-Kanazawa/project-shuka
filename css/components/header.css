@@ -5,6 +5,9 @@
   left: 0;
   right: 0;
   background: var(--background);
+  background-image: url('../img/和紙_黒.png');
+  background-size: cover;
+  background-repeat: repeat;
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
   z-index: var(--z-fixed);
@@ -185,25 +188,40 @@
 /* Header seasonal backgrounds */
 body[data-season="spring"] .header,
 .header[data-season="spring"] {
-  background: linear-gradient(90deg, var(--primary-spring), var(--accent-spring));
+  background: var(--primary-spring);
+  background-image: url('../img/和紙_黒.png');
+  background-size: cover;
+  background-repeat: repeat;
 }
 
 body[data-season="tsuyu"] .header,
 .header[data-season="tsuyu"] {
-  background: linear-gradient(90deg, var(--primary-tsuyu), var(--accent-tsuyu));
+  background: var(--primary-tsuyu);
+  background-image: url('../img/和紙_黒.png');
+  background-size: cover;
+  background-repeat: repeat;
 }
 
 body[data-season="summer"] .header,
 .header[data-season="summer"] {
-  background: linear-gradient(90deg, var(--primary-summer), var(--accent-summer));
+  background: var(--primary-summer);
+  background-image: url('../img/和紙_黒.png');
+  background-size: cover;
+  background-repeat: repeat;
 }
 
 body[data-season="autumn"] .header,
 .header[data-season="autumn"] {
-  background: linear-gradient(90deg, var(--primary-autumn), var(--accent-autumn));
+  background: var(--primary-autumn);
+  background-image: url('../img/和紙_黒.png');
+  background-size: cover;
+  background-repeat: repeat;
 }
 
 body[data-season="winter"] .header,
 .header[data-season="winter"] {
-  background: linear-gradient(90deg, var(--primary-winter), var(--accent-winter));
+  background: var(--primary-winter);
+  background-image: url('../img/和紙_黒.png');
+  background-size: cover;
+  background-repeat: repeat;
 }
