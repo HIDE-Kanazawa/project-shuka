@@ -435,7 +435,9 @@ a:focus {
   top: 0;
   left: 0;
   right: 0;
-  background: var(--background);
+  background: var(--background) url('./img/和紙_黒.png');
+  background-size: cover;
+  background-repeat: repeat;
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
@@ -636,27 +638,37 @@ a:focus {
 
 body[data-season="spring"] .header,
 .header[data-season="spring"] {
-  background: linear-gradient(90deg, var(--primary-spring), var(--accent-spring));
+  background: linear-gradient(90deg, var(--primary-spring), var(--accent-spring)), url('./img/和紙_黒.png');
+  background-size: cover;
+  background-repeat: repeat;
 }
 
 body[data-season="tsuyu"] .header,
 .header[data-season="tsuyu"] {
-  background: linear-gradient(90deg, var(--primary-tsuyu), var(--accent-tsuyu));
+  background: linear-gradient(90deg, var(--primary-tsuyu), var(--accent-tsuyu)), url('./img/和紙_黒.png');
+  background-size: cover;
+  background-repeat: repeat;
 }
 
 body[data-season="summer"] .header,
 .header[data-season="summer"] {
-  background: linear-gradient(90deg, var(--primary-summer), var(--accent-summer));
+  background: linear-gradient(90deg, var(--primary-summer), var(--accent-summer)), url('./img/和紙_黒.png');
+  background-size: cover;
+  background-repeat: repeat;
 }
 
 body[data-season="autumn"] .header,
 .header[data-season="autumn"] {
-  background: linear-gradient(90deg, var(--primary-autumn), var(--accent-autumn));
+  background: linear-gradient(90deg, var(--primary-autumn), var(--accent-autumn)), url('./img/和紙_黒.png');
+  background-size: cover;
+  background-repeat: repeat;
 }
 
 body[data-season="winter"] .header,
 .header[data-season="winter"] {
-  background: linear-gradient(90deg, var(--primary-winter), var(--accent-winter));
+  background: linear-gradient(90deg, var(--primary-winter), var(--accent-winter)), url('./img/和紙_黒.png');
+  background-size: cover;
+  background-repeat: repeat;
 }
 
 /* ===== Hero Section ===== */
@@ -1310,7 +1322,9 @@ SURF_END SeasonTextColor */
 
 /* ===== Footer ===== */
 .footer {
-  background: var(--neutral-800);
+  background: var(--neutral-800) url('./img/和紙_黒.png');
+  background-size: cover;
+  background-repeat: repeat;
   color: var(--neutral-300);
   padding: var(--space-20) 0 var(--space-10);
   position: relative;
