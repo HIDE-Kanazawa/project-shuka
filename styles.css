@@ -435,7 +435,7 @@ a:focus {
   top: 0;
   left: 0;
   right: 0;
-  background-image: url('./img/和紙_黒_optimized.webp'), url('./img/和紙_黒_optimized.png');
+  background-image: url('./img/和紙_黒_optimized.png');
   background-size: cover;
   background-repeat: repeat;
   backdrop-filter: blur(10px);
@@ -660,74 +660,7 @@ a:focus {
 }
 
 
-body[data-season="spring"] .header,
-.header[data-season="spring"] {
-  background-image: url('./img/和紙_黒_optimized.webp'), url('./img/和紙_黒_optimized.png');
-  background-size: cover;
-  background-repeat: repeat;
-}
-
-body[data-season="tsuyu"] .header,
-.header[data-season="tsuyu"] {
-  background-image: url('./img/和紙_黒_optimized.webp'), url('./img/和紙_黒_optimized.png');
-  background-size: cover;
-  background-repeat: repeat;
-}
-
-body[data-season="summer"] .header,
-.header[data-season="summer"] {
-  background-image: url('./img/和紙_黒_optimized.webp'), url('./img/和紙_黒_optimized.png');
-  background-size: cover;
-  background-repeat: repeat;
-}
-
-body[data-season="autumn"] .header,
-.header[data-season="autumn"] {
-  background-image: url('./img/和紙_黒_optimized.webp'), url('./img/和紙_黒_optimized.png');
-  background-size: cover;
-  background-repeat: repeat;
-}
-
-body[data-season="winter"] .header,
-.header[data-season="winter"] {
-  background-image: url('./img/和紙_黒_optimized.webp'), url('./img/和紙_黒_optimized.png');
-  background-size: cover;
-  background-repeat: repeat;
-}
-
-body[data-season="spring"] .footer,
-.footer[data-season="spring"] {
-  background-image: url('./img/和紙_黒_optimized.webp'), url('./img/和紙_黒_optimized.png');
-  background-size: cover;
-  background-repeat: repeat;
-}
-
-body[data-season="tsuyu"] .footer,
-.footer[data-season="tsuyu"] {
-  background-image: url('./img/和紙_黒_optimized.webp'), url('./img/和紙_黒_optimized.png');
-  background-size: cover;
-  background-repeat: repeat;
-}
-
-body[data-season="summer"] .footer,
-.footer[data-season="summer"] {
-  background-image: url('./img/和紙_黒_optimized.webp'), url('./img/和紙_黒_optimized.png');
-  background-size: cover;
-  background-repeat: repeat;
-}
-
-body[data-season="autumn"] .footer,
-.footer[data-season="autumn"] {
-  background-image: url('./img/和紙_黒_optimized.webp'), url('./img/和紙_黒_optimized.png');
-  background-size: cover;
-  background-repeat: repeat;
-}
-
-body[data-season="winter"] .footer,
-.footer[data-season="winter"] {
-  background-image: url('./img/和紙_黒_optimized.webp'), url('./img/和紙_黒_optimized.png');
-  background-size: cover;
-  background-repeat: repeat;
+/* 季節別ヘッダー・フッター背景は統一された和紙_黒を使用するため削除 */
 }
 
 /* ===== Hero Section ===== */
@@ -1383,7 +1316,7 @@ SURF_END SeasonTextColor */
 
 /* ===== Footer ===== */
 .footer {
-  background-image: url('./img/和紙_黒_optimized.webp'), url('./img/和紙_黒_optimized.png');
+  background-image: url('./img/和紙_黒_optimized.png');
   background-size: cover;
   background-repeat: repeat;
   color: var(--neutral-300);
@@ -3554,7 +3487,7 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    background-image: url('./img/和紙_黒_optimized.webp'), url('./img/和紙_黒_optimized.png');
+    background-image: url('./img/和紙_黒_optimized.png');
     background-size: cover;
     background-repeat: repeat;
     backdrop-filter: blur(10px);
@@ -3700,7 +3633,7 @@ body:not(.loaded) * {
 
 /* ===== Pro Washi Footer 2025 ===== */
 .footer {
-    background-image: url('./img/和紙_黒_optimized.webp'), url('./img/和紙_黒_optimized.png');
+    background-image: url('./img/和紙_黒_optimized.png');
     background-size: cover;
     background-repeat: repeat;
     border-top: 3px double rgba(0,0,0,0.12);

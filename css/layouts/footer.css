@@ -1,6 +1,6 @@
 /* ===== Footer ===== */
 .footer {
-  background-image: url('../img/和紙_黒_optimized.webp'), url('../img/和紙_黒_optimized.png');
+  background-image: url('../img/和紙_黒_optimized.png');
   background-size: cover;
   background-repeat: repeat;
   color: var(--neutral-300);

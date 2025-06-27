@@ -4,7 +4,7 @@
   top: 0;
   left: 0;
   right: 0;
-  background-image: url('../img/和紙_黒_optimized.webp'), url('../img/和紙_黒_optimized.png');
+  background-image: url('../img/和紙_黒_optimized.png');
   background-size: cover;
   background-repeat: repeat;
   backdrop-filter: blur(10px);
@@ -189,38 +189,4 @@
 
 
 
-/* Header seasonal backgrounds */
-body[data-season="spring"] .header,
-.header[data-season="spring"] {
-  background-image: url('../img/和紙_黒_optimized.webp'), url('../img/和紙_黒_optimized.png');
-  background-size: cover;
-  background-repeat: repeat;
-}
-
-body[data-season="tsuyu"] .header,
-.header[data-season="tsuyu"] {
-  background-image: url('../img/和紙_黒_optimized.webp'), url('../img/和紙_黒_optimized.png');
-  background-size: cover;
-  background-repeat: repeat;
-}
-
-body[data-season="summer"] .header,
-.header[data-season="summer"] {
-  background-image: url('../img/和紙_黒_optimized.webp'), url('../img/和紙_黒_optimized.png');
-  background-size: cover;
-  background-repeat: repeat;
-}
-
-body[data-season="autumn"] .header,
-.header[data-season="autumn"] {
-  background-image: url('../img/和紙_黒_optimized.webp'), url('../img/和紙_黒_optimized.png');
-  background-size: cover;
-  background-repeat: repeat;
-}
-
-body[data-season="winter"] .header,
-.header[data-season="winter"] {
-  background-image: url('../img/和紙_黒_optimized.webp'), url('../img/和紙_黒_optimized.png');
-  background-size: cover;
-  background-repeat: repeat;
-}
+/* Header seasonal backgrounds - 統一された背景のため季節別設定を削除 */
