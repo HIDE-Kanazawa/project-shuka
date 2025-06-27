@@ -254,6 +254,11 @@ class SeasonsGallery {
         button.setAttribute('tabindex', '-1');
       }
     });
+
+    document.querySelectorAll('.header-season-btn').forEach(btn => {
+      const s = btn.getAttribute('data-season');
+      btn.classList.toggle('active', s === activeSeason);
+    });
   }
   
   updateSeasonPanels(activeSeason, animate) {

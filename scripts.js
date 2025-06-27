@@ -707,6 +707,11 @@ class SeasonsGallery {
         button.setAttribute('tabindex', '-1');
       }
     });
+
+    document.querySelectorAll('.header-season-btn').forEach(btn => {
+      const s = btn.getAttribute('data-season');
+      btn.classList.toggle('active', s === activeSeason);
+    });
   }
   
   updateSeasonPanels(activeSeason, animate) {
@@ -3025,6 +3030,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Generate dynamic content first
   generateSocialLinks();
+  generateHeaderSeasonButtons();
   generateSeasonGallery();
   
   // Initialize SeasonsGallery class after DOM elements are generated
@@ -3034,9 +3040,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (window.seasonsGallery && typeof window.seasonsGallery.refresh === 'function') {
     window.seasonsGallery.refresh();
   }
-  
+
   // Setup footer season buttons
   setupFooterSeasonButtons();
+  setupHeaderSeasonButtons();
 });
 
 /**
@@ -3047,6 +3054,36 @@ function initScrollButtons() {
     button.addEventListener('click', (e) => {
       const target = e.currentTarget.getAttribute('data-scroll-target');
       scrollToSection(target);
+    });
+  });
+}
+
+/**
+ * Generate header season switcher buttons
+ */
+function generateHeaderSeasonButtons() {
+  const container = document.getElementById('header-seasons');
+  if (!container) return;
+  let html = '';
+  let isFirst = true;
+  for (const [key, season] of Object.entries(SEASON_DATA)) {
+    html += `
+      <button class="header-season-btn${isFirst ? ' active' : ''}" data-season="${key}" aria-label="${season.name}を表示">${season.icon}</button>
+    `;
+    isFirst = false;
+  }
+  container.innerHTML = html;
+}
+
+function setupHeaderSeasonButtons() {
+  const buttons = document.querySelectorAll('.header-season-btn');
+  buttons.forEach(button => {
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      const season = button.getAttribute('data-season');
+      if (season && window.switchSeason) {
+        window.switchSeason(season);
+      }
     });
   });
 }

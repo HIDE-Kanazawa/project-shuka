@@ -4,6 +4,11 @@ window.addEventListener('DOMContentLoaded', () => {
   if (typeof Navigation !== 'undefined') {
     window.navigation = new Navigation();
   }
+
+  if (typeof generateHeaderSeasonButtons === 'function') {
+    generateHeaderSeasonButtons();
+    setupHeaderSeasonButtons?.();
+  }
   
   if (typeof SeasonsGallery !== 'undefined') {
     window.seasonsGallery = new SeasonsGallery();

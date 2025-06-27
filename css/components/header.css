@@ -145,7 +145,52 @@
     border-bottom: 1px solid var(--border);
   }
   
-  .nav-menu a:last-child {
-    border-bottom: none;
+.nav-menu a:last-child {
+  border-bottom: none;
+}
+
+.nav-seasons {
+  display: flex;
+  align-items: center;
+}
+
+/* Header Season Switcher */
+.header-seasons {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  margin-left: var(--space-6);
+}
+
+.header-season-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.header-season-btn:hover,
+.header-season-btn:focus {
+  background-color: var(--neutral-800);
+  color: var(--primary);
+}
+
+.header-season-btn.active {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+@media (max-width: 767px) {
+  .header-seasons {
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: var(--space-4) 0 0;
   }
 }
