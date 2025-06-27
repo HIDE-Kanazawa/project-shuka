@@ -316,6 +316,28 @@ body[data-season="winter"] .ripple{ border-color: var(--accent-winter); }
   100% { transform: scale(2.5); opacity: 0; }
 }
 
+/* Kabuki swirl accent */
+.kabuki-swirl {
+  position: absolute;
+  pointer-events: none;
+  border: 2px solid transparent;
+  border-top-color: rgba(255,215,0,0.9);
+  border-right-color: rgba(255,215,0,0.6);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  width: 40px;
+  height: 40px;
+  transform: scale(0) rotate(0deg);
+  animation: kabukiSwirlSpin 0.8s ease-out forwards;
+  filter: blur(0.2px);
+}
+
+@keyframes kabukiSwirlSpin {
+  0% { transform: scale(0) rotate(0deg); opacity: 1; }
+  50% { opacity: 0.8; }
+  100% { transform: scale(3) rotate(720deg); opacity: 0; }
+}
+
 
 
 /* WINDSURF_END RippleEnhancement */
