@@ -4,6 +4,7 @@ body {
   line-height: 1.6;
   color: var(--text);
   background-color: var(--background);
+  transition: background-color 0.6s ease, color 0.6s ease;
   overflow-x: hidden;
   min-height: 100dvh;
   position: relative;
