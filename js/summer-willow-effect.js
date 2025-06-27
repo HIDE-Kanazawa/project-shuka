@@ -36,15 +36,17 @@ class SummerWillowEffect {
       y: randomY ? Math.random() * this.canvas.height : -30,
       length: 15 + Math.random() * 25, // Willow leaves are long and narrow
       width: 3 + Math.random() * 4, // Much narrower than other leaves
-      speed: 0.6 + Math.random() * 1.0, // Gentle falling speed
+      speed: 0.4 + Math.random() * 0.8, // Slower falling to emphasize horizontal movement
       opacity: 0.5 + Math.random() * 0.4, // Subtle visibility
-      drift: Math.random() * 0.8 - 0.4, // Side-to-side motion
-      rotationSpeed: (Math.random() - 0.5) * 1.5, // Gentle rotation
+      drift: Math.random() * 2 - 1, // Increased side-to-side motion
+      rotationSpeed: (Math.random() - 0.5) * 2.5, // More dynamic rotation
       rotation: Math.random() * Math.PI * 2,
-      swayAmplitude: 30 + Math.random() * 40, // More pronounced sway for willow
-      swaySpeed: 0.015 + Math.random() * 0.02, // Slower, more graceful
+      swayAmplitude: 50 + Math.random() * 60, // Much more pronounced sway
+      swaySpeed: 0.02 + Math.random() * 0.025, // Slightly faster sway
       swayOffset: Math.random() * Math.PI * 2,
       curvature: 0.1 + Math.random() * 0.3, // Natural curve of willow leaves
+      windResistance: 0.3 + Math.random() * 0.7, // How much the leaf responds to wind
+      turbulence: Math.random() * 0.5, // Random turbulence factor
       color: this.getWillowColor()
     };
   }
@@ -67,14 +69,14 @@ class SummerWillowEffect {
     const ctx = this.ctx;
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    // Update wind every few seconds - gentle summer breeze
+    // Update wind every few seconds - stronger summer wind
     const now = performance.now();
-    if (now - this.lastWindChange > 4500) {
-      this.windTarget = (Math.random() * 2 - 1) * 1.2; // Gentle wind
+    if (now - this.lastWindChange > 3000) {
+      this.windTarget = (Math.random() * 2 - 1) * 3.5; // Stronger wind for flowing effect
       this.lastWindChange = now;
     }
     // Ease current wind toward target
-    this.wind += (this.windTarget - this.wind) * 0.012;
+    this.wind += (this.windTarget - this.wind) * 0.02;
 
     for (const leaf of this.willowLeaves) {
       ctx.globalAlpha = leaf.opacity;
@@ -84,7 +86,10 @@ class SummerWillowEffect {
       
       ctx.save();
       ctx.translate(leaf.x + swayX, leaf.y);
-      ctx.rotate(leaf.rotation);
+      
+      // Add wind-influenced rotation - leaves tilt in wind direction
+      const windTilt = this.wind * 0.1;
+      ctx.rotate(leaf.rotation + windTilt);
       
       // Set leaf color
       const { r, g, b } = leaf.color;
@@ -97,10 +102,14 @@ class SummerWillowEffect {
       
       ctx.restore();
 
-      // Update leaf position with more graceful movement
-      leaf.x += this.wind + leaf.drift;
-      leaf.y += leaf.speed;
-      leaf.rotation += leaf.rotationSpeed * 0.015; // Slower rotation
+      // Update leaf position - wind-blown movement
+      const windForce = this.wind * leaf.windResistance;
+      const turbulenceX = Math.sin(now * 0.001 * leaf.turbulence) * 0.5;
+      const turbulenceY = Math.cos(now * 0.0015 * leaf.turbulence) * 0.3;
+      
+      leaf.x += windForce + leaf.drift + turbulenceX;
+      leaf.y += leaf.speed + Math.abs(windForce) * 0.1 + turbulenceY; // Wind affects vertical movement too
+      leaf.rotation += leaf.rotationSpeed * 0.02 + Math.abs(windForce) * 0.01; // Wind affects rotation
 
       // Wrap around horizontally
       if (leaf.x < -60) leaf.x = this.canvas.width + 60;
