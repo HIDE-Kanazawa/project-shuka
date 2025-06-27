@@ -3507,9 +3507,14 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Initialize resource prefetching
   initResourcePrefetching();
-  
+
   // Initialize scroll button handlers
   initScrollButtons();
+
+  // Initialize mobile navigation
+  if (typeof Navigation !== 'undefined') {
+    window.navigation = new Navigation();
+  }
   
   // Generate dynamic content first
   generateSocialLinks();
