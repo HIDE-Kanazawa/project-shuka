@@ -430,6 +430,29 @@ class SeasonsGallery {
       const selector = document.getElementById('season-selector');
       if (selector) selector.value = season;
     }
+
+    this.updateFavicon(season);
+  }
+
+  updateFavicon(season) {
+    const icons = {
+      spring: '🌸',
+      tsuyu: '☔️',
+      summer: '🌻',
+      autumn: '🍁',
+      winter: '❄️'
+    };
+    const emoji = icons[season] || '🌸';
+    const svg = encodeURIComponent(
+      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><text y="14" font-size="16">${emoji}</text></svg>`
+    );
+    let link = document.querySelector('link[rel="icon"]');
+    if (!link) {
+      link = document.createElement('link');
+      link.rel = 'icon';
+      document.head.appendChild(link);
+    }
+    link.setAttribute('href', `data:image/svg+xml,${svg}`);
   }
   
   updateHeroBackground(season) {
