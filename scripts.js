@@ -2317,8 +2317,8 @@ class WaterRippleEffect {
     if (!this.isActive) return;
 
     const { clientX: x, clientY: y } = e;
-    // Create zen-inspired subtle effect instead of flashy sparkles
-    this.createZenClickEffect(x, y);
+    // Luxurious Japanese-style click effect
+    this.createLuxuriousClickEffect(x, y);
   }
   
   handleTouch(e) {
@@ -2560,6 +2560,48 @@ class WaterRippleEffect {
       this.container.appendChild(dot);
       setTimeout(() => dot.remove(), duration * 1000);
     }
+  }
+
+  /**
+   * Burst of sakura petals for a luxurious click effect
+   */
+  createSakuraBurst(x, y, count = 8) {
+    if (!this.container) return;
+
+    for (let i = 0; i < count; i++) {
+      const petal = document.createElement('div');
+      petal.className = 'sakura-petal';
+
+      const size = Math.random() * 12 + 8;
+      petal.style.width = `${size}px`;
+      petal.style.height = `${size}px`;
+      petal.style.left = `${x - size / 2}px`;
+      petal.style.top = `${y - size / 2}px`;
+
+      const angle = Math.random() * 360;
+      const distance = 80 + Math.random() * 80;
+      const dx = Math.cos(angle * Math.PI / 180) * distance;
+      const dy = Math.sin(angle * Math.PI / 180) * distance;
+      const duration = (Math.random() * 1 + 2).toFixed(2);
+
+      petal.style.setProperty('--dx', `${dx}px`);
+      petal.style.setProperty('--dy', `${dy}px`);
+      petal.style.animationDuration = `${duration}s`;
+
+      this.container.appendChild(petal);
+      setTimeout(() => petal.remove(), duration * 1000);
+    }
+  }
+
+  /**
+   * Spectacular Japanese-style click effect
+   */
+  createLuxuriousClickEffect(x, y) {
+    this.createRipple(x, y, 'huge', 'gold');
+    this.createSakuraBurst(x, y, 8);
+    this.createFloatingElements(x, y, 10);
+    this.createSubtleGlow(x, y, 180);
+    this.createClickFlash(x, y);
   }
 
   /**
