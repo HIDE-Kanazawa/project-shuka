@@ -91,9 +91,11 @@ class SeasonsGallery {
   loadInitialSeason() {
     // Always set initial season to winter
     this.currentSeason = 'winter';
-    
+
     // Update body season for styling and washi background
     this.updateSeasonBackground('winter');
+    // Update favicon for initial season
+    this.updateFavicon('winter');
     
     // Enable snow effect for winter
     if (typeof window.enableSnow === 'function') {
@@ -202,14 +204,15 @@ class SeasonsGallery {
     // Update URL without page reload
     this.updateURL(season);
     
-    // Update hero background if needed
-    // Update hero background only when animate flag is true (i.e., user interaction)
+    // Update hero background only when user interaction triggers a change
     if (animate) {
       this.updateHeroBackground(season);
     }
 
     // Update body season for styling (includes washi background)
     this.updateSeasonBackground(season);
+    // Update favicon for the current season
+    this.updateFavicon(season);
 
     // Toggle weather effects depending on season
     if (season === 'tsuyu') {
@@ -394,6 +397,24 @@ class SeasonsGallery {
       };
       img.src = imageUrl;
     }
+  }
+
+  updateFavicon(season) {
+    const icons = {
+      tsuyu: '🌸',
+      spring: '🌸',
+      summer: '🌻',
+      autumn: '🍁',
+      winter: '❄️'
+    };
+
+    const emoji = icons[season] || '🌸';
+    const favicon = document.getElementById('favicon');
+    if (!favicon) return;
+
+    const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='16'>${emoji}</text></svg>`;
+    const url = `data:image/svg+xml,${encodeURIComponent(svg)}`;
+    favicon.setAttribute('href', url);
   }
   
   announceSeasonChange(season) {

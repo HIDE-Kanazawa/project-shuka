@@ -513,6 +513,8 @@ class SeasonsGallery {
 
     // Update styling / background
     this.updateSeasonBackground('tsuyu');
+    // Update favicon for initial season
+    this.updateFavicon('tsuyu');
 
     // Enable rain effect for tsuyu season
     if (typeof window.enableRain === 'function') {
@@ -651,6 +653,8 @@ class SeasonsGallery {
 
     // Update body season for styling (includes washi background)
     this.updateSeasonBackground(season);
+    // Update favicon to match selected season
+    this.updateFavicon(season);
 
     // Toggle visual effects depending on season
     console.log('[SeasonsGallery] switchToSeason', season);
@@ -831,6 +835,24 @@ class SeasonsGallery {
       };
       img.src = imageUrl;
     }
+  }
+
+  updateFavicon(season) {
+    const icons = {
+      tsuyu: '🌸',
+      spring: '🌸',
+      summer: '🌻',
+      autumn: '🍁',
+      winter: '❄️'
+    };
+
+    const emoji = icons[season] || '🌸';
+    const favicon = document.getElementById('favicon');
+    if (!favicon) return;
+
+    const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='16'>${emoji}</text></svg>`;
+    const url = `data:image/svg+xml,${encodeURIComponent(svg)}`;
+    favicon.setAttribute('href', url);
   }
   
   announceSeasonChange(season) {
