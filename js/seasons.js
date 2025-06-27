@@ -54,15 +54,13 @@ class SeasonsGallery {
 
       const container = video.closest('.season-visual');
       if (container && !container.dataset.playHandlerAdded) {
-        container.addEventListener('click', evt => {
-          if (evt.target !== video) {
-            if (video.paused) {
-              video.play().catch(err => {
-                console.log('Video play failed:', err);
-              });
-            } else {
-              video.pause();
-            }
+        container.addEventListener('click', () => {
+          if (video.paused) {
+            video.play().catch(err => {
+              console.log('Video play failed:', err);
+            });
+          } else {
+            video.pause();
           }
         });
         container.dataset.playHandlerAdded = 'true';
@@ -448,6 +446,7 @@ class SeasonsGallery {
 
   handleVideoClick(e) {
     const video = e.target;
+    e.stopPropagation();
 
     if (video.paused) {
       video.play().catch(error => {
