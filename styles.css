@@ -722,8 +722,8 @@ body[data-season="winter"] .footer,
 .hero {
   /* Prevent header overlap */
   --header-height: 80px;
-  /* Push section below the fixed header */
-  margin-top: var(--header-height);
+  /* Remove extra gap below the header */
+  margin-top: 0;
   height: 85vh;
   min-height: 480px;
   background: linear-gradient(
