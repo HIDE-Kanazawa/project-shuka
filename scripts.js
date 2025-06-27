@@ -259,9 +259,11 @@ class Navigation {
   
   openMobileMenu() {
     this.navMenu.classList.add('active');
-    this.navToggle.classList.add('active');
-    this.navToggle.setAttribute('aria-expanded', 'true');
-    this.navToggle.setAttribute('aria-label', 'メニューを閉じる');
+    if (this.navToggle) {
+      this.navToggle.classList.add('active');
+      this.navToggle.setAttribute('aria-expanded', 'true');
+      this.navToggle.setAttribute('aria-label', 'メニューを閉じる');
+    }
     
     // Prevent body scroll when menu is open
     document.body.style.overflow = 'hidden';
@@ -275,15 +277,19 @@ class Navigation {
   
   closeMobileMenu() {
     this.navMenu.classList.remove('active');
-    this.navToggle.classList.remove('active');
-    this.navToggle.setAttribute('aria-expanded', 'false');
-    this.navToggle.setAttribute('aria-label', 'メニューを開く');
+    if (this.navToggle) {
+      this.navToggle.classList.remove('active');
+      this.navToggle.setAttribute('aria-expanded', 'false');
+      this.navToggle.setAttribute('aria-label', 'メニューを開く');
+    }
     
     // Restore body scroll
     document.body.style.overflow = '';
     
     // Return focus to toggle button
-    this.navToggle.focus();
+    if (this.navToggle) {
+      this.navToggle.focus();
+    }
   }
   
   handleSmoothScroll(e) {
@@ -353,7 +359,7 @@ class Navigation {
   }
   
   handleOutsideClick(e) {
-    const isClickInsideNav = this.navMenu.contains(e.target) || this.navToggle.contains(e.target);
+    const isClickInsideNav = this.navMenu.contains(e.target) || (this.navToggle && this.navToggle.contains(e.target));
     
     if (!isClickInsideNav && this.navMenu.classList.contains('active')) {
       this.closeMobileMenu();
