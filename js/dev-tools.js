@@ -49,14 +49,6 @@ class DevelopmentTools {
           </div>
         </div>
         <div class="debug-section">
-          <h4>Theme Testing</h4>
-          <div class="debug-buttons">
-            <button onclick="devTools.testThemes()">Cycle Themes</button>
-            <button onclick="devTools.testHighContrast()">High Contrast</button>
-            <button onclick="devTools.testReducedMotion()">Reduced Motion</button>
-          </div>
-        </div>
-        <div class="debug-section">
           <h4>Performance</h4>
           <div class="debug-info" id="perf-info">
             <div>Load Time: <span id="load-time">-</span>ms</div>
@@ -368,25 +360,6 @@ class DevelopmentTools {
     console.log('Viewport reset to default');
   }
   
-  testThemes() {
-    const themes = ['light', 'dark', 'auto'];
-    let currentIndex = 0;
-    
-    const cycleTheme = () => {
-      if (window.themeManager) {
-        window.themeManager.setTheme(themes[currentIndex]);
-        currentIndex = (currentIndex + 1) % themes.length;
-        
-        if (currentIndex === 0) {
-          console.log('Theme cycling complete');
-        } else {
-          setTimeout(cycleTheme, 2000);
-        }
-      }
-    };
-    
-    cycleTheme();
-  }
   
   testHighContrast() {
     document.documentElement.style.filter = 
@@ -504,7 +477,7 @@ class DevelopmentTools {
       userAgent: navigator.userAgent,
       viewport: `${window.innerWidth}×${window.innerHeight}`,
       devicePixelRatio: window.devicePixelRatio,
-      colorScheme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
+      colorScheme: "dark",
       reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
       highContrast: window.matchMedia('(prefers-contrast: high)').matches,
       touchDevice: 'ontouchstart' in window,

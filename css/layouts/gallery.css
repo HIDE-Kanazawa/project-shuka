@@ -66,7 +66,7 @@
   background-repeat: no-repeat;
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
-  border: 2px solid rgba(255, 255, 255, 0.7);
+  border: 2px solid rgba(150, 150, 150, 0.6);
   border-radius: 12px;
   cursor: pointer;
   font-family: "Yuji Syuku", "Noto Serif JP", serif;
@@ -85,8 +85,8 @@
   inset: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.6) 0%,
-    rgba(0, 0, 0, 0.2) 60%,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.4) 50%,
     transparent 100%
   );
   transition: opacity 0.3s ease;
@@ -427,53 +427,28 @@
 
 .track {
   padding: var(--space-6);
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.3);
   border-radius: var(--radius-xl);
   transition: all var(--transition-normal);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(8px);
 }
 
-/* Dark theme adjustments */
-[data-theme="dark"] .season-btn {
-  border-color: rgba(150, 150, 150, 0.6);
-}
 
-[data-theme="dark"] .season-btn::before {
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.8) 0%,
-    rgba(0, 0, 0, 0.4) 50%,
-    transparent 100%
-  );
-}
 
-[data-theme="dark"] .season-btn.active {
-  border-color: #ffd700;
-}
 
-[data-theme="dark"] .track {
-  background: rgba(0, 0, 0, 0.3);
-  border-color: rgba(255, 255, 255, 0.08);
-}
-
-[data-theme="dark"] .track:hover {
+.track:hover {
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.15),
+    0 4px 10px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
   background: rgba(0, 0, 0, 0.4);
   border-color: rgba(255, 255, 255, 0.15);
 }
 
-[data-theme="dark"] .season-panel {
+.season-panel {
   background: rgba(0, 0, 0, 0.2);
   border-color: rgba(255, 255, 255, 0.08);
-}
-
-.track:hover {
-  box-shadow: 
-    0 8px 25px rgba(0, 0, 0, 0.15),
-    0 4px 10px rgba(0, 0, 0, 0.1);
-  transform: translateY(-2px);
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .track audio {

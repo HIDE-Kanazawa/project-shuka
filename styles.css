@@ -41,18 +41,8 @@ body[data-season="winter"]{ --primary:var(--primary-winter); --accent:var(--acce
 body[data-season="tsuyu"]{ --primary:var(--primary-tsuyu); --accent:var(--accent-tsuyu); }
 
 /* Tsuyu (Rainy Season) Special Styling */
-body[data-season="tsuyu"] {
-  --background: #f7f9fc;
-  --surface: #eef3f8;
-  --text: #2a3f5f;
-  --text-secondary: #4a5f7f;
-  --text-muted: #6b7b9a;
-  --border: #c5d4e3;
-  --shadow: rgba(74, 144, 184, 0.15);
-  --shadow-lg: rgba(74, 144, 184, 0.25);
-}
 
-[data-theme="dark"] body[data-season="tsuyu"] {
+body[data-season="tsuyu"] {
   --background: #1a2332;
   --surface: #253142;
   --text: #d1dae6;
@@ -166,14 +156,14 @@ body[data-season="tsuyu"] .ripple {
   --neutral-900: #111827;
   
   /* Semantic Colors */
-  --background: #ffffff;
-  --surface: #ffffff;
-  --text: #111827;
-  --text-secondary: #4b5563;
-  --text-muted: #6b7280;
-  --border: #e5e7eb;
-  --shadow: rgba(0, 0, 0, 0.1);
-  --shadow-lg: rgba(0, 0, 0, 0.15);
+  --background: #111827;
+  --surface: #1f2937;
+  --text: #f9fafb;
+  --text-secondary: #d1d5db;
+  --text-muted: #9ca3af;
+  --border: #374151;
+  --shadow: rgba(0, 0, 0, 0.3);
+  --shadow-lg: rgba(0, 0, 0, 0.4);
   
   /* Seasonal Colors */
   --spring: #22c55e;
@@ -236,17 +226,6 @@ body[data-season="tsuyu"] .ripple {
   --z-tooltip: 1060;
 }
 
-/* Dark Theme */
-[data-theme="dark"] {
-  --background: #111827;
-  --surface: #1f2937;
-  --text: #f9fafb;
-  --text-secondary: #d1d5db;
-  --text-muted: #9ca3af;
-  --border: #374151;
-  --shadow: rgba(0, 0, 0, 0.3);
-  --shadow-lg: rgba(0, 0, 0, 0.4);
-}
 
 /* ===== Base Styles ===== */
 *,
@@ -306,6 +285,7 @@ body::before {
   transition: opacity 0.5s ease-in-out;
 
   z-index: -1;
+  mix-blend-mode: normal;
 }
 
 /* 季節別和紙背景 */
@@ -331,14 +311,6 @@ body[data-season="tsuyu"]::before {
 }
 
 /* ダークテーマ時の和紙背景調整 */
-[data-theme="dark"] body::before {
-  opacity: 1;
-  mix-blend-mode: normal;
-}
-
-[data-theme="dark"] body[data-season="tsuyu"]::before {
-  opacity: 1;
-}
 
 /* レスポンシブ対応 - モバイルでのパフォーマンス最適化 */
 @media (max-width: 768px) {
@@ -463,15 +435,11 @@ a:focus {
   top: 0;
   left: 0;
   right: 0;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(17, 24, 39, 0.95);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
   z-index: var(--z-fixed);
   transition: all var(--transition-normal);
-}
-
-[data-theme="dark"] .header {
-  background: rgba(17, 24, 39, 0.95);
 }
 
 .nav-container {
@@ -523,13 +491,8 @@ a:focus {
 
 .nav-toggle:hover,
 .nav-toggle:focus {
-  background-color: var(--neutral-100);
-  outline: 2px solid var(--primary);
-}
-
-[data-theme="dark"] .nav-toggle:hover,
-[data-theme="dark"] .nav-toggle:focus {
   background-color: var(--neutral-800);
+  outline: 2px solid var(--primary);
 }
 
 .nav-toggle span {
@@ -571,35 +534,9 @@ a:focus {
 .nav-menu a:hover,
 .nav-menu a:focus {
   color: var(--primary);
-  background-color: var(--neutral-50);
-}
-
-[data-theme="dark"] .nav-menu a:hover,
-[data-theme="dark"] .nav-menu a:focus {
   background-color: var(--neutral-800);
 }
 
-.theme-toggle {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: var(--space-2);
-  border-radius: var(--radius-full);
-  transition: all var(--transition-fast);
-  font-size: var(--text-xl);
-}
-
-.theme-toggle:hover,
-.theme-toggle:focus {
-  background-color: var(--neutral-100);
-  transform: scale(1.1);
-  outline: 2px solid var(--primary);
-}
-
-[data-theme="dark"] .theme-toggle:hover,
-[data-theme="dark"] .theme-toggle:focus {
-  background-color: var(--neutral-800);
-}
 
 .autumn {
   --primary: #FFC080;
@@ -818,11 +755,6 @@ a:focus {
 /* ===== About Section ===== */
 .about {
   padding: var(--space-24) 0;
-  background: rgba(249, 250, 251, 0.85); /* 和紙背景を透かすため半透明に */
-  backdrop-filter: blur(1px);
-}
-
-[data-theme="dark"] .about {
   background: rgba(17, 24, 39, 0.85);
   backdrop-filter: blur(1px);
 }
@@ -995,22 +927,18 @@ a:focus {
 .season-btn::before { opacity: 0.35; }
 SURF_END SeasonTextColor */
 
-/* Dark theme adjustments */
-[data-theme="dark"] .season-btn {
+/* Gallery button styling */
+.season-btn {
   border-color: rgba(150, 150, 150, 0.6);
 }
 
-[data-theme="dark"] .season-btn::before {
+.season-btn::before {
   background: linear-gradient(
     to top,
     rgba(0, 0, 0, 0.8) 0%,
     rgba(0, 0, 0, 0.4) 60%,
     transparent 100%
   );
-}
-
-[data-theme="dark"] .season-btn.active {
-  border-color: #ffd700;
 }
 
 /* Responsive adjustments for season buttons */
@@ -1159,18 +1087,21 @@ SURF_END SeasonTextColor */
 }
 
 .track {
-  padding: var(--space-4);
-  background: var(--neutral-50);
-  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius-xl);
   transition: all var(--transition-normal);
-}
-
-[data-theme="dark"] .track {
-  background: var(--neutral-800);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
 }
 
 .track:hover {
-  box-shadow: 0 4px 15px var(--shadow);
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.15),
+    0 4px 10px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  background: rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 .track audio {
@@ -1194,11 +1125,6 @@ SURF_END SeasonTextColor */
 /* ===== Contact Section ===== */
 .contact {
   padding: var(--space-24) 0;
-  background: rgba(249, 250, 251, 0.85);
-  backdrop-filter: blur(1px);
-}
-
-[data-theme="dark"] .contact {
   background: rgba(17, 24, 39, 0.85);
   backdrop-filter: blur(1px);
 }
@@ -1325,7 +1251,7 @@ SURF_END SeasonTextColor */
 /* ===== Footer ===== */
 .footer {
   /* Wafu indigo base color */
-  background-color: #1f2937;
+  background: var(--neutral-800);
   /* Subtle seigaiha wave pattern using inline SVG */
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='60' viewBox='0 0 120 60'%3E%3Cpath d='M0 60c30-60 90-60 120 0H0z' fill='%232d3748'/%3E%3C/svg%3E");
   background-size: 120px 60px;
@@ -1333,11 +1259,6 @@ SURF_END SeasonTextColor */
   color: var(--neutral-300);
   padding: var(--space-20) 0 var(--space-10);
   position: relative;
-}
-
-/* Dark theme variant remains the same but keep pattern */
-[data-theme="dark"] .footer {
-  background: var(--neutral-800);
 }
 
 .footer-content {
@@ -1628,7 +1549,6 @@ SURF_END SeasonTextColor */
 @media print {
   .header,
   .nav-toggle,
-  .theme-toggle,
   .hero-actions,
   .season-nav,
   audio,
@@ -2175,7 +2095,6 @@ audio:focus-visible {
 /* Ensure minimum 44px touch targets for mobile */
 @media (max-width: 768px) {
   .nav-toggle,
-  .theme-toggle,
   .season-btn,
   .social-link {
     min-height: 44px;
@@ -2277,7 +2196,6 @@ body.using-mouse :focus {
   /* Skip navigation elements */
   .nav-menu,
   .season-nav,
-  .theme-toggle,
   .hero-actions {
     display: none;
   }
@@ -2451,10 +2369,6 @@ legend {
     background: var(--surface);
   }
   
-  .theme-toggle {
-    margin: var(--space-4) auto 0;
-    display: block;
-  }
 }
 
 /* ===== Section Spacing Adjustments ===== */
@@ -2873,7 +2787,6 @@ legend {
   .hero-actions,
   .season-nav,
   .nav-menu,
-  .theme-toggle,
   .social-links {
     display: none;
   }
@@ -2966,17 +2879,13 @@ legend {
   pointer-events: none;
   z-index: 1;
   overflow: hidden;
-  mix-blend-mode: multiply;
-  background-color: rgba(247, 244, 233, 0.03); /* Subtle washi background */
+  mix-blend-mode: overlay;
+  background-color: rgba(47, 63, 79, 0.05);
   transform: translateZ(0); /* Hardware acceleration */
   will-change: auto; /* Container doesn't animate */
   contain: strict; /* Optimize containment */
 }
 
-[data-theme="dark"] .ripple-container {
-  mix-blend-mode: overlay;
-  background-color: rgba(47, 63, 79, 0.05);
-}
 
 /* Base ripple with sumi-e ink aesthetic */
 .ripple {
@@ -3250,7 +3159,7 @@ body[data-season="winter"] .ripple:not(.elegant):not(.subtle) {
     );
   }
   
-  [data-theme="dark"] .ripple {
+  .ripple {
     background: radial-gradient(
       circle,
       rgba(255, 255, 255, 0.5) 0%,
@@ -3272,9 +3181,9 @@ body[data-season="winter"] .ripple:not(.elegant):not(.subtle) {
     --secondary: #f59e0b;
     --accent: #ec4899;
     --neutral: #374151;
-    --background: #ffffff;
-    --text: #111827;
-    --shadow: rgba(0, 0, 0, 0.1);
+    --background: #111827;
+    --text: #f9fafb;
+    --shadow: rgba(0, 0, 0, 0.3);
     --space-4: 1rem;
     --space-6: 1.5rem;
     --space-8: 2rem;
@@ -3285,12 +3194,6 @@ body[data-season="winter"] .ripple:not(.elegant):not(.subtle) {
     --transition-normal: 300ms ease-in-out;
 }
 
-[data-theme="dark"] {
-    --background: #111827;
-    --text: #f9fafb;
-    --neutral: #6b7280;
-    --shadow: rgba(255, 255, 255, 0.1);
-}
 
 body {
     font-family: system-ui, -apple-system, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
@@ -3310,15 +3213,11 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(17, 24, 39, 0.95);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(229, 231, 235, 0.8);
     z-index: 1020;
     transition: all var(--transition-normal);
-}
-
-[data-theme="dark"] .header {
-    background: rgba(17, 24, 39, 0.95);
 }
 
 .nav-container {
@@ -3457,19 +3356,13 @@ body:not(.loaded) * {
 
 /* ===== Pro Washi Footer 2025 ===== */
 .footer {
-    background-color: #faf8f5;
+    background-color: #14181d;
     background-size: 480px 480px;
     background-repeat: repeat;
     border-top: 3px double rgba(0,0,0,0.12);
     box-shadow: 0 -3px 5px rgba(0,0,0,0.06);
-    color: #3a3532;
-    line-height: 1.8;
-}
-
-[data-theme="dark"] .footer {
-    background-color: #14181d;
-    background-size: 480px 480px;
     color: var(--neutral-300);
+    line-height: 1.8;
 }
 
 
@@ -3534,13 +3427,9 @@ body:not(.loaded) * {
     justify-content: center;
     border-radius: 50%;
     border: 1px solid currentColor;
-    background: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(6px);
     transition: transform 0.2s ease-in-out, color 0.2s ease-in-out, background 0.2s ease-in-out;
-}
-
-[data-theme="dark"] .footer-social .social-link {
-    background: rgba(255, 255, 255, 0.08);
 }
 
 .footer-social .social-link:hover {

@@ -49,14 +49,14 @@ h1, h2, h3 {
   --neutral-900: #111827;
   
   /* Semantic Colors */
-  --background: #ffffff;
-  --surface: #ffffff;
-  --text: #111827;
-  --text-secondary: #4b5563;
-  --text-muted: #6b7280;
-  --border: #e5e7eb;
-  --shadow: rgba(0, 0, 0, 0.1);
-  --shadow-lg: rgba(0, 0, 0, 0.15);
+  --background: #111827;
+  --surface: #1f2937;
+  --text: #f9fafb;
+  --text-secondary: #d1d5db;
+  --text-muted: #9ca3af;
+  --border: #374151;
+  --shadow: rgba(0, 0, 0, 0.3);
+  --shadow-lg: rgba(0, 0, 0, 0.4);
   
   /* Seasonal Colors */
   --spring: #22c55e;
@@ -119,14 +119,3 @@ h1, h2, h3 {
   --z-tooltip: 1060;
 }
 
-/* Dark Theme */
-[data-theme="dark"] {
-  --background: #111827;
-  --surface: #1f2937;
-  --text: #f9fafb;
-  --text-secondary: #d1d5db;
-  --text-muted: #9ca3af;
-  --border: #374151;
-  --shadow: rgba(0, 0, 0, 0.3);
-  --shadow-lg: rgba(0, 0, 0, 0.4);
-}
