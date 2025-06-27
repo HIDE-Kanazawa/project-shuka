@@ -37,4 +37,12 @@ The site can be deployed with GitHub Pages. Enable Pages from the repository set
 
 ## Build notes
 
-`styles.css` and `scripts.js` are bundled files. If you modify the modules in `css/` or `js/`, rebuild these outputs before deploying. No automated build script is provided; combine the modules manually or with your preferred tooling.
+`styles.css` and `scripts.js` are generated from the source modules in `css/` and `js/`.
+Run the build script whenever you modify these directories:
+
+```bash
+npm install
+npm run build
+```
+
+Node.js 18 or later is required.
