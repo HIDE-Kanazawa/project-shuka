@@ -5,6 +5,10 @@
   "scripts": {
     "build": "node build.js"
   },
+  "devDependencies": {
+    "terser": "^5.17.6",
+    "csso": "^5.0.5"
+  },
   "engines": {
     "node": ">=18"
   }

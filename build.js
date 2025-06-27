@@ -1,10 +1,37 @@
 const fs = require('fs');
 const path = require('path');
 
-function concatFiles(files, outFile) {
-  const contents = files.map(f => fs.readFileSync(f, 'utf8')).join('\n\n');
-  fs.writeFileSync(outFile, contents);
-  console.log(`Built ${outFile}`);
+function tryRequire(name, fallback) {
+  try {
+    return require(name);
+  } catch (err) {
+    console.warn(`${name} not installed, using fallback minifier`);
+    return fallback;
+  }
+}
+
+function simpleJsMinify(code) {
+  return code
+    .replace(/\/\/.*$/gm, '')
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/\n+/g, '')
+    .replace(/\s+/g, ' ');
+}
+
+function simpleCssMinify(code) {
+  return code
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/\n+/g, '')
+    .replace(/\s+/g, ' ')
+    .replace(/\s*([{}:;,])\s*/g, '$1')
+    .trim();
+}
+
+const terser = tryRequire('terser', { minify: code => ({ code: simpleJsMinify(code) }) });
+const csso = tryRequire('csso', { minify: code => ({ css: simpleCssMinify(code) }) });
+
+function concatFiles(files) {
+  return files.map(f => fs.readFileSync(f, 'utf8')).join('\n\n');
 }
 
 // Order of JavaScript modules
@@ -31,5 +58,12 @@ const cssFiles = [
   ...fs.readdirSync(path.join(__dirname, 'css/layouts')).sort().map(f => `css/layouts/${f}`)
 ].map(f => path.join(__dirname, f));
 
-concatFiles(jsFiles, path.join(__dirname, 'scripts.js'));
-concatFiles(cssFiles, path.join(__dirname, 'styles.css'));
+const jsContent = concatFiles(jsFiles);
+const jsResult = terser.minify(jsContent);
+fs.writeFileSync(path.join(__dirname, 'scripts.js'), jsResult.code || jsResult);
+console.log('Built scripts.js');
+
+const cssContent = concatFiles(cssFiles);
+const cssResult = csso.minify(cssContent);
+fs.writeFileSync(path.join(__dirname, 'styles.css'), cssResult.css || cssResult);
+console.log('Built styles.css');
