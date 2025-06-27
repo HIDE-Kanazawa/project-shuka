@@ -2602,10 +2602,27 @@ class WaterRippleEffect {
    */
   createLuxuriousClickEffect(x, y) {
     this.createRipple(x, y, 'huge', 'gold');
-    this.createSakuraBurst(x, y, 8);
-    this.createFloatingElements(x, y, 10);
-    this.createSubtleGlow(x, y, 180);
+    this.createSakuraBurst(x, y, 14);
+    this.createKabukiSwirls(x, y, 2);
+    this.createFloatingElements(x, y, 12);
+    this.createSubtleGlow(x, y, 200);
     this.createClickFlash(x, y);
+  }
+
+  createKabukiSwirls(x, y, count = 2) {
+    if (!this.container) return;
+    for (let i = 0; i < count; i++) {
+      const swirl = document.createElement('div');
+      swirl.className = 'kabuki-swirl';
+      const size = 40 + Math.random() * 20;
+      swirl.style.width = `${size}px`;
+      swirl.style.height = `${size}px`;
+      swirl.style.left = `${x - size / 2}px`;
+      swirl.style.top = `${y - size / 2}px`;
+      swirl.style.animationDuration = `${(Math.random() * 0.4 + 0.8).toFixed(2)}s`;
+      this.container.appendChild(swirl);
+      setTimeout(() => swirl.remove(), 1000);
+    }
   }
 
   /**
