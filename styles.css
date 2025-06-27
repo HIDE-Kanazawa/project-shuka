@@ -596,6 +596,16 @@ a:focus {
 }
 .social-links a{ font-size:1.8rem; color:var(--accent); transition:opacity .3s; }
 .social-links a:hover{ opacity:.6; }
+
+/* Disabled social icons */
+.social-link.disabled{
+  pointer-events:none;
+  filter:grayscale(100%);
+  opacity:.5;
+}
+
+/* Instagram brand color */
+.social-link.instagram{ color:#E4405F; }
 /* WINDSURF_END FooterIconsStyle */
 
 /* Mobile Navigation */
