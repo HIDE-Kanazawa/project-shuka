@@ -159,19 +159,15 @@ function handleGlobalKeyboard(e) {
 function initResourcePrefetching() {
   if ('requestIdleCallback' in window) {
     requestIdleCallback(() => {
-      // Prefetch additional resources during idle time
-      const additionalResources = [
-        './audio/ひかりのあと.mp3',
-        './audio/光のほうへ.mp3',
-        './audio/夏庭園の詩.mp3',
-        './audio/緑の中のひととき.mp3',
-        './audio/風の庭にて.mp3',
-        './audio/落葉の宵(よい).mp3',
-        './audio/白のなかで.mp3',
-        './audio/しろのことば.mp3'
+      // Prefetch lightweight image assets during idle time
+      const images = [
+        './img/秀歌-春.webp',
+        './img/秀歌-夏.webp',
+        './img/秀歌-秋.webp',
+        './img/秀歌-冬.webp'
       ];
-      
-      additionalResources.forEach(src => {
+
+      images.forEach(src => {
         const link = document.createElement('link');
         link.rel = 'prefetch';
         link.href = src;
@@ -449,6 +445,8 @@ class SeasonsGallery {
     this.videoElements.forEach(video => {
       // Set default volume to 50%
       video.volume = 0.5;
+      // Avoid loading video data until play
+      video.preload = 'none';
       // Ensure videos don't autoplay with sound
       video.muted = false;
       
@@ -735,10 +733,6 @@ class SeasonsGallery {
     // Update ARIA attributes
     panel.setAttribute('aria-hidden', 'false');
     
-    // Lazy-preload audio in the newly visible panel
-    panel.querySelectorAll('audio[preload="none"]').forEach(aud => {
-      aud.preload = 'metadata';
-    });
   }
   
   hidePanel(panel, animate) {
@@ -3077,9 +3071,9 @@ function generateSeasonGallery() {
            aria-labelledby="${key}-tab" 
            data-season="${key}">
         <div class="season-visual">
-          <video class="season-video" 
-                 controls 
-                 preload="metadata"
+          <video class="season-video"
+                 controls
+                 preload="none"
                  loading="lazy"
                  tabindex="0"
                  
