@@ -803,7 +803,7 @@ body[data-season="winter"] .footer,
   margin-bottom: var(--space-6);
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
   animation: fadeInUp 1s ease-out;
-  white-space: nowrap;
+  white-space: normal;
 }
 
 /* Emphasize artist name in hero */
@@ -1130,7 +1130,7 @@ SURF_END SeasonTextColor */
     font-size: clamp(1rem, 6vw, 1.5rem);
     line-height: 1.4;
     margin-bottom: var(--space-2);
-    white-space: nowrap;
+    white-space: normal;
   }
   
   .hero-title br {
@@ -2651,7 +2651,7 @@ legend {
     font-size: clamp(1.25rem, 6vw, 2.5rem);
     line-height: 1.2;
     margin-bottom: var(--space-4);
-    white-space: nowrap;
+    white-space: normal;
   }
   
   .hero-title br {
