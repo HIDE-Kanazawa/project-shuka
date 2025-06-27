@@ -1268,6 +1268,10 @@ class ShukaApp {
     this.setupPerformanceOptimizations();
     this.setupAccessibilityEnhancements();
     this.setupErrorHandling();
+    const main = document.getElementById('main-content');
+    if (main) {
+      main.scrollIntoView({ behavior: 'auto' });
+    }
     this.isLoaded = true;
     
     // Dispatch custom event for other modules
