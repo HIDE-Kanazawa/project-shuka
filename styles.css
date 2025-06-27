@@ -1276,7 +1276,7 @@ SURF_END SeasonTextColor */
   background-size: 120px 60px;
   background-repeat: repeat;
   color: var(--neutral-300);
-  padding: var(--space-20) 0 var(--space-10);
+  padding: var(--space-12) 0 var(--space-8);
   position: relative;
   box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.4);
 }
@@ -3405,6 +3405,8 @@ body:not(.loaded) * {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-12);
+    justify-content: space-between;
+    align-items: flex-start;
 }
 
 .footer-brand {
@@ -3483,9 +3485,9 @@ body:not(.loaded) * {
 }
 
 .footer-bottom {
-    margin-top: var(--space-12);
+    margin-top: var(--space-6);
     border-top: 1px solid rgba(0,0,0,0.1);
-    padding-top: var(--space-6);
+    padding-top: var(--space-4);
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
