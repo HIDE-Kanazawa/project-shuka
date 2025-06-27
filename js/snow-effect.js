@@ -17,6 +17,14 @@ class SnowEffect {
       this.flakes.push(this.createFlake(true));
     }
 
+    this.handleMouseMove = this.handleMouseMove.bind(this);
+    window.addEventListener('mousemove', this.handleMouseMove);
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches && e.touches[0]) {
+        this.handleMouseMove(e.touches[0]);
+      }
+    }, { passive: true });
+
     // Wind variables for gentle drift
     this.wind = 0;
     this.windTarget = 0;
@@ -41,6 +49,12 @@ class SnowEffect {
       rotationSpeed: (Math.random() - 0.5) * 2, // Rotation for realism
       rotation: 0
     };
+  }
+
+  handleMouseMove(e) {
+    const centerX = window.innerWidth / 2;
+    const normalized = (e.clientX - centerX) / centerX;
+    this.windTarget = normalized * 0.5;
   }
 
   animate() {

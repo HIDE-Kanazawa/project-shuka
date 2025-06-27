@@ -17,6 +17,14 @@ class AutumnLeavesEffect {
       this.leaves.push(this.createLeaf(true));
     }
 
+    this.handleMouseMove = this.handleMouseMove.bind(this);
+    window.addEventListener('mousemove', this.handleMouseMove);
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches && e.touches[0]) {
+        this.handleMouseMove(e.touches[0]);
+      }
+    }, { passive: true });
+
     // Wind variables for natural leaf movement
     this.wind = 0;
     this.windTarget = 0;
@@ -73,6 +81,12 @@ class AutumnLeavesEffect {
       ];
       return colors[Math.floor(Math.random() * colors.length)];
     }
+  }
+
+  handleMouseMove(e) {
+    const centerX = window.innerWidth / 2;
+    const normalized = (e.clientX - centerX) / centerX;
+    this.windTarget = normalized * 1.5;
   }
 
   animate() {
