@@ -3578,10 +3578,21 @@ body:not(.loaded) * {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-12);
+    justify-content: space-between;
 }
 
 .footer-brand {
     flex: 1 1 260px;
+}
+
+.footer-section {
+    margin-left: auto;
+    text-align: right;
+}
+
+.footer-section .social-links {
+    flex-direction: row;
+    justify-content: flex-end;
 }
 
 .footer-links {
