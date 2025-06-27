@@ -1559,6 +1559,7 @@ SURF_END SeasonTextColor */
 .footer-bottom-link:hover,
 .footer-bottom-link:focus {
   color: var(--neutral-500);
+  outline: none;
 }
 
 .footer-links {
