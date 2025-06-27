@@ -2113,10 +2113,10 @@ class WaterRippleEffect {
   
   handleClick(e) {
     if (!this.isActive) return;
-    
+
     const { clientX: x, clientY: y } = e;
-    // Create gold foil sparkle effect instead of ripples
-    this.createGoldFoilEffect(x, y);
+    // Create zen-inspired subtle effect instead of flashy sparkles
+    this.createZenClickEffect(x, y);
   }
   
   handleTouch(e) {
@@ -2220,6 +2220,143 @@ class WaterRippleEffect {
       setTimeout(() => {
         this.createRipple(x, y, 'medium', 'subtle');
       }, Math.random() * 800 + 400);
+    }
+  }
+
+  /**
+   * Create zen-inspired subtle click effect - 禅の美学に基づく上品なクリックエフェクト
+   */
+  createZenClickEffect(x, y) {
+    // 墨滴の滲み
+    this.createInkDrops(x, y, 6);
+
+    // 浮遊する葉
+    setTimeout(() => {
+      this.createFloatingLeaves(x, y, 4);
+    }, 200);
+
+    // 微かな光の滲み
+    setTimeout(() => {
+      this.createSubtleGlow(x, y, 120);
+    }, 100);
+
+    // 静寂の点
+    this.createTranquilDots(x, y, 8);
+  }
+
+  /**
+   * Create ink drops - 墨滴の滲み
+   */
+  createInkDrops(x, y, count) {
+    if (!this.container) return;
+
+    for (let i = 0; i < count; i++) {
+      const drop = document.createElement('div');
+      drop.className = 'ink-drop';
+
+      // 控えめなサイズ
+      const size = Math.random() * 4 + 3; // 3-7px
+      drop.style.width = `${size}px`;
+      drop.style.height = `${size}px`;
+      drop.style.left = `${x - size / 2}px`;
+      drop.style.top = `${y - size / 2}px`;
+
+      // 穏やかな拡散
+      const angle = (360 / count) * i + (Math.random() * 60 - 30);
+      const distance = 30 + Math.random() * 50; // 控えめな距離
+      const dx = Math.cos(angle * Math.PI / 180) * distance;
+      const dy = Math.sin(angle * Math.PI / 180) * distance;
+      const duration = (Math.random() * 0.8 + 1.5).toFixed(2); // 1.5-2.3秒
+
+      drop.style.setProperty('--dx', `${dx}px`);
+      drop.style.setProperty('--dy', `${dy}px`);
+      drop.style.animationDuration = `${duration}s`;
+
+      this.container.appendChild(drop);
+      setTimeout(() => drop.remove(), duration * 1000);
+    }
+  }
+
+  /**
+   * Create subtle glow - 微かな光の滲み
+   */
+  createSubtleGlow(x, y, size) {
+    if (!this.container) return;
+
+    const glow = document.createElement('div');
+    glow.className = 'subtle-glow';
+    glow.style.width = `${size}px`;
+    glow.style.height = `${size}px`;
+    glow.style.left = `${x - size / 2}px`;
+    glow.style.top = `${y - size / 2}px`;
+
+    this.container.appendChild(glow);
+    setTimeout(() => glow.remove(), 2000);
+  }
+
+  /**
+   * Create floating leaves - 浮遊する葉
+   */
+  createFloatingLeaves(x, y, count) {
+    if (!this.container) return;
+
+    for (let i = 0; i < count; i++) {
+      const leaf = document.createElement('div');
+      leaf.className = 'floating-leaf';
+
+      // 自然なサイズの葉
+      const width = Math.random() * 4 + 2; // 2-6px
+      const height = Math.random() * 3 + 2; // 2-5px
+      leaf.style.width = `${width}px`;
+      leaf.style.height = `${height}px`;
+      leaf.style.left = `${x - width / 2}px`;
+      leaf.style.top = `${y - height / 2}px`;
+
+      // ゆっくりと舞い散る
+      const angle = Math.random() * 360;
+      const distance = 40 + Math.random() * 60; // 控えめな距離
+      const dx = Math.cos(angle * Math.PI / 180) * distance;
+      const dy = Math.sin(angle * Math.PI / 180) * distance;
+      const duration = (Math.random() * 1.5 + 2).toFixed(2); // 2-3.5秒
+
+      leaf.style.setProperty('--dx', `${dx}px`);
+      leaf.style.setProperty('--dy', `${dy}px`);
+      leaf.style.animationDuration = `${duration}s`;
+
+      // ランダムなグラデーション角度
+      const leafAngle = Math.random() * 360;
+      leaf.style.setProperty('--leaf-angle', `${leafAngle}deg`);
+
+      this.container.appendChild(leaf);
+      setTimeout(() => leaf.remove(), duration * 1000);
+    }
+  }
+
+  /**
+   * Create tranquil dots - 静寂の点
+   */
+  createTranquilDots(x, y, count) {
+    if (!this.container) return;
+
+    for (let i = 0; i < count; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'tranquil-dot';
+      dot.style.left = `${x - 1}px`;
+      dot.style.top = `${y - 1}px`;
+
+      // 静かに放射状に拡散
+      const angle = (360 / count) * i;
+      const distance = 20 + Math.random() * 40; // 控えめな距離
+      const dx = Math.cos(angle * Math.PI / 180) * distance;
+      const dy = Math.sin(angle * Math.PI / 180) * distance;
+      const duration = (Math.random() * 0.5 + 1).toFixed(2); // 1-1.5秒
+
+      dot.style.setProperty('--dx', `${dx}px`);
+      dot.style.setProperty('--dy', `${dy}px`);
+      dot.style.animationDuration = `${duration}s`;
+
+      this.container.appendChild(dot);
+      setTimeout(() => dot.remove(), duration * 1000);
     }
   }
 

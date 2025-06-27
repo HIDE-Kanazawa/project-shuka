@@ -1640,6 +1640,138 @@ body[data-season="summer"] .ripple{ border-color: var(--accent-summer); }
 body[data-season="autumn"] .ripple{ border-color: var(--accent-autumn); }
 body[data-season="winter"] .ripple{ border-color: var(--accent-winter); }
 
+.ink-drop {
+  position: absolute;
+  pointer-events: none;
+  background: radial-gradient(
+    circle,
+    rgba(47, 79, 79, 0.4) 0%,
+    rgba(105, 105, 105, 0.25) 40%,
+    rgba(128, 128, 128, 0.1) 70%,
+    transparent 100%
+  );
+  border-radius: 50%;
+  transform: scale(0);
+  animation: inkSpread ease-out forwards;
+  filter: blur(0.8px);
+}
+
+.floating-leaf {
+  position: absolute;
+  pointer-events: none;
+  background: linear-gradient(var(--leaf-angle, 45deg),
+    rgba(34, 139, 34, 0.3) 0%,
+    rgba(107, 142, 35, 0.25) 30%,
+    rgba(85, 107, 47, 0.15) 60%,
+    transparent 100%
+  );
+  border-radius: 50% 0 50% 0;
+  transform: scale(0) rotate(0deg);
+  animation: leafFloat ease-out forwards;
+  filter: blur(0.3px);
+}
+
+.subtle-glow {
+  position: absolute;
+  pointer-events: none;
+  background: radial-gradient(
+    circle,
+    rgba(240, 248, 255, 0.12) 0%,
+    rgba(230, 230, 250, 0.08) 30%,
+    rgba(211, 211, 211, 0.04) 60%,
+    transparent 100%
+  );
+  border-radius: 50%;
+  transform: scale(0);
+  animation: subtleGlowExpand 2s ease-out forwards;
+  mix-blend-mode: overlay;
+  filter: blur(3px);
+}
+
+.tranquil-dot {
+  position: absolute;
+  pointer-events: none;
+  width: 2px;
+  height: 2px;
+  background: rgba(105, 105, 105, 0.6);
+  border-radius: 50%;
+  transform: scale(0);
+  animation: tranquilDotExpand ease-out forwards;
+  filter: blur(0.2px);
+}
+
+@keyframes inkSpread {
+  0% {
+    transform: scale(0);
+    opacity: 0.6;
+  }
+  40% {
+    transform: scale(1.2) translate(calc(var(--dx) * 0.3), calc(var(--dy) * 0.3));
+    opacity: 0.4;
+  }
+  80% {
+    transform: scale(0.8) translate(calc(var(--dx) * 0.8), calc(var(--dy) * 0.8));
+    opacity: 0.1;
+  }
+  100% {
+    transform: scale(0.3) translate(var(--dx), var(--dy));
+    opacity: 0;
+  }
+}
+
+@keyframes leafFloat {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 0.5;
+  }
+  25% {
+    transform: scale(1) rotate(45deg) translate(calc(var(--dx) * 0.2), calc(var(--dy) * 0.2));
+    opacity: 0.4;
+  }
+  60% {
+    transform: scale(0.8) rotate(90deg) translate(calc(var(--dx) * 0.6), calc(var(--dy) * 0.6));
+    opacity: 0.2;
+  }
+  100% {
+    transform: scale(0.4) rotate(180deg) translate(var(--dx), var(--dy));
+    opacity: 0;
+  }
+}
+
+@keyframes subtleGlowExpand {
+  0% {
+    transform: scale(0);
+    opacity: 0.15;
+  }
+  40% {
+    transform: scale(1.8);
+    opacity: 0.08;
+  }
+  80% {
+    transform: scale(2.5);
+    opacity: 0.03;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+@keyframes tranquilDotExpand {
+  0% {
+    transform: scale(0) translate(0, 0);
+    opacity: 0.8;
+  }
+  30% {
+    transform: scale(2) translate(calc(var(--dx) * 0.3), calc(var(--dy) * 0.3));
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(0.8) translate(var(--dx), var(--dy));
+    opacity: 0;
+  }
+}
+
 /* Gold foil sparkle effect - 金箔の煌めき - 強化版 */
 .gold-sparkle {
   position: absolute;
