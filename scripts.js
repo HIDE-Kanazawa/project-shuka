@@ -1184,7 +1184,8 @@ class SeasonsGallery {
   }
   
   getAvailableSeasons() {
-    return ['spring', 'summer', 'autumn', 'winter', 'tsuyu'];
+    // 梅雨シーズンはギャラリーのナビゲーションには表示しない
+    return ['spring', 'summer', 'autumn', 'winter'];
   }
 }
 
@@ -3549,8 +3550,12 @@ function generateSeasonGallery() {
   let navHTML = '';
   let contentHTML = '';
   let isFirst = true;
-  
+
   for (const [key, season] of Object.entries(SEASON_DATA)) {
+    if (key === 'tsuyu') {
+      // 梅雨シーズンはボタンとコンテンツを生成しない
+      continue;
+    }
     // Generate navigation button
     navHTML += `
       <button class="season-btn ${isFirst ? 'active' : ''}" 
