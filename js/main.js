@@ -8,6 +8,10 @@ window.addEventListener('DOMContentLoaded', () => {
   if (typeof SeasonsGallery !== 'undefined') {
     window.seasonsGallery = new SeasonsGallery();
   }
+
+  if (typeof initSeasonSelector === 'function') {
+    initSeasonSelector();
+  }
   
   
   if (typeof WaterRippleEffect !== 'undefined') {

@@ -938,11 +938,23 @@ class SeasonsGallery {
       img.onload = () => {
         // Update body season attribute for CSS styling
         document.body.setAttribute('data-season', season);
+        const header = document.getElementById('header');
+        if (header)
+          header.setAttribute('data-season', season);
+        const selector = document.getElementById('season-selector');
+        if (selector)
+          selector.value = season;
       };
       img.src = imageUrl;
     } else {
       // Fallback to direct update
       document.body.setAttribute('data-season', season);
+      const header = document.getElementById('header');
+      if (header)
+        header.setAttribute('data-season', season);
+      const selector = document.getElementById('season-selector');
+      if (selector)
+        selector.value = season;
     }
   }
   
@@ -1161,6 +1173,20 @@ function switchSeason(season) {
   }
 }
 window.switchSeason = switchSeason;
+
+function initSeasonSelector() {
+  const selector = document.getElementById('season-selector');
+  if (!selector)
+    return;
+  if (window.seasonsGallery && typeof window.seasonsGallery.getCurrentSeason === 'function')
+    selector.value = window.seasonsGallery.getCurrentSeason();
+  selector.addEventListener('change', (e) => {
+    const season = e.target.value;
+    if (typeof window.switchSeason === 'function')
+      window.switchSeason(season);
+  });
+}
+window.initSeasonSelector = initSeasonSelector;
 
 // Setup footer season buttons helper function
 function setupFooterSeasonButtons() {
@@ -3373,9 +3399,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Generate dynamic content first
   generateSocialLinks();
   generateSeasonGallery();
-  
+
   // Initialize SeasonsGallery class after DOM elements are generated
   window.seasonsGallery = new SeasonsGallery();
+  if (typeof initSeasonSelector === 'function')
+    initSeasonSelector();
   
   // Re-bind events after dynamic generation
   if (window.seasonsGallery && typeof window.seasonsGallery.refresh === 'function') {

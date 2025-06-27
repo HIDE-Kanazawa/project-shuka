@@ -615,6 +615,50 @@ a:focus {
   }
 }
 
+.season-select {
+  margin-left: var(--space-4);
+}
+
+.season-selector {
+  background: var(--background);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--text-sm);
+}
+
+@media (max-width: 767px) {
+  .season-select {
+    display: none;
+  }
+}
+
+body[data-season="spring"] .header,
+.header[data-season="spring"] {
+  background: linear-gradient(90deg, var(--primary-spring), var(--accent-spring));
+}
+
+body[data-season="tsuyu"] .header,
+.header[data-season="tsuyu"] {
+  background: linear-gradient(90deg, var(--primary-tsuyu), var(--accent-tsuyu));
+}
+
+body[data-season="summer"] .header,
+.header[data-season="summer"] {
+  background: linear-gradient(90deg, var(--primary-summer), var(--accent-summer));
+}
+
+body[data-season="autumn"] .header,
+.header[data-season="autumn"] {
+  background: linear-gradient(90deg, var(--primary-autumn), var(--accent-autumn));
+}
+
+body[data-season="winter"] .header,
+.header[data-season="winter"] {
+  background: linear-gradient(90deg, var(--primary-winter), var(--accent-winter));
+}
+
 /* ===== Hero Section ===== */
 .hero {
   /* Prevent header overlap */
