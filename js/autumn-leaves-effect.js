@@ -215,7 +215,9 @@ function enableAutumnLeaves() {
 function disableAutumnLeaves() {
   console.log('[AutumnLeavesEffect] disableAutumnLeaves called');
   if (autumnLeavesEffect) {
-    autumnLeavesEffect.canvas.style.display = 'none';
+    autumnLeavesEffect.canvas.remove();
+    autumnLeavesEffect = null;
+    window.autumnLeavesEffect = null;
   }
 }
 

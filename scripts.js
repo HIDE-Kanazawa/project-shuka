@@ -3393,7 +3393,9 @@ window.enableSakura = function(withBurst = false) {
 window.disableSakura = function() {
   console.log('[SakuraEffect] disableSakura called');
   if (sakuraEffect) {
-    sakuraEffect.canvas.style.display = 'none';
+    sakuraEffect.destroy();
+    sakuraEffect = null;
+    window.sakuraEffect = null;
   }
 };
 
@@ -3430,7 +3432,9 @@ window.enableRain = function() {
 window.disableRain = function() {
   console.log('[RainEffect] disableRain called');
   if (rainEffect) {
-    rainEffect.canvas.style.display = 'none';
+    rainEffect.canvas.remove();
+    rainEffect = null;
+    window.rainEffect = null;
   }
 };
 
@@ -3821,7 +3825,9 @@ window.enableSnow = function() {
 window.disableSnow = function() {
   console.log('[SnowEffect] disableSnow called');
   if (snowEffect) {
-    snowEffect.canvas.style.display = 'none';
+    snowEffect.canvas.remove();
+    snowEffect = null;
+    window.snowEffect = null;
   }
 };
 
@@ -4062,7 +4068,9 @@ window.enableAutumnLeaves = function() {
 window.disableAutumnLeaves = function() {
   console.log('[AutumnLeavesEffect] disableAutumnLeaves called');
   if (autumnLeavesEffect) {
-    autumnLeavesEffect.canvas.style.display = 'none';
+    autumnLeavesEffect.canvas.remove();
+    autumnLeavesEffect = null;
+    window.autumnLeavesEffect = null;
   }
 };
 
@@ -4286,7 +4294,9 @@ window.enableSummerWillow = function() {
 window.disableSummerWillow = function() {
   console.log('[SummerWillowEffect] disableSummerWillow called');
   if (summerWillowEffect) {
-    summerWillowEffect.canvas.style.display = 'none';
+    summerWillowEffect.canvas.remove();
+    summerWillowEffect = null;
+    window.summerWillowEffect = null;
   }
 };
 
