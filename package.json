@@ -1,0 +1,17 @@
+{
+  "name": "project-shuka",
+  "version": "1.0.0",
+  "description": "Shuka official site",
+  "main": "scripts.js",
+  "scripts": {
+    "build": "rollup -c",
+    "test": "echo \"No tests specified\""
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.4",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-multi-entry": "^4.0.0",
+    "rollup": "^4.16.5"
+  },
+  "type": "module"
+}
