@@ -203,7 +203,6 @@ class AutumnLeavesEffect {
 // Autumn leaves effect functions
 let autumnLeavesEffect;
 function enableAutumnLeaves() {
-  console.log('[AutumnLeavesEffect] enableAutumnLeaves called');
   if (!autumnLeavesEffect) {
     autumnLeavesEffect = new AutumnLeavesEffect();
     window.autumnLeavesEffect = autumnLeavesEffect;
@@ -213,7 +212,6 @@ function enableAutumnLeaves() {
 }
 
 function disableAutumnLeaves() {
-  console.log('[AutumnLeavesEffect] disableAutumnLeaves called');
   if (autumnLeavesEffect) {
     autumnLeavesEffect.canvas.remove();
     autumnLeavesEffect = null;
