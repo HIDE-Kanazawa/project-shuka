@@ -148,37 +148,40 @@ class AutumnLeavesEffect {
     const scale = size / 20;
     
     ctx.beginPath();
-    
-    // Main body of maple leaf
+
+    // Stylized maple leaf using curves for a softer shape
     ctx.moveTo(cx, cy - 10 * scale);
-    
-    // Top point
-    ctx.lineTo(cx - 3 * scale, cy - 6 * scale);
-    ctx.lineTo(cx - 8 * scale, cy - 4 * scale);
-    ctx.lineTo(cx - 6 * scale, cy - 1 * scale);
-    
-    // Left side
-    ctx.lineTo(cx - 10 * scale, cy + 2 * scale);
-    ctx.lineTo(cx - 6 * scale, cy + 3 * scale);
-    ctx.lineTo(cx - 4 * scale, cy + 6 * scale);
-    
-    // Bottom left
-    ctx.lineTo(cx - 2 * scale, cy + 4 * scale);
-    ctx.lineTo(cx, cy + 8 * scale);
-    
-    // Bottom right
-    ctx.lineTo(cx + 2 * scale, cy + 4 * scale);
-    ctx.lineTo(cx + 4 * scale, cy + 6 * scale);
-    
-    // Right side
-    ctx.lineTo(cx + 6 * scale, cy + 3 * scale);
-    ctx.lineTo(cx + 10 * scale, cy + 2 * scale);
-    ctx.lineTo(cx + 6 * scale, cy - 1 * scale);
-    
-    // Top right
-    ctx.lineTo(cx + 8 * scale, cy - 4 * scale);
-    ctx.lineTo(cx + 3 * scale, cy - 6 * scale);
-    
+    ctx.bezierCurveTo(
+      cx - 2 * scale, cy - 12 * scale,
+      cx - 8 * scale, cy - 8 * scale,
+      cx - 4 * scale, cy - 4 * scale
+    );
+    ctx.bezierCurveTo(
+      cx - 8 * scale, cy - 2 * scale,
+      cx - 10 * scale, cy + 4 * scale,
+      cx - 5 * scale, cy + 4 * scale
+    );
+    ctx.bezierCurveTo(
+      cx - 8 * scale, cy + 8 * scale,
+      cx - 2 * scale, cy + 8 * scale,
+      cx, cy + 10 * scale
+    );
+    ctx.bezierCurveTo(
+      cx + 2 * scale, cy + 8 * scale,
+      cx + 8 * scale, cy + 8 * scale,
+      cx + 5 * scale, cy + 4 * scale
+    );
+    ctx.bezierCurveTo(
+      cx + 10 * scale, cy + 4 * scale,
+      cx + 8 * scale, cy - 2 * scale,
+      cx + 4 * scale, cy - 4 * scale
+    );
+    ctx.bezierCurveTo(
+      cx + 8 * scale, cy - 8 * scale,
+      cx + 2 * scale, cy - 12 * scale,
+      cx, cy - 10 * scale
+    );
+
     ctx.closePath();
     ctx.fill();
   }
@@ -188,28 +191,22 @@ class AutumnLeavesEffect {
     const scale = size / 20;
     
     ctx.beginPath();
-    
-    // Fan-shaped ginkgo leaf
-    const startAngle = -Math.PI * 0.7;
-    const endAngle = Math.PI * 0.7;
-    const radius = 8 * scale;
-    
-    // Draw fan shape
-    ctx.arc(cx, cy + 2 * scale, radius, startAngle, endAngle);
-    
-    // Add stem
-    ctx.lineTo(cx, cy + 8 * scale);
-    ctx.lineTo(cx, cy + 2 * scale + radius * Math.cos(Math.PI * 0.7));
-    
+
+    // Soft fan-shaped ginkgo leaf
+    ctx.moveTo(cx, cy + 8 * scale);
+    ctx.quadraticCurveTo(cx - 8 * scale, cy + 6 * scale, cx - 8 * scale, cy);
+    ctx.quadraticCurveTo(cx - 8 * scale, cy - 6 * scale, cx, cy - 8 * scale);
+    ctx.quadraticCurveTo(cx + 8 * scale, cy - 6 * scale, cx + 8 * scale, cy);
+    ctx.quadraticCurveTo(cx + 8 * scale, cy + 6 * scale, cx, cy + 8 * scale);
     ctx.closePath();
     ctx.fill();
-    
-    // Add characteristic notch in the middle
+
+    // Characteristic notch at the center
     ctx.globalCompositeOperation = 'destination-out';
     ctx.beginPath();
-    ctx.moveTo(cx, cy + 2 * scale);
-    ctx.lineTo(cx - 2 * scale, cy - 3 * scale);
-    ctx.lineTo(cx + 2 * scale, cy - 3 * scale);
+    ctx.moveTo(cx, cy);
+    ctx.quadraticCurveTo(cx - 2 * scale, cy - 2 * scale, cx, cy - 4 * scale);
+    ctx.quadraticCurveTo(cx + 2 * scale, cy - 2 * scale, cx, cy);
     ctx.closePath();
     ctx.fill();
     ctx.globalCompositeOperation = 'source-over';
