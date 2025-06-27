@@ -2702,7 +2702,7 @@ class SakuraEffect {
     return {
       x: Math.random() * this.canvas.width,
       y: randomY ? Math.random() * this.canvas.height : -20,
-      size: 5 + Math.random() * 10, // Larger, more visible sakura petals
+      size: 6 + Math.random() * 11, // Slightly larger sakura petals
       speed: 0.3 + Math.random() * 0.7, // Gentle falling speed
       opacity: 0.7 + Math.random() * 0.3, // Higher opacity for better visibility
       drift: Math.random() * 1.5 - 0.75, // Side-to-side motion
