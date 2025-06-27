@@ -797,11 +797,11 @@ a:focus {
   background: var(--background);
   border-radius: var(--radius-lg);
   box-shadow: 0 2px 10px var(--shadow);
-  transition: transform var(--transition-normal);
+  transition: box-shadow var(--transition-normal);
 }
 
 .feature:hover {
-  transform: translateY(-4px);
+  box-shadow: 0 6px 16px var(--shadow-lg);
 }
 
 .feature-title {
