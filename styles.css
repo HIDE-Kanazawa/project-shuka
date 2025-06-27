@@ -3167,9 +3167,12 @@ legend {
     transform: none;
   }
   
-  .cta-button:active,
-  .season-btn:active {
+  .cta-button:active {
     transform: scale(0.98);
+  }
+
+  .season-btn:active {
+    transform: none;
   }
   
   /* Increase touch targets */

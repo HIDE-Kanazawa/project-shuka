@@ -120,8 +120,8 @@
 }
 
 .season-btn:active {
-  transform: translateY(0) scale(0.98);
-  transition: transform 0.1s ease;
+  transform: none;
+  transition: none;
 }
 
 .season-btn:hover::after,
