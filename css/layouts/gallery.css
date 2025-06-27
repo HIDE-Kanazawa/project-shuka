@@ -112,11 +112,16 @@
 .season-btn:focus-visible {
   outline: 3px solid var(--accent, #ffd700);
   outline-offset: 2px;
-  transform: translateY(-8px) scale(1.05);
+  transform: translateY(-6px) scale(1.04);
   border-color: rgba(255, 255, 255, 1);
-  box-shadow: 
+  box-shadow:
     0 16px 40px rgba(0, 0, 0, 0.3),
     0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.season-btn:active {
+  transform: translateY(0) scale(0.98);
+  transition: transform 0.1s ease;
 }
 
 .season-btn:hover::after,
@@ -125,10 +130,10 @@
 }
 
 .season-btn.active {
-  transform: translateY(-4px) scale(1.02);
+  transform: translateY(-2px) scale(1.01);
   border-color: #ffd700;
   border-width: 4px;
-  box-shadow: 
+  box-shadow:
     0 0 20px rgba(255, 215, 0, 0.4),
     0 12px 32px rgba(0, 0, 0, 0.3),
     0 6px 12px rgba(0, 0, 0, 0.2);
