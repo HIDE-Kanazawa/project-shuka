@@ -404,6 +404,7 @@ class SeasonsGallery {
     this.seasonPanels = document.querySelectorAll('.season-panel');
     this.currentSeason = 'tsuyu';
     this.audioElements = [];
+    this.videoElements = [];
     
     this.init();
   }
@@ -428,7 +429,7 @@ class SeasonsGallery {
   
   setupAudioElements() {
     this.audioElements = Array.from(document.querySelectorAll('audio'));
-    this.videoElements = Array.from(document.querySelectorAll('video'));
+    this.videoElements = Array.from(document.querySelectorAll('.season-video'));
     
     this.audioElements.forEach(audio => {
       // Set default volume to 50%
@@ -455,6 +456,10 @@ class SeasonsGallery {
       
       // Add keyboard support for video
       video.addEventListener('keydown', (e) => this.handleVideoKeydown(e));
+      video.addEventListener('mouseenter', (e) => this.showPlayNote(e));
+      video.addEventListener('mousemove', (e) => this.movePlayNote(e));
+      video.addEventListener('mouseleave', (e) => this.hidePlayNote(e));
+      video.addEventListener('play', () => this.removePlayNote(video));
       
       // Add accessibility attributes
       const seasonTitle = video.closest('.season-panel')?.querySelector('.season-title')?.textContent || 'Video';
@@ -932,7 +937,45 @@ class SeasonsGallery {
       video.currentTime = Math.min(video.duration, video.currentTime + 5);
     }
   }
-  
+
+  showPlayNote(e) {
+    const video = e.currentTarget;
+    if (video._playNote) return;
+
+    const note = document.createElement('div');
+    note.className = 'play-note';
+    note.innerHTML = '♪<span class="visually-hidden">クリックで再生</span>';
+    document.body.appendChild(note);
+    note.style.left = `${e.clientX}px`;
+    note.style.top = `${e.clientY}px`;
+
+    video._playNote = note;
+
+    if (typeof window.createCustomRipple === 'function') {
+      window.createCustomRipple(e.clientX, e.clientY, getComputedStyle(note).color);
+    }
+  }
+
+  movePlayNote(e) {
+    const note = e.currentTarget._playNote;
+    if (note) {
+      note.style.left = `${e.clientX}px`;
+      note.style.top = `${e.clientY}px`;
+    }
+  }
+
+  hidePlayNote(e) {
+    this.removePlayNote(e.currentTarget);
+  }
+
+  removePlayNote(video) {
+    const note = video._playNote;
+    if (note) {
+      note.remove();
+      video._playNote = null;
+    }
+  }
+
   stopAllAudio() {
     this.audioElements.forEach(audio => {
       if (!audio.paused) {
