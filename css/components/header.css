@@ -31,16 +31,42 @@
 }
 
 .logo a {
+  position: relative;
+  display: inline-block;
   color: inherit;
   text-decoration: none;
-  transition: opacity var(--transition-fast);
+  background-image: linear-gradient(120deg, var(--primary) 0%, var(--accent) 100%);
+  background-size: 200% 100%;
+  background-position: 0 0;
+  transition: background-position var(--transition-fast), color var(--transition-fast);
+}
+
+.logo a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 2px;
+  background-image: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: var(--radius-full);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--transition-fast);
 }
 
 .logo a:hover,
 .logo a:focus {
-  opacity: 0.8;
-  outline: 2px solid var(--primary);
-  outline-offset: 2px;
+  background-position: 100% 0;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.logo a:hover::after,
+.logo a:focus::after {
+  transform: scaleX(1);
+  transform-origin: left;
 }
 
 .logo-jp {
