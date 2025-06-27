@@ -17,6 +17,14 @@ class SummerWillowEffect {
       this.willowLeaves.push(this.createWillowLeaf(true));
     }
 
+    this.handleMouseMove = this.handleMouseMove.bind(this);
+    window.addEventListener('mousemove', this.handleMouseMove);
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches && e.touches[0]) {
+        this.handleMouseMove(e.touches[0]);
+      }
+    }, { passive: true });
+
     // Wind variables for gentle summer breeze
     this.wind = 0;
     this.windTarget = 0;
@@ -49,6 +57,12 @@ class SummerWillowEffect {
       turbulence: Math.random() * 0.5, // Random turbulence factor
       color: this.getWillowColor()
     };
+  }
+
+  handleMouseMove(e) {
+    const centerX = window.innerWidth / 2;
+    const normalized = (e.clientX - centerX) / centerX;
+    this.windTarget = normalized * 3.5;
   }
 
   getWillowColor() {

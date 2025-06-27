@@ -2761,6 +2761,14 @@ class RainEffect {
       this.drops.push(this.createDrop(true));
     }
 
+    this.handleMouseMove = this.handleMouseMove.bind(this);
+    window.addEventListener('mousemove', this.handleMouseMove);
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches && e.touches[0]) {
+        this.handleMouseMove(e.touches[0]);
+      }
+    }, { passive: true });
+
     // Wind variables
     this.wind = 0;
     this.windTarget = 0;
@@ -2783,6 +2791,12 @@ class RainEffect {
       opacity: 0.3 + Math.random() * 0.4, // Slightly more visible
       thickness: 0.8 + Math.random() * 0.7 // Variable thickness
     };
+  }
+
+  handleMouseMove(e) {
+    const centerX = window.innerWidth / 2;
+    const normalized = (e.clientX - centerX) / centerX;
+    this.windTarget = normalized * 2;
   }
 
   animate() {
@@ -2861,6 +2875,13 @@ class SakuraEffect {
     this.lastWindChange = performance.now();
     
     this.initializePetals(withBurst);
+    this.handleMouseMove = this.handleMouseMove.bind(this);
+    window.addEventListener('mousemove', this.handleMouseMove);
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches && e.touches[0]) {
+        this.handleMouseMove(e.touches[0]);
+      }
+    }, { passive: true });
     this.animate = this.animate.bind(this);
     requestAnimationFrame(this.animate);
   }
@@ -2910,6 +2931,12 @@ class SakuraEffect {
       { r: 255, g: 235, b: 238 }  // Soft pink
     ];
     return colors[Math.floor(Math.random() * colors.length)];
+  }
+
+  handleMouseMove(e) {
+    const centerX = window.innerWidth / 2;
+    const normalized = (e.clientX - centerX) / centerX;
+    this.windTarget = normalized * 2.5;
   }
   
   animate() {
@@ -3412,6 +3439,14 @@ class SnowEffect {
       this.flakes.push(this.createFlake(true));
     }
 
+    this.handleMouseMove = this.handleMouseMove.bind(this);
+    window.addEventListener('mousemove', this.handleMouseMove);
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches && e.touches[0]) {
+        this.handleMouseMove(e.touches[0]);
+      }
+    }, { passive: true });
+
     // Wind variables for gentle drift
     this.wind = 0;
     this.windTarget = 0;
@@ -3436,6 +3471,12 @@ class SnowEffect {
       rotationSpeed: (Math.random() - 0.5) * 2, // Rotation for realism
       rotation: 0
     };
+  }
+
+  handleMouseMove(e) {
+    const centerX = window.innerWidth / 2;
+    const normalized = (e.clientX - centerX) / centerX;
+    this.windTarget = normalized * 0.5;
   }
 
   animate() {
@@ -3578,6 +3619,14 @@ class AutumnLeavesEffect {
       this.leaves.push(this.createLeaf(true));
     }
 
+    this.handleMouseMove = this.handleMouseMove.bind(this);
+    window.addEventListener('mousemove', this.handleMouseMove);
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches && e.touches[0]) {
+        this.handleMouseMove(e.touches[0]);
+      }
+    }, { passive: true });
+
     // Wind variables for natural leaf movement
     this.wind = 0;
     this.windTarget = 0;
@@ -3634,6 +3683,12 @@ class AutumnLeavesEffect {
       ];
       return colors[Math.floor(Math.random() * colors.length)];
     }
+  }
+
+  handleMouseMove(e) {
+    const centerX = window.innerWidth / 2;
+    const normalized = (e.clientX - centerX) / centerX;
+    this.windTarget = normalized * 1.5;
   }
 
   animate() {
@@ -3821,6 +3876,14 @@ class SummerWillowEffect {
       this.willowLeaves.push(this.createWillowLeaf(true));
     }
 
+    this.handleMouseMove = this.handleMouseMove.bind(this);
+    window.addEventListener('mousemove', this.handleMouseMove);
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches && e.touches[0]) {
+        this.handleMouseMove(e.touches[0]);
+      }
+    }, { passive: true });
+
     // Wind variables for gentle summer breeze
     this.wind = 0;
     this.windTarget = 0;
@@ -3867,6 +3930,12 @@ class SummerWillowEffect {
       { r: 90, g: 190, b: 90 }    // 薄い緑
     ];
     return colors[Math.floor(Math.random() * colors.length)];
+  }
+
+  handleMouseMove(e) {
+    const centerX = window.innerWidth / 2;
+    const normalized = (e.clientX - centerX) / centerX;
+    this.windTarget = normalized * 3.5;
   }
 
   animate() {

@@ -17,6 +17,14 @@ class RainEffect {
       this.drops.push(this.createDrop(true));
     }
 
+    this.handleMouseMove = this.handleMouseMove.bind(this);
+    window.addEventListener('mousemove', this.handleMouseMove);
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches && e.touches[0]) {
+        this.handleMouseMove(e.touches[0]);
+      }
+    }, { passive: true });
+
     // Wind variables
     this.wind = 0;
     this.windTarget = 0;
@@ -39,6 +47,12 @@ class RainEffect {
       opacity: 0.3 + Math.random() * 0.4, // Slightly more visible
       thickness: 0.8 + Math.random() * 0.7 // Variable thickness
     };
+  }
+
+  handleMouseMove(e) {
+    const centerX = window.innerWidth / 2;
+    const normalized = (e.clientX - centerX) / centerX;
+    this.windTarget = normalized * 2;
   }
 
   animate() {
