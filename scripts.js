@@ -25,6 +25,29 @@ const SEASON_DATA = {
       }
     ]
   },
+  tsuyu: {
+    icon: '☔️',
+    name: '梅雨',
+    title: '梅雨の音色',
+    description: '雨の季節の静けさと潤いを感じる楽曲集',
+    poster: './img/秀歌-梅雨.webp',
+    video: {
+      webm: './video/夏庭園の歌.webm',
+      mp4: './video/夏庭園の歌.mp4'
+    },
+    tracks: [
+      {
+        title: 'ひかりのあと',
+        description: '春の陽だまりで感じる穏やかな時間',
+        src: './audio/ひかりのあと.mp3'
+      },
+      {
+        title: '緑の中のひととき',
+        description: '木陰で過ごす静寂な時間',
+        src: './audio/緑の中のひととき.mp3'
+      }
+    ]
+  },
   summer: {
     icon: '🌻',
     name: '夏',
@@ -506,8 +529,8 @@ class SeasonsGallery {
   }
   
   loadInitialSeason() {
-    // Always set initial season to tsuyu (rainy season) on site reload
-    this.currentSeason = 'tsuyu';
+    // Style page for tsuyu season but don't select a panel
+    this.currentSeason = '';
 
     // Update URL to reflect tsuyu season
     this.updateURL('tsuyu');
@@ -527,9 +550,9 @@ class SeasonsGallery {
       window.enableSakura(false);
     }
 
-    // Show tsuyu gallery panel by default
-    this.updateSeasonButtons('tsuyu');
-    this.updateSeasonPanels('tsuyu', false);
+    // Hide all panels until user selects a season
+    this.updateSeasonButtons('');
+    this.updateSeasonPanels('', false);
   }
   
   getSeasonFromURL() {
@@ -724,6 +747,7 @@ class SeasonsGallery {
   }
   
   showPanel(panel, animate) {
+    this.loadVideoForPanel(panel);
     if (animate) {
       // Fade in animation
       panel.style.opacity = '0';
@@ -769,6 +793,20 @@ class SeasonsGallery {
     
     // Update ARIA attributes
     panel.setAttribute('aria-hidden', 'true');
+  }
+
+  loadVideoForPanel(panel) {
+    const video = panel.querySelector('.season-video');
+    if (!video || video.dataset.loaded === 'true') return;
+
+    const sources = video.querySelectorAll('source[data-src]');
+    sources.forEach(source => {
+      const src = source.getAttribute('data-src');
+      if (src) source.src = src;
+    });
+
+    video.load();
+    video.dataset.loaded = 'true';
   }
   
   updateURL(season) {
@@ -3270,10 +3308,9 @@ function generateSeasonGallery() {
                  preload="none"
                  loading="lazy"
                  tabindex="0"
-                 
                  aria-label="${season.name}をテーマにしたデモ動画 - クリックまたはEnterキーで再生">
-            <source src="${season.video.webm}" type="video/webm">
-            <source src="${season.video.mp4}" type="video/mp4">
+            <source data-src="${season.video.webm}" type="video/webm">
+            <source data-src="${season.video.mp4}" type="video/mp4">
             お使いのブラウザは動画再生に対応していません。
           </video>
         </div>
