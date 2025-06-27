@@ -658,7 +658,9 @@ class SeasonsGallery {
     
     // Update panel states with animation
     this.updateSeasonPanels(season, animate);
-    
+
+    // Store previous season before updating
+    const previousSeason = this.currentSeason;
     // Update current season
     this.currentSeason = season;
 
@@ -684,10 +686,13 @@ class SeasonsGallery {
     console.log('[SeasonsGallery] switchToSeason', season);
     if (season === 'spring') {
       // Check if this is a fresh switch to spring (not initial page load)
-      const isSeasonChange = this.currentSeason !== season && this.currentSeason !== null;
+      const isSeasonChange = previousSeason !== season && previousSeason !== null;
       window.enableSakura?.(isSeasonChange); // Pass true for burst if switching to spring
+      // Disable all other seasonal effects
       window.disableRain?.();
       window.disableSnow?.();
+      window.disableAutumnLeaves?.();
+      window.disableSummerWillow?.();
     } else if (season === 'tsuyu') {
       window.enableRain?.();
       window.disableSakura?.();

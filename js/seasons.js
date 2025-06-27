@@ -198,7 +198,9 @@ class SeasonsGallery {
     
     // Update panel states with animation
     this.updateSeasonPanels(season, animate);
-    
+
+    // Preserve previous season before update
+    const previousSeason = this.currentSeason;
     // Update current season
     this.currentSeason = season;
     
@@ -215,7 +217,21 @@ class SeasonsGallery {
     this.updateSeasonBackground(season);
 
     // Toggle weather effects depending on season
-    if (season === 'tsuyu') {
+    if (season === 'spring') {
+      // Disable all other seasonal effects
+      if (typeof window.disableRain === 'function') {
+        window.disableRain();
+      }
+      if (typeof window.disableSnow === 'function') {
+        window.disableSnow();
+      }
+      if (typeof window.disableAutumnLeaves === 'function') {
+        window.disableAutumnLeaves();
+      }
+      if (typeof window.disableSummerWillow === 'function') {
+        window.disableSummerWillow();
+      }
+    } else if (season === 'tsuyu') {
       if (typeof window.enableRain === 'function') {
         window.enableRain();
       }
@@ -229,6 +245,38 @@ class SeasonsGallery {
       if (typeof window.disableRain === 'function') {
         window.disableRain();
       }
+      if (typeof window.disableAutumnLeaves === 'function') {
+        window.disableAutumnLeaves();
+      }
+      if (typeof window.disableSummerWillow === 'function') {
+        window.disableSummerWillow();
+      }
+    } else if (season === 'autumn') {
+      if (typeof window.enableAutumnLeaves === 'function') {
+        window.enableAutumnLeaves();
+      }
+      if (typeof window.disableRain === 'function') {
+        window.disableRain();
+      }
+      if (typeof window.disableSnow === 'function') {
+        window.disableSnow();
+      }
+      if (typeof window.disableSummerWillow === 'function') {
+        window.disableSummerWillow();
+      }
+    } else if (season === 'summer') {
+      if (typeof window.enableSummerWillow === 'function') {
+        window.enableSummerWillow();
+      }
+      if (typeof window.disableRain === 'function') {
+        window.disableRain();
+      }
+      if (typeof window.disableSnow === 'function') {
+        window.disableSnow();
+      }
+      if (typeof window.disableAutumnLeaves === 'function') {
+        window.disableAutumnLeaves();
+      }
     } else {
       // Disable all weather effects for other seasons
       if (typeof window.disableRain === 'function') {
@@ -236,6 +284,12 @@ class SeasonsGallery {
       }
       if (typeof window.disableSnow === 'function') {
         window.disableSnow();
+      }
+      if (typeof window.disableAutumnLeaves === 'function') {
+        window.disableAutumnLeaves();
+      }
+      if (typeof window.disableSummerWillow === 'function') {
+        window.disableSummerWillow();
       }
     }
     
