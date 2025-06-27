@@ -752,51 +752,146 @@ class SeasonsGallery {
   
   showPanel(panel, animate) {
     this.loadVideoForPanel(panel);
+    panel.style.display = 'grid';
+    panel.classList.add('active');
+
     if (animate) {
-      // Fade in animation
       panel.style.opacity = '0';
-      panel.style.display = 'grid';
-      panel.classList.add('active');
-      
-      // Trigger reflow
-      panel.offsetHeight;
-      
-      panel.style.transition = 'opacity 0.3s ease-in-out';
-      panel.style.opacity = '1';
-      
-      // Clean up after animation
+      panel.style.transform = 'scale(0.97)';
+      panel.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+      requestAnimationFrame(() => {
+        panel.style.opacity = '1';
+        panel.style.transform = 'scale(1)';
+      });
       setTimeout(() => {
         panel.style.transition = '';
         panel.style.opacity = '';
-      }, 300);
-    } else {
-      panel.style.display = 'grid';
-      panel.classList.add('active');
+        panel.style.transform = '';
+      }, 400);
+
+      // Animate child elements
+      this.animatePanelChildren(panel, true);
     }
-    
+
     // Update ARIA attributes
     panel.setAttribute('aria-hidden', 'false');
-    
+
   }
   
   hidePanel(panel, animate) {
     if (animate) {
-      panel.style.transition = 'opacity 0.3s ease-in-out';
+      this.animatePanelChildren(panel, false);
+      panel.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
       panel.style.opacity = '0';
-      
+      panel.style.transform = 'scale(0.97)';
+
       setTimeout(() => {
+        panel.style.transition = '';
         panel.style.display = 'none';
         panel.classList.remove('active');
-        panel.style.transition = '';
         panel.style.opacity = '';
+        panel.style.transform = '';
       }, 300);
     } else {
       panel.style.display = 'none';
       panel.classList.remove('active');
     }
-    
+
     // Update ARIA attributes
     panel.setAttribute('aria-hidden', 'true');
+  }
+
+  animatePanelChildren(panel, isEntering) {
+    const videoElement = panel.querySelector('.season-visual');
+    const trackList = panel.querySelector('.season-tracks');
+    const seasonTitle = panel.querySelector('.season-title');
+    const seasonDesc = panel.querySelector('.season-description');
+
+    if (isEntering) {
+      if (videoElement) {
+        videoElement.style.opacity = '0';
+        videoElement.style.transform = 'translateX(-80px)';
+        videoElement.style.transition = 'opacity 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) 0.1s, transform 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) 0.1s';
+        requestAnimationFrame(() => {
+          videoElement.style.opacity = '1';
+          videoElement.style.transform = 'translateX(0)';
+        });
+        setTimeout(() => {
+          videoElement.style.transition = '';
+          videoElement.style.opacity = '';
+          videoElement.style.transform = '';
+        }, 800);
+      }
+
+      if (trackList) {
+        [seasonTitle, seasonDesc].forEach((el, idx) => {
+          if (el) {
+            el.style.opacity = '0';
+            el.style.transform = 'translateX(60px)';
+            el.style.transition = `opacity 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) ${0.2 + idx * 0.1}s, transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) ${0.2 + idx * 0.1}s`;
+            requestAnimationFrame(() => {
+              el.style.opacity = '1';
+              el.style.transform = 'translateX(0)';
+            });
+            setTimeout(() => {
+              el.style.transition = '';
+              el.style.opacity = '';
+              el.style.transform = '';
+            }, 700 + idx * 100);
+          }
+        });
+
+        trackList.style.opacity = '0';
+        trackList.style.transform = 'translateX(100px)';
+        trackList.style.transition = 'opacity 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) 0.3s, transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) 0.3s';
+        requestAnimationFrame(() => {
+          trackList.style.opacity = '1';
+          trackList.style.transform = 'translateX(0)';
+        });
+        setTimeout(() => {
+          trackList.style.transition = '';
+          trackList.style.opacity = '';
+          trackList.style.transform = '';
+        }, 1100);
+
+        const tracks = trackList.querySelectorAll('.track');
+        tracks.forEach((track, idx) => {
+          track.style.opacity = '0';
+          track.style.transform = 'translateX(40px)';
+          track.style.transition = `opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) ${0.5 + idx * 0.08}s, transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) ${0.5 + idx * 0.08}s`;
+          requestAnimationFrame(() => {
+            track.style.opacity = '1';
+            track.style.transform = 'translateX(0)';
+          });
+          setTimeout(() => {
+            track.style.transition = '';
+            track.style.opacity = '';
+            track.style.transform = '';
+          }, 1000 + idx * 80);
+        });
+      }
+    } else {
+      if (videoElement) {
+        videoElement.style.transition = 'opacity 0.4s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1)';
+        videoElement.style.opacity = '0';
+        videoElement.style.transform = 'translateX(-60px)';
+      }
+      if (trackList) {
+        const tracks = trackList.querySelectorAll('.track');
+        tracks.forEach((track, idx) => {
+          track.style.transition = `opacity 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) ${idx * 0.03}s, transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) ${idx * 0.03}s`;
+          track.style.opacity = '0';
+          track.style.transform = 'translateX(30px)';
+        });
+        [seasonTitle, seasonDesc, trackList].forEach((el, idx) => {
+          if (el) {
+            el.style.transition = `opacity 0.4s cubic-bezier(0.25, 0.1, 0.25, 1) ${0.1 + idx * 0.05}s, transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1) ${0.1 + idx * 0.05}s`;
+            el.style.opacity = '0';
+            el.style.transform = 'translateX(50px)';
+          }
+        });
+      }
+    }
   }
 
   loadVideoForPanel(panel) {
