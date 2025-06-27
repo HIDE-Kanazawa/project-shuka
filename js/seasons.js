@@ -33,7 +33,8 @@ class SeasonsGallery {
   
   setupAudioElements() {
     this.audioElements = Array.from(document.querySelectorAll('audio'));
-    
+    this.videoElements = Array.from(document.querySelectorAll('video'));
+
     this.audioElements.forEach(audio => {
       // Set default volume to 50%\n      audio.volume = 0.5;\n      // Set preload to none for performance
       audio.preload = 'none';
@@ -41,6 +42,30 @@ class SeasonsGallery {
       // Add accessibility attributes
       const trackTitle = audio.parentElement.querySelector('.track-title')?.textContent || 'Track';
       audio.setAttribute('aria-label', `${trackTitle}の音楽プレーヤー`);
+    });
+
+    // Setup video elements
+    this.videoElements.forEach(video => {
+      video.volume = 0.5;
+      video.preload = 'none';
+      video.muted = false;
+      video.addEventListener('click', (e) => this.handleVideoClick(e));
+      video.addEventListener('keydown', (e) => this.handleVideoKeydown(e));
+
+      const container = video.closest('.season-visual');
+      if (container && !container.dataset.playHandlerAdded) {
+        container.addEventListener('click', evt => {
+          if (evt.target !== video && video.paused) {
+            video.play().catch(err => {
+              console.log('Video play failed:', err);
+            });
+          }
+        });
+        container.dataset.playHandlerAdded = 'true';
+      }
+
+      const seasonTitle = video.closest('.season-panel')?.querySelector('.season-title')?.textContent || 'Video';
+      video.setAttribute('aria-label', `${seasonTitle}のデモ動画`);
     });
   }
 
@@ -378,6 +403,39 @@ class SeasonsGallery {
     if (e.target.tagName === 'AUDIO') {
       // Remove playing state class
       e.target.closest('.track')?.classList.remove('playing');
+    }
+  }
+
+  handleVideoClick(e) {
+    const video = e.target;
+
+    if (video.paused) {
+      video.play().catch(error => {
+        console.log('Video play failed:', error);
+      });
+    } else {
+      video.pause();
+    }
+
+    e.preventDefault();
+  }
+
+  handleVideoKeydown(e) {
+    const video = e.target;
+
+    if (e.code === 'Space' || e.code === 'Enter') {
+      e.preventDefault();
+      this.handleVideoClick(e);
+    }
+
+    if (e.code === 'ArrowLeft') {
+      e.preventDefault();
+      video.currentTime = Math.max(0, video.currentTime - 5);
+    }
+
+    if (e.code === 'ArrowRight') {
+      e.preventDefault();
+      video.currentTime = Math.min(video.duration, video.currentTime + 5);
     }
   }
   
