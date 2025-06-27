@@ -721,7 +721,8 @@ class SeasonsGallery {
   }
   
   getAvailableSeasons() {
-    return ['spring', 'summer', 'autumn', 'winter', 'tsuyu'];
+    // 梅雨シーズンはギャラリーのナビゲーションには表示しない
+    return ['spring', 'summer', 'autumn', 'winter'];
   }
 }
 
