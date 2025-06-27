@@ -31,7 +31,8 @@
       "Bash(open http://localhost:8000/debug_sakura.html)",
       "Bash(convert:*)",
       "Bash(open /Users/yamazaki/Downloads/Development/project-shuka3/optimize-petals.html)",
-      "Bash(git pull:*)"
+      "Bash(git pull:*)",
+      "Bash(sed:*)"
     ],
     "deny": []
   }

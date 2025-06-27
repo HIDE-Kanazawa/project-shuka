@@ -2612,167 +2612,195 @@ class RainEffect {
 // Sakura Effect Module with Initial Burst Feature
 class SakuraEffect {
   constructor(withBurst = false) {
-    this.container = document.createElement('div');
-    this.container.className = 'sakura-container';
-    document.body.appendChild(this.container);
+    this.canvas = document.createElement('canvas');
+    this.canvas.className = 'sakura-canvas';
+    this.ctx = this.canvas.getContext('2d');
+    document.body.appendChild(this.canvas);
 
-    // Refined petal density for elegant, sophisticated effect - reduced for larger petals
-    this.petalCount = Math.floor(window.innerWidth / 22);
-    this.activePetals = new Set();
+    this.resize();
+    window.addEventListener('resize', () => this.resize());
+
+    this.petals = [];
+    // Sakura petal density for elegant spring effect
+    this.petalCount = Math.floor(window.innerWidth / 15);
     this.isInBurstPhase = withBurst;
     
-    if (withBurst) {
-      this.startBurstPhase();
-    } else {
-      this.startGentlePhase();
-    }
-  }
-  
-  startBurstPhase() {
-    console.log('[SakuraEffect] Starting dramatic spring burst phase');
+    // Wind variables for spring breeze
+    this.wind = 0;
+    this.windTarget = 0;
+    this.lastWindChange = performance.now();
     
-    // Dramatic initial burst - higher density but adjusted for larger petals
-    const burstCount = Math.floor(window.innerWidth / 12); // Increased but balanced for larger petals
-    
-    // Create waves of petals for dramatic effect - faster waves
-    for (let wave = 0; wave < 3; wave++) {
-      setTimeout(() => {
-        for (let i = 0; i < burstCount / 3; i++) {
-          setTimeout(() => this.spawnPetal(true), Math.random() * 400);
-        }
-      }, wave * 300);
-    }
-    
-    // Transition to normal phase after burst - faster transition
-    setTimeout(() => {
-      this.isInBurstPhase = false;
-      this.startGentlePhase();
-      console.log('[SakuraEffect] Transitioning to normal phase');
-    }, 2500); // Faster transition
-  }
-  
-  startGentlePhase() {
-    // Clear any existing interval
-    if (this.spawnInterval) {
-      clearInterval(this.spawnInterval);
-    }
-    
-    if (!this.isInBurstPhase) {
-      // Normal dynamic density for ongoing effect
-      for (let i = 0; i < this.petalCount; i++) {
-        setTimeout(() => this.spawnPetal(), Math.random() * 2000);
-      }
-    }
-    
-    // Faster, more dynamic spawning for continuous flow
-    this.spawnInterval = setInterval(() => {
-      if (!this.isInBurstPhase && this.activePetals.size < this.petalCount * 1.5) {
-        this.spawnPetal();
-        // More frequent clusters for dynamic variation
-        if (Math.random() < 0.25) {
-          setTimeout(() => this.spawnPetal(), 150 + Math.random() * 300);
-        }
-      }
-    }, 800 + Math.random() * 600); // Faster, more dynamic timing
+    this.initializePetals(withBurst);
+    this.animate = this.animate.bind(this);
+    requestAnimationFrame(this.animate);
   }
 
-  spawnPetal(isBurst = false) {
-    const petal = document.createElement('div');
-    
-    // Elegant petal size distribution - favor medium/large for sophistication
-    const sizes = ['tiny', 'small', 'medium', 'large'];
-    let weights;
-    
-    if (isBurst) {
-      // During burst phase, include more varied sizes for dramatic effect
-      weights = [20, 25, 35, 20]; // Balanced with focus on medium/large
-    } else {
-      weights = [10, 20, 35, 35]; // Heavily favor medium/large petals for prominence
+  resize() {
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+  }
+
+  initializePetals(withBurst) {
+    const count = withBurst ? this.petalCount * 2 : this.petalCount;
+    for (let i = 0; i < count; i++) {
+      this.petals.push(this.createPetal(true, withBurst));
     }
-    
-    const sizeClass = this.weightedRandom(sizes, weights);
-    
-    // Petal type variations (3 different petal images)
-    const types = ['a', 'b', 'c'];
-    const typeClass = this.weightedRandom(types, [33, 33, 34]);
-    
-    // Depth layers for 3D atmospheric effect
-    const layers = ['back', 'mid', 'front'];
-    const layerWeights = [30, 50, 20];
-    const layerClass = this.weightedRandom(layers, layerWeights);
-    
-    petal.className = `sakura-petal size-${sizeClass} type-${typeClass} layer-${layerClass}`;
-    
-    // Sophisticated positioning and faster timing
-    petal.style.left = (Math.random() * 105 - 5) + 'vw'; // Start slightly off-screen
-    petal.style.animationDelay = Math.random() * 1.5 + 's'; // Faster start
-    
-    // Graceful, contemplative durations for serene elegance
-    let baseDuration;
-    
-    if (isBurst) {
-      // Very fast fall during burst for dramatic effect
-      baseDuration = sizeClass === 'large' ? 6 : 
-                     sizeClass === 'medium' ? 5 : 
-                     sizeClass === 'small' ? 4 : 3;
-      petal.style.animationDuration = (baseDuration + Math.random() * 2) + 's';
-    } else {
-      // Faster normal timing for dynamic flow
-      baseDuration = sizeClass === 'large' ? 8 : 
-                     sizeClass === 'medium' ? 7 : 
-                     sizeClass === 'small' ? 6 : 5;
-      petal.style.animationDuration = (baseDuration + Math.random() * 3) + 's';
+  }
+
+  createPetal(randomY = false, isBurst = false) {
+    return {
+      x: Math.random() * this.canvas.width,
+      y: randomY ? Math.random() * this.canvas.height : -20,
+      size: 3 + Math.random() * 8, // Sakura petal sizes
+      speed: 0.3 + Math.random() * 0.7, // Gentle falling speed
+      opacity: 0.6 + Math.random() * 0.4, // Elegant visibility
+      drift: Math.random() * 1.5 - 0.75, // Side-to-side motion
+      rotationSpeed: (Math.random() - 0.5) * 2, // Gentle rotation
+      rotation: Math.random() * Math.PI * 2,
+      swayAmplitude: 40 + Math.random() * 50, // Graceful sway for sakura
+      swaySpeed: 0.01 + Math.random() * 0.02, // Slow, elegant sway
+      swayOffset: Math.random() * Math.PI * 2,
+      windResistance: 0.4 + Math.random() * 0.6, // Spring breeze responsiveness
+      turbulence: Math.random() * 0.4, // Gentle turbulence
+      petalType: Math.floor(Math.random() * 3), // Different petal shapes
+      color: this.getSakuraColor(),
+      isBurst: isBurst
+    };
+  }
+
+  getSakuraColor() {
+    // Traditional sakura colors - soft pinks and whites
+    const colors = [
+      { r: 255, g: 182, b: 193 }, // Light pink
+      { r: 255, g: 192, b: 203 }, // Pink
+      { r: 255, g: 240, b: 245 }, // Lavender blush
+      { r: 255, g: 228, b: 225 }, // Misty rose
+      { r: 255, g: 255, b: 255 }, // Pure white
+      { r: 250, g: 218, b: 221 }, // Very light pink
+      { r: 255, g: 235, b: 238 }  // Soft pink
+    ];
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
+  
+  animate() {
+    const ctx = this.ctx;
+    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    // Update wind every few seconds - gentle spring breeze
+    const now = performance.now();
+    if (now - this.lastWindChange > 4000) {
+      this.windTarget = (Math.random() * 2 - 1) * 2.5; // Moderate spring wind
+      this.lastWindChange = now;
     }
-    
-    // Set refined opacity for sophisticated depth effect - higher for larger petals
-    const opacities = { tiny: 0.45, small: 0.65, medium: 0.8, large: 0.9 };
-    petal.style.setProperty('--petal-opacity', opacities[sizeClass]);
-    
-    this.container.appendChild(petal);
-    this.activePetals.add(petal);
-    
-    // Clean up completed animations
-    petal.addEventListener('animationiteration', () => {
-      if (Math.random() < 0.1) { // 10% chance to remove and respawn
-        this.removePetal(petal);
+    // Ease current wind toward target
+    this.wind += (this.windTarget - this.wind) * 0.015;
+
+    for (const petal of this.petals) {
+      ctx.globalAlpha = petal.opacity;
+      
+      const time = now * 0.001; // Convert to seconds
+      const swayX = Math.sin(time * petal.swaySpeed + petal.swayOffset) * petal.swayAmplitude;
+      
+      ctx.save();
+      ctx.translate(petal.x + swayX, petal.y);
+      
+      // Add wind-influenced rotation - petals tilt in wind direction
+      const windTilt = this.wind * 0.08;
+      ctx.rotate(petal.rotation + windTilt);
+      
+      // Set petal color
+      const { r, g, b } = petal.color;
+      ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${petal.opacity})`;
+      
+      // Draw sakura petal
+      this.drawSakuraPetal(ctx, 0, 0, petal.size, petal.petalType);
+      
+      ctx.restore();
+
+      // Update petal position - wind-blown movement
+      const windForce = this.wind * petal.windResistance;
+      const turbulenceX = Math.sin(now * 0.0008 * petal.turbulence) * 0.3;
+      const turbulenceY = Math.cos(now * 0.001 * petal.turbulence) * 0.2;
+      
+      petal.x += windForce + petal.drift + turbulenceX;
+      petal.y += petal.speed + Math.abs(windForce) * 0.05 + turbulenceY;
+      petal.rotation += petal.rotationSpeed * 0.015 + Math.abs(windForce) * 0.008;
+
+      // Wrap around horizontally
+      if (petal.x < -30) petal.x = this.canvas.width + 30;
+      if (petal.x > this.canvas.width + 30) petal.x = -30;
+
+      // Reset petal when it falls below viewport
+      if (petal.y > this.canvas.height + 30) {
+        Object.assign(petal, this.createPetal());
       }
-    });
+    }
+
+    requestAnimationFrame(this.animate);
+  }
+
+  // Draw a sakura petal shape
+  drawSakuraPetal(ctx, cx, cy, size, type) {
+    const scale = size / 10;
     
-    // Ensure cleanup after faster animation completes
+    ctx.beginPath();
+    
+    if (type === 0) {
+      // Type A: Classic 5-petal sakura shape
+      for (let i = 0; i < 5; i++) {
+        const angle = (i * Math.PI * 2) / 5 - Math.PI / 2;
+        const outerRadius = 6 * scale;
+        const innerRadius = 3 * scale;
+        
+        const x1 = cx + Math.cos(angle) * outerRadius;
+        const y1 = cy + Math.sin(angle) * outerRadius;
+        
+        const nextAngle = ((i + 1) * Math.PI * 2) / 5 - Math.PI / 2;
+        const midAngle = angle + Math.PI / 5;
+        const x2 = cx + Math.cos(midAngle) * innerRadius;
+        const y2 = cy + Math.sin(midAngle) * innerRadius;
+        
+        if (i === 0) ctx.moveTo(x1, y1);
+        ctx.quadraticCurveTo(x2, y2, cx + Math.cos(nextAngle) * outerRadius, cy + Math.sin(nextAngle) * outerRadius);
+      }
+    } else if (type === 1) {
+      // Type B: Heart-shaped petal
+      const width = 4 * scale;
+      const height = 5 * scale;
+      
+      ctx.moveTo(cx, cy + height);
+      ctx.bezierCurveTo(cx - width, cy, cx - width, cy - height/2, cx, cy - height/3);
+      ctx.bezierCurveTo(cx + width, cy - height/2, cx + width, cy, cx, cy + height);
+    } else {
+      // Type C: Simple oval petal
+      ctx.ellipse(cx, cy, 3 * scale, 5 * scale, 0, 0, Math.PI * 2);
+    }
+    
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  startBurstPhase() {
+    console.log('[SakuraEffect] Starting dramatic spring burst phase');
+    this.isInBurstPhase = true;
+    
+    // Add more petals for burst effect
+    const burstCount = Math.floor(window.innerWidth / 8);
+    for (let i = 0; i < burstCount; i++) {
+      this.petals.push(this.createPetal(false, true));
+    }
+    
+    // Transition to normal phase after burst
     setTimeout(() => {
-      if (petal.parentNode) {
-        this.removePetal(petal);
-      }
-    }, (baseDuration + 2) * 1000 + 500); // Faster cleanup for dynamic flow
-  }
-  
-  removePetal(petal) {
-    if (petal && petal.parentNode) {
-      this.activePetals.delete(petal);
-      petal.remove();
-    }
-  }
-  
-  weightedRandom(items, weights) {
-    const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
-    let random = Math.random() * totalWeight;
-    
-    for (let i = 0; i < items.length; i++) {
-      random -= weights[i];
-      if (random <= 0) {
-        return items[i];
-      }
-    }
-    return items[items.length - 1];
+      this.isInBurstPhase = false;
+      console.log('[SakuraEffect] Transitioning to normal phase');
+    }, 2500);
   }
   
   destroy() {
-    if (this.spawnInterval) {
-      clearInterval(this.spawnInterval);
-    }
-    this.activePetals.clear();
-    if (this.container && this.container.parentNode) {
-      this.container.remove();
+    console.log('[SakuraEffect] Destroying sakura effect');
+    if (this.canvas && this.canvas.parentNode) {
+      this.canvas.parentNode.removeChild(this.canvas);
     }
   }
 }
@@ -2786,10 +2814,9 @@ window.enableSakura = function(withBurst = false) {
     sakuraEffect = new SakuraEffect(withBurst);
     window.sakuraEffect = sakuraEffect;
     console.log('[SakuraEffect] Created with', sakuraEffect.petalCount, 'petals');
-    console.log('[SakuraEffect] Active petals:', sakuraEffect.activePetals.size);
   } else {
     console.log('[SakuraEffect] Showing existing sakura effect');
-    sakuraEffect.container.style.display = '';
+    sakuraEffect.canvas.style.display = '';
     
     // If requesting burst on existing effect, trigger burst
     if (withBurst && !sakuraEffect.isInBurstPhase) {
@@ -2800,10 +2827,28 @@ window.enableSakura = function(withBurst = false) {
 window.disableSakura = function() {
   console.log('[SakuraEffect] disableSakura called');
   if (sakuraEffect) {
-    sakuraEffect.destroy();
-    sakuraEffect = null;
+    sakuraEffect.canvas.style.display = 'none';
   }
 };
+
+// Add CSS for sakura canvas
+const sakuraCSS = `
+.sakura-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.9;
+}
+`;
+
+// Inject CSS
+const sakuraStyle = document.createElement('style');
+sakuraStyle.textContent = sakuraCSS;
+document.head.appendChild(sakuraStyle);
 
 // Rain effect will be toggled based on the active season
 let rainEffect;
