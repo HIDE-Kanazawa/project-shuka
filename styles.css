@@ -846,6 +846,16 @@ a:focus {
   width: 160px;
   height: 200px;
   color: white;
+  --artist-image: none;
+  --washi-texture: none;
+  background-image:
+    linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 0, 0, 0.35) 50%,
+      transparent 100%
+    ),
+    var(--artist-image);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -867,13 +877,11 @@ a:focus {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.4) 0%,
-    rgba(0, 0, 0, 0.1) 60%,
-    transparent 100%
-  );
-  transition: opacity 0.3s ease;
+  background-image: var(--washi-texture);
+  background-size: cover;
+  background-position: center;
+  mix-blend-mode: multiply;
+  opacity: 0.45;
   pointer-events: none;
 }
 
@@ -918,22 +926,26 @@ a:focus {
 
 /* Season-specific background images */
 .season-btn[data-season="spring"] {
-  background-image: url('./img/秀歌-春-btn.webp');
+  --artist-image: url('./img/秀歌-春-btn.webp');
+  --washi-texture: url('./img/和紙-春.webp');
 }
 
 .season-btn[data-season="summer"] {
-  background-image: url('./img/秀歌-夏-btn.webp');
+  --artist-image: url('./img/秀歌-夏-btn.webp');
+  --washi-texture: url('./img/和紙-夏.webp');
 }
 
 .season-btn[data-season="autumn"] {
-  background-image: url('./img/秀歌-秋-btn.webp');
+  --artist-image: url('./img/秀歌-秋-btn.webp');
+  --washi-texture: url('./img/和紙-秋.webp');
 }
 
 .season-btn[data-season="winter"] {
-  background-image: url('./img/秀歌-冬-btn.webp');
+  --artist-image: url('./img/秀歌-冬-btn.webp');
+  --washi-texture: url('./img/和紙-冬.webp');
 }
 
-.season-btn::before { opacity: 0.35; }
+.season-btn::before { opacity: 0.45; }
 SURF_END SeasonTextColor */
 
 /* Gallery button styling */
@@ -942,12 +954,11 @@ SURF_END SeasonTextColor */
 }
 
 .season-btn::before {
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.8) 0%,
-    rgba(0, 0, 0, 0.4) 60%,
-    transparent 100%
-  );
+  background-image: var(--washi-texture);
+  background-size: cover;
+  background-position: center;
+  mix-blend-mode: multiply;
+  opacity: 0.45;
 }
 
 /* Responsive adjustments for season buttons */

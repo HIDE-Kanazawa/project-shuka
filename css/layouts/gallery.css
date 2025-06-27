@@ -61,6 +61,16 @@
   width: 168px;
   height: 210px;
   color: white;
+  --artist-image: none;
+  --washi-texture: none;
+  background-image:
+    linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 0, 0, 0.35) 50%,
+      transparent 100%
+    ),
+    var(--artist-image);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -70,7 +80,7 @@
   border-radius: 12px;
   cursor: pointer;
   font-family: "Yuji Syuku", "Noto Serif JP", serif;
-  box-shadow: 
+  box-shadow:
     0 12px 32px rgba(0, 0, 0, 0.2),
     0 6px 12px rgba(0, 0, 0, 0.1);
   transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
@@ -83,13 +93,11 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.8) 0%,
-    rgba(0, 0, 0, 0.4) 50%,
-    transparent 100%
-  );
-  transition: opacity 0.3s ease;
+  background-image: var(--washi-texture);
+  background-size: cover;
+  background-position: center;
+  mix-blend-mode: multiply;
+  opacity: 0.45;
   pointer-events: none;
 }
 
@@ -141,19 +149,23 @@
 
 /* Season-specific background images */
 .season-btn[data-season="spring"] {
-  background-image: url('../img/秀歌-春.webp');
+  --artist-image: url('../img/秀歌-春-btn.webp');
+  --washi-texture: url('../img/和紙-春.webp');
 }
 
 .season-btn[data-season="summer"] {
-  background-image: url('../img/秀歌-夏.webp');
+  --artist-image: url('../img/秀歌-夏-btn.webp');
+  --washi-texture: url('../img/和紙-夏.webp');
 }
 
 .season-btn[data-season="autumn"] {
-  background-image: url('../img/秀歌-秋.webp');
+  --artist-image: url('../img/秀歌-秋-btn.webp');
+  --washi-texture: url('../img/和紙-秋.webp');
 }
 
 .season-btn[data-season="winter"] {
-  background-image: url('../img/秀歌-冬.webp');
+  --artist-image: url('../img/秀歌-冬-btn.webp');
+  --washi-texture: url('../img/和紙-冬.webp');
 }
 
 .season-icon {
