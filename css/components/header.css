@@ -131,11 +131,16 @@
   background-color: var(--neutral-800);
 }
 
+/* Position season selector at the end of the nav menu */
+.nav-menu .season-select {
+  margin-left: auto;
+}
+
 
 /* Mobile Navigation */
 @media (max-width: 767px) {
   .nav-toggle {
-    display: none;
+    display: flex;
   }
 
   .nav-container {
@@ -144,20 +149,46 @@
   }
 
   .nav-menu {
-    position: static;
-    flex-direction: row;
-    gap: var(--space-4);
-    padding: var(--space-2) 0;
-    transform: none;
+    position: fixed;
+    top: 100%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--background);
+    border-top: 1px solid var(--border);
+    flex-direction: column;
+    gap: 0;
+    padding: var(--space-6) var(--space-4);
+    transform: translateY(-100vh);
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-normal);
+    z-index: var(--z-modal);
+  }
+
+  .nav-menu.active {
+    transform: translateY(-100%);
     opacity: 1;
     visibility: visible;
   }
 
+  .nav-menu li {
+    width: 100%;
+    margin-bottom: var(--space-2);
+  }
+
+  .nav-menu a {
+    display: block;
+    padding: var(--space-4);
+    text-align: center;
+  }
+
   .season-select {
-    width: auto;
+    width: 100%;
     display: flex;
-    justify-content: flex-end;
-    margin: 0 0 0 auto;
+    justify-content: center;
+    margin-top: auto;
+    margin-left: 0;
   }
 }
 

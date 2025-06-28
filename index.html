@@ -95,22 +95,27 @@
                         </a>
                     </h1>
                 </div>
-                
-                
+
+                <button class="nav-toggle" id="nav-toggle" aria-controls="nav-menu" aria-expanded="false" aria-label="メニューを開く">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
                 <ul class="nav-menu" id="nav-menu" role="menubar">
                     <li role="none"><a href="#home" role="menuitem">Home</a></li>
                     <li role="none"><a href="#about" role="menuitem">About</a></li>
                     <li role="none"><a href="#gallery" role="menuitem">Gallery</a></li>
+                    <li class="season-select" role="none">
+                        <span id="season-selector-label" class="sr-only">季節選択</span>
+                        <div id="season-selector" class="season-selector-buttons" role="radiogroup" aria-labelledby="season-selector-label">
+                            <button type="button" class="season-option" data-season="spring">春</button>
+                            <button type="button" class="season-option" data-season="summer">夏</button>
+                            <button type="button" class="season-option" data-season="autumn">秋</button>
+                            <button type="button" class="season-option" data-season="winter">冬</button>
+                        </div>
+                    </li>
                 </ul>
-                <div class="season-select">
-                    <span id="season-selector-label" class="sr-only">季節選択</span>
-                    <div id="season-selector" class="season-selector-buttons" role="radiogroup" aria-labelledby="season-selector-label">
-                        <button type="button" class="season-option" data-season="spring">春</button>
-                        <button type="button" class="season-option" data-season="summer">夏</button>
-                        <button type="button" class="season-option" data-season="autumn">秋</button>
-                        <button type="button" class="season-option" data-season="winter">冬</button>
-                    </div>
-                </div>
             </div>
         </nav>
     </header>
