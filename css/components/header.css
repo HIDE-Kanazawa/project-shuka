@@ -157,6 +157,7 @@
     transform: translateY(-100%);
     opacity: 0;
     visibility: hidden;
+    display: none;
     transition: all var(--transition-normal);
     z-index: var(--z-modal);
   }
@@ -165,6 +166,7 @@
     transform: translateY(0);
     opacity: 1;
     visibility: visible;
+    display: flex;
   }
 
   .nav-menu li {
