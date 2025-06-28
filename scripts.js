@@ -1813,6 +1813,14 @@ class WaterRippleEffect {
       this.container.style.display = 'none';
       return;
     }
+
+    // Disable ripples on small screens (smartphones)
+    const smallScreenQuery = window.matchMedia('(max-width: 768px)');
+    if (smallScreenQuery.matches) {
+      this.isActive = false;
+      this.container.style.display = 'none';
+      return;
+    }
     
     // Check for low-end device - maintain tranquil aesthetic while optimizing
     if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) {
@@ -1835,6 +1843,16 @@ class WaterRippleEffect {
     
     // Listen for preference changes
     window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', (e) => {
+      if (e.matches) {
+        this.disable();
+      } else {
+        this.enable();
+      }
+    });
+
+    // Disable ripples if the viewport becomes small
+    const smallScreenQuery = window.matchMedia('(max-width: 768px)');
+    smallScreenQuery.addEventListener('change', (e) => {
       if (e.matches) {
         this.disable();
       } else {
