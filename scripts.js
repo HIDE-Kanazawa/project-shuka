@@ -9,19 +9,19 @@ const SEASON_DATA = {
     description: '桜咲く季節の温かな希望と新しい始まりを表現した楽曲集',
     poster: './img/秀歌-春.webp',
     video: {
-      webm: './video/夏庭園の歌.webm',
+      webm: null,
       mp4: './video/夏庭園の歌.mp4'
     },
     tracks: [
       {
-        title: 'ひかりのあと',
-        description: '春の陽だまりで感じる穏やかな時間',
-        src: './audio/ひかりのあと.mp3'
-      },
-      {
         title: '光のほうへ',
         description: '新緑の季節に響く希望のメロディー',
         src: './audio/光のほうへ.mp3'
+      },
+      {
+        title: 'ひかりのあと',
+        description: '春の陽だまりで感じる穏やかな時間',
+        src: './audio/ひかりのあと.mp3'
       }
     ]
   },
@@ -32,7 +32,7 @@ const SEASON_DATA = {
     description: '雨の季節の静けさと潤いを感じる楽曲集',
     poster: './img/秀歌-梅雨.webp',
     video: {
-      webm: './video/夏庭園の歌.webm',
+      webm: null,
       mp4: './video/夏庭園の歌.mp4'
     },
     tracks: [
@@ -55,7 +55,7 @@ const SEASON_DATA = {
     description: '緑豊かな季節の生命力と情熱を込めた楽曲集',
     poster: './img/秀歌-夏.webp',
     video: {
-      webm: './video/夏庭園の歌.webm',
+      webm: null,
       mp4: './video/夏庭園の歌.mp4'
     },
     tracks: [
@@ -78,19 +78,19 @@ const SEASON_DATA = {
     description: '色づく季節の深い情感と静寂を表現した楽曲集',
     poster: './img/秀歌-秋.webp',
     video: {
-      webm: './video/夏庭園の歌.webm',
-      mp4: './video/夏庭園の歌.mp4'
+      webm: null,
+      mp4: './video/洛陽の宵.mp4'
     },
     tracks: [
-      {
-        title: '風の庭にて',
-        description: '秋風に舞う葉音のハーモニー',
-        src: './audio/風の庭にて.mp3'
-      },
       {
         title: '洛陽の宵（よい）',
         description: '秋の夜に響く古都の響き',
         src: './audio/落葉の宵(よい).mp3'
+      },
+      {
+        title: '風の庭にて',
+        description: '秋風に舞う葉音のハーモニー',
+        src: './audio/風の庭にて.mp3'
       }
     ]
   },
@@ -101,7 +101,7 @@ const SEASON_DATA = {
     description: '雪景色の中の静けさと内省を込めた楽曲集',
     poster: './img/秀歌-冬.webp',
     video: {
-      webm: './video/白のなかで.webm',
+      webm: null,
       mp4: './video/白のなかで.mp4'
     },
     tracks: [
@@ -3144,7 +3144,7 @@ function generateSeasonGallery() {
                  poster="${season.poster}"
                  tabindex="0"
                  aria-label="${season.name}をテーマにしたデモ動画 - クリックまたはEnterキーで再生">
-            <source data-src="${season.video.webm}" type="video/webm">
+            ${season.video.webm ? `<source data-src="${season.video.webm}" type="video/webm">` : ''}
             <source data-src="${season.video.mp4}" type="video/mp4">
             お使いのブラウザは動画再生に対応していません。
           </video>
