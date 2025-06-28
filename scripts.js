@@ -1688,12 +1688,12 @@ class ShukaApp {
   
   setupErrorHandling() {
     // Global error handler
-    window.addEventListener('error', (e) => {
+    window.addEventListener('error', () => {
       // Could send to error tracking service
     });
     
     // Unhandled promise rejections
-    window.addEventListener('unhandledrejection', (e) => {
+    window.addEventListener('unhandledrejection', () => {
       // Could send to error tracking service
     });
   }
@@ -3060,7 +3060,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initialize mobile navigation
   if (typeof Navigation !== 'undefined') {
-    window.navigation = new Navigation();
+    window.navigationInstance = new Navigation();
   }
   
   // Generate dynamic content first
