@@ -1143,27 +1143,26 @@ class SeasonsGallery {
       return;
     }
     
-    console.log('Video clicked:', {
-      loaded: video.dataset.loaded,
-      paused: video.paused,
-      currentTime: video.currentTime
-    });
+    // Video interaction logging removed for production
     
     // Load video on first interaction if not already loaded
     if (video.dataset.loaded !== 'true') {
       const panel = video.closest('.season-panel');
       if (panel) {
-        console.log('Loading video and auto-playing...');
+        // Loading video and auto-playing
         // Load video and auto-play immediately
         this.loadVideoForPanel(panel, true);
       }
     } else {
       // Play already loaded videos on click
       if (video.paused) {
-        console.log('Playing video...');
+        // Playing video
         video.play().catch(error => {
           console.error('Video play failed:', error);
         });
+      } else {
+        console.log('Pausing video...');
+        video.pause();
       }
     }
     
