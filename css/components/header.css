@@ -178,7 +178,7 @@
     text-align: center;
   }
 
-  .season-select {
+  .nav-menu .season-select {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -187,7 +187,7 @@
 }
 
 /* Season selector styling */
-.season-select {
+.nav-menu .season-select {
   margin-left: var(--space-4);
 }
 
