@@ -3067,6 +3067,9 @@ document.addEventListener('DOMContentLoaded', () => {
   generateSocialLinks();
   generateCreatorSection();
   generateSeasonGallery();
+  
+  // Setup error handling for assets
+  setupImageErrorHandling();
 
   // Initialize SeasonsGallery class after DOM elements are generated
   window.seasonsGallery = new SeasonsGallery();
@@ -3254,6 +3257,29 @@ function generateCreatorSection() {
     </div>`;
   
   creatorContainer.innerHTML = creatorHTML;
+}
+
+/**
+ * Asset Error Handling - Add fallback for broken images
+ */
+function handleImageError(img) {
+  // Add error handling for broken images
+  if (!img.dataset.errorHandled) {
+    img.dataset.errorHandled = 'true';
+    console.warn('Failed to load image:', img.src);
+    
+    // Try to use a fallback or hide the image gracefully
+    if (img.classList.contains('about-image') || img.classList.contains('creator-avatar')) {
+      img.style.display = 'none';
+    }
+  }
+}
+
+function setupImageErrorHandling() {
+  // Add error handlers to all images
+  document.querySelectorAll('img').forEach(img => {
+    img.addEventListener('error', () => handleImageError(img));
+  });
 }
 
 /**

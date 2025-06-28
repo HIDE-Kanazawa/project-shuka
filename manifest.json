@@ -2,7 +2,7 @@
   "name": "Shuka – 秀歌 | AI音楽アーティスト",
   "short_name": "Shuka",
   "description": "四季をテーマにしたAI×和楽器サウンドで新しい音楽体験を",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#111827",
   "theme_color": "#6366f1",
