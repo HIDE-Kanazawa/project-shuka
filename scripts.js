@@ -803,6 +803,8 @@ class SeasonsGallery {
     // Update ARIA attributes
     panel.setAttribute('aria-hidden', 'false');
 
+    // Ensure video sources are loaded when the panel becomes visible so the player is ready
+    this.loadVideoForPanel(panel, false);
   }
   
   hidePanel(panel, animate) {
