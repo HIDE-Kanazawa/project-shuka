@@ -622,7 +622,7 @@ a:focus {
     left: 0;
     right: 0;
     bottom: 0;
-    background: var(--background);
+    background: var(--neutral-900);
     border-top: 1px solid var(--border);
     flex-direction: column;
     gap: 0;
@@ -675,9 +675,14 @@ a:focus {
   color: var(--text);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: var(--space-1) var(--space-2);
-  font-size: var(--text-sm);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-base);
+  min-width: 44px;
+  min-height: 44px;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   transition: background-color var(--transition-fast);
 }
 
