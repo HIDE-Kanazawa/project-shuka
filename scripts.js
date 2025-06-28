@@ -1156,15 +1156,12 @@ class SeasonsGallery {
         this.loadVideoForPanel(panel, true);
       }
     } else {
-      // Toggle play/pause for already loaded videos
+      // Play already loaded videos on click
       if (video.paused) {
         console.log('Playing video...');
         video.play().catch(error => {
           console.error('Video play failed:', error);
         });
-      } else {
-        console.log('Pausing video...');
-        video.pause();
       }
     }
     
