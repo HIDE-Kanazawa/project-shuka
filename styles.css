@@ -3760,3 +3760,40 @@ body:not(.loaded) * {
         text-align: center;
     }
 }
+
+/* Creator section styling */
+.creator-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: flex-start;
+}
+
+.creator-avatar {
+    border-radius: 50%;
+}
+
+.creator-name {
+    font-weight: 500;
+    color: var(--text);
+}
+
+.creator-label {
+    color: var(--text-secondary, var(--text));
+}
+
+.creator-info .social-link {
+    font-size: 1.8rem;
+    color: var(--accent);
+    transition: opacity .3s;
+    text-decoration: none;
+    margin-left: 0.25rem;
+}
+
+.creator-info .social-link:hover {
+    opacity: .6;
+}
+
+.creator-info .social-icon-img {
+    transition: all var(--transition-normal);
+}
