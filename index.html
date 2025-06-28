@@ -39,8 +39,11 @@
     
     <!-- Preload critical resources -->
     <link rel="preload" href="./img/秀歌-メインビジュアル.webp" as="image">
+    <link rel="preload" href="./img/ローディング.png" as="image">
     <link rel="preload" href="./styles.css" as="style">
     <link rel="stylesheet" href="./styles.css">
+    <link rel="preload" href="./css/loader.css" as="style">
+    <link rel="stylesheet" href="./css/loader.css">
     <link rel="preload" href="./scripts.js" as="script">
 
     
@@ -70,6 +73,13 @@
     </script>
 </head>
 <body>
+    <!-- Impressionistic Loader -->
+    <div id="loader" role="status" aria-label="ページを読み込み中">
+      <div class="ink"></div>
+      <svg id="logo-svg" viewBox="0 0 120 40" aria-hidden="true">
+        <text id="logo-text" x="0" y="28" font-size="28" font-family="&quot;Yuji Syuku&quot;, &quot;Noto Serif JP&quot;, serif">秀歌</text>
+      </svg>
+    </div>
     
     <!-- Ripple Effect Container -->
     <div class="ripple-container" id="ripple-container" aria-hidden="true"></div>
@@ -231,5 +241,6 @@
     <script src="./scripts.js" defer></script>
     <script src="./three-lanterns.js" defer></script>
     
+    <script defer src="./js/loader.js"></script>
 </body>
 </html>
