@@ -1,3 +1,31 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 100%;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
 /* WINDSURF_START Fonts */
 :root {
   --ff-heading: "Noto Serif JP", serif;
@@ -5,18 +33,6 @@
 }
 body {
   font-family: var(--ff-body);
-  margin: 0;
-}
-
-/* Three.js canvas styling */
-.three-js-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  pointer-events: none;
 }
 h1, h2, h3 {
   font-family: var(--ff-heading);
@@ -34,102 +50,7 @@ h1, h2, h3 {
   --primary-winter:#ADC8FF; --accent-winter:#4B6CFF;
   --primary-tsuyu:#7BA7D4; --accent-tsuyu:#4A90B8;
 }
-body[data-season="spring"]{ --primary:var(--primary-spring); --accent:var(--accent-spring); }
-body[data-season="summer"]{ --primary:var(--primary-summer); --accent:var(--accent-summer); }
-body[data-season="autumn"]{ --primary:var(--primary-autumn); --accent:var(--accent-autumn); }
-body[data-season="winter"]{ --primary:var(--primary-winter); --accent:var(--accent-winter); }
-body[data-season="tsuyu"]{ --primary:var(--primary-tsuyu); --accent:var(--accent-tsuyu); }
 
-/* Tsuyu (Rainy Season) Special Styling */
-
-body[data-season="tsuyu"] {
-  --background: #1a2332;
-  --surface: #253142;
-  --text: #d1dae6;
-  --text-secondary: #a8b8c8;
-  --text-muted: #7a8ba3;
-  --border: #3a4a5c;
-  --shadow: rgba(123, 167, 212, 0.2);
-  --shadow-lg: rgba(123, 167, 212, 0.3);
-}
-
-/* Tsuyu hero backdrop effect */
-body[data-season="tsuyu"] .hero {
-  position: relative;
-}
-
-body[data-season="tsuyu"] .hero::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(123, 167, 212, 0.1) 0%,
-    rgba(74, 144, 184, 0.15) 50%,
-    rgba(123, 167, 212, 0.2) 100%
-  );
-  pointer-events: none;
-  z-index: 1;
-}
-
-body[data-season="tsuyu"] .hero-content {
-  z-index: 2;
-  position: relative;
-}
-
-/* Tsuyu-specific gradient buttons */
-body[data-season="tsuyu"] .cta-button.primary {
-  background: linear-gradient(120deg, #4A90B8 0%, #7BA7D4 100%);
-  box-shadow: 0 4px 15px rgba(74, 144, 184, 0.3);
-}
-
-body[data-season="tsuyu"] .cta-button.primary:hover {
-  box-shadow: 0 8px 25px rgba(74, 144, 184, 0.4);
-}
-
-/* Soften borders and add subtle moisture effect */
-body[data-season="tsuyu"] .feature,
-body[data-season="tsuyu"] .track,
-body[data-season="tsuyu"] .about-image,
-body[data-season="tsuyu"] .season-image {
-  border: 1px solid rgba(123, 167, 212, 0.2);
-  box-shadow: 0 2px 8px rgba(74, 144, 184, 0.1), 
-              0 1px 3px rgba(123, 167, 212, 0.15);
-}
-
-body[data-season="tsuyu"] .feature:hover,
-body[data-season="tsuyu"] .track:hover {
-  box-shadow: 0 4px 16px rgba(74, 144, 184, 0.2), 
-              0 2px 6px rgba(123, 167, 212, 0.25);
-}
-
-/* Tsuyu season button styling */
-body[data-season="tsuyu"] .season-btn:hover,
-body[data-season="tsuyu"] .season-btn:focus-visible {
-  box-shadow: 0 12px 32px rgba(74, 144, 184, 0.25), 
-              0 6px 12px rgba(123, 167, 212, 0.2);
-}
-
-/* Add subtle water droplet animation to text elements */
-body[data-season="tsuyu"] .hero-title {
-  text-shadow: 
-    2px 2px 4px rgba(0, 0, 0, 0.7),
-    0 0 10px rgba(123, 167, 212, 0.3);
-}
-
-body[data-season="tsuyu"] .section-title::after {
-  background: linear-gradient(90deg, var(--primary-tsuyu), var(--accent-tsuyu));
-  box-shadow: 0 2px 8px rgba(74, 144, 184, 0.3);
-}
-
-/* Make ripples more prominent in tsuyu season */
-body[data-season="tsuyu"] .ripple {
-  border-color: rgba(123, 167, 212, 0.6);
-  box-shadow: 0 0 12px rgba(74, 144, 184, 0.4);
-}
 /* WINDSURF_END SeasonVars */
 :root {
   /* Color Palette */
@@ -227,33 +148,6 @@ body[data-season="tsuyu"] .ripple {
 }
 
 
-/* ===== Base Styles ===== */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  font-size: 100%;
-  scroll-behavior: smooth;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
 
 body {
   font-family: var(--ff-body);
@@ -261,79 +155,10 @@ body {
   line-height: 1.6;
   color: var(--text);
   background-color: var(--background);
+  transition: background-color 0.6s ease, color 0.6s ease;
   overflow-x: hidden;
   min-height: 100dvh;
   position: relative;
-}
-
-/* 季節に合わせた和紙背景 */
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('./img/和紙-春.webp');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  opacity: 1;
-
-  pointer-events: none;
-  transition: opacity 0.5s ease-in-out;
-
-  z-index: -1;
-  mix-blend-mode: normal;
-}
-
-/* 季節別和紙背景 */
-body[data-season="spring"]::before {
-  background-image: url('./img/和紙-春.webp');
-}
-
-body[data-season="summer"]::before {
-  background-image: url('./img/和紙-夏.webp');
-}
-
-body[data-season="autumn"]::before {
-  background-image: url('./img/和紙-秋.webp');
-}
-
-body[data-season="winter"]::before {
-  background-image: url('./img/和紙-冬.webp');
-}
-
-body[data-season="tsuyu"]::before {
-  background-image: url('./img/和紙-梅雨.webp');
-  opacity: 1;
-}
-
-/* ダークテーマ時の和紙背景調整 */
-
-/* レスポンシブ対応 - モバイルでのパフォーマンス最適化 */
-@media (max-width: 768px) {
-  body::before {
-    background-attachment: scroll; /* モバイルでfixedを避ける */
-    background-size: cover;
-  }
-}
-
-/* 低性能デバイス対応 */
-@media (prefers-reduced-motion: reduce) {
-  body::before {
-    transition: none;
-    background-attachment: scroll;
-  }
-}
-
-/* 高解像度ディスプレイ対応 */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  body::before {
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
-  }
 }
 
 /* ===== Typography ===== */
@@ -370,64 +195,298 @@ a:focus {
   outline-offset: 2px;
 }
 
-/* ===== Layout Components ===== */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--space-4);
-}
-
-@media (min-width: 768px) {
-  .container {
-    padding: 0 var(--space-6);
+/* ===== High Contrast Mode ===== */
+@media (prefers-contrast: high) {
+  :root {
+    --shadow: rgba(0, 0, 0, 0.5);
+    --shadow-lg: rgba(0, 0, 0, 0.7);
+  }
+  
+  .cta-button,
+  .season-btn,
+  .form-submit {
+    border: 2px solid currentColor;
   }
 }
 
-.section-title {
-  text-align: center;
-  margin-bottom: var(--space-8);
-  position: relative;
+/**
+ * Accessibility Enhancement Styles
+ * Improves focus management, contrast, and screen reader experience
+ */
+
+/* ===== Focus Management ===== */
+/* Improve focus visibility across all interactive elements */
+:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
 }
 
-.section-title::after {
-  content: '';
-  position: absolute;
-  bottom: -var(--space-4);
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60px;
-  height: 3px;
-  background: linear-gradient(90deg, var(--primary), var(--accent));
-  border-radius: var(--radius-full);
+/* Remove default focus outline when focus-visible is supported */
+:focus:not(:focus-visible) {
+  outline: none;
 }
 
-.section-subtitle {
-  text-align: center;
-  font-size: var(--text-lg);
-  color: var(--text-muted);
-  margin-bottom: var(--space-12);
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+/* Custom focus styles for specific elements */
+.cta-button:focus-visible,
+.season-btn:focus-visible,
+.form-submit:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 2px var(--background), 0 0 0 5px var(--accent);
 }
 
-/* ===== Skip Link (Accessibility) ===== */
+.nav-menu a:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+  background-color: var(--primary);
+  color: white;
+}
+
+/* Audio controls focus enhancement */
+audio:focus-visible {
+  outline: 3px solid var(--secondary);
+  outline-offset: 2px;
+  border-radius: var(--radius);
+}
+
+/* Form elements focus enhancement */
+.form-input:focus-visible,
+.form-textarea:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 1px;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+}
+
+/* ===== Skip Links Enhancement ===== */
 .skip-link {
   position: absolute;
   top: -100px;
   left: var(--space-4);
   background: var(--primary);
   color: white;
-  padding: var(--space-2) var(--space-4);
+  padding: var(--space-3) var(--space-4);
   border-radius: var(--radius);
   font-weight: 600;
+  font-size: var(--text-sm);
+  text-decoration: none;
   z-index: var(--z-tooltip);
   transition: top var(--transition-fast);
+  border: 2px solid white;
 }
 
-.skip-link:focus {
+.skip-link:focus,
+.skip-link:focus-visible {
   top: var(--space-4);
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
 }
+
+/* ===== Screen Reader Enhancements ===== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Screen reader announcements */
+.sr-announcer {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* ===== Enhanced Navigation for Screen Readers ===== */
+[role="tablist"] {
+  display: flex;
+  gap: var(--space-2);
+}
+
+[role="tab"] {
+  position: relative;
+}
+
+[role="tab"][aria-selected="true"]::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--primary);
+}
+
+
+/* ===== Animations ===== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Animation classes for JavaScript */
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.6s ease-out;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.6s ease-out;
+}
+
+
+/* ===== Utility Classes ===== */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mb-0 { margin-bottom: 0; }
+.mb-2 { margin-bottom: var(--space-2); }
+.mb-4 { margin-bottom: var(--space-4); }
+.mb-6 { margin-bottom: var(--space-6); }
+.mb-8 { margin-bottom: var(--space-8); }
+
+.mt-0 { margin-top: 0; }
+.mt-2 { margin-top: var(--space-2); }
+.mt-4 { margin-top: var(--space-4); }
+.mt-6 { margin-top: var(--space-6); }
+.mt-8 { margin-top: var(--space-8); }
+
+/* ===== Print Styles ===== */
+@media print {
+  .header,
+  .nav-toggle,
+  .hero-actions,
+  .season-nav,
+  audio,
+  .contact-form,
+  .social-links {
+    display: none;
+  }
+  
+  .hero {
+    background: none;
+    color: var(--text);
+    height: auto;
+    padding: var(--space-8) 0;
+  }
+  
+  .season-panel {
+    display: block !important;
+    page-break-inside: avoid;
+  }
+}
+
+
+/* ===== Buttons ===== */
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-6);
+  border: none;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-base);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+/* WINDSURF_START CTA_Gradient */
+.cta-button.primary{
+  background: linear-gradient(120deg,var(--accent) 0%,var(--primary) 100%);
+  background-size: 200% 100%;
+  color: white;
+  box-shadow: 0 4px 15px var(--shadow-lg);
+  transition: background-position .4s ease;
+}
+.cta-button.primary:hover{
+  background-position: 100% 0;
+}
+/* WINDSURF_END CTA_Gradient */
+
+.cta-button.primary:hover,
+.cta-button.primary:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px var(--shadow-lg);
+}
+
+.cta-button.secondary {
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+}
+
+.cta-button.secondary:hover,
+.cta-button.secondary:focus {
+  background: white;
+  color: var(--primary);
+  transform: translateY(-2px);
+}
+
 
 /* ===== Header & Navigation ===== */
 .header {
@@ -435,12 +494,11 @@ a:focus {
   top: 0;
   left: 0;
   right: 0;
-  background-image: url('./img/和紙_黒_optimized.png');
+  background-image: url('../img/和紙_黒_optimized.png');
   background-size: cover;
   background-repeat: repeat;
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid var(--border);
   z-index: var(--z-fixed);
   transition: all var(--transition-normal);
 }
@@ -555,8 +613,6 @@ a:focus {
   transition: color var(--transition-fast);
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius);
-  font-family: "Yuji Syuku", "Noto Serif JP", serif;
-  letter-spacing: 0.05em;
 }
 
 .nav-menu a:hover,
@@ -565,45 +621,6 @@ a:focus {
   background-color: var(--neutral-800);
 }
 
-
-.autumn {
-  --primary: #FFC080;
-  --accent: #FF69B4;
-}
-
-.winter {
-  --primary: #87CEEB;
-  --accent: #ADD8E6;
-}
-
-.spring {
-  --primary: #C6E2B5;
-  --accent: #8BC34A;
-}
-
-.summer {
-  --primary: #FFA07A;
-  --accent: #FFC080;
-}
-/* WINDSURF_END SeasonVars */
-
-/* WINDSURF_START FooterIconsStyle */
-.social-links{
-  display:flex; gap:1rem; justify-content:center; margin-top:1.5rem;
-}
-.social-links a{ font-size:1.8rem; color:var(--accent); transition:opacity .3s; }
-.social-links a:hover{ opacity:.6; }
-
-/* Disabled social icons */
-.social-link.disabled{
-  pointer-events:none;
-  filter:grayscale(100%);
-  opacity:.5;
-}
-
-/* Instagram brand color */
-.social-link.instagram{ color:#E4405F; }
-/* WINDSURF_END FooterIconsStyle */
 
 /* Mobile Navigation */
 @media (max-width: 767px) {
@@ -661,8 +678,27 @@ a:focus {
   }
 }
 
+/* Season selector styling */
 .nav-menu .season-select {
   margin-left: var(--space-4);
+}
+
+/* Overlay for mobile navigation */
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--transition-normal);
+  z-index: var(--z-modal-backdrop);
+}
+
+.nav-overlay.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 .season-selector-buttons {
@@ -693,148 +729,553 @@ a:focus {
 
 
 
-/* ===== Hero Section ===== */
-.hero {
-  /* Prevent header overlap */
-  --header-height: 80px;
-  /* Remove extra gap below the header */
-  margin-top: 0;
-  height: 85vh;
-  min-height: 480px;
+/* Header seasonal backgrounds - 統一された背景のため季節別設定を削除 */
+
+
+/* Rain Effect Canvas */
+.rain-canvas{
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  z-index: var(--z-sticky);
+}
+
+
+/* WINDSURF_START RippleEnhancement */
+.ripple {
+  position: absolute;
+  background: transparent !important;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  box-shadow: 0 0 8px currentColor;
+  filter: blur(0.2px);
+  transform: scale(0);
+  opacity: 0.85;
+  animation: rippleRing 6s cubic-bezier(0.25, 0.65, 0.35, 1) forwards !important;
+}
+
+.ripple::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: inherit;
+  border-radius: 50%;
+  opacity: 0.3;
+  filter: blur(1px);
+  transform: scale(0);
+  animation: rippleRing 7s cubic-bezier(0.25, 0.65, 0.35, 1) 0.4s forwards !important;
+}
+
+@keyframes rippleRing {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(7); 
+    opacity: 0;
+  }
+}
+
+
+
+body[data-season="spring"] .ripple{ border-color: var(--accent-spring); }
+body[data-season="summer"] .ripple{ border-color: var(--accent-summer); }
+body[data-season="autumn"] .ripple{ border-color: var(--accent-autumn); }
+body[data-season="winter"] .ripple{ border-color: var(--accent-winter); }
+
+
+.ink-drop {
+  position: absolute;
+  pointer-events: none;
+  background: radial-gradient(
+    circle,
+    rgba(47, 79, 79, 0.4) 0%,
+    rgba(105, 105, 105, 0.25) 40%,
+    rgba(128, 128, 128, 0.1) 70%,
+    transparent 100%
+  );
+  border-radius: 50%;
+  transform: scale(0);
+  animation: inkSpread ease-out forwards;
+  filter: blur(0.8px);
+}
+
+.floating-leaf {
+  position: absolute;
+  pointer-events: none;
+  background: linear-gradient(var(--leaf-angle, 45deg),
+    rgba(34, 139, 34, 0.3) 0%,
+    rgba(107, 142, 35, 0.25) 30%,
+    rgba(85, 107, 47, 0.15) 60%,
+    transparent 100%
+  );
+  border-radius: 50% 0 50% 0;
+  transform: scale(0) rotate(0deg);
+  animation: leafFloat ease-out forwards;
+  filter: blur(0.3px);
+}
+
+.subtle-glow {
+  position: absolute;
+  pointer-events: none;
+  background: radial-gradient(
+    circle,
+    rgba(240, 248, 255, 0.12) 0%,
+    rgba(230, 230, 250, 0.08) 30%,
+    rgba(211, 211, 211, 0.04) 60%,
+    transparent 100%
+  );
+  border-radius: 50%;
+  transform: scale(0);
+  animation: subtleGlowExpand 2s ease-out forwards;
+  mix-blend-mode: overlay;
+  filter: blur(3px);
+}
+
+.tranquil-dot {
+  position: absolute;
+  pointer-events: none;
+  width: 2px;
+  height: 2px;
+  background: rgba(105, 105, 105, 0.6);
+  border-radius: 50%;
+  transform: scale(0);
+  animation: tranquilDotExpand ease-out forwards;
+  filter: blur(0.2px);
+}
+
+
+@keyframes inkSpread {
+  0% {
+    transform: scale(0);
+    opacity: 0.6;
+  }
+  40% {
+    transform: scale(1.2) translate(calc(var(--dx) * 0.3), calc(var(--dy) * 0.3));
+    opacity: 0.4;
+  }
+  80% {
+    transform: scale(0.8) translate(calc(var(--dx) * 0.8), calc(var(--dy) * 0.8));
+    opacity: 0.1;
+  }
+  100% {
+    transform: scale(0.3) translate(var(--dx), var(--dy));
+    opacity: 0;
+  }
+}
+
+@keyframes leafFloat {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 0.5;
+  }
+  25% {
+    transform: scale(1) rotate(45deg) translate(calc(var(--dx) * 0.2), calc(var(--dy) * 0.2));
+    opacity: 0.4;
+  }
+  60% {
+    transform: scale(0.8) rotate(90deg) translate(calc(var(--dx) * 0.6), calc(var(--dy) * 0.6));
+    opacity: 0.2;
+  }
+  100% {
+    transform: scale(0.4) rotate(180deg) translate(var(--dx), var(--dy));
+    opacity: 0;
+  }
+}
+
+@keyframes subtleGlowExpand {
+  0% {
+    transform: scale(0);
+    opacity: 0.15;
+  }
+  40% {
+    transform: scale(1.8);
+    opacity: 0.08;
+  }
+  80% {
+    transform: scale(2.5);
+    opacity: 0.03;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+@keyframes tranquilDotExpand {
+  0% {
+    transform: scale(0) translate(0, 0);
+    opacity: 0.8;
+  }
+  30% {
+    transform: scale(2) translate(calc(var(--dx) * 0.3), calc(var(--dy) * 0.3));
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(0.8) translate(var(--dx), var(--dy));
+    opacity: 0;
+  }
+}
+
+/* Gold flake burst */
+.refined-particle {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(139, 69, 19, 0.3) 0%,
+    rgba(160, 82, 45, 0.2) 50%,
+    transparent 100%
+  );
+  opacity: 0.7;
+  transform: translate(0,0) scale(0.6);
+  animation: refinedParticleFloat ease-out forwards;
+  will-change: transform, opacity;
+  filter: blur(0.5px);
+}
+
+.gentle-glow {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(240, 248, 255, 0.08) 30%,
+    rgba(230, 230, 250, 0.05) 60%,
+    transparent 100%
+  );
+  animation: gentleGlow 1.2s ease-out forwards;
+  pointer-events: none;
+  filter: blur(2px);
+}
+
+
+@keyframes refinedParticleFloat {
+  0% {
+    transform: translate(0,0) scale(0.6);
+    opacity: 0.7;
+  }
+  30% {
+    opacity: 0.5;
+    transform: translate(calc(var(--dx) * 0.3), calc(var(--dy) * 0.3)) scale(0.8);
+  }
+  100% {
+    transform: translate(var(--dx), var(--dy)) scale(0.2);
+    opacity: 0;
+  }
+}
+
+@keyframes gentleGlow {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.2;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.1;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+
+@keyframes rippleElegant {
+  0% {
+    transform: scale(0);
+    opacity: 0.15;
+  }
+  30% {
+    opacity: 0.08;
+  }
+  100% {
+    transform: scale(1.1);
+    opacity: 0;
+  }
+}
+
+@keyframes rippleSubtle {
+  0% {
+    transform: scale(0);
+    opacity: 0.08;
+  }
+  40% {
+    opacity: 0.04;
+  }
+  100% {
+    transform: scale(1.3);
+    opacity: 0;
+  }
+}
+
+/* Floating musical note for video hover */
+.play-note {
+  position: absolute;
+  pointer-events: none;
+  font-size: 2.5rem;
+  line-height: 1;
+  transform: scale(0);
+  opacity: 0.9;
+  animation: rippleElegant 0.8s forwards;
+  color: currentColor;
+  text-shadow: 0 0 4px currentColor;
+}
+
+/* Sakura burst for luxurious click */
+.sakura-petal {
+  position: absolute;
+  pointer-events: none;
+  background: radial-gradient(circle at 60% 40%, rgba(255,182,193,0.9) 0%, rgba(255,105,180,0.6) 40%, rgba(255,192,203,0.3) 70%, transparent 100%);
+  border-radius: 70% 90% 70% 90%;
+  transform: scale(0) rotate(0deg);
+  animation: sakuraBurst ease-out forwards;
+  filter: drop-shadow(0 0 3px rgba(255,192,203,0.5));
+}
+
+@keyframes sakuraBurst {
+  0% { transform: translate(0,0) scale(0) rotate(0deg); opacity: 0.9; }
+  80% { opacity: 0.6; }
+  100% { transform: translate(var(--dx), var(--dy)) scale(0.4) rotate(360deg); opacity: 0; }
+}
+
+.click-flash {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,215,0,0.8) 0%, rgba(255,215,0,0.4) 40%, rgba(255,215,0,0.1) 70%, transparent 100%);
+  transform: scale(0);
+  mix-blend-mode: screen;
+  animation: clickFlash 0.6s ease-out forwards;
+}
+
+@keyframes clickFlash {
+  0% { transform: scale(0); opacity: 0.9; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+/* Kabuki swirl accent */
+.kabuki-swirl {
+  position: absolute;
+  pointer-events: none;
+  border: 2px solid transparent;
+  border-top-color: rgba(255,215,0,0.9);
+  border-right-color: rgba(255,215,0,0.6);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  width: 40px;
+  height: 40px;
+  transform: scale(0) rotate(0deg);
+  animation: kabukiSwirlSpin 0.8s ease-out forwards;
+  filter: blur(0.2px);
+}
+
+@keyframes kabukiSwirlSpin {
+  0% { transform: scale(0) rotate(0deg); opacity: 1; }
+  50% { opacity: 0.8; }
+  100% { transform: scale(3) rotate(720deg); opacity: 0; }
+}
+
+
+
+/* WINDSURF_END RippleEnhancement */
+
+
+body[data-season="spring"]{ --primary:var(--primary-spring); --accent:var(--accent-spring); }
+body[data-season="summer"]{ --primary:var(--primary-summer); --accent:var(--accent-summer); }
+body[data-season="autumn"]{ --primary:var(--primary-autumn); --accent:var(--accent-autumn); }
+body[data-season="winter"]{ --primary:var(--primary-winter); --accent:var(--accent-winter); }
+body[data-season="tsuyu"]{ --primary:var(--primary-tsuyu); --accent:var(--accent-tsuyu); }
+
+/* Tsuyu (Rainy Season) Special Styling */
+body[data-season="tsuyu"] {
+  --background: #1a2332;
+  --surface: #253142;
+  --text: #d1dae6;
+  --text-secondary: #a8b8c8;
+  --text-muted: #7a8ba3;
+  --border: #3a4a5c;
+  --shadow: rgba(123, 167, 212, 0.2);
+  --shadow-lg: rgba(123, 167, 212, 0.3);
+}
+
+/* Tsuyu hero backdrop effect */
+body[data-season="tsuyu"] .hero {
+  position: relative;
+}
+
+body[data-season="tsuyu"] .hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: linear-gradient(
-    rgba(0, 0, 0, 0.4), 
-    rgba(0, 0, 0, 0.4)
-  ), url('./img/秀歌-メインビジュアル.webp');
-  background-size: cover;
-  background-position: center top;
-  background-attachment: fixed;
+    to bottom,
+    rgba(123, 167, 212, 0.1) 0%,
+    rgba(74, 144, 184, 0.15) 50%,
+    rgba(123, 167, 212, 0.2) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
 }
 
-/* Mobile adjustments to keep subject visible */
-@media (max-width: 600px) {
-  .hero {
-    background-position: center top;
-    height: 90vh;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero {
-    background-attachment: scroll;
-  }
-}
-
-@media (max-width: 767px) {
-  .hero {
-    background-attachment: scroll;
-    height: 100dvh;
-  }
-}
-
-.hero-content {
-  padding-top: var(--header-height);
-  max-width: 800px;
-  padding: var(--space-4);
+body[data-season="tsuyu"] .hero-content {
   z-index: 2;
   position: relative;
 }
 
-.hero-title {
-  font-size: var(--text-5xl);
-  font-weight: 800;
-  margin-bottom: var(--space-6);
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-  animation: fadeInUp 1s ease-out;
-  white-space: normal;
+/* Tsuyu-specific gradient buttons */
+body[data-season="tsuyu"] .cta-button.primary {
+  background: linear-gradient(120deg, #4A90B8 0%, #7BA7D4 100%);
+  box-shadow: 0 4px 15px rgba(74, 144, 184, 0.3);
 }
 
-/* Emphasize artist name in hero */
-.artist-name {
-  display: inline-block;
-  margin-top: var(--space-4);
-  font-size: var(--text-6xl);
-  font-weight: 900;
-  line-height: 1.1;
-  background: linear-gradient(90deg, #fbc2eb 0%, #a6c1ee 50%, #fbc2eb 100%);
-  background-size: 200% 100%;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shine 6s linear infinite;
+body[data-season="tsuyu"] .cta-button.primary:hover {
+  box-shadow: 0 8px 25px rgba(74, 144, 184, 0.4);
 }
 
-@keyframes shine {
-  0% { background-position: 0 0; }
-  100% { background-position: -200% 0; }
+/* Soften borders and add subtle moisture effect */
+body[data-season="tsuyu"] .feature,
+body[data-season="tsuyu"] .track,
+body[data-season="tsuyu"] .about-image,
+body[data-season="tsuyu"] .season-image {
+  border: 1px solid rgba(123, 167, 212, 0.2);
+  box-shadow: 0 2px 8px rgba(74, 144, 184, 0.1), 
+              0 1px 3px rgba(123, 167, 212, 0.15);
 }
 
-.artist-name .jp {
-  font-size: 0.7em;
-  font-weight: 700;
+body[data-season="tsuyu"] .feature:hover,
+body[data-season="tsuyu"] .track:hover {
+  box-shadow: 0 4px 16px rgba(74, 144, 184, 0.2), 
+              0 2px 6px rgba(123, 167, 212, 0.25);
 }
 
-.hero-subtitle {
-  font-size: var(--text-xl);
-  margin-bottom: var(--space-10);
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
-  animation: fadeInUp 1s ease-out 0.3s both;
+/* Tsuyu season button styling */
+
+body[data-season="tsuyu"] .season-btn:hover,
+body[data-season="tsuyu"] .season-btn:focus-visible {
+  box-shadow: 0 12px 32px rgba(74, 144, 184, 0.25), 
+              0 6px 12px rgba(123, 167, 212, 0.2);
 }
 
-.hero-actions {
-  display: flex;
-  gap: var(--space-4);
-  justify-content: center;
-  flex-wrap: wrap;
-  animation: fadeInUp 1s ease-out 0.6s both;
+
+/* Add subtle water droplet animation to text elements */
+body[data-season="tsuyu"] .hero-title {
+  text-shadow: 
+    2px 2px 4px rgba(0, 0, 0, 0.7),
+    0 0 10px rgba(123, 167, 212, 0.3);
 }
 
-/* ===== Buttons ===== */
-.cta-button {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-4) var(--space-6);
-  border: none;
-  border-radius: var(--radius-lg);
-  font-size: var(--text-base);
-  font-weight: 600;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all var(--transition-normal);
-  position: relative;
-  overflow: hidden;
+body[data-season="tsuyu"] .section-title::after {
+  background: linear-gradient(90deg, var(--primary-tsuyu), var(--accent-tsuyu));
+  box-shadow: 0 2px 8px rgba(74, 144, 184, 0.3);
 }
 
-/* WINDSURF_START CTA_Gradient */
-.cta-button.primary{
-  background: linear-gradient(120deg,var(--accent) 0%,var(--primary) 100%);
-  background-size: 200% 100%;
-  color: white;
-  box-shadow: 0 4px 15px var(--shadow-lg);
-  transition: background-position .4s ease;
-}
-.cta-button.primary:hover{
-  background-position: 100% 0;
-}
-/* WINDSURF_END CTA_Gradient */
-
-.cta-button.primary:hover,
-.cta-button.primary:focus {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px var(--shadow-lg);
+/* Make ripples more prominent in tsuyu season */
+body[data-season="tsuyu"] .ripple {
+  border-color: rgba(123, 167, 212, 0.6);
+  box-shadow: 0 0 12px rgba(74, 144, 184, 0.4);
 }
 
-.cta-button.secondary {
-  background: transparent;
-  color: white;
-  border: 2px solid white;
+/* 季節に合わせた和紙背景 */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('../img/和紙-春.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  opacity: 1;
+
+  pointer-events: none;
+  transition: opacity 0.5s ease-in-out;
+
+  z-index: -1;
+  mix-blend-mode: normal;
 }
 
-.cta-button.secondary:hover,
-.cta-button.secondary:focus {
-  background: white;
-  color: var(--primary);
-  transform: translateY(-2px);
+/* 季節別和紙背景 */
+body[data-season="spring"]::before {
+  background-image: url('../img/和紙-春.webp');
 }
+
+body[data-season="summer"]::before {
+  background-image: url('../img/和紙-夏.webp');
+}
+
+body[data-season="autumn"]::before {
+  background-image: url('../img/和紙-秋.webp');
+}
+
+body[data-season="winter"]::before {
+  background-image: url('../img/和紙-冬.webp');
+}
+
+body[data-season="tsuyu"]::before {
+  background-image: url('../img/和紙-梅雨.webp');
+  opacity: 1;
+}
+
+
+/* レスポンシブ対応 - モバイルでのパフォーマンス最適化 */
+@media (max-width: 768px) {
+  body::before {
+    background-attachment: scroll; /* モバイルでfixedを避ける */
+    background-size: cover;
+  }
+}
+
+/* 低性能デバイス対応 */
+@media (prefers-reduced-motion: reduce) {
+  body::before {
+    transition: none;
+    background-attachment: scroll;
+  }
+}
+
+/* 高解像度ディスプレイ対応 */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  body::before {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+.autumn {
+  --primary: #FFC080;
+  --accent: #FF69B4;
+}
+
+.winter {
+  --primary: #87CEEB;
+  --accent: #ADD8E6;
+}
+
+.spring {
+  --primary: #C6E2B5;
+  --accent: #8BC34A;
+}
+
+.summer {
+  --primary: #FFA07A;
+  --accent: #FFC080;
+}
+
 
 /* ===== About Section ===== */
 .about {
@@ -872,11 +1313,11 @@ a:focus {
   background: var(--background);
   border-radius: var(--radius-lg);
   box-shadow: 0 2px 10px var(--shadow);
-  transition: box-shadow var(--transition-normal);
+  transition: transform var(--transition-normal);
 }
 
 .feature:hover {
-  box-shadow: 0 6px 16px var(--shadow-lg);
+  transform: translateY(-4px);
 }
 
 .feature-title {
@@ -890,469 +1331,90 @@ a:focus {
 }
 
 .about-image {
-  width: 100%;
-  height: auto;
-  border-radius: var(--radius-xl);
-  box-shadow: 0 10px 30px var(--shadow-lg);
-}
-
-/* ===== Gallery Section ===== */
-.gallery {
-  padding: var(--space-24) 0;
-  backdrop-filter: blur(0.5px);
-}
-
-.season-nav {
-  display: flex;
-  justify-content: center;
-  gap: var(--space-6);
-  margin-bottom: var(--space-16);
-  flex-wrap: wrap;
-  padding: var(--space-4);
-}
-
-.season-btn {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-  padding: var(--space-4);
-  width: 160px;
-  height: 200px;
-  color: white;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
-  filter: brightness(1.2) contrast(1.1);
-  border: 3px solid rgba(255, 255, 255, 0.8);
-  border-radius: 8px;
-  cursor: pointer;
-  font-family: "Yuji Syuku", "Noto Serif JP", serif;
-  box-shadow: 
-    0 8px 24px rgba(0, 0, 0, 0.25),
-    0 4px 8px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: hidden;
-}
-
-.season-btn::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.4) 0%,
-    rgba(0, 0, 0, 0.1) 60%,
-    transparent 100%
-  );
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-
-.season-btn:hover,
-.season-btn:focus-visible {
-  transform: translateY(-8px) scale(1.05);
-  border-color: rgba(255, 255, 255, 1);
-  box-shadow: 
-    0 16px 40px rgba(0, 0, 0, 0.3),
-    0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.season-btn::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    45deg,
-    transparent 30%,
-    rgba(255, 255, 255, 0.15) 50%,
-    transparent 70%
-  );
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-
-.season-btn:hover::after,
-.season-btn:focus-visible::after {
-  opacity: 1;
-}
-
-.season-btn.active {
-  transform: translateY(-4px) scale(1.02);
-  border-color: #ffd700;
-  border-width: 4px;
-  box-shadow: 
-    0 0 20px rgba(255, 215, 0, 0.4),
-    0 12px 32px rgba(0, 0, 0, 0.3),
-    0 6px 12px rgba(0, 0, 0, 0.2);
-}
-
-/* Season-specific background images */
-.season-btn[data-season="spring"] {
-  background-image: url('./img/秀歌-春-btn.webp');
-}
-
-.season-btn[data-season="summer"] {
-  background-image: url('./img/秀歌-夏-btn.webp');
-}
-
-.season-btn[data-season="autumn"] {
-  background-image: url('./img/秀歌-秋-btn.webp');
-}
-
-.season-btn[data-season="winter"] {
-  background-image: url('./img/秀歌-冬-btn.webp');
-}
-
-.season-btn::before { opacity: 0.35; }
-SURF_END SeasonTextColor */
-
-/* Gallery button styling */
-.season-btn {
-  border-color: rgba(150, 150, 150, 0.6);
-}
-
-.season-btn::before {
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.8) 0%,
-    rgba(0, 0, 0, 0.4) 60%,
-    transparent 100%
-  );
-}
-
-/* Responsive adjustments for season buttons */
-@media (max-width: 768px) {
-  .season-nav {
-    gap: var(--space-2);
-    padding: var(--space-2);
-    justify-content: center;
-  }
-  
-  
-  .season-btn {
-    width: 80px;
-    height: 120px;
-    padding: var(--space-2);
-  }
-  
-  .season-name {
-    font-size: var(--text-sm);
-    letter-spacing: 0.1em;
-    padding: 2px 6px;
-    font-weight: 800;
-  }
-}
-
-@media (max-width: 480px) {
-  .season-btn {
-    width: 70px;
-    height: 100px;
-    padding: var(--space-1);
-  }
-  
-  .season-name {
-    font-size: var(--text-xs);
-    padding: 1px 4px;
-    font-weight: 800;
-  }
-  
-  .season-nav {
-    gap: var(--space-1);
-  }
-}
-
-/* 超小型デバイス用 - ヒーロータイトル追加調整 */
-@media (max-width: 360px) {
-  .hero-title {
-    font-size: clamp(1rem, 6vw, 1.5rem);
-    line-height: 1.4;
-    margin-bottom: var(--space-2);
-    white-space: normal;
-  }
-  
-  .hero-title br {
-    display: none;
-  }
-  
-  .hero-subtitle {
-    font-size: clamp(0.75rem, 3vw, 1rem);
-    margin-bottom: var(--space-3);
-  }
-  
-  .hero-content {
-    padding: var(--space-1);
-  }
-}
-
-.season-icon {
-  display: none;
-}
-
-.season-name {
-  position: relative;
-  z-index: 10;
-  font-size: var(--text-xl);
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  color: white;
-  text-shadow: 
-    2px 2px 6px rgba(0, 0, 0, 0.9),
-    0 0 12px rgba(0, 0, 0, 0.8),
-    0 0 4px rgba(0, 0, 0, 1);
-  background: rgba(0, 0, 0, 0.4);
-  padding: var(--space-1) var(--space-2);
-  border-radius: var(--radius);
-  backdrop-filter: blur(4px);
-}
-
-.season-content {
-  position: relative;
-  min-height: 600px;
-}
-
-.season-panel {
-  display: none;
-  grid-template-columns: 1fr;
-  gap: var(--space-12);
-  align-items: start;
-}
-
-.season-panel.active {
-  display: grid;
-}
-
-@media (min-width: 768px) {
-  .season-panel {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-.season-visual {
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--radius-xl);
-  box-shadow: 0 10px 30px var(--shadow-lg);
-}
-
-.season-image {
-  width: 100%;
-  height: auto;
-  display: block;
-  transition: transform var(--transition-slow);
-}
-
-.season-visual:hover .season-image {
-  transform: scale(1.05);
-}
-
-.season-tracks {
-  padding: var(--space-6);
-}
-
-.season-title {
-  margin-bottom: var(--space-4);
-  color: var(--text);
-}
-
-.season-description {
-  margin-bottom: var(--space-8);
-  font-size: var(--text-lg);
-  color: var(--text-muted);
-}
-
-.track-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-6);
-}
-
-.track {
-  padding: var(--space-6);
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: var(--radius-xl);
-  transition: all var(--transition-normal);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(8px);
-}
-
-.track:hover {
-  box-shadow:
-    0 8px 25px rgba(0, 0, 0, 0.15),
-    0 4px 10px rgba(0, 0, 0, 0.1);
-  transform: translateY(-2px);
-  background: rgba(0, 0, 0, 0.4);
-  border-color: rgba(255, 255, 255, 0.15);
-}
-
-.track audio {
-  width: 100%;
-  margin-bottom: var(--space-3);
-  border-radius: var(--radius);
-}
-
-.track-title {
-  margin-bottom: var(--space-2);
-  font-size: var(--text-lg);
-  color: var(--text);
-}
-
-.track-description {
-  margin: 0;
-  font-size: var(--text-sm);
-  color: var(--text-muted);
-}
-
-/* Ensure Season Gallery videos always fit within the visual container */
-.season-visual {
-  aspect-ratio: 16 / 9; /* Maintain 16:9 container */
-}
-.season-visual > .season-video {
-  width: 100%;
-  height: 100%;
+  width: 400px;
   max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
-/* ===== Contact Section ===== */
-.contact {
-  padding: var(--space-24) 0;
-  background: rgba(17, 24, 39, 0.85);
-  backdrop-filter: blur(1px);
+  height: auto;
+  object-fit: cover;
+  border-radius: var(--radius-xl);
+  box-shadow: 0 10px 30px var(--shadow-lg);
 }
 
-.contact-content {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-12);
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-@media (min-width: 768px) {
-  .contact-content {
-    grid-template-columns: 2fr 1fr;
+@media (max-width: 767px) {
+  .about-image {
+    width: 100%;
+    height: auto;
   }
 }
 
-.contact-form {
-  background: var(--background);
-  padding: var(--space-8);
-  border-radius: var(--radius-xl);
-  box-shadow: 0 4px 20px var(--shadow);
+
+/* ===== Layout Components ===== */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-4);
 }
 
-.form-group {
-  margin-bottom: var(--space-6);
+@media (min-width: 768px) {
+  .container {
+    padding: 0 var(--space-6);
+  }
 }
 
-.form-label {
-  display: block;
-  margin-bottom: var(--space-2);
-  font-weight: 600;
-  color: var(--text);
+.section-title {
+  text-align: center;
+  margin-bottom: var(--space-8);
+  position: relative;
 }
 
-.required {
-  color: var(--accent);
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -var(--space-4);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: var(--radius-full);
 }
 
-.form-input,
-.form-textarea {
-  width: 100%;
-  padding: var(--space-3) var(--space-4);
-  border: 2px solid var(--border);
-  border-radius: var(--radius);
-  font-size: var(--text-base);
-  font-family: inherit;
-  background: var(--background);
-  color: var(--text);
-  transition: border-color var(--transition-fast);
+.section-subtitle {
+  text-align: center;
+  font-size: var(--text-lg);
+  color: var(--text-muted);
+  margin-bottom: var(--space-12);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.form-input:focus,
-.form-textarea:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-}
-
-.form-textarea {
-  resize: vertical;
-  min-height: 120px;
-}
-
-.form-submit {
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+/* ===== Skip Link (Accessibility) ===== */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--space-4);
+  background: var(--primary);
   color: white;
-  border: none;
-  padding: var(--space-4) var(--space-8);
-  border-radius: var(--radius-lg);
-  font-size: var(--text-base);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius);
   font-weight: 600;
-  cursor: pointer;
-  transition: all var(--transition-normal);
-  width: 100%;
+  z-index: var(--z-tooltip);
+  transition: top var(--transition-fast);
 }
 
-.form-submit:hover,
-.form-submit:focus {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px var(--shadow-lg);
+.skip-link:focus {
+  top: var(--space-4);
 }
 
-.contact-info {
-  padding: var(--space-8);
-}
-
-.contact-info h3 {
-  margin-bottom: var(--space-6);
-  color: var(--text);
-}
-
-.social-links {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-}
-
-.social-link {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-3) var(--space-4);
-  background: var(--background);
-  border-radius: var(--radius-lg);
-  color: var(--text);
-  text-decoration: none;
-  transition: all var(--transition-normal);
-  box-shadow: 0 2px 10px var(--shadow);
-}
-
-.social-link:hover,
-.social-link:focus {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px var(--shadow);
-  color: var(--primary);
-}
-
-.social-icon {
-  font-size: var(--text-xl);
-}
 
 /* ===== Footer ===== */
 .footer {
-  background-image: url('./img/和紙_黒_optimized.png');
+  background-image: url('../img/和紙_黒_optimized.png');
   background-size: cover;
   background-repeat: repeat;
   color: var(--neutral-300);
   padding: var(--space-20) 0 var(--space-10);
   position: relative;
-  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.4);
 }
 
 .footer-content {
@@ -1383,8 +1445,6 @@ SURF_END SeasonTextColor */
   margin-bottom: var(--space-4);
   font-size: var(--text-xl);
   font-weight: 700;
-  font-family: "Yuji Syuku", "Noto Serif JP", serif;
-  letter-spacing: 0.05em;
 }
 
 .footer-description {
@@ -1398,8 +1458,6 @@ SURF_END SeasonTextColor */
   margin-bottom: var(--space-4);
   font-size: var(--text-lg);
   font-weight: 600;
-  font-family: "Yuji Syuku", "Noto Serif JP", serif;
-  letter-spacing: 0.05em;
 }
 
 .footer-nav-list {
@@ -1548,2305 +1606,642 @@ SURF_END SeasonTextColor */
   color: var(--neutral-600);
 }
 
-/* Rain Effect Canvas */
-.rain-canvas{
-  position: fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  pointer-events:none;
-  z-index: var(--z-sticky);
+/* WINDSURF_START FooterIconsStyle */
+.social-links{
+  display:flex; gap:1rem; justify-content:center; margin-top:1.5rem;
+}
+.social-links a{ font-size:1.8rem; color:var(--accent); transition:opacity .3s; }
+.social-links a:hover{ opacity:.6; }
+
+/* Disabled social icons */
+.social-link.disabled {
+  pointer-events: none;
+  filter: grayscale(100%);
+  opacity: 0.5;
 }
 
-/* ===== Animations ===== */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Instagram brand color */
+.social-link.instagram {
+  color: #E4405F;
 }
+/* WINDSURF_END FooterIconsStyle */
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
+@media (max-width: 767px) {
+  .footer-section {
+    margin-left: 0;
+    text-align: center;
   }
-  to {
-    opacity: 1;
-  }
-}
 
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(30px);
+  .footer-section .social-links {
+    justify-content: center;
   }
-  to {
-    opacity: 1;
-    transform: translateX(0);
+
+  .footer-section-title {
+    text-align: center;
   }
 }
 
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+
+/* ===== Gallery Section ===== */
+.gallery {
+  padding: var(--space-32) 0;
+  backdrop-filter: blur(0.5px);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.02) 0%,
+    rgba(255, 255, 255, 0.005) 100%
+  );
+  position: relative;
 }
 
-/* Animation classes for JavaScript */
-.animate-fade-in {
-  animation: fadeIn 0.6s ease-out;
-}
-
-.animate-slide-in-right {
-  animation: slideInRight 0.6s ease-out;
-}
-
-.animate-slide-in-left {
-  animation: slideInLeft 0.6s ease-out;
-}
-
-/* ===== Utility Classes ===== */
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-.text-center {
+.gallery .section-title {
+  font-size: var(--text-5xl);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-6);
+  background: linear-gradient(
+    135deg,
+    var(--text) 0%,
+    var(--text-muted) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
   text-align: center;
 }
 
-.mb-0 { margin-bottom: 0; }
-.mb-2 { margin-bottom: var(--space-2); }
-.mb-4 { margin-bottom: var(--space-4); }
-.mb-6 { margin-bottom: var(--space-6); }
-.mb-8 { margin-bottom: var(--space-8); }
-
-.mt-0 { margin-top: 0; }
-.mt-2 { margin-top: var(--space-2); }
-.mt-4 { margin-top: var(--space-4); }
-.mt-6 { margin-top: var(--space-6); }
-.mt-8 { margin-top: var(--space-8); }
-
-/* ===== Print Styles ===== */
-@media print {
-  .header,
-  .nav-toggle,
-  .hero-actions,
-  .season-nav,
-  audio,
-  .contact-form,
-  .social-links {
-    display: none;
-  }
-  
-  .hero {
-    background: none;
-    color: var(--text);
-    height: auto;
-    padding: var(--space-8) 0;
-  }
-  
-  .season-panel {
-    display: block !important;
-    page-break-inside: avoid;
-  }
+.gallery .section-subtitle {
+  font-size: var(--text-xl);
+  color: var(--text-muted);
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto var(--space-16);
+  line-height: 1.6;
+  font-weight: 400;
 }
 
-/* WINDSURF_START RippleEnhancement */
-.ripple {
-  position: absolute;
-  background: transparent !important;
-  border: 1.5px solid currentColor;
-  border-radius: 50%;
-  box-shadow: 0 0 8px currentColor;
-  filter: blur(0.2px);
-  transform: scale(0);
-  opacity: 0.85;
-  animation: rippleRing 6s cubic-bezier(0.25, 0.65, 0.35, 1) forwards !important;
+.season-nav {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-12);
+  margin-bottom: var(--space-24);
+  flex-wrap: wrap;
+  padding: var(--space-8) var(--space-12);
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  /* Japanese asymmetrical balance */
+  padding-left: var(--space-16);
+  padding-right: var(--space-8);
 }
 
-.ripple::after {
-  content: '';
+.season-btn {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: var(--space-5);
+  width: 168px;
+  height: 210px;
+  color: white;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  border: 2px solid rgba(150, 150, 150, 0.6);
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: "Yuji Syuku", "Noto Serif JP", serif;
+  box-shadow: 
+    0 12px 32px rgba(0, 0, 0, 0.2),
+    0 6px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+  overflow: hidden;
+  /* Japanese golden ratio proportions */
+  aspect-ratio: 1 / 1.618;
+}
+
+.season-btn::before {
+  content: "";
   position: absolute;
   inset: 0;
-  border: inherit;
-  border-radius: 50%;
-  opacity: 0.3;
-  filter: blur(1px);
-  transform: scale(0);
-  animation: rippleRing 7s cubic-bezier(0.25, 0.65, 0.35, 1) 0.4s forwards !important;
-}
-
-@keyframes rippleRing {
-  0% {
-    transform: scale(0);
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.6;
-  }
-  100% {
-    transform: scale(7); 
-    opacity: 0;
-  }
-}
-
-
-
-body[data-season="spring"] .ripple{ border-color: var(--accent-spring); }
-body[data-season="summer"] .ripple{ border-color: var(--accent-summer); }
-body[data-season="autumn"] .ripple{ border-color: var(--accent-autumn); }
-body[data-season="winter"] .ripple{ border-color: var(--accent-winter); }
-
-.ink-drop {
-  position: absolute;
-  pointer-events: none;
-  background: radial-gradient(
-    circle,
-    rgba(47, 79, 79, 0.4) 0%,
-    rgba(105, 105, 105, 0.25) 40%,
-    rgba(128, 128, 128, 0.1) 70%,
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.4) 50%,
     transparent 100%
   );
-  border-radius: 50%;
-  transform: scale(0);
-  animation: inkSpread ease-out forwards;
-  filter: blur(0.8px);
-}
-
-.floating-leaf {
-  position: absolute;
+  transition: opacity 0.3s ease;
   pointer-events: none;
-  background: linear-gradient(var(--leaf-angle, 45deg),
-    rgba(34, 139, 34, 0.3) 0%,
-    rgba(107, 142, 35, 0.25) 30%,
-    rgba(85, 107, 47, 0.15) 60%,
-    transparent 100%
-  );
-  border-radius: 50% 0 50% 0;
-  transform: scale(0) rotate(0deg);
-  animation: leafFloat ease-out forwards;
-  filter: blur(0.3px);
 }
 
-.subtle-glow {
-  position: absolute;
-  pointer-events: none;
-  background: radial-gradient(
-    circle,
-    rgba(240, 248, 255, 0.12) 0%,
-    rgba(230, 230, 250, 0.08) 30%,
-    rgba(211, 211, 211, 0.04) 60%,
-    transparent 100%
-  );
-  border-radius: 50%;
-  transform: scale(0);
-  animation: subtleGlowExpand 2s ease-out forwards;
-  mix-blend-mode: overlay;
-  filter: blur(3px);
-}
-
-.tranquil-dot {
-  position: absolute;
-  pointer-events: none;
-  width: 2px;
-  height: 2px;
-  background: rgba(105, 105, 105, 0.6);
-  border-radius: 50%;
-  transform: scale(0);
-  animation: tranquilDotExpand ease-out forwards;
-  filter: blur(0.2px);
-}
-
-@keyframes inkSpread {
-  0% {
-    transform: scale(0);
-    opacity: 0.6;
-  }
-  40% {
-    transform: scale(1.2) translate(calc(var(--dx) * 0.3), calc(var(--dy) * 0.3));
-    opacity: 0.4;
-  }
-  80% {
-    transform: scale(0.8) translate(calc(var(--dx) * 0.8), calc(var(--dy) * 0.8));
-    opacity: 0.1;
-  }
-  100% {
-    transform: scale(0.3) translate(var(--dx), var(--dy));
-    opacity: 0;
-  }
-}
-
-@keyframes leafFloat {
-  0% {
-    transform: scale(0) rotate(0deg);
-    opacity: 0.5;
-  }
-  25% {
-    transform: scale(1) rotate(45deg) translate(calc(var(--dx) * 0.2), calc(var(--dy) * 0.2));
-    opacity: 0.4;
-  }
-  60% {
-    transform: scale(0.8) rotate(90deg) translate(calc(var(--dx) * 0.6), calc(var(--dy) * 0.6));
-    opacity: 0.2;
-  }
-  100% {
-    transform: scale(0.4) rotate(180deg) translate(var(--dx), var(--dy));
-    opacity: 0;
-  }
-}
-
-@keyframes subtleGlowExpand {
-  0% {
-    transform: scale(0);
-    opacity: 0.15;
-  }
-  40% {
-    transform: scale(1.8);
-    opacity: 0.08;
-  }
-  80% {
-    transform: scale(2.5);
-    opacity: 0.03;
-  }
-  100% {
-    transform: scale(3);
-    opacity: 0;
-  }
-}
-
-@keyframes tranquilDotExpand {
-  0% {
-    transform: scale(0) translate(0, 0);
-    opacity: 0.8;
-  }
-  30% {
-    transform: scale(2) translate(calc(var(--dx) * 0.3), calc(var(--dy) * 0.3));
-    opacity: 0.4;
-  }
-  100% {
-    transform: scale(0.8) translate(var(--dx), var(--dy));
-    opacity: 0;
-  }
-}
-
-/* Gold foil sparkle effect - 金箔の煌めき - 強化版 */
-.gold-sparkle {
-  position: absolute;
-  pointer-events: none;
-  background: radial-gradient(
-    circle,
-    rgba(255, 215, 0, 1) 0%,
-    rgba(255, 235, 59, 0.95) 15%,
-    rgba(255, 193, 7, 0.8) 35%,
-    rgba(255, 175, 0, 0.4) 60%,
-    transparent 85%
-  );
-  border-radius: 50%;
-  transform: scale(0) rotate(0deg);
-  animation: goldSparkleIntense 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
-  box-shadow: 
-    0 0 30px rgba(255, 215, 0, 0.9),
-    0 0 60px rgba(255, 215, 0, 0.6),
-    0 0 100px rgba(255, 235, 59, 0.3),
-    inset 0 0 15px rgba(255, 235, 59, 0.7);
-}
-
-.gold-particle {
-  position: absolute;
-  pointer-events: none;
-  background: linear-gradient(var(--particle-angle, 45deg), 
-    rgba(255, 215, 0, 1) 0%,
-    rgba(255, 235, 59, 0.95) 25%,
-    rgba(255, 193, 7, 0.8) 50%,
-    rgba(255, 175, 0, 0.4) 75%,
-    transparent 100%
-  );
-  border-radius: 2px;
-  transform: scale(0) rotate(0deg);
-  animation: goldParticleFloatIntense ease-out forwards;
-  box-shadow: 
-    0 0 12px rgba(255, 215, 0, 0.8),
-    0 0 24px rgba(255, 235, 59, 0.4);
-}
-
-.gold-flake {
-  position: absolute;
-  pointer-events: none;
-  background: linear-gradient(var(--flake-angle, 60deg),
-    rgba(255, 215, 0, 0.95) 0%,
-    rgba(255, 235, 59, 0.9) 30%,
-    rgba(255, 193, 7, 0.7) 60%,
-    transparent 100%
-  );
-  border-radius: 50% 10% 50% 10%;
-  transform: scale(0) rotate(0deg);
-  animation: goldFlakeScatter ease-out forwards;
-  box-shadow: 
-    0 0 8px rgba(255, 215, 0, 0.6),
-    inset 0 0 4px rgba(255, 235, 59, 0.5);
-}
-
-.gold-shimmer {
-  position: absolute;
-  pointer-events: none;
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg,
-    rgba(255, 215, 0, 0.8) 45deg,
-    rgba(255, 235, 59, 1) 90deg,
-    rgba(255, 193, 7, 0.8) 135deg,
-    transparent 180deg,
-    rgba(255, 215, 0, 0.6) 225deg,
-    rgba(255, 235, 59, 0.9) 270deg,
-    rgba(255, 193, 7, 0.6) 315deg,
-    transparent 360deg
-  );
-  border-radius: 50%;
-  transform: scale(0) rotate(0deg);
-  animation: goldShimmerIntense 1s ease-out forwards;
-  mix-blend-mode: screen;
-  box-shadow: 
-    0 0 40px rgba(255, 215, 0, 0.5),
-    0 0 80px rgba(255, 235, 59, 0.3);
-}
-
-.gold-burst {
-  position: absolute;
-  pointer-events: none;
-  width: 4px;
-  height: 4px;
-  background: rgba(255, 215, 0, 1);
-  border-radius: 50%;
-  transform: scale(0);
-  animation: goldBurstExplosion ease-out forwards;
-  box-shadow: 
-    0 0 20px rgba(255, 215, 0, 1),
-    0 0 40px rgba(255, 235, 59, 0.6);
-}
-
-@keyframes goldSparkleIntense {
-  0% {
-    transform: scale(0) rotate(0deg);
-    opacity: 1;
-  }
-  15% {
-    transform: scale(1.2) rotate(60deg);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.8) rotate(180deg);
-    opacity: 0.8;
-  }
-  100% {
-    transform: scale(3) rotate(720deg);
-    opacity: 0;
-  }
-}
-
-@keyframes goldParticleFloatIntense {
-  0% {
-    transform: scale(0) rotate(0deg);
-    opacity: 1;
-  }
-  20% {
-    transform: scale(1.2) rotate(90deg) translate(calc(var(--dx) * 0.2), calc(var(--dy) * 0.2));
-    opacity: 0.9;
-  }
-  60% {
-    opacity: 0.7;
-    transform: scale(1) rotate(270deg) translate(var(--dx), var(--dy));
-  }
-  100% {
-    transform: scale(0.1) rotate(540deg) translate(calc(var(--dx) * 1.8), calc(var(--dy) * 1.8));
-    opacity: 0;
-  }
-}
-
-@keyframes goldFlakeScatter {
-  0% {
-    transform: scale(0) rotate(0deg);
-    opacity: 1;
-  }
-  30% {
-    transform: scale(1.5) rotate(180deg) translate(calc(var(--dx) * 0.3), calc(var(--dy) * 0.3));
-    opacity: 0.8;
-  }
-  70% {
-    transform: scale(1) rotate(360deg) translate(calc(var(--dx) * 0.8), calc(var(--dy) * 0.8));
-    opacity: 0.4;
-  }
-  100% {
-    transform: scale(0.3) rotate(720deg) translate(calc(var(--dx) * 1.5), calc(var(--dy) * 1.5));
-    opacity: 0;
-  }
-}
-
-@keyframes goldShimmerIntense {
-  0% {
-    transform: scale(0) rotate(0deg);
-    opacity: 0.8;
-  }
-  30% {
-    transform: scale(2) rotate(180deg);
-    opacity: 0.9;
-  }
-  70% {
-    transform: scale(3.5) rotate(360deg);
-    opacity: 0.4;
-  }
-  100% {
-    transform: scale(5) rotate(540deg);
-    opacity: 0;
-  }
-}
-
-@keyframes goldBurstExplosion {
-  0% {
-    transform: scale(0) translate(0, 0);
-    opacity: 1;
-  }
-  10% {
-    transform: scale(3) translate(0, 0);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1) translate(var(--dx), var(--dy));
-    opacity: 0;
-  }
-}
-
-/* Gold flake burst */
-.refined-particle {
-  position: absolute;
-  pointer-events: none;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(139, 69, 19, 0.3) 0%,
-    rgba(160, 82, 45, 0.2) 50%,
-    transparent 100%
-  );
-  opacity: 0.7;
-  transform: translate(0,0) scale(0.6);
-  animation: refinedParticleFloat ease-out forwards;
-  will-change: transform, opacity;
-  filter: blur(0.5px);
-}
-
-.gentle-glow {
-  position: absolute;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.1) 0%,
-    rgba(240, 248, 255, 0.08) 30%,
-    rgba(230, 230, 250, 0.05) 60%,
-    transparent 100%
-  );
-  animation: gentleGlow 1.2s ease-out forwards;
-  pointer-events: none;
-  filter: blur(2px);
-}
-
-
-@keyframes refinedParticleFloat {
-  0% {
-    transform: translate(0,0) scale(0.6);
-    opacity: 0.7;
-  }
-  30% {
-    opacity: 0.5;
-    transform: translate(calc(var(--dx) * 0.3), calc(var(--dy) * 0.3)) scale(0.8);
-  }
-  100% {
-    transform: translate(var(--dx), var(--dy)) scale(0.2);
-    opacity: 0;
-  }
-}
-
-@keyframes gentleGlow {
-  0% {
-    transform: scale(0.8);
-    opacity: 0.2;
-  }
-  50% {
-    transform: scale(1.2);
-    opacity: 0.1;
-  }
-  100% {
-    transform: scale(1.8);
-    opacity: 0;
-  }
-}
-
-
-@keyframes rippleElegant {
-  0% {
-    transform: scale(0);
-    opacity: 0.15;
-  }
-  30% {
-    opacity: 0.08;
-  }
-  100% {
-    transform: scale(1.1);
-    opacity: 0;
-  }
-}
-
-@keyframes rippleSubtle {
-  0% {
-    transform: scale(0);
-    opacity: 0.08;
-  }
-  40% {
-    opacity: 0.04;
-  }
-  100% {
-    transform: scale(1.3);
-    opacity: 0;
-  }
-}
-
-/* Floating musical note for video hover */
-.play-note {
-  position: absolute;
-  pointer-events: none;
-  font-size: 2.5rem;
-  line-height: 1;
-  transform: scale(0);
-  opacity: 0.9;
-  animation: rippleElegant 0.8s forwards;
-  color: currentColor;
-  text-shadow: 0 0 4px currentColor;
-}
-
-.sakura-petal {
-  position: absolute;
-  pointer-events: none;
-  background: radial-gradient(circle at 60% 40%, rgba(255,182,193,0.9) 0%, rgba(255,105,180,0.6) 40%, rgba(255,192,203,0.3) 70%, transparent 100%);
-  border-radius: 70% 90% 70% 90%;
-  transform: scale(0) rotate(0deg);
-  animation: sakuraBurst ease-out forwards;
-  filter: drop-shadow(0 0 3px rgba(255,192,203,0.5));
-}
-
-@keyframes sakuraBurst {
-  0% { transform: translate(0,0) scale(0) rotate(0deg); opacity: 0.9; }
-  80% { opacity: 0.6; }
-  100% { transform: translate(var(--dx), var(--dy)) scale(0.4) rotate(360deg); opacity: 0; }
-}
-
-.click-flash {
-  position: absolute;
-  pointer-events: none;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,215,0,0.8) 0%, rgba(255,215,0,0.4) 40%, rgba(255,215,0,0.1) 70%, transparent 100%);
-  transform: scale(0);
-  mix-blend-mode: screen;
-  animation: clickFlash 0.6s ease-out forwards;
-}
-
-@keyframes clickFlash {
-  0% { transform: scale(0); opacity: 0.9; }
-  100% { transform: scale(2.5); opacity: 0; }
-}
-
-.kabuki-swirl {
-  position: absolute;
-  pointer-events: none;
-  border: 2px solid transparent;
-  border-top-color: rgba(255,215,0,0.9);
-  border-right-color: rgba(255,215,0,0.6);
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  width: 40px;
-  height: 40px;
-  transform: scale(0) rotate(0deg);
-  animation: kabukiSwirlSpin 0.8s ease-out forwards;
-  filter: blur(0.2px);
-}
-
-@keyframes kabukiSwirlSpin {
-  0% { transform: scale(0) rotate(0deg); opacity: 1; }
-  50% { opacity: 0.8; }
-  100% { transform: scale(3) rotate(720deg); opacity: 0; }
-}
-
-
-
-/* WINDSURF_END RippleEnhancement */
-
-/* ===== High Contrast Mode ===== */
-@media (prefers-contrast: high) {
-  :root {
-    --shadow: rgba(0, 0, 0, 0.5);
-    --shadow-lg: rgba(0, 0, 0, 0.7);
-  }
-  
-  .cta-button,
-  .season-btn,
-  .form-submit {
-    border: 2px solid currentColor;
-  }
-}/**
- * Accessibility Enhancement Styles
- * Improves focus management, contrast, and screen reader experience
- */
-
-/* ===== Focus Management ===== */
-/* Improve focus visibility across all interactive elements */
-:focus-visible {
-  outline: 3px solid var(--primary);
-  outline-offset: 2px;
-  border-radius: var(--radius-sm);
-}
-
-/* Remove default focus outline when focus-visible is supported */
-:focus:not(:focus-visible) {
-  outline: none;
-}
-
-/* Custom focus styles for specific elements */
-.cta-button:focus-visible,
-.season-btn:focus-visible,
-.form-submit:focus-visible {
-  outline: 3px solid var(--accent);
-  outline-offset: 3px;
-  box-shadow: 0 0 0 2px var(--background), 0 0 0 5px var(--accent);
-}
-
-.nav-menu a:focus-visible {
-  outline: 3px solid var(--primary);
-  outline-offset: 2px;
-  background-color: var(--primary);
-  color: white;
-}
-
-/* Audio controls focus enhancement */
-audio:focus-visible {
-  outline: 3px solid var(--secondary);
-  outline-offset: 2px;
-  border-radius: var(--radius);
-}
-
-/* Form elements focus enhancement */
-.form-input:focus-visible,
-.form-textarea:focus-visible {
-  outline: 3px solid var(--primary);
-  outline-offset: 1px;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
-}
-
-/* ===== Skip Links Enhancement ===== */
-.skip-link {
-  position: absolute;
-  top: -100px;
-  left: var(--space-4);
-  background: var(--primary);
-  color: white;
-  padding: var(--space-3) var(--space-4);
-  border-radius: var(--radius);
-  font-weight: 600;
-  font-size: var(--text-sm);
-  text-decoration: none;
-  z-index: var(--z-tooltip);
-  transition: top var(--transition-fast);
-  border: 2px solid white;
-}
-
-.skip-link:focus,
-.skip-link:focus-visible {
-  top: var(--space-4);
-  outline: 3px solid var(--accent);
-  outline-offset: 2px;
-}
-
-/* ===== Screen Reader Enhancements ===== */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-/* Screen reader announcements */
-.sr-announcer {
-  position: absolute;
-  left: -10000px;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-}
-
-/* ===== Enhanced Navigation for Screen Readers ===== */
-[role="tablist"] {
-  display: flex;
-  gap: var(--space-2);
-}
-
-[role="tab"] {
-  position: relative;
-}
-
-[role="tab"][aria-selected="true"]::after {
+.season-btn::after {
   content: "";
   position: absolute;
-  bottom: -2px;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--primary);
-  border-radius: var(--radius-full);
+  inset: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
-/* ===== High Contrast Mode Support ===== */
-@media (prefers-contrast: high) {
-  :root {
-    --shadow: rgba(0, 0, 0, 0.8);
-    --shadow-lg: rgba(0, 0, 0, 0.9);
-  }
-  
-  .cta-button,
-  .season-btn,
-  .form-submit,
-  .social-link {
-    border: 2px solid currentColor;
-    font-weight: 700;
-  }
-  
-  .hero-title,
-  .hero-subtitle {
-    text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
-  }
-  
-  .nav-menu a {
-    border: 1px solid transparent;
-    font-family: "Yuji Syuku", "Noto Serif JP", serif;
-    letter-spacing: 0.05em;
-  }
-  
-  .nav-menu a:hover,
-  .nav-menu a:focus {
-    border-color: currentColor;
-  }
+.season-btn:hover,
+.season-btn:focus-visible {
+  outline: 3px solid var(--accent, #ffd700);
+  outline-offset: 2px;
+  transform: translateY(-6px) scale(1.04);
+  border-color: rgba(255, 255, 255, 1);
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.3),
+    0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-/* ===== Reduced Motion Preferences ===== */
-@media (prefers-reduced-motion: reduce) {
-  /* Disable all animations and transitions */
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-  
-  /* Keep focus transitions for accessibility */
-  :focus,
-  :focus-visible {
-    transition: outline 0.15s ease-in-out !important;
-  }
-  
-  /* Disable parallax effects */
-  .hero {
-    background-attachment: scroll !important;
-  }
+.season-btn:active {
+  transform: none;
+  transition: none;
 }
 
-/* ===== Color Blindness Support ===== */
-/* Add patterns/shapes alongside color coding */
+.season-btn:hover::after,
+.season-btn:focus-visible::after {
+  opacity: 1;
+}
+
+.season-btn.active {
+  transform: translateY(-2px) scale(1.01);
+  border-color: #ffd700;
+  border-width: 4px;
+  box-shadow:
+    0 0 20px rgba(255, 215, 0, 0.4),
+    0 12px 32px rgba(0, 0, 0, 0.3),
+    0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Season-specific background images */
 .season-btn[data-season="spring"] {
-  position: relative;
+  background-image: url('../img/秀歌-春.webp');
 }
 
-
-
-
-/* ===== Touch Target Size Enhancement ===== */
-/* Ensure minimum 44px touch targets for mobile */
-@media (max-width: 768px) {
-  .nav-toggle,
-  .season-btn,
-  .social-link {
-    min-height: 44px;
-    min-width: 44px;
-  }
-  
-  .cta-button {
-    min-height: 48px;
-    padding: var(--space-3) var(--space-6);
-  }
+.season-btn[data-season="summer"] {
+  background-image: url('../img/秀歌-夏.webp');
 }
 
-/* ===== Error State Accessibility ===== */
-.form-input[aria-invalid="true"],
-.form-textarea[aria-invalid="true"] {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.2);
+.season-btn[data-season="autumn"] {
+  background-image: url('../img/秀歌-秋.webp');
 }
 
-.field-error {
-  color: var(--accent);
-  font-size: var(--text-sm);
-  margin-top: var(--space-1);
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
+.season-btn[data-season="winter"] {
+  background-image: url('../img/秀歌-冬.webp');
 }
 
-.field-error::before {
-  content: "⚠️";
-  font-size: var(--text-base);
-}
-
-/* ===== Loading States for Accessibility ===== */
-.loading {
-  position: relative;
-  pointer-events: none;
-}
-
-.loading::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 20px;
-  height: 20px;
-  margin: -10px 0 0 -10px;
-  border: 2px solid transparent;
-  border-top: 2px solid var(--primary);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* Respect reduced motion for loading spinner */
-@media (prefers-reduced-motion: reduce) {
-  .loading::after {
-    animation: none;
-    border: 2px solid var(--primary);
-    border-radius: 0;
-    width: 16px;
-    height: 16px;
-    margin: -8px 0 0 -8px;
-  }
-}
-
-/* ===== Keyboard Navigation Enhancement ===== */
-/* Visual indication for keyboard users */
-body:not(.using-mouse) :focus {
-  outline: 3px solid var(--primary);
-  outline-offset: 2px;
-}
-
-/* Hide mouse focus when using mouse */
-body.using-mouse :focus {
-  outline: none;
-}
-
-/* ===== Print Accessibility ===== */
-@media print {
-  /* Ensure good contrast in print */
-  * {
-    background: transparent !important;
-    color: black !important;
-    box-shadow: none !important;
-  }
-  
-  /* Add URLs for links */
-  a[href]:after {
-    content: " (" attr(href) ")";
-    font-size: smaller;
-    color: #666;
-  }
-  
-  /* Skip navigation elements */
-  .nav-menu,
-  .season-nav,
-  .hero-actions {
-    display: none;
-  }
-  
-  /* Ensure headings are properly sized */
-  h1, h2, h3, h4, h5, h6 {
-    page-break-after: avoid;
-    font-weight: bold;
-  }
-  
-  /* Avoid breaking content */
-  .feature,
-  .track,
-  .season-panel {
-    page-break-inside: avoid;
-  }
-}
-
-/* ===== ARIA Live Region Styling ===== */
-[aria-live] {
-  position: absolute;
-  left: -10000px;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-}
-
-/* ===== Enhanced Form Labels ===== */
-.form-label {
-  display: block;
+.season-icon {
+  display: inline-block;
+  font-size: var(--text-lg);
   margin-bottom: var(--space-2);
+}
+
+.season-name {
+  position: relative;
+  z-index: 10;
+  font-size: var(--text-xl);
   font-weight: 600;
-  color: var(--text);
-  cursor: pointer;
+  letter-spacing: 0.15em;
+  text-shadow: 
+    2px 2px 4px rgba(0, 0, 0, 0.8),
+    0 0 8px rgba(0, 0, 0, 0.6);
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0.85) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }
 
-.form-label .required {
-  color: var(--accent);
-  font-weight: bold;
-  margin-left: var(--space-1);
+.season-content {
+  position: relative;
+  min-height: 520px;
+  max-height: 720px;
+  margin-top: var(--space-16);
+  /* Japanese ma (negative space) principle */
+  padding: 0 var(--space-8);
 }
 
-/* Improved fieldset styling if needed */
-fieldset {
-  border: 2px solid var(--border);
-  border-radius: var(--radius);
-  padding: var(--space-4);
-  margin: var(--space-4) 0;
+.season-panel {
+  display: none;
+  grid-template-columns: 1fr;
+  gap: var(--space-20);
+  align-items: start;
+  padding: var(--space-10) var(--space-12);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--radius-2xl);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.1),
+    0 8px 20px rgba(0, 0, 0, 0.08);
+  max-height: 620px;
+  overflow: hidden;
+  /* Japanese asymmetrical spacing */
+  margin-left: var(--space-4);
+  margin-right: var(--space-8);
 }
 
-legend {
-  font-weight: 600;
-  padding: 0 var(--space-2);
-  color: var(--text);
+.season-panel.active {
+  display: grid;
 }
 
-/* ===== Toast/Notification Accessibility ===== */
-.toast {
-  position: fixed;
-  top: var(--space-4);
-  right: var(--space-4);
-  background: var(--primary);
-  color: white;
-  padding: var(--space-4) var(--space-6);
-  border-radius: var(--radius);
-  font-weight: 600;
-  z-index: var(--z-tooltip);
-  transform: translateX(100%);
-  transition: transform var(--transition-normal);
-}
-
-.toast.show {
-  transform: translateX(0);
-}
-
-.toast[role="alert"] {
-  background: var(--accent);
-}
-
-.toast[role="status"] {
-  background: var(--spring);
-}/**
- * Responsive Enhancement Styles
- * Additional responsive adjustments for optimal display across all devices
- */
-
-/* ===== Container and Layout Refinements ===== */
-@media (max-width: 480px) {
-  .container {
-    padding: 0 var(--space-3);
-  }
-  
-  .hero-content {
-    padding: var(--space-3);
-  }
-  
-  .hero-title {
-    font-size: clamp(1.25rem, 6vw, 2.5rem);
-    line-height: 1.2;
-    margin-bottom: var(--space-4);
-    white-space: normal;
-  }
-  
-  .hero-title br {
-    display: none;
-  }
-  
-  .hero-subtitle {
-    font-size: clamp(1rem, 4vw, 1.25rem);
-    margin-bottom: var(--space-6);
-  }
-  
-  .hero-actions {
-    flex-direction: column;
-    gap: var(--space-3);
-    width: 100%;
-  }
-  
-  .cta-button {
-    width: 100%;
-    justify-content: center;
-    min-height: 48px;
-  }
-}
-
-/* ===== Navigation Improvements ===== */
-@media (max-width: 767px) {
-  .nav-container {
-    padding: var(--space-3) var(--space-4);
-  }
-  
-  .logo {
-    font-size: clamp(1.25rem, 5vw, 1.5rem);
-  }
-  
-  .nav-menu {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--background);
-    border-top: 1px solid var(--border);
-    flex-direction: column;
-    gap: 0;
-    padding: var(--space-6) var(--space-4);
-    transform: translateY(-100%);
-    opacity: 0;
-    visibility: hidden;
-    display: none;
-    transition: all var(--transition-normal);
-    z-index: var(--z-modal);
-  }
-
-  .nav-menu.active {
-    transform: translateY(0);
-    opacity: 1;
-    visibility: visible;
-    display: flex;
-  }
-  
-  .nav-menu li {
-    width: 100%;
-    margin-bottom: var(--space-2);
-  }
-  
-  .nav-menu a {
-    display: block;
-    padding: var(--space-4);
-    text-align: center;
-    font-family: "Yuji Syuku", "Noto Serif JP", serif;
-    letter-spacing: 0.05em;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    margin-bottom: var(--space-2);
-    background: var(--surface);
-  }
-  
-}
-
-/* ===== Section Spacing Adjustments ===== */
+/* Responsive adjustments for season buttons */
 @media (max-width: 768px) {
-  .about,
-  .gallery,
-  .contact {
-    padding: var(--space-16) 0;
-  }
-  
-  .about-content,
-  .contact-content {
-    grid-template-columns: 1fr;
-    gap: var(--space-8);
-  }
-  
-  .about-visual {
-    order: -1;
-  }
-}
-
-@media (max-width: 480px) {
-  .about,
-  .gallery,
-  .contact {
-    padding: var(--space-12) 0;
-  }
-  
-  .section-title {
-    margin-bottom: var(--space-6);
-  }
-  
-  .section-subtitle {
-    margin-bottom: var(--space-8);
-  }
-}
-
-/* ===== Gallery Responsive Improvements ===== */
-@media (max-width: 768px) {
-  .season-nav {
-    gap: var(--space-2);
-    margin-bottom: var(--space-12);
+  .gallery {
+    padding: var(--space-20) 0;
   }
   
   .season-btn {
-    min-width: 80px;
-    padding: var(--space-3) var(--space-4);
+    width: 148px;
+    height: 190px;
+    /* Maintain golden ratio on mobile */
+    aspect-ratio: 1 / 1.618;
   }
   
-  .season-icon {
-    font-size: var(--text-xl);
+  .season-name {
+    font-size: var(--text-lg);
+  }
+  
+  .season-nav {
+    gap: var(--space-8);
+    margin-bottom: var(--space-18);
+    padding: var(--space-6);
+    /* Maintain Japanese asymmetry on mobile */
+    padding-left: var(--space-8);
+    padding-right: var(--space-4);
+  }
+  
+  .season-content {
+    max-height: 800px;
   }
   
   .season-panel {
-    grid-template-columns: 1fr;
-    gap: var(--space-8);
+    padding: var(--space-6);
+    gap: var(--space-12);
+    max-height: 700px;
   }
   
   .season-tracks {
-    padding: var(--space-4);
-  }
-}
-
-@media (max-width: 480px) {
-  .season-nav {
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-2);
-    width: 100%;
-  }
-  
-  .season-btn {
-    min-width: unset;
-    width: 100%;
-    padding: var(--space-3);
-  }
-  
-  .season-name {
-    font-size: var(--text-xs);
-  }
-  
-  .track-list {
-    gap: var(--space-4);
-  }
-  
-  .track {
-    padding: var(--space-3);
-  }
-  
-  .track audio {
-    margin-bottom: var(--space-2);
-  }
-}
-
-/* ===== Form Responsive Improvements ===== */
-@media (max-width: 768px) {
-  .contact-form {
     padding: var(--space-6);
+    max-height: 400px;
   }
   
-  .contact-info {
-    padding: var(--space-6);
-    text-align: center;
+  .season-title {
+    font-size: var(--text-2xl);
   }
   
-  .social-links {
-    gap: var(--space-3);
+  .season-video {
+    height: 180px;
+    max-height: 180px;
   }
 }
 
-@media (max-width: 480px) {
-  .contact-form {
-    padding: var(--space-4);
-  }
-  
-  .form-group {
-    margin-bottom: var(--space-4);
-  }
-  
-  .form-input,
-  .form-textarea {
-    padding: var(--space-3);
-    font-size: var(--text-base);
-  }
-  
-  .form-submit {
-    width: 100%;
-    padding: var(--space-4);
-  }
-  
-  .social-links {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .social-link {
-    width: 100%;
-    max-width: 200px;
-    justify-content: center;
-  }
-}
-
-/* ===== Footer Responsive Improvements ===== */
-@media (max-width: 768px) {
-  .footer-content {
-    grid-template-columns: 1fr;
-    text-align: center;
-    gap: var(--space-8);
-  }
-  
-  .footer-links {
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-6);
-  }
-  
-  .footer-seasons {
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-1);
-  }
-  
-  .footer-season-btn {
-    padding: var(--space-2);
-    font-size: 0.75rem;
-  }
-  
-  .footer-social {
-    justify-content: center;
-  }
-  
-  .footer-bottom-content {
-    flex-direction: column;
-    text-align: center;
-    gap: var(--space-2);
-  }
-}
-
-@media (max-width: 480px) {
-  .footer {
-    padding: var(--space-12) 0 var(--space-6);
-  }
-  
-  .footer-links {
-    grid-template-columns: 1fr;
-    gap: var(--space-6);
-  }
-  
-  .footer-seasons {
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-2);
-  }
-  
-  .footer-season-btn {
-    min-height: 44px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-1);
-  }
-  
-  .footer-bottom {
-    padding-top: var(--space-6);
-  }
-  
-  .footer-bottom p {
-    font-size: var(--text-sm);
-  }
-  
-  .footer-bottom-links {
-    flex-direction: column;
-    gap: var(--space-3);
-  }
-}
-
-/* ===== Feature Cards Responsive ===== */
-@media (max-width: 768px) {
-  .features {
-    grid-template-columns: 1fr;
-    gap: var(--space-6);
-  }
-  
-  .feature {
-    padding: var(--space-4);
-    text-align: center;
-  }
-}
-
-/* ===== Large Desktop Optimizations ===== */
-@media (min-width: 1200px) {
-  .container {
-    max-width: 1400px;
-  }
-  
-  .hero-content {
-    max-width: 900px;
-  }
-  
-  .about-content {
-    grid-template-columns: 1.5fr 1fr;
-    gap: var(--space-16);
-  }
-  
+@media (min-width: 768px) {
   .season-panel {
-    grid-template-columns: 1.2fr 1fr;
-    gap: var(--space-16);
+    grid-template-columns: 1.618fr 1fr;
+    align-items: start;
+    max-height: 500px;
+    /* Japanese asymmetrical grid using golden ratio */
+    gap: var(--space-24);
   }
   
-  .contact-content {
-    grid-template-columns: 1.5fr 1fr;
-    gap: var(--space-16);
+  .season-visual {
+    order: 2;
+    max-height: 320px;
+    overflow: hidden;
+  }
+  
+  .season-tracks {
+    order: 1;
+    max-height: 400px;
+  }
+  
+  .season-video {
+    max-width: 520px;
+    height: auto;
+    max-height: 292px;
+    margin: 0 auto;
   }
 }
 
-@media (min-width: 1600px) {
-  .container {
-    max-width: 1600px;
+@media (max-width: 767px) {
+  .season-video {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    max-height: 200px;
+    margin: 0 auto var(--space-6);
   }
   
-  .hero-title {
-    font-size: clamp(3rem, 4vw, 5rem);
-  }
-  
-  .hero-subtitle {
-    font-size: clamp(1.25rem, 1.5vw, 2rem);
-  }
-}
-
-/* ===== Ultra-wide Screen Support ===== */
-@media (min-width: 1920px) {
-  .hero {
-    background-size: cover;
-    background-position: center top;
-  }
-  
-  .container {
-    max-width: 1800px;
-  }
-}
-
-/* ===== Portrait Tablet Adjustments ===== */
-@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
-  .hero {
-    height: 80vh;
-    min-height: 500px;
-  }
-  
-  .hero-title {
-    font-size: clamp(2.5rem, 6vw, 3.5rem);
-  }
-  
-  .about-content,
-  .season-panel,
-  .contact-content {
-    grid-template-columns: 1fr;
-    gap: var(--space-10);
-  }
-  
-  .season-nav {
+  .season-visual {
+    margin-bottom: var(--space-8);
     justify-content: center;
-    max-width: 400px;
-    margin: 0 auto var(--space-12);
+    align-items: center;
+    text-align: center;
   }
 }
 
-/* ===== Landscape Phone Adjustments ===== */
-@media (max-width: 896px) and (orientation: landscape) and (max-height: 500px) {
+.season-visual {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  box-shadow: 0 10px 30px var(--shadow-lg);
+  min-width: 0;
+}
+
+.season-visual > .season-image,
+.season-visual > .season-video {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.season-image,
+.season-video {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform var(--transition-slow);
+}
+
+.season-visual:hover .season-image {
+  transform: scale(1.05);
+}
+
+.season-video {
+  border-radius: var(--radius-xl);
+  background: var(--surface);
+  object-fit: cover;
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  max-height: 450px;
+  box-shadow: 
+    0 12px 30px rgba(0, 0, 0, 0.15),
+    0 6px 15px rgba(0, 0, 0, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  display: block;
+  margin: 0 auto;
+}
+
+.season-video:hover {
+  transform: scale(1.02);
+  box-shadow: 
+    0 16px 40px rgba(0, 0, 0, 0.2),
+    0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.season-tracks {
+  padding: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  max-height: 500px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.season-tracks::-webkit-scrollbar {
+  width: 6px;
+}
+
+.season-tracks::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.season-tracks::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.season-tracks::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.season-title {
+  margin-bottom: var(--space-8);
+  color: var(--text);
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  position: relative;
+  padding-bottom: var(--space-4);
+  /* Japanese typography spacing */
+  line-height: 1.4;
+}
+
+.season-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent) 0%, transparent 100%);
+  border-radius: 2px;
+}
+
+.season-description {
+  margin-bottom: var(--space-10);
+  font-size: var(--text-lg);
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 600px;
+}
+
+.track-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding-right: var(--space-2);
+}
+
+.track {
+  padding: var(--space-6);
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius-xl);
+  transition: all var(--transition-normal);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+
+
+
+.track:hover {
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.15),
+    0 4px 10px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  background: rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.season-panel {
+  background: rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.track audio {
+  width: 100%;
+  margin-bottom: var(--space-4);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.track-info {
+  margin-top: var(--space-2);
+}
+
+.track-title {
+  margin-bottom: var(--space-3);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.01em;
+}
+
+.track-description {
+  margin: 0;
+  font-size: var(--text-base);
+  color: var(--text-muted);
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* Ensure Season Gallery videos always fit within the visual container */
+.season-visual {
+  aspect-ratio: 16 / 9; /* Maintain 16:9 container */
+}
+.season-visual > .season-video {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+
+/* ===== Hero Section ===== */
+.hero {
+  /* Prevent header overlap */
+  --header-height: 80px;
+  /* Push section below the fixed header */
+  margin-top: var(--header-height);
+  height: 85vh;
+  min-height: 480px;
+  background: linear-gradient(
+    rgba(0, 0, 0, 0.4), 
+    rgba(0, 0, 0, 0.4)
+  ), url('../img/秀歌-メインビジュアル.webp');
+  background-size: cover;
+  background-position: left top;
+  background-attachment: fixed;
+}
+
+/* Mobile adjustments to keep subject visible */
+@media (max-width: 600px) {
   .hero {
-    height: 100vh;
+    background-position: left 20%;
+    height: 90vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero {
     background-attachment: scroll;
   }
-  
-  .hero-content {
-    padding: var(--space-2);
-  }
-  
-  .hero-title {
-    font-size: clamp(1.25rem, 5vw, 2rem);
-    margin-bottom: var(--space-3);
-    line-height: 1.3;
-  }
-  
-  .hero-subtitle {
-    font-size: clamp(0.875rem, 2.5vw, 1.125rem);
-    margin-bottom: var(--space-4);
-  }
-  
-  .hero-actions {
-    flex-direction: row;
-    gap: var(--space-2);
-  }
-  
-  .cta-button {
-    padding: var(--space-2) var(--space-4);
-    font-size: var(--text-sm);
-  }
-  
-  .header {
-    padding: var(--space-2) 0;
-  }
-  
-  .nav-container {
-    padding: var(--space-2) var(--space-4);
-  }
-  
-  .logo {
-    font-size: var(--text-lg);
-  }
-}
-
-/* ===== High DPI Display Optimizations ===== */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  .hero,
-  .season-image,
-  .about-image {
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
-  }
-}
-
-/* ===== Foldable Device Support ===== */
-@media (max-width: 280px) {
-  .container {
-    padding: 0 var(--space-2);
-  }
-  
-  .hero-content {
-    padding: var(--space-2);
-  }
-  
-  .hero-title {
-    font-size: clamp(1.25rem, 8vw, 1.75rem);
-  }
-  
-  .hero-title br {
-    display: none;
-  }
-  
-  .hero-subtitle {
-    font-size: clamp(0.875rem, 4vw, 1rem);
-  }
-  
-  .nav-container {
-    padding: var(--space-2);
-  }
-  
-  .logo {
-    font-size: var(--text-base);
-  }
-  
-  .season-nav {
-    grid-template-columns: 1fr;
-    gap: var(--space-1);
-  }
-  
-  .season-btn {
-    padding: var(--space-2);
-  }
-  
-  .season-icon {
-    font-size: var(--text-base);
-  }
-  
-  .season-name {
-    font-size: 0.75rem;
-  }
-}
-
-/* ===== Print Specific Responsive ===== */
-@media print {
-  .hero {
-    height: auto;
-    min-height: auto;
-    background: none;
-    color: black;
-    padding: var(--space-8) 0;
-  }
-  
-  .hero-actions,
-  .season-nav,
-  .nav-menu,
-  .social-links {
-    display: none;
-  }
-  
-  .season-panel {
-    display: block !important;
-    page-break-inside: avoid;
-    margin-bottom: var(--space-8);
-  }
-  
-  .track audio {
-    display: none;
-  }
-  
-  .track::after {
-    content: "Audio: " attr(data-track-title);
-    font-style: italic;
-    color: #666;
-  }
-}
-
-/* ===== Animation Performance Optimizations ===== */
-@media (max-width: 768px) {
-  .feature,
-  .track,
-  .season-visual {
-    will-change: auto;
-  }
-  
-  .hero {
-    transform: translateZ(0);
-  }
-}
-
-/* ===== Touch Device Optimizations ===== */
-@media (hover: none) and (pointer: coarse) {
-  .cta-button:hover,
-  .season-btn:hover,
-  .social-link:hover,
-  .feature:hover {
-    transform: none;
-  }
-  
-  .cta-button:active {
-    transform: scale(0.98);
-  }
-
-  .season-btn:active {
-    transform: none;
-  }
-  
-  /* Increase touch targets */
-  .nav-menu a,
-  .season-btn,
-  .social-link {
-    min-height: 48px;
-    min-width: 48px;
-  }
-}
-
-/* ===== Reduced Data Mode ===== */
-@media (prefers-reduced-data: reduce) {
-  .hero {
-    background-image: none;
-    background-color: var(--primary);
-  }
-  
-  .season-image,
-  .about-image {
-    display: none;
-  }
-  
-  .season-visual::after {
-    content: "Image: " attr(data-season-name);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 200px;
-    background: var(--neutral-100);
-    border-radius: var(--radius-lg);
-    color: var(--text-muted);
-    font-style: italic;
-  }
-}
-
-/* ===== Water Ripple Effect - Enhanced Japanese Aesthetic ===== */
-.ripple-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 1;
-  overflow: hidden;
-  mix-blend-mode: overlay;
-  background-color: rgba(47, 63, 79, 0.05);
-  transform: translateZ(0); /* Hardware acceleration */
-  will-change: auto; /* Container doesn't animate */
-  contain: strict; /* Optimize containment */
-}
-
-
-/* Base ripple with sumi-e ink aesthetic */
-.ripple {
-  position: absolute;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(47, 63, 79, 0.12) 0%,
-    rgba(47, 63, 79, 0.08) 20%,
-    rgba(47, 63, 79, 0.04) 50%,
-    rgba(47, 63, 79, 0.02) 75%,
-    transparent 95%
-  );
-  transform: scale(0);
-  animation: rippleEffect 2.8s cubic-bezier(0.25, 0.65, 0.35, 1) forwards;
-  pointer-events: none;
-  filter: blur(0.5px);
-  box-shadow: 
-    0 0 15px rgba(47, 63, 79, 0.08),
-    inset 0 0 8px rgba(47, 63, 79, 0.04);
-}
-
-/* Koi pond ripple variations with sumi-e aesthetics */
-.ripple.large {
-  background: radial-gradient(
-    circle,
-    rgba(47, 63, 79, 0.18) 0%,
-    rgba(47, 63, 79, 0.12) 25%,
-    rgba(47, 63, 79, 0.06) 50%,
-    rgba(47, 63, 79, 0.03) 75%,
-    transparent 95%
-  );
-  animation: rippleEffectLarge 3.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-  filter: blur(0.8px);
-  box-shadow: 
-    0 0 25px rgba(47, 63, 79, 0.1),
-    inset 0 0 12px rgba(47, 63, 79, 0.06);
-}
-
-.ripple.small {
-  background: radial-gradient(
-    circle,
-    rgba(47, 63, 79, 0.1) 0%,
-    rgba(47, 63, 79, 0.06) 40%,
-    rgba(47, 63, 79, 0.03) 70%,
-    transparent 95%
-  );
-  animation: rippleEffectSmall 2.2s cubic-bezier(0.25, 0.65, 0.35, 1) forwards;
-  filter: blur(0.3px);
-  box-shadow: 0 0 12px rgba(47, 63, 79, 0.06);
-}
-
-/* Sumi-e ink bleeding effect */
-.ripple.elegant {
-  background: radial-gradient(
-    circle,
-    rgba(47, 63, 79, 0.14) 0%,
-    rgba(75, 85, 99, 0.08) 30%,
-    rgba(107, 114, 128, 0.04) 60%,
-    rgba(156, 163, 175, 0.02) 80%,
-    transparent 95%
-  );
-  filter: blur(0.6px);
-  box-shadow: 
-    0 0 18px rgba(47, 63, 79, 0.08),
-    0 0 35px rgba(47, 63, 79, 0.04);
-  animation: rippleElegant 3s cubic-bezier(0.25, 0.65, 0.35, 1) forwards;
-}
-
-/* Subtle water disturbance */
-.ripple.subtle {
-  background: radial-gradient(
-    circle,
-    rgba(75, 85, 99, 0.08) 0%,
-    rgba(107, 114, 128, 0.05) 40%,
-    rgba(156, 163, 175, 0.02) 70%,
-    transparent 95%
-  );
-  filter: blur(0.8px);
-  box-shadow: 0 0 15px rgba(75, 85, 99, 0.04);
-  animation: rippleSubtle 3.2s cubic-bezier(0.25, 0.65, 0.35, 1) forwards;
-}
-
-/* Enhanced washi paper texture overlay */
-.ripple-container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: 
-    /* Fine paper fibers */
-    radial-gradient(ellipse 2px 1px at 25% 30%, rgba(247, 244, 233, 0.025) 0%, transparent 70%),
-    radial-gradient(ellipse 1px 2px at 70% 65%, rgba(245, 240, 225, 0.02) 0%, transparent 80%),
-    radial-gradient(ellipse 1px 1px at 15% 80%, rgba(250, 248, 240, 0.015) 0%, transparent 60%),
-    /* Subtle texture grain */
-    radial-gradient(circle at 45% 25%, rgba(248, 246, 235, 0.012) 1px, transparent 1px),
-    radial-gradient(circle at 85% 75%, rgba(246, 242, 230, 0.01) 1px, transparent 1px);
-  background-size: 16px 16px, 12px 20px, 8px 8px, 6px 6px, 10px 10px;
-  pointer-events: none;
-  mix-blend-mode: overlay;
-  opacity: 0.6;
-  will-change: auto; /* Don't animate this layer */
-}
-
-
-/* Refined seasonal ripple colors */
-body[data-season="spring"] .ripple:not(.elegant):not(.subtle) {
-  background: radial-gradient(
-    circle,
-    rgba(255, 182, 193, 0.12) 0%,
-    rgba(255, 192, 203, 0.08) 40%,
-    rgba(255, 228, 225, 0.04) 70%,
-    transparent 95%
-  );
-  box-shadow: 0 0 30px rgba(255, 182, 193, 0.08);
-}
-
-body[data-season="summer"] .ripple:not(.elegant):not(.subtle) {
-  background: radial-gradient(
-    circle,
-    rgba(127, 255, 212, 0.1) 0%,
-    rgba(175, 238, 238, 0.06) 40%,
-    rgba(224, 255, 255, 0.03) 70%,
-    transparent 95%
-  );
-  box-shadow: 0 0 30px rgba(127, 255, 212, 0.06);
-}
-
-body[data-season="autumn"] .ripple:not(.elegant):not(.subtle) {
-  background: radial-gradient(
-    circle,
-    rgba(222, 184, 135, 0.1) 0%,
-    rgba(245, 222, 179, 0.06) 40%,
-    rgba(255, 248, 220, 0.03) 70%,
-    transparent 95%
-  );
-  box-shadow: 0 0 30px rgba(222, 184, 135, 0.06);
-}
-
-body[data-season="winter"] .ripple:not(.elegant):not(.subtle) {
-  background: radial-gradient(
-    circle,
-    rgba(230, 230, 250, 0.1) 0%,
-    rgba(248, 248, 255, 0.06) 40%,
-    rgba(255, 250, 250, 0.03) 70%,
-    transparent 95%
-  );
-  box-shadow: 0 0 30px rgba(230, 230, 250, 0.06);
-}
-
-/* Tranquil Japanese aesthetic animations - slow and gentle */
-@keyframes rippleEffect {
-  0% {
-    transform: scale(0);
-    opacity: 0.3;
-  }
-  15% {
-    opacity: 0.25;
-  }
-  50% {
-    opacity: 0.15;
-  }
-  85% {
-    opacity: 0.05;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 0;
-  }
-}
-
-@keyframes rippleEffectLarge {
-  0% {
-    transform: scale(0);
-    opacity: 0.35;
-  }
-  20% {
-    opacity: 0.25;
-  }
-  50% {
-    opacity: 0.18;
-  }
-  80% {
-    opacity: 0.08;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 0;
-  }
-}
-
-@keyframes rippleEffectSmall {
-  0% {
-    transform: scale(0);
-    opacity: 0.25;
-  }
-  30% {
-    opacity: 0.18;
-  }
-  70% {
-    opacity: 0.08;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 0;
-  }
-}
-
-/* Performance optimizations for 60fps */
-.ripple {
-  will-change: transform, opacity;
-  backface-visibility: hidden;
-  perspective: 1000px;
-  transform: translateZ(0); /* Force hardware acceleration */
-  contain: layout style paint; /* Optimize for CSS containment */
-}
-
-.refined-particle {
-  will-change: transform, opacity;
-  backface-visibility: hidden;
-  transform: translateZ(0);
-  contain: layout style paint;
-}
-
-.gentle-glow {
-  will-change: transform, opacity;
-  backface-visibility: hidden;
-  transform: translateZ(0);
-  contain: layout style paint;
-}
-
-.gold-sparkle,
-.gold-particle,
-.gold-shimmer,
-.gold-flake,
-.gold-burst {
-  will-change: transform, opacity;
-  backface-visibility: hidden;
-  transform: translateZ(0);
-  contain: layout style paint;
-}
-
-/* Reduced motion support */
-@media (prefers-reduced-motion: reduce) {
-  .ripple-container {
-    display: none;
-  }
-  
-  .ripple,
-  .gold-sparkle,
-  .gold-particle,
-  .gold-shimmer,
-  .gold-flake,
-  .gold-burst {
-    animation: none;
-    opacity: 0;
-  }
-}
-
-/* High contrast mode adjustments */
-@media (prefers-contrast: high) {
-  .ripple {
-    background: radial-gradient(
-      circle,
-      rgba(0, 0, 0, 0.5) 0%,
-      rgba(0, 0, 0, 0.3) 30%,
-      rgba(0, 0, 0, 0.1) 60%,
-      transparent 90%
-    );
-  }
-  
-  .ripple {
-    background: radial-gradient(
-      circle,
-      rgba(255, 255, 255, 0.5) 0%,
-      rgba(255, 255, 255, 0.3) 30%,
-      rgba(255, 255, 255, 0.1) 60%,
-      transparent 90%
-    );
-  }
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-:root {
-    --primary: #6366f1;
-    --secondary: #f59e0b;
-    --accent: #ec4899;
-    --neutral: #374151;
-    --background: #111827;
-    --text: #f9fafb;
-    --shadow: rgba(0, 0, 0, 0.3);
-    --space-4: 1rem;
-    --space-6: 1.5rem;
-    --space-8: 2rem;
-    --text-2xl: clamp(1.5rem, 1.3rem + 0.8vw, 2rem);
-    --text-5xl: clamp(3rem, 2.5rem + 2vw, 4rem);
-    --text-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
-    --radius-lg: 1rem;
-    --transition-normal: 300ms ease-in-out;
-}
-
-
-body {
-    font-family: system-ui, -apple-system, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
-    line-height: 1.6;
-    color: var(--text);
-    background-color: var(--background);
-    overflow-x: hidden;
-    min-height: 100dvh;
-    position: relative;
-    z-index: 0;              /* スタッキングコンテキストを作成 */
-    background-color: var(--background);
-}
-
-/* Header styles for immediate display */
-.header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-image: url('./img/和紙_黒_optimized.png');
-    background-size: cover;
-    background-repeat: repeat;
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
-    z-index: 1020;
-    transition: all var(--transition-normal);
-}
-
-.nav-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--space-4);
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.logo {
-    font-size: var(--text-2xl);
-    font-weight: 800;
-    color: var(--primary);
-    margin: 0;
-}
-
-.nav-menu {
-    display: flex;
-    align-items: center;
-    gap: var(--space-8);
-    list-style: none;
-    margin: 0;
 }
 
 @media (max-width: 767px) {
-    .nav-menu {
-        display: none;
-    }
-}
-
-/* Hero section critical styles */
-.hero {
-    height: 100vh;
-    min-height: 600px;
-    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('./img/秀歌-メインビジュアル.webp');
-    background-size: cover;
-    background-position: center top;
-    background-attachment: fixed;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: white;
-    position: relative;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .hero {
-        background-attachment: scroll;
-    }
-}
-
-@media (max-width: 767px) {
-    .hero {
-        background-attachment: scroll;
-        height: 100dvh;
-    }
+  .hero {
+    background-attachment: scroll;
+    height: 100dvh;
+  }
 }
 
 .hero-content {
-    max-width: 800px;
-    padding: var(--space-4);
-    z-index: 2;
-    position: relative;
+  padding-top: var(--header-height);
+  max-width: 800px;
+  padding: var(--space-4);
+  z-index: 2;
+  position: relative;
 }
 
 .hero-title {
-    font-size: var(--text-5xl);
-    font-weight: 800;
-    margin-bottom: var(--space-6);
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  font-size: var(--text-5xl);
+  font-weight: 800;
+  margin-bottom: var(--space-6);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  animation: fadeInUp 1s ease-out;
+  white-space: normal;
+}
+
+/* Emphasize artist name in hero */
+.artist-name {
+  display: inline-block;
+  margin-top: var(--space-4);
+  font-size: var(--text-6xl);
+  font-weight: 900;
+  line-height: 1.1;
+  background: linear-gradient(90deg, #fbc2eb 0%, #a6c1ee 50%, #fbc2eb 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 6s linear infinite;
+}
+
+@keyframes shine {
+  0% { background-position: 0 0; }
+  100% { background-position: -200% 0; }
+}
+
+.artist-name .jp {
+  font-size: 0.7em;
+  font-weight: 700;
 }
 
 .hero-subtitle {
-    font-size: var(--text-xl);
-    margin-bottom: var(--space-8);
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+  font-size: var(--text-xl);
+  margin-bottom: var(--space-10);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+  animation: fadeInUp 1s ease-out 0.3s both;
 }
 
 .hero-actions {
-    display: flex;
-    gap: var(--space-4);
-    justify-content: center;
-    flex-wrap: wrap;
+  display: flex;
+  gap: var(--space-4);
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeInUp 1s ease-out 0.6s both;
 }
 
-.cta-button {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-4);
-    padding: var(--space-4) var(--space-6);
-    border: none;
-    border-radius: var(--radius-lg);
-    font-weight: 600;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all var(--transition-normal);
-}
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: clamp(1.25rem, 6vw, 2.5rem);
+  }
 
-.cta-button.primary {
-    background: linear-gradient(135deg, var(--primary), #8b5cf6);
-    color: white;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-}
-
-.cta-button.secondary {
-    background: transparent;
-    color: white;
-    border: 2px solid white;
-}
-
-/* Skip link for accessibility */
-.skip-link {
-    position: absolute;
-    top: -100px;
-    left: var(--space-4);
-    background: var(--primary);
-    color: white;
-    padding: var(--space-4);
-    border-radius: var(--radius-lg);
-    font-weight: 600;
-    z-index: 1060;
-    transition: top var(--transition-normal);
-}
-
-.skip-link:focus {
-    top: var(--space-4);
-}
-
-/* Loading state to prevent FOUC */
-body:not(.loaded) * {
-    transition: none !important;
-}
-
-/* ===== Pro Washi Footer 2025 ===== */
-.footer {
-    background-image: url('./img/和紙_黒_optimized.png');
-    background-size: cover;
-    background-repeat: repeat;
-    border-top: 3px double rgba(0,0,0,0.12);
-    box-shadow: 0 -4px 6px rgba(0,0,0,0.4);
-    color: var(--neutral-300);
-    line-height: 1.8;
-}
-
-
-.footer-content {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-12);
-    justify-content: space-between;
-}
-
-.footer-brand {
-    flex: 1 1 260px;
-}
-
-.footer-section {
-    margin-left: auto;
-    text-align: right;
-}
-
-.footer-section .social-links {
-    flex-direction: row;
-    justify-content: flex-end;
-}
-
-.footer-links {
-    flex: 1 1 260px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.footer-logo {
-    font-family: "Yuji Syuku", "Noto Serif JP", serif;
-    font-size: 1.5rem;
-    letter-spacing: .04em;
-    margin-bottom: var(--space-4);
-}
-
-.footer-description {
-    color: inherit;
-}
-
-.footer-section-title {
-    font-family: "Yuji Syuku", "Noto Serif JP", serif;
-    font-size: 1.125rem;
-    letter-spacing: .05em;
-    color: currentColor;
-    position: relative;
-    margin-bottom: var(--space-6);
-}
-
-.footer-section-title::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 60px;
-    height: 2px;
-    background: linear-gradient(90deg, var(--accent, #8c3d08), transparent);
-}
-
-/* Social icons */
-.footer-social {
-    display: flex;
-    gap: var(--space-4);
-}
-
-.footer-social .social-link {
-    width: 44px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    border: 1px solid currentColor;
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(6px);
-    transition: transform 0.2s ease-in-out, color 0.2s ease-in-out, background 0.2s ease-in-out;
-}
-
-.footer-social .social-link:hover {
-    transform: translateY(-2px);
-    background: rgba(255, 255, 255, 0.7);
-}
-
-.footer a {
-    color: currentColor;
-    transition: color 0.2s ease-in-out;
-}
-
-.footer a:hover,
-.footer a:focus {
-    color: #8c3d08; /* koge-cha accent */
-}
-
-.footer-bottom {
-    margin-top: var(--space-12);
-    border-top: 1px solid rgba(0,0,0,0.1);
-    padding-top: var(--space-6);
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    font-size: var(--text-sm);
-}
-
-/* Mobile responsive - 767px and below */
-@media (max-width: 767px) {
-    .footer-content {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: var(--space-8);
-        text-align: center;
-    }
-
-    .footer-section {
-        margin: 0;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .footer-section-title {
-        text-align: center;
-        margin-bottom: var(--space-4);
-    }
-
-    .footer-section .social-links {
-        justify-content: center;
-        align-items: center;
-    }
-    
-    .creator-info {
-        justify-content: center !important;
-        text-align: center;
-        flex-direction: row;
-        white-space: nowrap;
-    }
-}
-
-/* Creator section styling */
-.creator-info {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    justify-content: flex-start;
-}
-
-.creator-avatar {
-    border-radius: 50%;
-}
-
-.creator-name {
-    font-weight: 500;
-    color: var(--text);
-}
-
-.creator-label {
-    color: var(--text-secondary, var(--text));
-}
-
-.creator-info .social-link {
-    font-size: 1.8rem;
-    color: var(--accent);
-    transition: opacity .3s;
-    text-decoration: none;
-    margin-left: 0.25rem;
-}
-
-.creator-info .social-link:hover {
-    opacity: .6;
-}
-
-.creator-info .social-icon-img {
-    transition: all var(--transition-normal);
+  .hero-title br {
+    display: none;
+  }
 }

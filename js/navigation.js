@@ -7,6 +7,7 @@ class Navigation {
   constructor() {
     this.navToggle = document.getElementById('nav-toggle');
     this.navMenu = document.getElementById('nav-menu');
+    this.navOverlay = document.getElementById('nav-overlay');
     this.navLinks = document.querySelectorAll('.nav-menu a[href^="#"]');
     this.header = document.getElementById('header');
     
@@ -22,6 +23,10 @@ class Navigation {
     // Mobile menu toggle
     if (this.navToggle) {
       this.navToggle.addEventListener('click', () => this.toggleMobileMenu());
+    }
+
+    if (this.navOverlay) {
+      this.navOverlay.addEventListener('click', () => this.closeMobileMenu());
     }
     
     // Smooth scrolling for anchor links
@@ -51,6 +56,10 @@ class Navigation {
   
   openMobileMenu() {
     this.navMenu.classList.add('active');
+    if (this.navOverlay) {
+      this.navOverlay.classList.add('active');
+      this.navOverlay.setAttribute('aria-hidden', 'false');
+    }
     if (this.navToggle) {
       this.navToggle.classList.add('active');
       this.navToggle.setAttribute('aria-expanded', 'true');
@@ -69,6 +78,10 @@ class Navigation {
   
   closeMobileMenu() {
     this.navMenu.classList.remove('active');
+    if (this.navOverlay) {
+      this.navOverlay.classList.remove('active');
+      this.navOverlay.setAttribute('aria-hidden', 'true');
+    }
     if (this.navToggle) {
       this.navToggle.classList.remove('active');
       this.navToggle.setAttribute('aria-expanded', 'false');
@@ -152,8 +165,9 @@ class Navigation {
   
   handleOutsideClick(e) {
     const isClickInsideNav = this.navMenu.contains(e.target) || (this.navToggle && this.navToggle.contains(e.target));
-    
-    if (!isClickInsideNav && this.navMenu.classList.contains('active')) {
+    const clickedOverlay = this.navOverlay && this.navOverlay.contains(e.target);
+
+    if (!isClickInsideNav && !clickedOverlay && this.navMenu.classList.contains('active')) {
       this.closeMobileMenu();
     }
   }
