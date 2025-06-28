@@ -34,7 +34,12 @@
       "Bash(git pull:*)",
       "Bash(sed:*)",
       "Bash(git fetch:*)",
-      "Bash(sips:*)"
+      "Bash(sips:*)",
+      "Bash(npm run lint)",
+      "Bash(find:*)",
+      "Bash(cp:*)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:threejs.org)"
     ],
     "deny": []
   }
