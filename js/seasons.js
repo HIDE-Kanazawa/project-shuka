@@ -543,8 +543,6 @@ class SeasonsGallery {
       video.play().catch(error => {
         console.error('Video play failed:', error);
       });
-    } else {
-      video.pause();
     }
 
     e.preventDefault();
