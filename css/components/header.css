@@ -193,24 +193,6 @@
   margin-left: var(--space-4);
 }
 
-/* Overlay for mobile navigation */
-.nav-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: opacity var(--transition-normal);
-  z-index: var(--z-modal-backdrop);
-}
-
-.nav-overlay.active {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-}
-
 .season-selector-buttons {
   display: flex;
   gap: var(--space-2);
