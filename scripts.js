@@ -933,41 +933,23 @@ class SeasonsGallery {
       return;
     }
 
-    // Show loading state
     video.style.opacity = '0.7';
-    
+
     const sources = video.querySelectorAll('source[data-src]');
     sources.forEach(source => {
       const src = source.getAttribute('data-src');
       if (src) source.src = src;
     });
 
-    // Add loading event listeners
-    const onLoad = () => {
-      video.style.opacity = '1';
-      video.removeEventListener('loadeddata', onLoad);
-      video.removeEventListener('error', onError);
-      
-      // Auto-play if requested
-      if (autoPlay) {
-        video.play().catch(error => {
-          console.error('Video play failed:', error);
-        });
-      }
-    };
-    
-    const onError = () => {
-      console.error('Video loading failed');
-      video.style.opacity = '1';
-      video.removeEventListener('loadeddata', onLoad);
-      video.removeEventListener('error', onError);
-    };
-    
-    video.addEventListener('loadeddata', onLoad);
-    video.addEventListener('error', onError);
-    
     video.load();
     video.dataset.loaded = 'true';
+    video.style.opacity = '1';
+
+    if (autoPlay) {
+      video.play().catch(error => {
+        console.error('Video play failed:', error);
+      });
+    }
   }
   
   updateURL(season) {
@@ -3143,6 +3125,7 @@ function generateSeasonGallery() {
                  loading="lazy"
                  poster="${season.poster}"
                  tabindex="0"
+                 playsinline
                  aria-label="${season.name}をテーマにしたデモ動画 - クリックまたはEnterキーで再生">
             ${season.video.webm ? `<source data-src="${season.video.webm}" type="video/webm">` : ''}
             <source data-src="${season.video.mp4}" type="video/mp4">
