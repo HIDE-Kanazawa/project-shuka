@@ -630,6 +630,7 @@ a:focus {
     transform: translateY(-100%);
     opacity: 0;
     visibility: hidden;
+    display: none;
     transition: all var(--transition-normal);
     z-index: var(--z-modal);
   }
@@ -638,6 +639,7 @@ a:focus {
     transform: translateY(0);
     opacity: 1;
     visibility: visible;
+    display: flex;
   }
 
   .nav-menu li {
@@ -2636,6 +2638,7 @@ legend {
     transform: translateY(-100%);
     opacity: 0;
     visibility: hidden;
+    display: none;
     transition: all var(--transition-normal);
     z-index: var(--z-modal);
   }
@@ -2644,6 +2647,7 @@ legend {
     transform: translateY(0);
     opacity: 1;
     visibility: visible;
+    display: flex;
   }
   
   .nav-menu li {
