@@ -36,24 +36,4 @@
   }
 }
 
-/* Logo stroke animation */
-#logo-svg {
-  width: 200px;
-  height: auto;
-  overflow: visible;
-}
 
-#logo-text {
-  fill: none;
-  stroke: #000;
-  stroke-width: 2.5px;
-  stroke-dasharray: 400;
-  stroke-dashoffset: 400;
-  animation: drawLogo 5s ease-out forwards 1.2s;
-}
-
-@keyframes drawLogo {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
