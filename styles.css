@@ -3800,6 +3800,8 @@ body:not(.loaded) * {
     .creator-info {
         justify-content: center !important;
         text-align: center;
+        flex-direction: row;
+        white-space: nowrap;
     }
 }
 
