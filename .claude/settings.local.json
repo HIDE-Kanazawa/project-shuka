@@ -39,7 +39,10 @@
       "Bash(find:*)",
       "Bash(cp:*)",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "WebFetch(domain:threejs.org)"
+      "WebFetch(domain:threejs.org)",
+      "WebFetch(domain:suno.com)",
+      "WebFetch(domain:note.com)",
+      "WebFetch(domain:openai.com)"
     ],
     "deny": []
   }
