@@ -10,7 +10,7 @@ const SEASON_DATA = {
     poster: './img/秀歌-春.webp',
     video: {
       webm: null,
-      mp4: './video/夏庭園の歌.mp4'
+      mp4: './video/光のほうへ.mp4'
     },
     tracks: [
       {
