@@ -3194,7 +3194,7 @@ function generateSocialLinks() {
       label: 'Suno アカウント',
       name: 'Suno',
       icon: null,
-      image: './img/suno.png',
+      image: './img/suno.webp',
       enabled: true,
       class: "suno"
     },
@@ -3246,7 +3246,7 @@ function generateCreatorSection() {
   // Generate creator info with profile image, name, and Note link
   const creatorHTML = `
     <div class="creator-info">
-      <img src="./img/hide.png" alt="ひで" class="creator-avatar" width="24" height="24">
+      <img src="./img/hide.webp" alt="ひで" class="creator-avatar" width="24" height="24">
       <span class="creator-name">ひで</span>
       <span class="creator-label">のNote</span>
       <a href="https://note.com/yamazaki2357" rel="noopener noreferrer" target="_blank" class="social-link note" aria-label="製作者のNote">

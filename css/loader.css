@@ -6,7 +6,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #fdfaf5 url('../img/ローディング.png') center / cover no-repeat;
+  background: #fdfaf5 url('../img/ローディング.webp') center / cover no-repeat;
   overflow: hidden;
   opacity: 1;
   visibility: visible;

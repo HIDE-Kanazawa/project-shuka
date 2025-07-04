@@ -42,7 +42,9 @@
       "WebFetch(domain:threejs.org)",
       "WebFetch(domain:suno.com)",
       "WebFetch(domain:note.com)",
-      "WebFetch(domain:openai.com)"
+      "WebFetch(domain:openai.com)",
+      "Bash(do echo \"Optimizing $file...\")",
+      "Bash(npx:*)"
     ],
     "deny": []
   }
