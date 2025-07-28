@@ -4,7 +4,7 @@ const urlsToCache = [
   '/index.html',
   '/styles.min.css',
   '/css/loader.min.css',
-  '/scripts.min.js',
+  '/scripts.js',
   '/three-lanterns.min.js',
   '/js/loader.min.js',
   '/img/秀歌-メインビジュアル.webp',
