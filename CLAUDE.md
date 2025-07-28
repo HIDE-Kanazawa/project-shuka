@@ -22,15 +22,18 @@ _Autonoums Development Guide for Claude Code_
 
 ### 1-5. 技術要件
 **バニラ HTML / CSS / JavaScript** で実装し、モバイルを含む主要ブラウザで快適に表示できるサイトを完成させる。  
+**開発方針**: ソースファイルを直接使用し、ビルドプロセスは使用しない。  
 
 ---
 
 ## 2. 成果物スコープ
 - `index.html` … LP 本体  
-- `style.css` … ページスタイル  
-- `script.js` … ギャラリー切替・テーマ変更などのロジック  
+- `styles.css` … ページスタイル  
+- `scripts.js` … ギャラリー切替・テーマ変更などのロジック  
+- `three-lanterns.js` … Three.js 3D演出  
 - `img/` … 画像ファイル
 - `audio/` … 音声ファイル
+- `video/` … 動画ファイル
    
 
 > **柔軟性重視**  
@@ -88,8 +91,8 @@ _Autonoums Development Guide for Claude Code_
 
 ### 5-4. パフォーマンス要件
 - **ページ読み込み速度** … 3秒以内  
-- **画像最適化** … WebP 対応推奨  
-- **CSS/JS 最小化** … 本番環境では圧縮
+- **画像最適化** … WebP 形式使用、遅延読み込み実装  
+- **ソースファイル直接使用** … 開発・メンテナンス効率を優先
 
 ---
 
@@ -171,10 +174,10 @@ _Autonoums Development Guide for Claude Code_
 - **ローディング.png**: 2.4MB → 338KB（約86%削減）
 - **和紙_黒_optimized.png**: 667KB → 180KB（約73%削減）
 
-### ファイル圧縮
-- **scripts.js**: 120KB → 66KB（約45%削減）
-- **styles.css**: 77KB → 56KB（約27%削減）
-- **three-lanterns.js**: 8.1KB → 4.3KB（約47%削減）
+### ソースファイル最適化
+- **ソースファイル直接使用**: 開発効率とメンテナンス性を重視
+- **コード品質**: 可読性と保守性を優先した実装
+- **パフォーマンス**: Service Worker キャッシュで補完
 
 ### 追加最適化
 - **Service Worker**: キャッシュ機能実装
@@ -217,7 +220,7 @@ _Autonoums Development Guide for Claude Code_
 
 ### 9-2. 公開前チェック
 - [x] 本番用画像・コンテンツ差し替え  
-- [x] CSS/JS 圧縮  
+- [x] ソースファイル最適化完了  
 - [x] SEO 設定完了
 - [x] 動画コンテンツ対応完了
 - [x] 外部リンク設定完了
@@ -253,8 +256,10 @@ Claude Code を `--dangerous-skip-permissions` フラグで実行する場合で
 ### 11-2. システムコマンドの扱い
 | 許可 | 禁止 |
 | ---- | ---- |
-| `node`, `npm`, `npx`, `python`, `bash` (ワークスペース内) | `sudo`, `chmod 777`, `chown`, 任意ポート開放 |
-| `cwebp`, `git`, `grep`, `sed`, `awk` | `curl` / `wget` で第三者サイトへ POST |
+| `git`, `grep`, `sed`, `awk`, `http-server` (ワークスペース内) | `sudo`, `chmod 777`, `chown`, 任意ポート開放 |
+| `cwebp` (画像最適化のみ) | `curl` / `wget` で第三者サイトへ POST |
+
+**注意**: ビルドプロセスは使用しないため、`npm run build` 等のコマンドは実行しない。
 
 > **外部 API 叩きは要レビュー**  
 > GET でのドキュメント参照は可だが、書き込み系リクエストは Issue で相談すること。
