@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Build tools for the Shuka website",
   "scripts": {
-    "build": "node build.js",
     "start": "http-server -c-1"
   },
   "engines": {

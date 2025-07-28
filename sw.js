@@ -2,7 +2,7 @@ const CACHE_NAME = 'shuka-v1';
 const urlsToCache = [
   '/',
   '/index.html',
-  '/styles.min.css',
+  '/styles.css',
   '/css/loader.min.css',
   '/scripts.js',
   '/three-lanterns.min.js',
