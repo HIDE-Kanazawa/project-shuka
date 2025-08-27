@@ -27,6 +27,8 @@
 
 // Initialize Three.js Scene after DOM is loaded
 function initThreeJsScene() {
+  if (window.__threeSceneInitialized) return;
+  window.__threeSceneInitialized = true;
   var scene = new THREE.Scene();
   var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 500);
   camera.position.set(0, -25, 80);
@@ -193,15 +195,26 @@ function initThreeJsScene() {
 
   var clock = new THREE.Clock();
 
-  // Animation loop
-  renderer.setAnimationLoop(() => {
+  function renderFrame(){
     if (controls.enabled) {
       controls.update();
     }
     let t = clock.getElapsedTime();
     oUs.forEach(ou => {ou.uTime.value = t;});
     renderer.render(scene, camera);
-  });
+  }
+
+  var prefersReduced = false;
+  try {
+    prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  } catch(e) {}
+
+  if (prefersReduced) {
+    // Render once for reduced motion users
+    renderFrame();
+  } else {
+    renderer.setAnimationLoop(renderFrame);
+  }
 
   // Handle window resize
   window.addEventListener('resize', () => {
@@ -209,6 +222,18 @@ function initThreeJsScene() {
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
   });
+
+  // Page Visibility: pause/resume animation loop to save resources
+  function pause(){ renderer.setAnimationLoop(null); }
+  function resume(){ if (!prefersReduced) renderer.setAnimationLoop(renderFrame); }
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) pause(); else resume();
+  });
+  window.addEventListener('pagehide', pause);
+  window.addEventListener('pageshow', resume);
+
+  // Expose simple controls for debugging
+  window.__threeSceneControl = { pause, resume, renderer };
 }
 
 // Initialize when DOM is loaded and Three.js is available
@@ -219,3 +244,6 @@ document.addEventListener('DOMContentLoaded', () => {
     console.error('Three.js not loaded');
   }
 });
+
+// Ensure init is reachable when loaded after DOMContentLoaded via lazy loader
+window.initThreeJsScene = window.initThreeJsScene || initThreeJsScene;

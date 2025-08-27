@@ -44,7 +44,8 @@
       "WebFetch(domain:note.com)",
       "WebFetch(domain:openai.com)",
       "Bash(do echo \"Optimizing $file...\")",
-      "Bash(npx:*)"
+      "Bash(npx:*)",
+      "Bash(open http://localhost:8000)"
     ],
     "deny": []
   }
