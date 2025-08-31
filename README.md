@@ -43,6 +43,11 @@ Then visit <http://localhost:8000/>.
 
 The site can be deployed with GitHub Pages. Enable Pages from the repository settings and serve content from the `main` branch (root). A `CNAME` file is included for the custom domain `project-shuka.com`.
 
+### About CNAME
+- Purpose: bind the site to the custom domain `project-shuka.com` on GitHub Pages.
+- Format: the file must contain exactly one line with the domain name (no protocol, no path). Comments are not supported.
+- DNS: ensure the domain points to GitHub Pages (A/ALIAS/CNAME records as appropriate) and that the custom domain is set in the repository’s Pages settings.
+
 ## Notes
 
 This site is a static build checked into the repository. No build step is required. Node.js 18+ is recommended for tooling compatibility.
