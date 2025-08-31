@@ -538,20 +538,34 @@ class SeasonsGallery {
   }
 
   preloadWashiBackgrounds() {
-    // Preload all washi background images for smooth transitions
-    const washiImages = [
-      './img/和紙-春.webp',
-      './img/和紙-夏.webp',
-      './img/和紙-秋.webp',
-      './img/和紙-冬.webp',
-      './img/和紙-梅雨.webp'
-    ];
+    // Preload washi backgrounds during idle time to avoid competing with LCP
+    const run = () => {
+      try {
+        const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        if (conn && conn.saveData) return; // Respect Data Saver
+      } catch (e) {}
 
-    washiImages.forEach(src => {
-      const img = new Image();
-      img.src = src;
-      // Images will be cached by browser
-    });
+      const washiImages = [
+        './img/和紙-春.webp',
+        './img/和紙-夏.webp',
+        './img/和紙-秋.webp',
+        './img/和紙-冬.webp',
+        './img/和紙-梅雨.webp'
+      ];
+
+      washiImages.forEach(src => {
+        const img = new Image();
+        img.decoding = 'async';
+        img.loading = 'eager';
+        img.src = src;
+      });
+    };
+
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(run, { timeout: 8000 });
+    } else {
+      setTimeout(run, 5000);
+    }
   }
   
   loadInitialSeason() {
@@ -3139,6 +3153,7 @@ function generateSeasonGallery() {
                  preload="none"
                  loading="lazy"
                  poster="${season.poster}"
+                 width="1280" height="720"
                  tabindex="0"
                  playsinline
                  aria-label="${season.name}をテーマにしたデモ動画 - クリックまたはEnterキーで再生">
