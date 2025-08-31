@@ -1,8 +1,0 @@
-{
-  "name": "project-shuka",
-  "version": "1.0.0",
-  "description": "Build tools for the Shuka website",
-  "engines": {
-    "node": ">=18"
-  }
-}

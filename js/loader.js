@@ -4,7 +4,7 @@
  *   CSS の `#loader.fade-out` 遷移を発火させ、アニメーション終了後に DOM から除去する。
  * - ポイント:
  *   1) IIFE でスコープを閉じ、副作用を最小化
- *   2) 読み込みが何らかの理由で完了しない場合でも 10 秒で確実に閉じる（UX 安全策）
+ *   2) 読み込みが何らかの理由で完了しない場合でも 2.5 秒で確実に閉じる（UX 安全策）
  *   3) `transitionend` を待ってから削除し、フェードアウトをきちんと見せる
  */
 (function () {
@@ -12,9 +12,9 @@
   const loader = document.getElementById('loader');
   if (!loader) return;
 
-  // 安全対策: 10 秒を上限として自動で閉じる
+  // 安全対策: 2.5 秒を上限として自動で閉じる
   // - ネットワーク遅延や SW 未登録、画像プリロード失敗などのケースでも UI が固まらないようにする
-  const safety = setTimeout(finishLoading, 10000);
+  const safety = setTimeout(finishLoading, 5000);
 
   // 通常ルート: ウィンドウの load 完了でフェードアウトを開始
   window.addEventListener('load', finishLoading);

@@ -1,5 +1,13 @@
 /**
  * Season Data Configuration
+ *
+ * 目的:
+ * - 四季ごとの表示情報（アイコン/名称/説明/ポスター/動画/音源）を一元管理。
+ * - UI生成ロジック（ギャラリーやナビ）から定数参照で扱いやすくする。
+ *
+ * パフォーマンス配慮:
+ * - 画像/動画ファイルはここでパスを定義するのみ。実ロードは必要時に行う（遅延）。
+ * - 動画は `<source data-src>` を使い、可視化/操作時にのみ `src` をセットする設計（ネットワーク競合を抑制）。
  */
 const SEASON_DATA = {
   spring: {
@@ -184,7 +192,17 @@ function handleGlobalKeyboard(e) {
   }
 }
 
-// Optimize loading with requestIdleCallback
+/**
+ * initResourcePrefetching()
+ *
+ * 目的:
+ * - 初期表示に不要だが近い将来参照される軽量画像を、アイドル時間に `prefetch` で取得。
+ *
+ * ポイント:
+ * - `requestIdleCallback` によりメインスレッドが空いたタイミングでリンク要素を挿入し、
+ *   ユーザー操作に影響しにくい形で後方取得を促す。
+ * - ここでは小さめのWebP画像のみを対象とし、太いアセット（動画/音声）は含めない。
+ */
 function initResourcePrefetching() {
   if ('requestIdleCallback' in window) {
     requestIdleCallback(() => {
@@ -208,7 +226,15 @@ function initResourcePrefetching() {
 
 /**
  * Navigation Module
- * Handles mobile menu toggle and smooth scrolling
+ *
+ * 役割:
+ * - ハンバーガーメニュー（モバイル）トグル
+ * - アンカースクロールのスムーズ化
+ * - スクロール位置に応じたヘッダー挙動（必要に応じて）
+ *
+ * パフォーマンス配慮:
+ * - スクロール/ポインタイベントは `passive: true` を基本にし、
+ *   レイアウトスラッシングを避けるため `requestAnimationFrame`/スロットリングの検討余地あり。
  */
 
 class Navigation {
@@ -434,6 +460,18 @@ if (typeof module !== 'undefined' && module.exports) {
 // Set winter season gallery video to "白のなかで"
 SEASON_DATA.winter.video.mp4 = './video/白のなかで.mp4';
 
+/**
+ * SeasonsGallery
+ *
+ * 役割:
+ * - 季節ナビ/パネルの動的生成、切替、アクセシビリティ対応。
+ * - 動画/音声の遅延ロードとリソース解放（同時再生防止）。
+ *
+ * パフォーマンス配慮:
+ * - `<video>` は `preload="none"` + `loading="lazy"`、`width/height` 指定でCLS低減。
+ * - `<source>` には `data-src` を使い、可視化/再生要求時にのみ実URLを充当。
+ * - 和紙背景は `requestIdleCallback` + `Save-Data` 尊重でアイドル時にプリロード。
+ */
 class SeasonsGallery {
   constructor() {
     this.seasonButtons = document.querySelectorAll('.season-btn');
@@ -538,7 +576,9 @@ class SeasonsGallery {
   }
 
   preloadWashiBackgrounds() {
-    // Preload washi backgrounds during idle time to avoid competing with LCP
+    // 和紙背景のアイドル時プリロード
+    // - LCP競合を避けるため初期レンダリング直後は取得しない
+    // - Data Saver有効時はスキップ
     const run = () => {
       try {
         const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
@@ -553,6 +593,7 @@ class SeasonsGallery {
         './img/和紙-梅雨.webp'
       ];
 
+      // 画像は非同期デコード指定でメインスレッド負荷を軽減
       washiImages.forEach(src => {
         const img = new Image();
         img.decoding = 'async';
@@ -3157,13 +3198,19 @@ function generateSeasonGallery() {
                  tabindex="0"
                  playsinline
                  aria-label="${season.name}をテーマにしたデモ動画 - クリックまたはEnterキーで再生">
-            ${season.video.webm ? `<source data-src="${season.video.webm}" type="video/webm">` : ''}
-            <source data-src="${season.video.mp4}" type="video/mp4">
-            お使いのブラウザは動画再生に対応していません。
+           <!-- Conditionally add WebM video source if available -->
+           ${season.video.webm ? `<source data-src="${season.video.webm}" type="video/webm">` : ''}
+           <!-- Add MP4 video source as fallback -->
+           <source data-src="${season.video.mp4}" type="video/mp4">
+           <!-- Display error message if browser doesn't support video playback -->
+           お使いのブラウザは動画再生に対応していません。
           </video>
         </div>
+        <!-- Container for season tracks and descriptions -->
         <div class="season-tracks">
+          <!-- Display season title -->
           <h3 class="season-title">${season.title}</h3>
+          <!-- Display season description -->
           <p class="season-description">${season.description}</p>
           <div class="track-list">
             ${season.tracks.map(track => `

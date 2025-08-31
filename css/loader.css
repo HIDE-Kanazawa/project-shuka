@@ -19,7 +19,7 @@
   /* レイアウト上でも表示状態 */
   visibility: visible;
   /* フェードアウト時の滑らかな遷移（不透明度と可視性） */
-  transition: opacity 1.6s ease, visibility 1.6s ease;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
 }
 
 #loader.fade-out {
@@ -42,7 +42,7 @@
   /* 初期は極小（見えない）から開始 */
   transform: scale(0);
   /* 5秒かけて拡大し、終了状態を保持（forwards） */
-  animation: inkSpread 5s ease-out forwards;
+  animation: inkSpread 2.5s ease-out forwards;
 }
 
 @keyframes inkSpread {
