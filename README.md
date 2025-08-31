@@ -1,53 +1,53 @@
-# Shuka – 秀歌 Official Site
+# Shuka – 秀歌 公式サイト
 
-This repository hosts the source for the web site of **Shuka – 秀歌**, an AI music artist. The site delivers a seasonal Japanese aesthetic with interactive animations and audio tracks.
+このリポジトリは、AI 音楽アーティスト **Shuka – 秀歌** の公式サイトのソースコードを公開しています。日本の四季を感じる和風テイストと、インタラクティブなアニメーション・音声体験を提供します。
 
-## Project structure
+## プロジェクト構成
 
 ```
 project-shuka/
-├── index.html            # main entry point
-├── css/                  # modular CSS source
+├── index.html            # エントリーポイント
+├── css/                  # モジュール化した CSS
 │   ├── base/
 │   ├── components/
 │   └── layouts/
-├── js/                   # JavaScript modules
-├── styles.css            # bundled CSS
-├── scripts.js            # bundled JavaScript
-├── img/                  # images
-├── audio/                # music tracks
-└── video/                # promotional videos
+├── js/                   # JavaScript モジュール
+├── styles.css            # バンドル済み CSS
+├── scripts.js            # バンドル済み JavaScript
+├── img/                  # 画像
+├── audio/                # 楽曲
+└── video/                # 動画
 ```
 
-*HTML* and *CSS* modules live under `index.html` and the `css/` directory. Individual JavaScript modules are kept in `js/` and compiled into `scripts.js` for use on the page. Additional effects powered by Three.js are contained in `three-lanterns.js`.
+HTML/CSS は `index.html` および `css/` ディレクトリに配置しています。JavaScript は `js/` にモジュールとして置き、ページでは `scripts.js` を読み込みます。Three.js による追加演出は `three-lanterns.js` に実装されています。
 
-## Local preview
+## ローカルプレビュー
 
-- Recommended (no install):
+- 推奨（インストール不要）:
 
 ```bash
 npx http-server -c-1
 ```
 
-Visit the URL printed in the terminal (e.g. <http://127.0.0.1:8080/>).
+ターミナルに表示される URL にアクセスしてください（例: <http://127.0.0.1:8080/>）。
 
-- Alternative (Python built-in):
+- 代替（Python 標準機能）:
 
 ```bash
 python3 -m http.server
 ```
 
-Then visit <http://localhost:8000/>.
+ブラウザで <http://localhost:8000/> を開いてください。
 
-## Deployment
+## デプロイ
 
-The site can be deployed with GitHub Pages. Enable Pages from the repository settings and serve content from the `main` branch (root). A `CNAME` file is included for the custom domain `project-shuka.com`.
+本サイトは GitHub Pages で公開できます。リポジトリ設定から Pages を有効化し、`main` ブランチ（ルート）を公開対象に設定してください。カスタムドメイン `project-shuka.com` 用の `CNAME` ファイルを同梱しています。
 
-### About CNAME
-- Purpose: bind the site to the custom domain `project-shuka.com` on GitHub Pages.
-- Format: the file must contain exactly one line with the domain name (no protocol, no path). Comments are not supported.
-- DNS: ensure the domain points to GitHub Pages (A/ALIAS/CNAME records as appropriate) and that the custom domain is set in the repository’s Pages settings.
+### CNAME について
+- 目的: GitHub Pages でサイトをカスタムドメイン `project-shuka.com` に紐付けるためのファイルです。
+- 形式: ドメイン名のみを 1 行で記載します（プロトコル・パス不可）。コメントは記述できません。
+- DNS: ドメインが GitHub Pages を指すように DNS（A/ALIAS/CNAME）を設定し、リポジトリの Pages 設定で Custom domain を登録してください。
 
-## Notes
+## 補足
 
-This site is a static build checked into the repository. No build step is required. Node.js 18+ is recommended for tooling compatibility.
+本サイトは静的サイトとしてリポジトリに格納されています。ビルド工程は不要です。ツール互換性のため Node.js 18 以上の利用を推奨します。
