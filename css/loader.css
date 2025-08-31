@@ -10,7 +10,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* 生成り色の下地＋和紙画像。中央配置、coverで全面フィット、繰り返しなし */
+  /* 指定のローディング背景を使用 */
   background: #fdfaf5 url('../img/ローディング.webp') center / cover no-repeat;
   /* 拡大アニメなどで子要素がはみ出す部分はマスク */
   overflow: hidden;
