@@ -23,26 +23,26 @@ project-shuka/
 
 ## Local preview
 
-Any static server can be used to preview the site locally. Example using Python:
+- Recommended (no install):
+
+```bash
+npx http-server -c-1
+```
+
+Visit the URL printed in the terminal (e.g. <http://127.0.0.1:8080/>).
+
+- Alternative (Python built-in):
 
 ```bash
 python3 -m http.server
 ```
 
-Then visit <http://localhost:8000/> in your browser.
+Then visit <http://localhost:8000/>.
 
 ## Deployment
 
 The site can be deployed with GitHub Pages. Enable Pages from the repository settings and serve content from the `main` branch (root). A `CNAME` file is included for the custom domain `project-shuka.com`.
 
-## Build notes
+## Notes
 
-`styles.css` and `scripts.js` are generated from the source modules in `css/` and `js/`.
-Run the build script whenever you modify these directories:
-
-```bash
-npm install
-npm run build
-```
-
-Node.js 18 or later is required.
+This site is a static build checked into the repository. No build step is required. Node.js 18+ is recommended for tooling compatibility.

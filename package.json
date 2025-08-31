@@ -2,13 +2,7 @@
   "name": "project-shuka",
   "version": "1.0.0",
   "description": "Build tools for the Shuka website",
-  "scripts": {
-    "start": "http-server -c-1"
-  },
   "engines": {
     "node": ">=18"
-  },
-  "dependencies": {
-    "http-server": "^14.1.1"
   }
 }
