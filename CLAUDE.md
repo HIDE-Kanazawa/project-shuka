@@ -48,6 +48,13 @@ _Autonoums Development Guide for Claude Code_
 - **JavaScript** … ES6+ 記法  
 - **外部ライブラリ** … Three.js（CDN経由）を視覚効果のために使用許可
 
+#### ローカル起動メモ
+- ビルド工程なし。プレビューは `npx http-server -c-1` を推奨（キャッシュ無効）。
+
+#### Service Worker 運用
+- `sw.js` は `VERSION` によりキャッシュ更新を制御（現在: `v4`）。
+- `PRECACHE_URLS` は非 minified アセット（例: `/css/loader.css`, `/js/loader.js`）を対象とする。
+
 ### 4-2. レスポンシブ対応
 - **モバイルファースト** 設計  
 - ブレークポイント例:  
@@ -178,6 +185,7 @@ _Autonoums Development Guide for Claude Code_
 - **ソースファイル直接使用**: 開発効率とメンテナンス性を重視
 - **コード品質**: 可読性と保守性を優先した実装
 - **パフォーマンス**: Service Worker キャッシュで補完
+ - **アセット方針**: 可読性重視のため `.min.css` / `.min.js` は使用しない（必要時のみ再導入）。
 
 ### 追加最適化
 - **Service Worker**: キャッシュ機能実装
@@ -286,8 +294,8 @@ Claude Code を `--dangerous-skip-permissions` フラグで実行する場合で
 > これらを実施する場合は必ずメンション付き PR または Issue で承認を得る。
 
 ### 11-7. ログ & 監査
-- すべての Danger-mode 実行ログは `logs/danger-<YYYYMMDD-HHmm>.txt` に保存。  
-- 重要ログは 30 日間保持し、Git には **コミットしない**（.gitignore 済み）。
+- すべての Danger-mode 実行ログは必要に応じて `logs/danger-<YYYYMMDD-HHmm>.txt` に保存。  
+- 重要ログは 30 日間保持し、Git には **コミットしない**。現在 `.gitignore` は未設置のため、生成時は手動で除外・削除する運用とする（必要になれば再追加）。
 
 ---
 
