@@ -1,37 +1,55 @@
-/* Fullscreen loader with washi texture and ink spread */
+/* 画面全体を覆うローディング演出（和紙テクスチャ背景＋墨のにじみ拡大） */
 #loader {
+  /* ビューポート固定配置：スクロールに関係なく全画面に表示 */
   position: fixed;
+  /* 4辺を0指定して全画面に広げる（top/right/bottom/leftの省略記法） */
   inset: 0;
+  /* 他要素より確実に前面に出すための大きいスタッキングコンテキスト */
   z-index: 100000;
+  /* コンテンツを中央に配置するためのFlexレイアウト */
   display: flex;
   justify-content: center;
   align-items: center;
+  /* 生成り色の下地＋和紙画像。中央配置、coverで全面フィット、繰り返しなし */
   background: #fdfaf5 url('../img/ローディング.webp') center / cover no-repeat;
+  /* 拡大アニメなどで子要素がはみ出す部分はマスク */
   overflow: hidden;
+  /* 初期は可視（不透明） */
   opacity: 1;
+  /* レイアウト上でも表示状態 */
   visibility: visible;
+  /* フェードアウト時の滑らかな遷移（不透明度と可視性） */
   transition: opacity 1.6s ease, visibility 1.6s ease;
 }
 
 #loader.fade-out {
+  /* 非表示状態へ。JSなどでクラス付与して発火 */
   opacity: 0;
   visibility: hidden;
 }
 
-/* Expanding ink effect */
+/* 墨が広がるような円形グラデーションの拡大エフェクト */
 #loader .ink {
+  /* ローダー内で自由配置（中央基準に広がる効果を作りやすい） */
   position: absolute;
+  /* 画面の長辺基準（vmax）で十分大きく。四隅まで覆う想定 */
   width: 120vmax;
   height: 120vmax;
+  /* 中心が濃く外側に向かって透明になる放射状グラデーション（墨のにじみ感） */
   background: radial-gradient(circle at center, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 60%);
+  /* 完全な円にする */
   border-radius: 50%;
+  /* 初期は極小（見えない）から開始 */
   transform: scale(0);
+  /* 5秒かけて拡大し、終了状態を保持（forwards） */
   animation: inkSpread 5s ease-out forwards;
 }
 
 @keyframes inkSpread {
   to {
+    /* 等倍まで拡大（scale(0) → scale(1)） */
     transform: scale(1);
+    /* 拡大とともに透明にして自然に消える */
     opacity: 0;
   }
 }

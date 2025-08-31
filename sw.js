@@ -1,4 +1,4 @@
-const VERSION = 'v2';
+const VERSION = 'v3';
 const STATIC_CACHE = `shuka-static-${VERSION}`;
 const RUNTIME_CACHE = `shuka-runtime-${VERSION}`;
 
@@ -7,7 +7,7 @@ const PRECACHE_URLS = [
   '/',
   '/index.html',
   '/styles.css',
-  '/css/loader.min.css',
+  '/css/loader.css',
   '/scripts.js',
   '/js/loader.min.js',
   '/img/秀歌-メインビジュアル.webp',
