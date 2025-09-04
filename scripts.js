@@ -3479,14 +3479,7 @@ class RainEffect {
       this.drops.push(this.createDrop(true));
     }
 
-    // マウス・タッチインタラクションの設定
-    this.handleMouseMove = this.handleMouseMove.bind(this);
-    window.addEventListener('mousemove', this.handleMouseMove);
-    window.addEventListener('touchmove', (e) => {
-      if (e.touches && e.touches[0]) {
-        this.handleMouseMove(e.touches[0]);
-      }
-    }, { passive: true }); // パッシブモードでパフォーマンス向上
+    // マウス・タッチインタラクションは削除し、自然な風の変化のみに
 
     // 風の動きを管理する変数
     this.wind = 0; // 現在の風力
@@ -3539,18 +3532,7 @@ class RainEffect {
     };
   }
 
-  /**
-   * マウス移動イベントハンドラー - ユーザーのマウス操作で風の方向を制御
-   * マウスの水平位置に応じて風の目標値を設定し、雨の傾きを動的に変化
-   * @param {MouseEvent|Touch} e - マウスイベントまたはタッチイベント
-   * @description ユーザーがマウスを左右に動かすと、その方向に応じて風が吹き、
-   *              雨が斜めに降るインタラクティブな体験を提供。参加型の雨の演出
-   */
-  handleMouseMove(e) {
-    const centerX = window.innerWidth / 2;
-    const normalized = (e.clientX - centerX) / centerX;
-    this.windTarget = normalized * 2;
-  }
+  // マウス連動は削除し、自然な風の変化のみに変更
 
   /**
    * 雨のアニメーションメインループ - リアルな梅雨の動きをキャンバスに描画
@@ -3651,13 +3633,7 @@ class SakuraEffect {
     this.lastWindChange = performance.now();
     
     this.initializePetals(withBurst);
-    this.handleMouseMove = this.handleMouseMove.bind(this);
-    window.addEventListener('mousemove', this.handleMouseMove);
-    window.addEventListener('touchmove', (e) => {
-      if (e.touches && e.touches[0]) {
-        this.handleMouseMove(e.touches[0]);
-      }
-    }, { passive: true });
+    // マウス連動を削除 - 自然な風の変化のみを使用
     this.animate = this.animate.bind(this);
     requestAnimationFrame(this.animate);
   }
@@ -3751,18 +3727,7 @@ class SakuraEffect {
     return colors[Math.floor(Math.random() * colors.length)];
   }
 
-  /**
-   * マウス移動イベントハンドラー - 春のそよ風をユーザー操作で制御
-   * マウスの水平位置に応じて春の風の方向を設定し、花びらの舞いを動的に制御
-   * @param {MouseEvent|Touch} e - マウスイベントまたはタッチイベント
-   * @description ユーザーがマウスを動かすとその方向に春のそよ風が吹き、
-   *              桜の花びらが美しく舞い散るインタラクティブな春の体験を提供
-   */
-  handleMouseMove(e) {
-    const centerX = window.innerWidth / 2;
-    const normalized = (e.clientX - centerX) / centerX;
-    this.windTarget = normalized * 2.5;
-  }
+  // マウス連動は削除し、自然な風の変化のみに変更
   
   animate() {
     const ctx = this.ctx;
@@ -4510,14 +4475,7 @@ class SnowEffect {
       this.flakes.push(this.createFlake(true));
     }
 
-    // マウス・タッチインタラクションの設定
-    this.handleMouseMove = this.handleMouseMove.bind(this);
-    window.addEventListener('mousemove', this.handleMouseMove);
-    window.addEventListener('touchmove', (e) => {
-      if (e.touches && e.touches[0]) {
-        this.handleMouseMove(e.touches[0]);
-      }
-    }, { passive: true });
+    // マウス連動は削除し、自然な風の変化のみに
 
     // 穏やかな漂いのための風変数
     this.wind = 0;
@@ -4572,18 +4530,7 @@ class SnowEffect {
     };
   }
 
-  /**
-   * マウス移動イベントハンドラー - 冬の穏やかな風をユーザー操作で制御
-   * マウスの水平位置に応じて冬の風の方向を設定し、雪片の漂いを動的に制御
-   * @param {MouseEvent|Touch} e - マウスイベントまたはタッチイベント
-   * @description ユーザーがマウスを動かすとその方向に穏やかな冬の風が吹き、
-   *              雪片が美しく漂うインタラクティブな冬の体験を提供
-   */
-  handleMouseMove(e) {
-    const centerX = window.innerWidth / 2;
-    const normalized = (e.clientX - centerX) / centerX;
-    this.windTarget = normalized * 0.5;
-  }
+  // マウス連動は削除し、自然な風の変化のみに変更
 
   /**
    * 雪エフェクトのアニメーション処理 - 冬の静寂で美しい雪景の表現
@@ -4785,14 +4732,7 @@ class AutumnLeavesEffect {
       this.leaves.push(this.createLeaf(true));
     }
 
-    // マウス・タッチインタラクションの設定
-    this.handleMouseMove = this.handleMouseMove.bind(this);
-    window.addEventListener('mousemove', this.handleMouseMove);
-    window.addEventListener('touchmove', (e) => {
-      if (e.touches && e.touches[0]) {
-        this.handleMouseMove(e.touches[0]);
-      }
-    }, { passive: true });
+    // マウス連動は削除し、自然な風の変化のみに
 
     // 自然な落ち葉の動きのための風変数
     this.wind = 0;
@@ -4887,18 +4827,7 @@ class AutumnLeavesEffect {
     }
   }
 
-  /**
-   * マウス移動イベントハンドラー - 秋風をユーザー操作で制御
-   * マウスの水平位置に応じて秋風の方向を設定し、落ち葉の舞いを動的に制御
-   * @param {MouseEvent|Touch} e - マウスイベントまたはタッチイベント
-   * @description ユーザーがマウスを動かすとその方向に秋風が吹き、
-   *              もみじとイチョウが美しく舞い散るインタラクティブな秋の体験を提供
-   */
-  handleMouseMove(e) {
-    const centerX = window.innerWidth / 2;
-    const normalized = (e.clientX - centerX) / centerX;
-    this.windTarget = normalized * 1.5; // 秋風の強さ設定
-  }
+  // マウス連動による風向き制御を削除 - 自然な風の変化のみを使用
 
   /**
    * 紅葉エフェクトのアニメーション処理 - 秋の情緒ある紅葉景の表現
@@ -5118,13 +5047,7 @@ class SummerWillowEffect {
       this.willowLeaves.push(this.createWillowLeaf(true));
     }
 
-    this.handleMouseMove = this.handleMouseMove.bind(this);
-    window.addEventListener('mousemove', this.handleMouseMove);
-    window.addEventListener('touchmove', (e) => {
-      if (e.touches && e.touches[0]) {
-        this.handleMouseMove(e.touches[0]);
-      }
-    }, { passive: true });
+    // マウス連動は削除し、自然な風の変化のみに
 
     // 穏やかな夏風のための風変数 - 涼風の表現
     this.wind = 0;
@@ -5195,18 +5118,7 @@ class SummerWillowEffect {
     return colors[Math.floor(Math.random() * colors.length)];
   }
 
-  /**
-   * マウス移動イベントハンドラー - 夏風をユーザー操作で制御
-   * マウスの水平位置に応じて夏風の方向を設定し、柳葉の流れを動的に制御
-   * @param {MouseEvent|Touch} e - マウスイベントまたはタッチイベント
-   * @description ユーザーがマウスを動かすとその方向に涼しい夏風が吹き、
-   *              柳の葉が美しく流れるようにそよぐインタラクティブな夏の体験を提供
-   */
-  handleMouseMove(e) {
-    const centerX = window.innerWidth / 2;
-    const normalized = (e.clientX - centerX) / centerX;
-    this.windTarget = normalized * 3.5; // 夏風の強さ設定（秋よりも強め）
-  }
+  // マウス連動は削除し、自然な風の変化のみに変更
 
   /**
    * 夏の柳エフェクトのアニメーション処理 - 涼しげのある夏の柳景の表現
