@@ -147,9 +147,9 @@ function initAccessibilityFeatures() {
  * Navigation Module
  *
  * 役割:
- * - ハンバーガーメニュー（モバイル）トグル
  * - アンカースクロールのスムーズ化
  * - スクロール位置に応じたヘッダー挙動（必要に応じて）
+ * - アクティブナビゲーションの更新
  *
  * パフォーマンス配慮:
  * - スクロール/ポインタイベントは `passive: true` を基本にし、
@@ -162,7 +162,6 @@ class Navigation {
    */
   constructor() {
     // DOM要素の取得
-    this.navToggle = document.getElementById('nav-toggle'); // モバイルメニューのトグルボタン
     this.navMenu = document.getElementById('nav-menu'); // メニュー要素
     this.navLinks = document.querySelectorAll('.nav-menu a[href^="#"]'); // アンカーリンク群
     this.header = document.getElementById('header'); // ヘッダー要素
@@ -183,90 +182,31 @@ class Navigation {
   
   /**
    * イベントリスナーのバインディング
-   * - モバイルメニューの開閉
    * - スムーズスクロール
    * - 外部クリック検知
    * - スクロール検知
    * - キーボード操作
    */
   bindEvents() {
-    // モバイルメニューのトグル機能
-    if (this.navToggle) {
-      this.navToggle.addEventListener('click', () => this.toggleMobileMenu());
-    }
     
     // アンカーリンクでのスムーズスクロール
     this.navLinks.forEach(link => {
       link.addEventListener('click', (e) => this.handleSmoothScroll(e));
     });
     
-    // メニュー外クリックでメニューを閉じる
-    document.addEventListener('click', (e) => this.handleOutsideClick(e));
     
     // スクロール時のヘッダースタイル変更
     window.addEventListener('scroll', () => this.handleScroll());
     
   }
   
-  /**
-   * モバイルメニューの開閉トグル
-   * 現在の状態に応じて開く・閉じるを切り替える
-   */
-  toggleMobileMenu() {
-    const isActive = this.navMenu.classList.contains('active');
-    
-    if (isActive) {
-      this.closeMobileMenu();
-    } else {
-      this.openMobileMenu();
-    }
-  }
   
-  /**
-   * モバイルメニューを開く
-   * - メニューを表示状態にする
-   * - ARIAアトリビュートを更新
-   * - ページスクロールを無効化
-   * - フォーカス管理
-   */
-  openMobileMenu() {
-    this.navMenu.classList.add('active');
-    if (this.navToggle) {
-      this.navToggle.classList.add('active');
-      this.navToggle.setAttribute('aria-expanded', 'true'); // 展開状態を通知
-      this.navToggle.setAttribute('aria-label', 'メニューを閉じる');
-    }
-    
-    // メニュー表示中はページのスクロールを無効化
-    document.body.style.overflow = 'hidden';
-    
-  }
   
-  /**
-   * モバイルメニューを閉じる
-   * - メニューを非表示状態にする
-   * - ARIAアトリビュートを更新
-   * - ページスクロールを復元
-   * - フォーカスをトグルボタンに戻す
-   */
-  closeMobileMenu() {
-    this.navMenu.classList.remove('active');
-    if (this.navToggle) {
-      this.navToggle.classList.remove('active');
-      this.navToggle.setAttribute('aria-expanded', 'false'); // 折りたたみ状態を通知
-      this.navToggle.setAttribute('aria-label', 'メニューを開く');
-    }
-    
-    // ページスクロールを復元
-    document.body.style.overflow = '';
-    
-  }
   
   /**
    * スムーズスクロール処理
    * アンカーリンククリック時の処理
    * - ページ内の指定セクションにスムーズにスクロール
-   * - モバイルメニューが開いている場合は閉じる
    * - URLを更新してブックマーク対応
    * - アクティブなナビゲーションリンクを更新
    */
@@ -277,10 +217,6 @@ class Navigation {
     const targetElement = document.getElementById(targetId);
     
     if (targetElement) {
-      // モバイルメニューが開いている場合は閉じる
-      if (this.navMenu.classList.contains('active')) {
-        this.closeMobileMenu();
-      }
       
       // 固定ヘッダーの高さを考慮したオフセット計算
       const headerHeight = this.header.offsetHeight;
@@ -348,17 +284,6 @@ class Navigation {
     });
   }
   
-  /**
-   * メニュー外クリック処理
-   * - ナビゲーション以外の場所をクリックした時にモバイルメニューを閉じる
-   */
-  handleOutsideClick(e) {
-    const isClickInsideNav = this.navMenu.contains(e.target) || (this.navToggle && this.navToggle.contains(e.target));
-    
-    if (!isClickInsideNav && this.navMenu.classList.contains('active')) {
-      this.closeMobileMenu();
-    }
-  }
   
   
   /**
@@ -3804,7 +3729,6 @@ if (typeof module !== 'undefined' && module.exports) {
  * - 季節ギャラリーを梅雨（tsuyu）に設定
  * - 雨エフェクトの有効化
  * - アバウト画像のメイン画像へのリセット
- * - モバイルメニューの自動クローズ
  * - URLの適切な更新
  * 
  * @param {Event} event - クリックイベント
@@ -3846,15 +3770,6 @@ window.handleLogoClick = function(event) {
     window.seasonsGallery.updateURL('tsuyu');
   }
   
-  // モバイルメニューが開いている場合はクローズ
-  const navMenu = document.getElementById('nav-menu');
-  const navToggle = document.getElementById('nav-toggle');
-  if (navMenu && navMenu.classList.contains('active')) {
-    navMenu.classList.remove('active');
-    navToggle.classList.remove('active');
-    navToggle.setAttribute('aria-expanded', 'false');
-    document.body.style.overflow = ''; // スクロールを再有効化
-  }
 };
 
 /**

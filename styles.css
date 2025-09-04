@@ -628,43 +628,6 @@ a:focus {
   font-weight: 400;              /* ノーマルウェイト */
 }
 
-.nav-toggle {
-  display: none;
-  flex-direction: column;
-  gap: var(--space-1);
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: var(--space-2);
-  border-radius: var(--radius);
-  transition: background-color var(--transition-fast);
-}
-
-.nav-toggle:hover,
-.nav-toggle:focus {
-  background-color: var(--neutral-800);
-  outline: 2px solid var(--primary);
-}
-
-.nav-toggle span {
-  width: 25px;
-  height: 3px;
-  background-color: var(--text);
-  border-radius: var(--radius-full);
-  transition: all var(--transition-fast);
-}
-
-.nav-toggle.active span:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
-}
-
-.nav-toggle.active span:nth-child(2) {
-  opacity: 0;
-}
-
-.nav-toggle.active span:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg);
-}
 
 .nav-menu {
   display: flex;
@@ -835,21 +798,16 @@ a:focus {
  * 767px以下のスクリーンでのナビゲーション体験最適化
  * 
  * モバイルファースト設計の特徴:
- * - ハンバーガーメニューで省スペース化
  * - フルスクリーンオーバーレイで集中的なナビゲーション
  * - タッチフレンドリーなターゲットサイズ
  * - アニメーションでスムーズな開閉操作
  */
 @media (max-width: 767px) {
-  /* ハンバーガーメニュートグルボタンを表示 */
-  .nav-toggle {
-    display: flex;              /* モバイルでのみハンバーガーボタンを表示 */
-  }
 
   /* モバイル用ナビゲーションコンテナの調整 */
   .nav-container {
     flex-wrap: nowrap;          /* 要素の折り返しを禁止して一列表示 */
-    gap: var(--space-4);        /* ロゴとハンバーガーボタンの適切な間隔 */
+    gap: var(--space-4);        /* ロゴとナビゲーションの適切な間隔 */
   }
 
   /* 
@@ -3116,7 +3074,6 @@ SURF_END SeasonTextColor */
 /* ===== 印刷スタイル - 紙出力最適化 ===== */
 @media print {
   .header,
-  .nav-toggle,
   .hero-actions,
   .season-nav,
   audio,
@@ -3915,7 +3872,6 @@ audio:focus-visible {
 /* ===== タッチターゲットサイズ強化 ===== */
 /* モバイル向け最低44pxタッチターゲットを確保 */
 @media (max-width: 768px) {
-  .nav-toggle,
   .season-btn,
   .social-link {
     min-height: 44px;
