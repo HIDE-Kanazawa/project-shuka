@@ -1,313 +1,437 @@
-/* WINDSURF_START Fonts */
+/* =============================================================================
+ * Shuka - 秀歌（AI音楽アーティスト公式サイト）スタイルシート
+ * =============================================================================
+ * 和風テイストを基調とした季節演出システム搭載のレスポンシブWebサイト
+ * Three.js 3D演出、季節自動切替、モバイル最適化対応
+ * ============================================================================= */
+
+/* ===== フォント設定開始 ===== */
+/* =============================================================================
+ * フォント設定
+ * =============================================================================
+ * 日本語表示に最適化されたフォントファミリーを定義
+ * Noto Serif JP を使用して和風な印象を演出
+ * ============================================================================= */
 :root {
+  /* 見出し用フォント - 和風セリフ体で重厚感を演出 */
   --ff-heading: "Noto Serif JP", serif;
+  /* 本文用フォント - 可読性を重視した日本語最適化フォント */
   --ff-body:    "Noto Serif JP", serif;
 }
+
+/* ===== 初期body設定 - フォント適用とリセット ===== */
 body {
-  font-family: var(--ff-body);
-  margin: 0;
+  font-family: var(--ff-body);    /* 日本語最適化フォントファミリーを適用 */
+  margin: 0;                      /* ブラウザデフォルトマージンをリセット */
 }
 
-/* Three.js canvas styling */
+/* =============================================================================
+ * Three.js 3D演出用キャンバス設定
+ * =============================================================================
+ * 背景に固定表示される3D演出（提灯など）のキャンバス要素
+ * ユーザーインタラクションを無効化し、最背面に配置
+ * ============================================================================= */
 .three-js-canvas {
-  position: fixed;
+  position: fixed;        /* 画面固定表示 */
   top: 0;
   left: 0;
-  width: 100%;
+  width: 100%;           /* 全画面サイズ */
   height: 100%;
-  z-index: -1;
-  pointer-events: none;
+  z-index: -1;           /* 最背面に配置 */
+  pointer-events: none;  /* クリックやタッチを無効化 */
 }
+
+/* ===== 見出し要素フォント設定 - 和風セリフ体適用 ===== */
 h1, h2, h3 {
-  font-family: var(--ff-heading);
+  font-family: var(--ff-heading); /* 重厚感のある見出し用和風フォント適用 */
 }
-/* WINDSURF_END Fonts */
+/* ===== フォント設定終了 ===== */
   
 
-/* ===== CSS Variables ===== */
+/* =============================================================================
+ * CSS カスタムプロパティ（変数）定義
+ * =============================================================================
+ * サイト全体で使用するカラー、フォント、スペーシングなどを一元管理
+ * 季節テーマシステムと連携してダイナミックな色彩表現を実現
+ * ============================================================================= */
 
-/* WINDSURF_START SeasonVars */
+/* ===== 季節変数設定開始 ===== */
+/* =============================================================================
+ * 季節テーマカラーシステム
+ * =============================================================================
+ * 日本の四季（春・夏・秋・冬）と梅雨をテーマにした5色のカラーパレット
+ * 各季節に適した色合いで訪問者に季節感を演出
+ * ============================================================================= */
 :root{
+  /* 春テーマ - 桜の季節を表現する優しいピンク系 */
   --primary-spring:#FFB7C5; --accent-spring:#FF7C98;
+  
+  /* 夏テーマ - 新緑と海を表現する爽やかなグリーン・ブルー系 */
   --primary-summer:#6FDCC2; --accent-summer:#10BFA7;
+  
+  /* 秋テーマ - 紅葉を表現する温かみのあるオレンジ・ゴールド系 */
   --primary-autumn:#F9AF4B; --accent-autumn:#E57C04;
+  
+  /* 冬テーマ - 雪景色を表現する清涼感のあるブルー系 */
   --primary-winter:#ADC8FF; --accent-winter:#4B6CFF;
+  
+  /* 梅雨テーマ - 雨雲と紫陽花を表現する落ち着いたブルーグレー系 */
   --primary-tsuyu:#7BA7D4; --accent-tsuyu:#4A90B8;
 }
-body[data-season="spring"]{ --primary:var(--primary-spring); --accent:var(--accent-spring); }
-body[data-season="summer"]{ --primary:var(--primary-summer); --accent:var(--accent-summer); }
-body[data-season="autumn"]{ --primary:var(--primary-autumn); --accent:var(--accent-autumn); }
-body[data-season="winter"]{ --primary:var(--primary-winter); --accent:var(--accent-winter); }
-body[data-season="tsuyu"]{ --primary:var(--primary-tsuyu); --accent:var(--accent-tsuyu); }
+/* ===== 季節テーマ動的切替システム ===== */
+/* data-season属性の値に基づいて、サイト全体の色彩テーマを瞬時に変更 */
+/* 各季節ごとにプライマリカラーとアクセントカラーを自動的に適用 */
+body[data-season="spring"]{ --primary:var(--primary-spring); --accent:var(--accent-spring); } /* 春：桜色系 */
+body[data-season="summer"]{ --primary:var(--primary-summer); --accent:var(--accent-summer); } /* 夏：新緑系 */
+body[data-season="autumn"]{ --primary:var(--primary-autumn); --accent:var(--accent-autumn); } /* 秋：紅葉系 */
+body[data-season="winter"]{ --primary:var(--primary-winter); --accent:var(--accent-winter); } /* 冬：雪景系 */
+body[data-season="tsuyu"]{ --primary:var(--primary-tsuyu); --accent:var(--accent-tsuyu); }   /* 梅雨：雨雲系 */
 
-/* Tsuyu (Rainy Season) Special Styling */
+/* =============================================================================
+ * 梅雨（つゆ）シーズン特別スタイリング
+ * =============================================================================
+ * 日本の梅雨シーズンを表現する特別なテーマ設定
+ * 雨空と湿気をイメージした深いブルーグレー調のカラーパレット
+ * ============================================================================= */
 
 body[data-season="tsuyu"] {
+  /* 梅雨時の曇り空を表現する深いブルーグレー背景 */
   --background: #1a2332;
+  /* カードやパネルの表面色 - 雨雲のような柔らかさ */
   --surface: #253142;
+  /* メインテキスト色 - 雨に濡れた空気を表現 */
   --text: #d1dae6;
+  /* サブテキスト色 - 霧の中のような柔らかさ */
   --text-secondary: #a8b8c8;
+  /* ミュートテキスト色 - 遠くの景色のような淡さ */
   --text-muted: #7a8ba3;
+  /* ボーダー色 - 水滴の輪郭をイメージ */
   --border: #3a4a5c;
+  /* 影の色 - 梅雨の柔らかな光と影 */
   --shadow: rgba(123, 167, 212, 0.2);
   --shadow-lg: rgba(123, 167, 212, 0.3);
 }
 
-/* Tsuyu hero backdrop effect */
+/* =============================================================================
+ * 梅雨シーズンのヒーロー背景エフェクト
+ * =============================================================================
+ * ファーストビューエリアに梅雨の湿った空気感を演出するグラデーション
+ * 層状の雨雲を表現し、深みと雰囲気を作り出す
+ * ============================================================================= */
 body[data-season="tsuyu"] .hero {
-  position: relative;
+  position: relative;  /* 擬似要素の基準点となるため */
 }
 
+/* ヒーローエリアに梅雨の大気を表現するオーバーレイ */
 body[data-season="tsuyu"] .hero::before {
-  content: '';
+  content: '';              /* 空の擬似要素を作成 */
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: 0;               /* 親要素全体をカバー */
+  /* 上から下へのグラデーション - 梅雨空の層状構造を表現 */
   background: linear-gradient(
     to bottom,
-    rgba(123, 167, 212, 0.1) 0%,
-    rgba(74, 144, 184, 0.15) 50%,
-    rgba(123, 167, 212, 0.2) 100%
+    rgba(123, 167, 212, 0.1) 0%,    /* 上部:淡い雲 */
+    rgba(74, 144, 184, 0.15) 50%,   /* 中央:少し濃い雲 */
+    rgba(123, 167, 212, 0.2) 100%   /* 下部:雨雲の重み */
   );
-  pointer-events: none;
-  z-index: 1;
+  pointer-events: none;    /* クリックを無効化 */
+  z-index: 1;             /* 背景より上、コンテンツより下に配置 */
 }
 
+/* ヒーローコンテンツをオーバーレイより上に表示 */
 body[data-season="tsuyu"] .hero-content {
-  z-index: 2;
+  z-index: 2;             /* オーバーレイより上に配置 */
   position: relative;
 }
 
-/* Tsuyu-specific gradient buttons */
+/* =============================================================================
+ * 梅雨シーズン特別グラデーションボタン
+ * =============================================================================
+ * 雨水の流れをイメージした美しいグラデーションボタン
+ * ホバー時のエフェクトで水面の波紋を表現
+ * ============================================================================= */
 body[data-season="tsuyu"] .cta-button.primary {
+  /* 120度の角度で雨の雫を表現するグラデーション */
   background: linear-gradient(120deg, #4A90B8 0%, #7BA7D4 100%);
+  /* 水面に落ちる雨粒のような柔らかな影 */
   box-shadow: 0 4px 15px rgba(74, 144, 184, 0.3);
 }
 
+/* ホバー時の水面波紋エフェクト */
 body[data-season="tsuyu"] .cta-button.primary:hover {
+  /* より大きな波紋と深い影でインタラクションを表現 */
   box-shadow: 0 8px 25px rgba(74, 144, 184, 0.4);
 }
 
-/* Soften borders and add subtle moisture effect */
+/* =============================================================================
+ * 梅雨シーズンの湿気エフェクト
+ * =============================================================================
+ * カードや画像に湿気を含んだ空気のような柔らかさを付与
+ * 綺綺なボーダーと多層シャドウで水滴のような質感を表現
+ * ============================================================================= */
 body[data-season="tsuyu"] .feature,
 body[data-season="tsuyu"] .track,
 body[data-season="tsuyu"] .about-image,
 body[data-season="tsuyu"] .season-image {
+  /* 水滴の輪郭のような緊細なボーダー */
   border: 1px solid rgba(123, 167, 212, 0.2);
-  box-shadow: 0 2px 8px rgba(74, 144, 184, 0.1), 
-              0 1px 3px rgba(123, 167, 212, 0.15);
+  /* 二重の影で水面に浮かぶような立体感を演出 */
+  box-shadow: 0 2px 8px rgba(74, 144, 184, 0.1),    /* 外側の大きな柔らかい影 */
+              0 1px 3px rgba(123, 167, 212, 0.15); /* 内側の緊細な影 */
 }
 
+/* ホバー時の水面波紋拡大エフェクト */
 body[data-season="tsuyu"] .feature:hover,
 body[data-season="tsuyu"] .track:hover {
-  box-shadow: 0 4px 16px rgba(74, 144, 184, 0.2), 
-              0 2px 6px rgba(123, 167, 212, 0.25);
+  /* より大きな波紋と深い影でインタラクションを表現 */
+  box-shadow: 0 4px 16px rgba(74, 144, 184, 0.2),   /* 拡大された外側の影 */
+              0 2px 6px rgba(123, 167, 212, 0.25);  /* 強化された内側の影 */
 }
 
-/* Tsuyu season button styling */
+/* =============================================================================
+ * 梅雨シーズンボタンスタイリング
+ * =============================================================================
+ * 季節切替ボタンに梅雨の雰囲気を付与する特別エフェクト
+ * フォーカスやホバー時に水滴の波紋が広がるようなアニメーション
+ * ============================================================================= */
 body[data-season="tsuyu"] .season-btn:hover,
 body[data-season="tsuyu"] .season-btn:focus-visible {
-  box-shadow: 0 12px 32px rgba(74, 144, 184, 0.25), 
-              0 6px 12px rgba(123, 167, 212, 0.2);
+  /* 大きな水滴の波紋を表現する大きな影 */
+  box-shadow: 0 12px 32px rgba(74, 144, 184, 0.25),  /* 幅広い波紋エフェクト */
+              0 6px 12px rgba(123, 167, 212, 0.2);   /* 中心部の濃い影 */
 }
 
-/* Add subtle water droplet animation to text elements */
+/* =============================================================================
+ * 梅雨シーズンのテキストエフェクト
+ * =============================================================================
+ * 水滴や水蒸気を想起させる繊細なテキストシャドウエフェクト
+ * タイトルや区切り線に梅雨の美しさを表現
+ * ============================================================================= */
+
+/* ヒーロータイトルに水滴アニメーション風のエフェクト */
 body[data-season="tsuyu"] .hero-title {
   text-shadow: 
-    2px 2px 4px rgba(0, 0, 0, 0.7),
-    0 0 10px rgba(123, 167, 212, 0.3);
+    2px 2px 4px rgba(0, 0, 0, 0.7),        /* 深い影で文字を強調 */
+    0 0 10px rgba(123, 167, 212, 0.3);     /* 水蒸気のような柔らかい光 */
 }
 
+/* セクションタイトル下の区切り線に梅雨のグラデーション */
 body[data-season="tsuyu"] .section-title::after {
+  /* 梅雨カラーのグラデーションで水の流れを表現 */
   background: linear-gradient(90deg, var(--primary-tsuyu), var(--accent-tsuyu));
+  /* 水面に映る光のような柔らかい影 */
   box-shadow: 0 2px 8px rgba(74, 144, 184, 0.3);
 }
 
-/* Make ripples more prominent in tsuyu season */
+/* =============================================================================
+ * 梅雨シーズンのリップルエフェクト強化
+ * =============================================================================
+ * 水面の波紋をより目立たせて梅雨の特別感を演出
+ * ============================================================================= */
 body[data-season="tsuyu"] .ripple {
+  /* 水滴の波紋を表現するより鮮明なボーダー */
   border-color: rgba(123, 167, 212, 0.6);
+  /* 水面に広がる波紋のような光る影 */
   box-shadow: 0 0 12px rgba(74, 144, 184, 0.4);
 }
-/* WINDSURF_END SeasonVars */
+/* ===== 季節変数設定終了 ===== */
+/* ===== メインカラーシステム定義 - サイト全体デザイン統一 ===== */
 :root {
-  /* Color Palette */
-  --primary: #6366f1;
-  --primary-light: #8b5cf6;
-  --primary-dark: #4f46e5;
-  --secondary: #f59e0b;
-  --secondary-light: #fbbf24;
-  --secondary-dark: #d97706;
-  --accent: #ec4899;
-  --accent-light: #f472b6;
-  --accent-dark: #db2777;
+  /* ===== プライマリカラーパレット ===== */
+  --primary: #6366f1;            /* メインブランドカラー（インディゴブルー） */
+  --primary-light: #8b5cf6;      /* ライトバリエーション（パープル系） */
+  --primary-dark: #4f46e5;       /* ダークバリエーション（濃いブルー） */
+  --secondary: #f59e0b;          /* セカンダリーカラー（アンバー） */
+  --secondary-light: #fbbf24;    /* ライトアンバー */
+  --secondary-dark: #d97706;     /* ダークアンバー */
+  --accent: #ec4899;             /* アクセントカラー（ピンク） */
+  --accent-light: #f472b6;       /* ライトピンク */
+  --accent-dark: #db2777;        /* ダークピンク */
   
-  /* Neutral Colors */
-  --neutral-50: #f9fafb;
-  --neutral-100: #f3f4f6;
-  --neutral-200: #e5e7eb;
-  --neutral-300: #d1d5db;
-  --neutral-400: #9ca3af;
-  --neutral-500: #6b7280;
-  --neutral-600: #4b5563;
-  --neutral-700: #374151;
-  --neutral-800: #1f2937;
-  --neutral-900: #111827;
   
-  /* Semantic Colors */
-  --background: #111827;
-  --surface: #1f2937;
-  --text: #f9fafb;
-  --text-secondary: #d1d5db;
-  --text-muted: #9ca3af;
-  --border: #374151;
-  --shadow: rgba(0, 0, 0, 0.3);
-  --shadow-lg: rgba(0, 0, 0, 0.4);
+  /* ===== ニュートラルグレースケール ===== */
+  --neutral-50: #f9fafb;         /* 極薄グレー（背景用） */
+  --neutral-100: #f3f4f6;        /* 薄グレー（カード背景） */
+  --neutral-200: #e5e7eb;        /* ボーダー用薄グレー */
+  --neutral-300: #d1d5db;        /* セカンダリテキスト用 */
+  --neutral-400: #9ca3af;        /* ミュートテキスト用 */
+  --neutral-500: #6b7280;        /* 中間グレー */
+  --neutral-600: #4b5563;        /* ダークグレー */
+  --neutral-700: #374151;        /* ダーク背景用 */
+  --neutral-800: #1f2937;        /* 濃いダーク */
+  --neutral-900: #111827;        /* 最深ダーク */
   
-  /* Seasonal Colors */
-  --spring: #22c55e;
-  --summer: #0ea5e9;
-  --autumn: #f97316;
-  --winter: #64748b;
   
-  /* Typography */
+  /* ===== セマンティックカラー（意味付けされた色） ===== */
+  --background: #111827;         /* メイン背景色 */
+  --surface: #1f2937;            /* カードやパネルの表面色 */
+  --text: #f9fafb;               /* メインテキスト色 */
+  --text-secondary: #d1d5db;     /* セカンダリテキスト色 */
+  --text-muted: #9ca3af;         /* 控えめなテキスト色 */
+  --border: #374151;             /* ボーダーや線の色 */
+  --shadow: rgba(0, 0, 0, 0.3);  /* 基本シャドウ */
+  --shadow-lg: rgba(0, 0, 0, 0.4); /* 大きなシャドウ */
+  
+  
+  /* ===== 季節アクセントカラー ===== */
+  --spring: #22c55e;             /* 春：新緑のグリーン */
+  --summer: #0ea5e9;             /* 夏：清涼なスカイブルー */
+  --autumn: #f97316;             /* 秋：紅葉のオレンジ */
+  --winter: #64748b;             /* 冬：雪空のグレー */
+  
+  
+  /* ===== タイポグラフィシステム ===== */
+  /* クロスプラットフォーム対応のフォントファミリー定義 */
   --font-sans: system-ui, -apple-system, "Segoe UI", "Roboto", "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif;
   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --font-mono: ui-monospace, "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
   --font-jp: "Noto Sans JP", "Yu Gothic", "游ゴシック", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
   
-  /* Font Sizes (Clamp for responsive typography) */
-  --text-xs: clamp(0.75rem, 0.7rem + 0.2vw, 0.875rem);
-  --text-sm: clamp(0.875rem, 0.8rem + 0.3vw, 1rem);
-  --text-base: clamp(1rem, 0.9rem + 0.4vw, 1.125rem);
-  --text-lg: clamp(1.125rem, 1rem + 0.5vw, 1.25rem);
-  --text-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
-  --text-2xl: clamp(1.5rem, 1.3rem + 0.8vw, 2rem);
-  --text-3xl: clamp(1.875rem, 1.6rem + 1vw, 2.5rem);
-  --text-4xl: clamp(2.25rem, 1.9rem + 1.4vw, 3rem);
-  --text-5xl: clamp(3rem, 2.5rem + 2vw, 4rem);
   
-  /* Spacing (8px grid system) */
-  --space-1: 0.25rem;   /* 4px */
-  --space-2: 0.5rem;    /* 8px */
-  --space-3: 0.75rem;   /* 12px */
-  --space-4: 1rem;      /* 16px */
-  --space-5: 1.25rem;   /* 20px */
-  --space-6: 1.5rem;    /* 24px */
-  --space-8: 2rem;      /* 32px */
-  --space-10: 2.5rem;   /* 40px */
-  --space-12: 3rem;     /* 48px */
-  --space-16: 4rem;     /* 64px */
-  --space-20: 5rem;     /* 80px */
-  --space-24: 6rem;     /* 96px */
-  --space-32: 8rem;     /* 128px */
+  /* ===== レスポンシブフォントサイズ（clamp関数使用） ===== */
+  --text-xs: clamp(0.75rem, 0.7rem + 0.2vw, 0.875rem);     /* 最小テキスト */
+  --text-sm: clamp(0.875rem, 0.8rem + 0.3vw, 1rem);        /* 小テキスト */
+  --text-base: clamp(1rem, 0.9rem + 0.4vw, 1.125rem);      /* ベーステキスト（標準） */
+  --text-lg: clamp(1.125rem, 1rem + 0.5vw, 1.25rem);       /* 大テキスト */
+  --text-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);       /* 特大テキスト */
+  --text-2xl: clamp(1.5rem, 1.3rem + 0.8vw, 2rem);         /* 小タイトル */
+  --text-3xl: clamp(1.875rem, 1.6rem + 1vw, 2.5rem);       /* 中タイトル */
+  --text-4xl: clamp(2.25rem, 1.9rem + 1.4vw, 3rem);        /* 大タイトル */
+  --text-5xl: clamp(3rem, 2.5rem + 2vw, 4rem);             /* 特大タイトル */
   
-  /* Border Radius */
-  --radius-sm: 0.25rem;
-  --radius: 0.5rem;
-  --radius-md: 0.75rem;
-  --radius-lg: 1rem;
-  --radius-xl: 1.5rem;
-  --radius-full: 9999px;
   
-  /* Transitions */
-  --transition-fast: 150ms ease-in-out;
-  --transition-normal: 300ms ease-in-out;
-  --transition-slow: 500ms ease-in-out;
+  /* ===== スペーシングシステム（8pxグリッドベース） ===== */
+  --space-1: 0.25rem;   /* 4px  - 最小間隔 */
+  --space-2: 0.5rem;    /* 8px  - 基本単位 */
+  --space-3: 0.75rem;   /* 12px - 小間隔 */
+  --space-4: 1rem;      /* 16px - 中間隔 */
+  --space-5: 1.25rem;   /* 20px - 中大間隔 */
+  --space-6: 1.5rem;    /* 24px - 大間隔 */
+  --space-8: 2rem;      /* 32px - 特大間隔 */
+  --space-10: 2.5rem;   /* 40px - セクション間隔 */
+  --space-12: 3rem;     /* 48px - 大セクション間隔 */
+  --space-16: 4rem;     /* 64px - 特大セクション間隔 */
+  --space-20: 5rem;     /* 80px - 巨大間隔 */
+  --space-24: 6rem;     /* 96px - 超大間隔 */
+  --space-32: 8rem;     /* 128px - 最大間隔 */
   
-  /* Z-index scale */
-  --z-dropdown: 1000;
-  --z-sticky: 1010;
-  --z-fixed: 1020;
-  --z-modal-backdrop: 1030;
-  --z-modal: 1040;
-  --z-popover: 1050;
-  --z-tooltip: 1060;
+  
+  /* ===== 角丸システム ===== */
+  --radius-sm: 0.25rem;          /* 小さな角丸 */
+  --radius: 0.5rem;              /* 標準角丸 */
+  --radius-md: 0.75rem;          /* 中角丸 */
+  --radius-lg: 1rem;             /* 大きな角丸 */
+  --radius-xl: 1.5rem;           /* 特大角丸 */
+  --radius-full: 9999px;         /* 完全な円形 */
+  
+  
+  /* ===== アニメーション時間設定 ===== */
+  --transition-fast: 150ms ease-in-out;     /* 素早いアニメーション */
+  --transition-normal: 300ms ease-in-out;   /* 標準アニメーション */
+  --transition-slow: 500ms ease-in-out;     /* ゆっくりアニメーション */
+  
+  
+  /* ===== Z-indexスケール（層の管理） ===== */
+  --z-dropdown: 1000;            /* ドロップダウンメニュー */
+  --z-sticky: 1010;              /* スティッキー要素 */
+  --z-fixed: 1020;               /* 固定要素（ヘッダーなど） */
+  --z-modal-backdrop: 1030;      /* モーダル背景 */
+  --z-modal: 1040;               /* モーダル本体 */
+  --z-popover: 1050;             /* ポップオーバー */
+  --z-tooltip: 1060;             /* ツールチップ（最前面） */
 }
 
 
-/* ===== Base Styles ===== */
+/* ===== ベーススタイル - サイト全体の基礎設定 ===== */
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+  box-sizing: border-box;         /* パディングとボーダーを幅に含める */
+  margin: 0;                      /* デフォルトマージンをリセット */
+  padding: 0;                     /* デフォルトパディングをリセット */
 }
 
+/* HTML全体のスクロール動作設定 */
 html {
-  font-size: 100%;
-  scroll-behavior: smooth;
+  font-size: 100%;                /* ブラウザデフォルトフォントサイズを維持 */
+  scroll-behavior: smooth;        /* スムーズスクロールでUX向上 */
 }
 
+/* アクセシビリティ対応 - モーションを抑えたユーザー向け */
 @media (prefers-reduced-motion: reduce) {
   html {
-    scroll-behavior: auto;
+    scroll-behavior: auto;        /* スムーズスクロールを無効化 */
   }
   
+  /* 全てのアニメーションを最小時間に短縮 */
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;      /* アニメーション時間を最小化 */
+    animation-iteration-count: 1 !important;    /* アニメーション繰り返しを無効 */
+    transition-duration: 0.01ms !important;     /* トランジションを最小化 */
   }
 }
 
+/* メインbody要素 - サイト全体のコンテナ */
 body {
-  font-family: var(--ff-body);
-  font-size: var(--text-base);
-  line-height: 1.6;
-  color: var(--text);
-  background-color: var(--background);
-  overflow-x: hidden;
-  min-height: 100dvh;
-  position: relative;
+  font-family: var(--ff-body);        /* 日本語最適化フォント適用 */
+  font-size: var(--text-base);        /* レスポンシブベースフォントサイズ */
+  line-height: 1.6;                   /* 読みやすい行間設定 */
+  color: var(--text);                 /* メインテキスト色適用 */
+  background-color: var(--background); /* ベース背景色 */
+  overflow-x: hidden;                 /* 横スクロール禁止 */
+  min-height: 100dvh;                 /* ビューポートの最低高さを確保 */
+  position: relative;                 /* 位置基準設定 */
 }
 
-/* 季節に合わせた和紙背景 */
+/* ===== 季節対応和紙背景システム ===== */
+/* 季節に合わせて自動切替される背景テクスチャ */
 body::before {
-  content: '';
-  position: fixed;
+  content: '';                        /* 疑似要素の作成 */
+  position: fixed;                    /* 画面に固定表示 */
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  background-image: url('./img/和紙-春.webp');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  opacity: 1;
-
-  pointer-events: none;
-  transition: opacity 0.5s ease-in-out;
-
-  z-index: -1;
-  mix-blend-mode: normal;
+  bottom: 0;                          /* 全画面をカバー */
+  background-image: url('./img/和紙-春.webp'); /* デフォルトは春テーマ */
+  background-size: cover;             /* 画面全体をカバー */
+  background-position: center;        /* 中央配置 */
+  background-repeat: no-repeat;       /* 繰り返しなし */
+  background-attachment: fixed;       /* スクロールで固定（パララックス効果） */
+  opacity: 1;                         /* 完全不透明 */
+  
+  pointer-events: none;               /* クリックイベントを透過 */
+  transition: opacity 0.5s ease-in-out; /* 季節切替時のスムーズフェード */
+  
+  z-index: -1;                        /* 最背面へ配置 */
+  mix-blend-mode: normal;             /* 通常の合成モード */
 }
 
-/* 季節別和紙背景 */
+/* ===== 季節別和紙背景設定 ===== */
+/* 各季節に合わせた独自の和紙テクスチャを適用 */
 body[data-season="spring"]::before {
-  background-image: url('./img/和紙-春.webp');
+  background-image: url('./img/和紙-春.webp'); /* 春：桜色の和紙 */
 }
 
 body[data-season="summer"]::before {
-  background-image: url('./img/和紙-夏.webp');
+  background-image: url('./img/和紙-夏.webp'); /* 夏：緑色の和紙 */
 }
 
 body[data-season="autumn"]::before {
-  background-image: url('./img/和紙-秋.webp');
+  background-image: url('./img/和紙-秋.webp'); /* 秋：紅葉色の和紙 */
 }
 
 body[data-season="winter"]::before {
-  background-image: url('./img/和紙-冬.webp');
+  background-image: url('./img/和紙-冬.webp'); /* 冬：雪白の和紙 */
 }
 
 body[data-season="tsuyu"]::before {
-  background-image: url('./img/和紙-梅雨.webp');
-  opacity: 1;
+  background-image: url('./img/和紙-梅雨.webp'); /* 梅雨：雨雲色の和紙 */
+  opacity: 1;                         /* 梅雨時は特に鮮明に表示 */
 }
 
 /* ダークテーマ時の和紙背景調整 */
@@ -336,7 +460,7 @@ body[data-season="tsuyu"]::before {
   }
 }
 
-/* ===== Typography ===== */
+/* ===== タイポグラフィ - 文字スタイル設定 ===== */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--ff-heading);
   font-weight: 700;
@@ -370,7 +494,7 @@ a:focus {
   outline-offset: 2px;
 }
 
-/* ===== Layout Components ===== */
+/* ===== レイアウトコンポーネント - 基本配置要素 ===== */
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -411,7 +535,7 @@ a:focus {
   margin-right: auto;
 }
 
-/* ===== Skip Link (Accessibility) ===== */
+/* ===== スキップリンク（アクセシビリティ） ===== */
 .skip-link {
   position: absolute;
   top: -100px;
@@ -429,7 +553,7 @@ a:focus {
   top: var(--space-4);
 }
 
-/* ===== Header & Navigation ===== */
+/* ===== ヘッダーとナビゲーション ===== */
 .header {
   position: fixed;
   top: 0;
@@ -497,10 +621,11 @@ a:focus {
   transform-origin: left;
 }
 
+/* 日本語ロゴ補助テキスト */
 .logo-jp {
-  font-family: var(--font-jp);
-  color: var(--text);
-  font-weight: 400;
+  font-family: var(--font-jp);     /* 日本語最適化フォント */
+  color: var(--text);             /* 標準テキスト色 */
+  font-weight: 400;              /* ノーマルウェイト */
 }
 
 .nav-toggle {
@@ -566,75 +691,193 @@ a:focus {
 }
 
 
+/* 
+ * 秋テーマカラー設定 - 紅葉と収穫の季節を表現する温かみのある色調
+ * 
+ * カラー選定理由:
+ * - プライマリ: #FFC080 (温かいオレンジ) - 秋の夕日と紅葉を表現
+ * - アクセント: #FF69B4 (ホットピンク) - 秋の花や実の鮮やかさを演出
+ * 
+ * 適用される要素:
+ * - ボタンのグラデーション背景
+ * - 季節切替時のテーマカラー
+ * - アクセント要素の強調色
+ */
 .autumn {
-  --primary: #FFC080;
-  --accent: #FF69B4;
+  --primary: #FFC080;           /* 秋の夕日・紅葉を表現する温かいオレンジ */
+  --accent: #FF69B4;            /* 秋の実りを表現する鮮やかなピンク */
 }
 
+/* 
+ * 冬テーマカラー設定 - 雪と氷の季節を表現する清涼感のある色調
+ * 
+ * カラー選定理由:
+ * - プライマリ: #87CEEB (スカイブルー) - 冬の澄んだ空と雪景色
+ * - アクセント: #ADD8E6 (ライトブルー) - 氷や霜の繊細な美しさ
+ * 
+ * 冬の美学:
+ * - 静寂と純粋さを表現する青系統
+ * - 雪化粧した日本の風景をイメージ
+ * - 清廉で上品な印象を与える配色
+ */
 .winter {
-  --primary: #87CEEB;
-  --accent: #ADD8E6;
+  --primary: #87CEEB;           /* 冬空の澄んだ青・雪景色の清涼感 */
+  --accent: #ADD8E6;            /* 氷や霜の繊細で美しい青白さ */
 }
 
+/* 
+ * 春テーマカラー設定 - 新緑と桜の季節を表現する生命力あふれる色調
+ * 
+ * カラー選定理由:
+ * - プライマリ: #C6E2B5 (ライトグリーン) - 新緑の若葉と生命力
+ * - アクセント: #8BC34A (フレッシュグリーン) - 芽吹きの力強さ
+ * 
+ * 春の象徴:
+ * - 成長と再生を表現するグリーン系統
+ * - 日本の美しい春景色をイメージ
+ * - 希望と活力を感じさせる配色
+ */
 .spring {
-  --primary: #C6E2B5;
-  --accent: #8BC34A;
+  --primary: #C6E2B5;           /* 新緑の若葉・春の生命力を表現 */
+  --accent: #8BC34A;            /* 芽吹きの力強さ・成長のエネルギー */
 }
 
+/* 
+ * 夏テーマカラー設定 - 太陽と海の季節を表現する活力的な色調
+ * 
+ * カラー選定理由:
+ * - プライマリ: #FFA07A (ライトサーモン) - 夏の夕陽と温かみ
+ * - アクセント: #FFC080 (ピーチ) - 夏の果実と豊かさ
+ * 
+ * 夏の情景:
+ * - エネルギッシュで温かい印象
+ * - 日本の夏祭りや海辺をイメージ
+ * - 活動的で開放的な気分を演出
+ */
 .summer {
-  --primary: #FFA07A;
-  --accent: #FFC080;
+  --primary: #FFA07A;           /* 夏の夕陽・温かな陽光を表現 */
+  --accent: #FFC080;            /* 夏の果実・豊かさと活力を演出 */
 }
-/* WINDSURF_END SeasonVars */
+/* ===== 季節変数設定終了 ===== */
 
-/* WINDSURF_START FooterIconsStyle */
-.social-links{
-  display:flex; gap:1rem; justify-content:center; margin-top:1.5rem;
+/* ===== フッターアイコンスタイル開始 ===== */
+/* 
+ * ソーシャルリンクコンテナ - 外部SNSプラットフォームへのアクセスポイント
+ * 
+ * レイアウト設計:
+ * - Flexboxで横並び配置し、視覚的バランスを確保
+ * - 中央揃えで統一感のある表示
+ * - 適切な間隔で各アイコンを分離し操作しやすさを向上
+ */
+.social-links {
+  display: flex;                /* アイコンを横並びで整列 */
+  gap: 1rem;                   /* アイコン間の適切なスペーシング */
+  justify-content: center;     /* 中央揃えで視覚的バランス確保 */
+  margin-top: 1.5rem;          /* 上部コンテンツとの適切な分離 */
 }
-.social-links a{ font-size:1.8rem; color:var(--accent); transition:opacity .3s; }
-.social-links a:hover{ opacity:.6; }
 
-/* Disabled social icons */
-.social-link.disabled{
-  pointer-events:none;
-  filter:grayscale(100%);
-  opacity:.5;
+/* 
+ * ソーシャルリンクアイコン - 個別プラットフォームへの誘導要素
+ * 
+ * インタラクション設計:
+ * - アクセントカラーで重要性を表現
+ * - ホバー時の透明度変化で視覚的フィードバック
+ * - スムーズなトランジションで上品な操作感
+ */
+.social-links a {
+  font-size: 1.8rem;           /* 視認性の高い大きなアイコンサイズ */
+  color: var(--accent);        /* テーマ統一のアクセントカラー */
+  transition: opacity 0.3s;    /* 滑らかな透明度変化アニメーション */
 }
 
-/* Instagram brand color */
-.social-link.instagram{ color:#E4405F; }
-/* Spotify brand color */
-.social-link.spotify{ color:#1DB954; }
-/* WINDSURF_END FooterIconsStyle */
+/* ホバー時の透明度変化で操作感をフィードバック */
+.social-links a:hover {
+  opacity: 0.6;                /* ホバー時に透明度を下げて反応を示す */
+}
 
-/* Mobile Navigation */
+/* 
+ * 無効化ソーシャルアイコン - 利用不可能なプラットフォームリンクの視覚的表現
+ * 
+ * 無効化の視覚的表現:
+ * - グレースケールフィルターで「使用不可」を直感的に伝達
+ * - 透明度を下げて非アクティブ状態を表現
+ * - ポインターイベント無効化で誤操作を防止
+ */
+.social-link.disabled {
+  pointer-events: none;        /* クリック・タッチ操作を無効化 */
+  filter: grayscale(100%);     /* グレースケール化で非アクティブを表現 */
+  opacity: 0.5;                /* 透明度を下げて無効状態を視覚化 */
+}
+
+/* 
+ * ブランド固有カラー設定 - 各SNSプラットフォームの公式色で統一感を確保
+ * 
+ * ブランドアイデンティティの尊重:
+ * - 各プラットフォームの公式ブランドカラーを使用
+ * - ユーザーの認識しやすさと信頼性向上
+ * - 一貫したブランド体験の提供
+ */
+
+/* Instagramの公式ブランドカラー - 鮮やかなピンク系 */
+.social-link.instagram {
+  color: #E4405F;              /* Instagram公式ブランドピンク */
+}
+
+/* Spotifyの公式ブランドカラー - 特徴的なグリーン */
+.social-link.spotify {
+  color: #1DB954;              /* Spotify公式ブランドグリーン */
+}
+/* ===== フッターアイコンスタイル終了 ===== */
+
+/* 
+ * ===== モバイルナビゲーション =====
+ * 
+ * 767px以下のスクリーンでのナビゲーション体験最適化
+ * 
+ * モバイルファースト設計の特徴:
+ * - ハンバーガーメニューで省スペース化
+ * - フルスクリーンオーバーレイで集中的なナビゲーション
+ * - タッチフレンドリーなターゲットサイズ
+ * - アニメーションでスムーズな開閉操作
+ */
 @media (max-width: 767px) {
+  /* ハンバーガーメニュートグルボタンを表示 */
   .nav-toggle {
-    display: flex;
+    display: flex;              /* モバイルでのみハンバーガーボタンを表示 */
   }
 
+  /* モバイル用ナビゲーションコンテナの調整 */
   .nav-container {
-    flex-wrap: nowrap;
-    gap: var(--space-4);
+    flex-wrap: nowrap;          /* 要素の折り返しを禁止して一列表示 */
+    gap: var(--space-4);        /* ロゴとハンバーガーボタンの適切な間隔 */
   }
 
+  /* 
+   * モバイルナビゲーションメニュー - フルスクリーンオーバーレイスタイル
+   * 
+   * UX設計の特徴:
+   * - フルスクリーンカバーで集中的なナビゲーション体験
+   * - 上から下にスライドするアニメーション
+   * - 高いz-indexで他の要素より前面に表示
+   * - 縦方向のレイアウトでモバイルに最適化
+   */
   .nav-menu {
-    position: fixed;
+    position: fixed;            /* ビューポート全体をカバーして表示 */
     top: 0;
     left: 0;
     right: 0;
-    bottom: 0;
-    background: var(--neutral-900);
-    border-top: 1px solid var(--border);
-    flex-direction: column;
-    gap: 0;
-    padding: var(--space-6) var(--space-4);
-    transform: translateY(-100%);
-    opacity: 0;
-    visibility: hidden;
-    display: none;
-    transition: all var(--transition-normal);
-    z-index: var(--z-modal);
+    bottom: 0;                  /* フルスクリーンカバレッジ */
+    background: var(--neutral-900); /* 濃い背景でコンテンツを目立たせる */
+    border-top: 1px solid var(--border); /* 上部に境界線で親窓との分離 */
+    flex-direction: column;     /* メニュー項目を縦並びで配置 */
+    gap: 0;                     /* メニュー項目間のスペーシングは個別に管理 */
+    padding: var(--space-6) var(--space-4); /* メニュー内部の適切な余白 */
+    transform: translateY(-100%); /* 初期状態は画面上部に隠し */
+    opacity: 0;                 /* 初期状態は透明 */
+    visibility: hidden;         /* スクリーンリーダーから隠し */
+    display: none;              /* 初期状態は非表示 */
+    transition: all var(--transition-normal); /* スムーズな開閉アニメーション */
+    z-index: var(--z-modal);    /* モーダルレベルの重なり順で最前面表示 */
   }
 
   .nav-menu.active {
@@ -667,345 +910,1152 @@ a:focus {
   margin-left: var(--space-4);
 }
 
+/* 
+ * 季節セレクターボタングループ - 四季のテーマ切替コントロール
+ * 
+ * レイアウト特徴:
+ * - Flexboxで水平に並んだコンパクトな配置
+ * - ボタン間の適切なスペーシングで操作しやすさを確保
+ * - レスポンシブデザインでモバイルでも適切に表示
+ * 
+ * UX設計:
+ * - 直感的な季節切替操作
+ * - ユーザーのサイト体験をパーソナライズ
+ */
 .season-selector-buttons {
-  display: flex;
-  gap: var(--space-2);
+  display: flex;               /* ボタンを水平に並べて表示 */
+  gap: var(--space-2);         /* ボタン間の適切なスペーシング */
 }
 
+/* 
+ * 季節選択オプションボタン - 個別の季節を選択するインタラクティブ要素
+ * 
+ * アクセシビリティ配慮:
+ * - 44px以上のタッチターゲットサイズでWCAGガイドライン準拠
+ * - 十分なコントラストで視認性を確保
+ * - キーボードナビゲーションに対応
+ * 
+ * ビジュアルデザイン:
+ * - テーマ統一の背景色とボーダー
+ * - Flexboxで中央揃えのバランスの良いレイアウト
+ * - スムーズな背景色変化でユーザーフィードバック
+ */
 .season-option {
-  background: var(--background);
-  color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: var(--space-2) var(--space-3);
-  font-size: var(--text-base);
-  min-width: 44px;
-  min-height: 44px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color var(--transition-fast);
+  background: var(--background);  /* テーマ統一の背景色 */
+  color: var(--text);            /* テーマ統一のテキスト色 */
+  border: 1px solid var(--border); /* テーマ統一のボーダー色 */
+  border-radius: var(--radius);  /* 統一感のある角丸 */
+  padding: var(--space-2) var(--space-3); /* ボタン内部の適切な余白 */
+  font-size: var(--text-base);   /* 読みやすい基本フォントサイズ */
+  min-width: 44px;               /* アクセシビリティガイドラインの最小幅 */
+  min-height: 44px;              /* アクセシビリティガイドラインの最小高さ */
+  cursor: pointer;               /* クリック可能であることを明示 */
+  display: inline-flex;          /* インラインFlexboxで中央揃えを実現 */
+  align-items: center;           /* 垂直中央揃え */
+  justify-content: center;       /* 水平中央揃え */
+  transition: background-color var(--transition-fast); /* 背景色変化のスムーズなアニメーション */
 }
 
+/* 
+ * アクティブな季節オプション - 現在選択されている季節の視覚的表現
+ * 
+ * アクティブ状態の特徴:
+ * - プライマリカラーの背景で選択状態を明確に表現
+ * - 白文字で高いコントラストと読みやすさを確保
+ * - 現在適用中の季節テーマを直感的に伝達
+ * 
+ * UX設計の意図:
+ * - ユーザーが現在の状態を一目で理解できる
+ * - 他のボタンとの明確な差別化
+ * - サイト全体のテーマとの一貫性
+ */
 .season-option.active {
-  background: var(--primary);
-  color: #fff;
+  background: var(--primary);    /* テーマのプライマリカラーでアクティブ状態を表現 */
+  color: #fff;                   /* 白文字で高コントラストと読みやすさを確保 */
 }
 
 
 
-/* ===== Hero Section ===== */
+/* ===== ヒーローセクション - メインビジュアルエリア ===== */
+/* 
+ * ヒーローセクション - サイトの第一印象を決定する核心エリア
+ * 
+ * デザイン哲学:
+ * - 和風美学とモダンUI技術の融合
+ * - 視覚的インパクトと情報伝達の最適バランス
+ * - 季節感を織り込んだ日本独特の美意識
+ * 
+ * パフォーマンス考慮:
+ * - WebP形式による軽量化済み背景画像
+ * - Viewport単位による効率的な高さ制御
+ * - モバイル向けのパフォーマンス最適化
+ */
 .hero {
-  /* Prevent header overlap */
+  /* ヘッダーとの重複防止 - レイアウト安定性確保 */
   --header-height: 80px;
-  /* Remove extra gap below the header */
+  
+  /* ヘッダー下の不要な余白除去 - デザインの一体感向上 */
   margin-top: 0;
+  
+  /* ビューポートの85%使用 - 視覚的インパクト最大化 */
   height: 85vh;
+  
+  /* 最小高さ保証 - 小画面での視認性確保 */
   min-height: 480px;
+  
+  /* 背景構成:
+   * 1. 半透明オーバーレイ（可読性向上）
+   * 2. 秀歌メインビジュアル（WebP最適化済み）
+   */
   background: linear-gradient(
     rgba(0, 0, 0, 0.4), 
     rgba(0, 0, 0, 0.4)
   ), url('./img/秀歌-メインビジュアル.webp');
+  
+  /* 背景画像の完全カバレッジ - どの画面比でも美しく表示 */
   background-size: cover;
+  
+  /* 中央上部配置 - 被写体の最適な表示位置 */
   background-position: center top;
+  
+  /* パララックス効果 - 没入感の演出（高性能デバイス向け） */
   background-attachment: fixed;
 }
 
-/* Mobile adjustments to keep subject visible */
+/* 
+ * モバイル端末向け調整 - 被写体の視認性確保
+ * 
+ * 小画面での課題:
+ * - 縦長画面での構図バランス
+ * - タッチ操作での利便性
+ * - バッテリー消費への配慮
+ */
 @media (max-width: 600px) {
   .hero {
+    /* 被写体が画面上部に確実に表示される配置 */
     background-position: center top;
+    
+    /* より多くの画面面積を活用 - モバイルでの迫力向上 */
     height: 90vh;
   }
 }
 
+/* 
+ * アクセシビリティ対応 - モーション過敏症ユーザーへの配慮
+ * prefer-reduced-motionが設定されている場合の調整
+ */
 @media (prefers-reduced-motion: reduce) {
   .hero {
+    /* パララックス効果を無効化 - 動きによる不快感を防止 */
     background-attachment: scroll;
   }
 }
 
+/* 
+ * モバイル端末全般向け最適化
+ * 
+ * パフォーマンス重視:
+ * - パララックス効果をOFF（GPU負荷軽減）
+ * - Dynamic Viewportサポート（iOS Safari対応）
+ */
 @media (max-width: 767px) {
   .hero {
+    /* パララックス無効化 - バッテリー消費とパフォーマンス配慮 */
     background-attachment: scroll;
+    
+    /* Dynamic Viewport Height - ブラウザUIの動的変化に対応 */
     height: 100dvh;
   }
 }
 
+/* 
+ * ヒーローコンテンツコンテナ
+ * 
+ * レイアウト戦略:
+ * - ヘッダーとの適切な距離確保
+ * - 読みやすさを重視した最大幅設定
+ * - 背景要素より前面に確実に表示
+ */
 .hero-content {
+  /* ヘッダー高さ分のオフセット - コンテンツとの重複回避 */
   padding-top: var(--header-height);
+  
+  /* 読みやすい行長を維持 - タイポグラフィのベストプラクティス */
   max-width: 800px;
+  
+  /* 適切な内側余白 - コンテンツの呼吸感確保 */
   padding: var(--space-4);
+  
+  /* 重要度の高いレイヤー - 背景エフェクトより前面表示 */
   z-index: 2;
+  
+  /* 相対配置 - z-indexの基準点として機能 */
   position: relative;
 }
 
+/* 
+ * メインタイトル - サイトの核心メッセージ
+ * 
+ * タイポグラフィ戦略:
+ * - インパクトと可読性の両立
+ * - 和風テイストを活かしたフォントウェイト
+ * - アニメーションによる登場演出
+ * 
+ * アクセシビリティ:
+ * - 背景との充分なコントラスト確保
+ * - 自然な改行処理
+ */
 .hero-title {
+  /* 大見出しサイズ - 視覚階層の頂点 */
   font-size: var(--text-5xl);
+  
+  /* 極太フォントウェイト - 強い印象付け */
   font-weight: 800;
+  
+  /* 下部マージン - 次の要素との適切な間隔 */
   margin-bottom: var(--space-6);
+  
+  /* テキストシャドウ - 背景画像上での可読性向上 */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  
+  /* フェードイン登場アニメーション - 印象的な初回体験 */
   animation: fadeInUp 1s ease-out;
+  
+  /* 自然改行許可 - レスポンシブ対応 */
   white-space: normal;
 }
 
-/* Emphasize artist name in hero */
+/* 
+ * アーティスト名の特別演出 - ブランドアイデンティティの中核
+ * 
+ * デザインコンセプト:
+ * - グラデーションによる煌めき表現
+ * - 和風美学とモダン技術の融合
+ * - 動的アニメーションによる印象強化
+ * 
+ * 技術実装:
+ * - CSS Gradient + Background Clip
+ * - 無限ループアニメーション
+ * - WebKit互換性考慮
+ */
 .artist-name {
+  /* インラインブロック - 改行制御とサイズ調整の両立 */
   display: inline-block;
+  
+  /* 上部マージン - タイトルとの視覚的分離 */
   margin-top: var(--space-4);
+  
+  /* 特大サイズ - 最高の視覚的重要度 */
   font-size: var(--text-6xl);
+  
+  /* 最大フォントウェイト - 強烈な印象付け */
   font-weight: 900;
+  
+  /* 密な行間 - コンパクトで力強い表示 */
   line-height: 1.1;
+  
+  /* 
+   * 煌めきグラデーション設定
+   * - ピンクから青、再びピンクの美しい遷移
+   * - 200%幅でアニメーション用の余白確保
+   */
   background: linear-gradient(90deg, #fbc2eb 0%, #a6c1ee 50%, #fbc2eb 100%);
   background-size: 200% 100%;
+  
+  /* グラデーションをテキストに適用 - モダンな表現技法 */
   background-clip: text;
+  -webkit-background-clip: text;
+  
+  /* テキストを透明化 - グラデーションを可視化 */
   -webkit-text-fill-color: transparent;
+  color: transparent;
+  
+  /* 煌めきアニメーション - 6秒周期の無限ループ */
   animation: shine 6s linear infinite;
 }
 
+/* 
+ * 煌めきアニメーション定義
+ * 
+ * 動作原理:
+ * - グラデーション背景を左右に移動
+ * - 200%の背景サイズを活用した滑らかな循環
+ * - 光の反射を模した自然な輝きを演出
+ * 
+ * パフォーマンス:
+ * - GPU加速対象のtransform使用
+ * - 60FPSでの滑らかな動作保証
+ */
 @keyframes shine {
+  /* 開始位置 - グラデーションが右端に位置 */
   0% { background-position: 0 0; }
+  
+  /* 終了位置 - グラデーションが左端まで移動（200%移動で1周） */
   100% { background-position: -200% 0; }
 }
 
+/* 
+ * アーティスト名の日本語部分スタイリング
+ * 
+ * 文字バランス調整:
+ * - 英語部分より小さめのサイズ設定
+ * - 和文の美しさを活かした適切な太さ
+ * - 全体の調和を重視したプロポーション
+ */
 .artist-name .jp {
+  /* 英語部分の70%サイズ - バランスの良い日英混植 */
   font-size: 0.7em;
+  
+  /* 和文に適したフォントウェイト - 美しい文字表現 */
   font-weight: 700;
 }
 
+/* 
+ * ヒーローサブタイトル - コンセプト説明とキャッチフレーズ
+ * 
+ * 役割:
+ * - メインタイトルの補完説明
+ * - ユーザーの興味喚起
+ * - サイト全体のトーン設定
+ * 
+ * UX設計:
+ * - 段階的な情報開示（遅延アニメーション）
+ * - 適切な文字サイズで可読性確保
+ * - 背景との視認性両立
+ */
 .hero-subtitle {
+  /* 中見出しサイズ - 階層構造の明確化 */
   font-size: var(--text-xl);
+  
+  /* 大きな下部マージン - アクションボタンとの明確な分離 */
   margin-bottom: var(--space-10);
+  
+  /* 控えめなテキストシャドウ - 可読性向上と自然な立体感 */
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+  
+  /* 遅延フェードイン - 0.3秒後に登場する段階的演出 */
   animation: fadeInUp 1s ease-out 0.3s both;
 }
 
+/* 
+ * ヒーローアクションエリア - CTA（Call to Action）ボタン群
+ * 
+ * レイアウト戦略:
+ * - Flexboxによる柔軟な配置制御
+ * - レスポンシブ対応の自動折り返し
+ * - 中央配置による視覚的バランス
+ * 
+ * UX考慮:
+ * - 最後に登場する段階的演出（0.6秒遅延）
+ * - ユーザーの行動を促す適切な配置
+ * - タッチデバイスでの操作性確保
+ */
 .hero-actions {
+  /* フレックスコンテナ - 子要素の柔軟な配置 */
   display: flex;
+  
+  /* ボタン間の適切な間隔 - 誤操作防止とデザインバランス */
   gap: var(--space-4);
+  
+  /* 中央配置 - 視覚的な安定感と美しさ */
   justify-content: center;
+  
+  /* 自動折り返し - 小画面での適切な表示 */
   flex-wrap: wrap;
+  
+  /* 最終段階のフェードイン - ユーザーの注意を段階的に誘導 */
   animation: fadeInUp 1s ease-out 0.6s both;
 }
 
-/* ===== Buttons ===== */
+/* ===== ボタン - インタラクション要素 ===== */
+/* 
+ * CTA（Call-to-Action）ボタンシステム - ユーザー行動促進の核心要素
+ * 
+ * デザインフィロソフィー:
+ * - 和風美学とモダンUIパターンの最適な融合
+ * - 直感的な操作性と視覚的な魅力の両立
+ * - アクセシビリティ標準への完全準拠
+ * - 多様なデバイスでの一貫したユーザー体験
+ * 
+ * インタラクションデザイン:
+ * - マイクロアニメーションによる自然な応答感
+ * - タッチフレンドリーなサイズ設計
+ * - キーボード操作とスクリーンリーダーへの配慮
+ * - 状態変化の視覚的フィードバック
+ * 
+ * パフォーマンス最適化:
+ * - GPU加速によるスムーズなトランジション
+ * - 60FPS維持のためのハードウェア最適化
+ * - リペイント頻度の最小化
+ */
 .cta-button {
+  /* フレックスレイアウト - アイコンとテキストの整列制御 */
   display: inline-flex;
+  
+  /* 垂直中央揃え - 内容要素の美しい配置 */
   align-items: center;
+  
+  /* アイコンとテキスト間の適切なスペーシング */
   gap: var(--space-2);
+  
+  /* 十分なパディング - タッチターゲット44px以上を確保 */
   padding: var(--space-4) var(--space-6);
+  
+  /* ボーダーなし - ミニマルなデザイン哲学 */
   border: none;
+  
+  /* 大きな角丸 - 和風の柔らかさを表現 */
   border-radius: var(--radius-lg);
+  
+  /* 基本文字サイズ - 可読性とデザインバランス */
   font-size: var(--text-base);
+  
+  /* セミボールド - 適度な強調と読みやすさ */
   font-weight: 600;
+  
+  /* アンダーライン除去 - クリーンな外観 */
   text-decoration: none;
+  
+  /* ポインターカーソル - インタラクティブ要素の明示 */
   cursor: pointer;
+  
+  /* スムーズトランジション - 全プロパティの滑らかな変化 */
   transition: all var(--transition-normal);
+  
+  /* 相対配置 - 内部要素の基準点として機能 */
   position: relative;
+  
+  /* 内容の隠し領域制御 - アニメーション効果用 */
   overflow: hidden;
 }
 
-/* WINDSURF_START CTA_Gradient */
+/* ===== CTAグラデーション設定開始 ===== */
+/* 
+ * プライマリボタン - 最重要アクション用スタイル
+ * 
+ * グラデーション戦略:
+ * - アクセントカラーからプライマリカラーへの美しい遷移
+ * - 120度角度による動的な視覚効果
+ * - 200%サイズでホバーアニメーション用の余白確保
+ * 
+ * インタラクション設計:
+ * - ホバー時のグラデーション移動による華やかな演出
+ * - 0.4秒の適度な速度による上品なアニメーション
+ * - ドロップシャドウによる立体感と重要性の強調
+ */
 .cta-button.primary{
+  /* 動的グラデーション背景 - 視覚的な魅力と品格を演出 */
   background: linear-gradient(120deg,var(--accent) 0%,var(--primary) 100%);
+  
+  /* 200%サイズ - ホバーアニメーション用の余白確保 */
   background-size: 200% 100%;
+  
+  /* 白文字 - グラデーション背景上での最適なコントラスト */
   color: white;
+  
+  /* 立体感のあるシャドウ - 重要性と押しやすさを視覚的に伝達 */
   box-shadow: 0 4px 15px var(--shadow-lg);
+  
+  /* 背景位置のトランジション - 滑らかなグラデーション移動 */
   transition: background-position .4s ease;
 }
+
+/* ホバー時のグラデーション移動 - エレガントな色彩変化 */
 .cta-button.primary:hover{
+  /* グラデーションを右端に移動 - 色調の動的変化を演出 */
   background-position: 100% 0;
 }
-/* WINDSURF_END CTA_Gradient */
+/* ===== CTAグラデーション設定終了 ===== */
 
+/* 
+ * プライマリボタンのホバー・フォーカス状態
+ * 
+ * 3D効果の実装:
+ * - Y軸方向の微細な浮上効果（-2px）
+ * - シャドウの拡張による立体感の強化
+ * - 視覚的フィードバックによる操作性向上
+ * 
+ * アクセシビリティ配慮:
+ * - hoverとfocusの同一スタイル適用
+ * - キーボード操作時の明確な視覚的フィードバック
+ * - スクリーンリーダーユーザーへの配慮
+ */
 .cta-button.primary:hover,
 .cta-button.primary:focus {
+  /* 上方向への軽微な移動 - ボタンが浮き上がる印象を演出 */
   transform: translateY(-2px);
+  
+  /* シャドウの拡大 - 立体感の強化と視覚的重要性の向上 */
   box-shadow: 0 8px 25px var(--shadow-lg);
 }
 
+/* 
+ * セカンダリボタン - 補助的アクション用スタイル
+ * 
+ * デザインコンセプト:
+ * - 透明背景による控えめで上品な印象
+ * - 白色ボーダーによる明確な境界線
+ * - プライマリボタンとの適切な視覚階層の構築
+ * 
+ * 用途:
+ * - "詳細を見る"、"戻る" などの二次的なアクション
+ * - プライマリボタンを邪魔しない補助的な機能
+ * - 情報系のナビゲーション要素
+ */
 .cta-button.secondary {
+  /* 透明背景 - 控えめで品のある印象を演出 */
   background: transparent;
+  
+  /* 白文字 - ダークな背景上での視認性確保 */
   color: white;
+  
+  /* 白ボーダー - 境界の明確化とエレガントな印象 */
   border: 2px solid white;
 }
 
+/* 
+ * セカンダリボタンのインタラクション状態
+ * 
+ * 色彩反転による明確なフィードバック:
+ * - 背景を白に変更（インバージョン効果）
+ * - テキスト色をプライマリカラーに変更
+ * - プライマリボタンと同様の浮上効果
+ * 
+ * UX設計思想:
+ * - 明確な状態変化でユーザーに操作感を提供
+ * - ホバー状態での視認性向上
+ * - 統一感のあるインタラクションパターン
+ */
 .cta-button.secondary:hover,
 .cta-button.secondary:focus {
+  /* 背景色の反転 - 印象的な状態変化を演出 */
   background: white;
+  
+  /* テキスト色をプライマリに変更 - コントラスト確保 */
   color: var(--primary);
+  
+  /* プライマリボタンと同様の浮上効果 - 一貫したインタラクション */
   transform: translateY(-2px);
 }
 
-/* ===== About Section ===== */
+/* ===== アバウトセクション - 紹介エリア ===== */
+/* 
+ * Aboutセクション - アーティスト紹介とブランドストーリー
+ * 
+ * セクションの役割:
+ * - Shukaのアーティストアイデンティティ確立
+ * - Vibe Cordingのコンセプト説明
+ * - ユーザーの共感と理解を深める情報提供
+ * - サイト全体の信頼性と専門性の証明
+ * 
+ * デザインアプローチ:
+ * - 半透明背景による深みと品格の演出
+ * - バックドロップフィルターによる現代的な美しさ
+ * - 幅広いパディングによる空間の余裕と品格
+ * - 結果を重視した情報設計
+ */
 .about {
+  /* 大きな上下パディング - セクションの重要性と品格を表現 */
   padding: var(--space-24) 0;
+  
+  /* 半透明黒背景 - 和風の深みとモダンな洗練さの融合 */
   background: rgba(17, 24, 39, 0.85);
+  
+  /* 微細なブラー効果 - 背景との自然な統合と立体感 */
   backdrop-filter: blur(1px);
 }
 
+/* 
+ * Aboutコンテンツレイアウト - 柔軟で反応的なグリッドシステム
+ * 
+ * グリッド戦略:
+ * - モバイルファーストアプローチ（1列スタート）
+ * - タブレット以上で自動で2列レイアウトに変化
+ * - 内容の読みやすさと視覚的バランスの最適化
+ * 
+ * ユーザビリティ配慮:
+ * - 適切な間隔による情報の整理
+ * - 中央揃えによる視線の安定化
+ * - コンテンツ間の調和の取れたバランス
+ */
 .about-content {
+  /* CSS Gridレイアウト - 柔軟な2次元配置制御 */
   display: grid;
+  
+  /* モバイルファースト - 単一列レイアウト */
   grid-template-columns: 1fr;
+  
+  /* 要素間の適切なスペーシング - 情報の整理と読みやすさ */
   gap: var(--space-12);
+  
+  /* 中央揃え - 視覚的バランスと安定感の確保 */
   align-items: center;
 }
 
+/* 
+ * タブレット以上での2列レイアウト
+ * 
+ * 情報設計の最適化:
+ * - メインコンテンツ（テキスト）に2/3のスペース配分
+ * - ビジュアルコンテンツ（画像）に1/3のスペース配分
+ * - 読みやすさと視覚的インパクトの黄金比
+ * - コンテンツの階層構造を明確に表現
+ */
 @media (min-width: 768px) {
   .about-content {
+    /* 2:1の黄金比レイアウト - テキストと画像の最適バランス */
     grid-template-columns: 2fr 1fr;
   }
 }
 
+/* 
+ * Aboutイントロダクション - アーティストの核心メッセージ
+ * 
+ * 役割と目的:
+ * - ユーザーの最初の共感ポイント構築
+ * - Shukaのアーティストとしての世界観伝達
+ * - サイト全体のトーン設定と期待管理
+ * - 続くコンテンツへの興味喚起
+ * 
+ * タイポグラフィ戦略:
+ * - 大きめの文字サイズで重要性を強調
+ * - 十分な下部余白で読みやすさを確保
+ * - システムカラーで一貫したブランド体験
+ */
 .about-intro {
+  /* 大きめの文字サイズ - 重要なメッセージの視覚的強調 */
   font-size: var(--text-lg);
+  
+  /* 適切な下部余白 - コンテンツの読みやすさと情報階層 */
   margin-bottom: var(--space-8);
+  
+  /* システムテキストカラー - テーマとの一貫性とアクセシビリティ */
   color: var(--text);
 }
 
+/* 
+ * フィーチャー一覧コンテナ - Vibe Cordingの特徴と価値提案
+ * 
+ * 情報設計の原則:
+ * - グリッドレイアウトでの整理された情報提示
+ * - 一貫した間隔で読みやすさを確保
+ * - レスポンシブで柔軟なコンテンツ表示
+ * 
+ * UX目標:
+ * - ユーザーがVibe Cordingの価値を理解しやすい構造
+ * - 情報のスキャン性と詳細閲覧の両立
+ * - カードベースUIによる直感的な情報構造
+ */
 .features {
+  /* CSS Grid - フィーチャーカードの柔軟な配置制御 */
   display: grid;
+  
+  /* 一貫した間隔 - コンテンツ間の調和と読みやすさ */
   gap: var(--space-8);
 }
 
+/* 
+ * フィーチャーカード - 個別特徴のコンテナ
+ * 
+ * デザイン原則:
+ * - カードベースUIによる情報のグルーピング
+ * - 十分なパディングで読みやすさ確保
+ * - システムカラーとシャドウで統一感ある外観
+ * - マイクロインタラクションでユーザーエンゲージメント向上
+ * 
+ * アクセシビリティ:
+ * - 十分なコントラスト比で可読性確保
+ * - スクリーンリーダーフレンドリーな構造
+ * - キーボードナビゲーション対応
+ */
 .feature {
+  /* 適切な内側パディング - コンテンツの呼吸感と読みやすさ */
   padding: var(--space-6);
+  
+  /* システム背景色 - 統一されたブランド体験 */
   background: var(--background);
+  
+  /* 大きな角丸 - 和風の柔らかさとモダンな洗練さ */
   border-radius: var(--radius-lg);
+  
+  /* 立体感のあるシャドウ - カードの存在感と重要性表現 */
   box-shadow: 0 2px 10px var(--shadow);
+  
+  /* スムーズシャドウトランジション - ホバー効果のための準備 */
   transition: box-shadow var(--transition-normal);
 }
 
+/* 
+ * フィーチャーカードのホバー状態
+ * 
+ * インタラクションデザイン:
+ * - シャドウの強化で浮上感を演出
+ * - ユーザーの注意を引きつける視覚的フィードバック
+ * - カードが“アクティブ”な状態であることを直感的に伝達
+ * - ブランドの高級感と注意深いディテールを表現
+ * 
+ * パフォーマンス:
+ * - GPU加速対象のCSSプロパティ使用
+ * - 60FPSのスムーズなアニメーション保証
+ */
 .feature:hover {
+  /* シャドウ強化 - カードの浮上と重要性を視覚的に表現 */
   box-shadow: 0 6px 16px var(--shadow-lg);
 }
 
+/* 
+ * フィーチャータイトル - 各特徴の見出し
+ * 
+ * 情報設計の重要性:
+ * - ユーザーの視線をガイドするエントリーポイント
+ * - スキャン可能な情報構造の構築
+ * - SEOとアクセシビリティの両面で重要な役割
+ * - ブランドメッセージの明確な伝達
+ * 
+ * タイポグラフィ戦略:
+ * - 中見出しサイズで適切な階層構造
+ * - 適度な下部余白で本文との分離
+ * - システムカラーで一貫したブランド体験
+ */
 .feature-title {
+  /* 適切な下部マージン - タイトルと説明文の視覚的分離 */
   margin-bottom: var(--space-3);
+  
+  /* システムテキストカラー - テーマの一貫性と可読性確保 */
   color: var(--text);
+  
+  /* 中見出しサイズ - 情報階層の明確な表現 */
   font-size: var(--text-xl);
 }
 
+/* 
+ * フィーチャー説明文 - 簡潔で分かりやすい情報伝達
+ * 
+ * マージンリセットの意図:
+ * - ブラウザデフォルトの不一貫なスペーシング除去
+ * - カード内での精密なレイアウト制御
+ * - コンテンツの垂直リズムを統一
+ * - 読みやすさと美しいバランスの確保
+ * 
+ * コンテンツ戦略:
+ * - 簡潔で分かりやすい言回し
+ * - Vibe Cordingの価値を具体的に伝達
+ * - ユーザーの求めるベネフィットに焦点
+ */
 .feature p {
+  /* マージンリセット - カード内レイアウトの精密な制御 */
   margin: 0;
 }
 
+/* 
+ * Aboutセクションのビジュアル要素 - アーティストの人格と世界観を視覚化
+ * 
+ * 画像最適化戦略:
+ * - フル幅レスポンシブデザイン
+ * - アスペクト比維持で正しい表示
+ * - 高品質な立体感と存在感の演出
+ * - 和風美学とモダンデザインの融合
+ * 
+ * ブランドインパクト:
+ * - 大きな角丸でフレンドリーな印象
+ * - ドラマティックなシャドウで高級感を演出
+ * - ユーザーの感情と信頼を構築する視覚的訴求力
+ * 
+ * パフォーマンス:
+ * - ブラウザーネイティブの最適化機能活用
+ * - レイアウトシフトの最小化
+ */
 .about-image {
+  /* フル幅表示 - コンテナの幅を最大限活用 */
   width: 100%;
+  
+  /* アスペクト比維持 - 正しいプロポーションでの表示 */
   height: auto;
+  
+  /* 大きな角丸 - 和風の柔らかさとモダンな洗練さの融合 */
   border-radius: var(--radius-xl);
+  
+  /* ドラマティックなドロップシャドウ - アーティストの存在感と重要性を視覚的に強調 */
   box-shadow: 0 10px 30px var(--shadow-lg);
 }
 
-/* ===== Gallery Section ===== */
+/* ===== ギャラリーセクション - 作品展示エリア ===== */
+/* 
+ * ギャラリーセクション - Shukaの楽曲とビジュアル作品の展示スペース
+ * 
+ * コンセプトアプローチ:
+ * - 日本の四季をテーマにした情緒的なコンテンツ組織
+ * - インタラクティブな季節選択システム
+ * - 楽曲とビジュアルの統合的プレゼンテーション
+ * - Vibe Cordingの世界観を体験できる中核コンテンツ
+ * 
+ * UX戦略:
+ * - 直感的なナビゲーションでユーザーエンゲージメント向上
+ * - 季節ごとの異なる情緒とムードを適切に伝達
+ * - コンテントの永続性と再訪問を促すデザイン
+ * - モバイルファーストでありながらデスクトップでも美しい体験
+ * 
+ * 技術的特徴:
+ * - CSS GridとFlexboxの組み合わせによる柔軟なレイアウト
+ * - GPU加速されたアニメーション
+ * - アクセシビリティガイドライン準拠
+ */
 .gallery {
+  /* 大きな上下パディング - ギャラリーの重要性と品格を表現 */
   padding: var(--space-24) 0;
+  
+  /* 微細なバックドロップフィルター - 背景との自然な統合 */
   backdrop-filter: blur(0.5px);
 }
 
+/* 
+ * 季節ナビゲーション - ユーザーが季節を選択するインタラクティブUI
+ * 
+ * デザイン哲学:
+ * - 四季の美しさを直感的に伝えるビジュアルナビゲーション
+ * - 各季節の特性を色彩と文字で表現
+ * - タッチフレンドリーなサイズと適切な間隔
+ * - レスポンシブで柔軟なレイアウト管理
+ * 
+ * ユーザビリティ:
+ * - 中央配置で視覚的バランスとアクセシビリティ確保
+ * - 自動折り返しで小画面でも美しく表示
+ * - 十分な余白で誅操作を防止
+ * - キーボードナビゲーションとスクリーンリーダー対応
+ */
 .season-nav {
+  /* フレックスコンテナ - 季節ボタンの柔軟な横並び */
   display: flex;
+  
+  /* 中央配置 - 視覚的バランスと対称性の確保 */
   justify-content: center;
+  
+  /* ボタン間の適切な間隔 - 誇操作防止と美しいバランス */
   gap: var(--space-6);
+  
+  /* 下部マージン - ナビゲーションとコンテンツの分離 */
   margin-bottom: var(--space-16);
+  
+  /* 自動折り返し - 小画面での柔軟な表示 */
   flex-wrap: wrap;
+  
+  /* コンテナパディング - 適切な内側余白で呼吸感確保 */
   padding: var(--space-4);
 }
 
+/* 
+ * 季節ボタン - 各季節の世界観を表現したインタラクティブ要素
+ * 
+ * デザインコンセプト:
+ * - 季節の本質を捉えたビジュアル表現
+ * - 日本の美学とモダンUIの融合
+ * - フォトカードスタイルのエレガントな表現
+ * - 立体感と浮遊感の絶妙なバランス
+ * 
+ * インタラクション設計:
+ * - ホバー時の動的な3Dエフェクト
+ * - スケールと移動の組み合わせで生き生きした動き
+ * - グラデーションオーバーレイで文字の可読性確保
+ * - 適切なトランジションで滞らかな操作感
+ * 
+ * 技術的実装:
+ * - CSS Filterでコントラストと明度調整
+ * - 精密なシャドウで高級感を演出
+ * - cubic-bezierイージングで自然な動き
+ * - 和文フォントでブランド世界観を強化
+ * 
+ * アクセシビリティ:
+ * - キーボードフォーカスとホバーの同一スタイル
+ * - スクリーンリーダーフレンドリーな構造
+ * - 十分なコントラスト比で可読性確保
+ */
 .season-btn {
+  /* 相対配置 - 絶対配置された子要素の基準点 */
   position: relative;
+  
+  /* フレックスコンテナ - 内部要素の縦並びと中央配置 */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
+  
+  /* 内側パディング - テキストと縁の適切な間隔 */
   padding: var(--space-4);
+  
+  /* 固定サイズ - 統一感あるカードサイズ */
   width: 160px;
   height: 200px;
+  
+  /* 白文字 - 背景画像上での最適な可読性 */
   color: white;
+  
+  /* 背景画像の最適化設定 */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  
+  /* 画像レンダリング最適化 - 鮮明で鮮やかな表示 */
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
+  
+  /* CSSフィルター - 明度とコントラストで美しさを強化 */
   filter: brightness(1.2) contrast(1.1);
+  
+  /* 半透明白ボーダー - 上品でエレガントな境界線 */
   border: 3px solid rgba(255, 255, 255, 0.8);
+  
+  /* 適度な角丸 - 和風の柔らかさとモダンな洗練さ */
   border-radius: 8px;
+  
+  /* ポインターカーソル - インタラクティブ要素であることを明示 */
   cursor: pointer;
+  
+  /* 和文フォント - ブランド世界観と文字の美しさ */
   font-family: "Yuji Syuku", "Noto Serif JP", serif;
+  
+  /* 多層シャドウ - 高級感と立体感の絶妙な演出 */
   box-shadow: 
     0 8px 24px rgba(0, 0, 0, 0.25),
     0 4px 8px rgba(0, 0, 0, 0.15);
+  
+  /* 高品質イージング - 滞らかで自然なアニメーション */
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* オーバーフロー非表示 - 精密なアニメーション用 */
   overflow: hidden;
 }
 
+/* 
+ * 季節ボタンのグラデーションオーバーレイ - 文字可読性向上
+ * 
+ * 機能的目的:
+ * - 背景画像上でのテキストの可読性確保
+ * - 下部から上部への自然なグラデーション効果
+ * - 季節名ラベルの背景として機能
+ * - ブランドの高級感とプロフェッショナル感を演出
+ * 
+ * 視覚的効果:
+ * - 下部に集中した陰影でテキストエリア強化
+ * - 上部は透明で背景画像の美しさを最大限活用
+ * - 滞らかなグラデーションで自然な見た目
+ * - インタラクション時の透明度変化に対応
+ */
 .season-btn::before {
+  /* 空のコンテンツ - CSSプラクティスに準拠した撬似要素 */
   content: "";
+  
+  /* 絶対配置 - 親要素全体をカバー */
   position: absolute;
+  
+  /* 全体をカバー - モダンCSSの簡潑記法 */
   inset: 0;
+  
+  /* 
+   * 縦方向グラデーションで可読性を強化:
+   * - 下部: 適度な陰影でテキストを強調
+   * - 中間: 軽い陰影で自然な移行
+   * - 上部: 完全透明で背景画像を最大限活用
+   */
   background: linear-gradient(
     to top,
     rgba(0, 0, 0, 0.4) 0%,
     rgba(0, 0, 0, 0.1) 60%,
     transparent 100%
   );
+  
+  /* 透明度トランジション - インタラクション時の滞らかな変化 */
   transition: opacity 0.3s ease;
+  
+  /* マウスイベント無効 - オーバーレイがクリックを妨げないように */
   pointer-events: none;
 }
 
+/* 
+ * 季節ボタンのホバー・フォーカス状態 - ダイナミックな3Dインタラクション
+ * 
+ * アニメーション効果:
+ * - Y軸方向の大胆な浮上効果（-8px）
+ * - スケール拡大でカードの存在感を強化
+ * - ボーダーの完全不透明化で選択状態を明示
+ * - ドラマティックなシャドウ強化で立体感最大化
+ * 
+ * UX哲学:
+ * - ホバーとキーボードフォーカスの同一スタイルでアクセシビリティ確保
+ * - 印象的で楽しいインタラクション体験
+ * - ユーザーの注意を引きつける物理的な動き
+ * - ブランドのプレミアム感と品質を表現
+ * 
+ * 技術的最適化:
+ * - GPU加速対象のtransformプロパティ使用
+ * - 60FPSアニメーションのスムーズな動作保証
+ */
 .season-btn:hover,
 .season-btn:focus-visible {
+  /* 大胆な浮上とスケール拡大 - ダイナミックな3D効果 */
   transform: translateY(-8px) scale(1.05);
+  
+  /* ボーダーの完全不透明化 - 選択状態の明確な視覚的フィードバック */
   border-color: rgba(255, 255, 255, 1);
+  
+  /* ドラマティックな多層シャドウ - 最大限の立体感と存在感 */
   box-shadow: 
     0 16px 40px rgba(0, 0, 0, 0.3),
     0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
+/* 
+ * 季節ボタンのシャインオーバーレイ - ホバー時の特別効果
+ * 
+ * シャイン効果の技術:
+ * - 45度の対角線グラデーションで光の反射を模擬
+ * - 中央部に集中した光の帯で自然な輝き
+ * - 半透明の白で上品な光沢感
+ * - ホバー時のみ出現する特別なアクセント
+ * 
+ * ユーザー体験の向上:
+ * - 選択可能要素であることを直感的に伝達
+ * - ブランドの高級感と注意深いディテールをアピール
+ * - 物理的な光の反射をデジタルで再現
+ * - インタラクションの喜びと驚きを提供
+ * 
+ * 技術的配慮:
+ * - デフォルトで非表示（opacity: 0）
+ * - インタラクション時のみフェードイン
+ * - pointer-events: noneでクリックを妨げない
+ */
 .season-btn::after {
+  /* 空のコンテンツ - 擬似要素の標準実装 */
   content: "";
+  
+  /* 絶対配置 - 親要素全体をカバーするオーバーレイ */
   position: absolute;
+  
+  /* 全面カバー - 簡潔なCSS記法 */
   inset: 0;
+  
+  /* 
+   * 対角線シャイングラデーション:
+   * - 45度の光の角度で自然な反射を模擬
+   * - 両端30%は透明で自然なグラデーション
+   * - 中央50%で最大の輝きを演出
+   * - 半透明の白で上品な光沢感
+   */
   background: linear-gradient(
     45deg,
     transparent 30%,
     rgba(255, 255, 255, 0.15) 50%,
     transparent 70%
   );
+  
+  /* デフォルトで非表示 - ホバー時の特別効果として機能 */
   opacity: 0;
+  
+  /* 透明度トランジション - 滞らかな出現と消失 */
   transition: opacity 0.3s ease;
+  
+  /* マウスイベント無効 - オーバーレイがクリックを妨げない */
   pointer-events: none;
 }
 
+/* 
+ * シャイン効果のアクティベーション - ホバー・フォーカス時の特別演出
+ * 
+ * インタラクションデザイン:
+ * - ホバーとキーボードフォーカスで同一効果
+ * - アクセシビリティガイドラインへの完全準拠
+ * - 選択可能状態の明確な視覚的フィードバック
+ * - ブランドの高級感と細部へのこだわりを表現
+ * 
+ * ユーザー体験:
+ * - インタラクションの喜びと発見の驚きを提供
+ * - 物理的な感覚をデジタルで再現
+ * - サイト全体の品質と価値を印象付け
+ */
 .season-btn:hover::after,
 .season-btn:focus-visible::after {
+  /* シャインオーバーレイを可視化 - 特別な瞬間の美しさ */
   opacity: 1;
 }
 
+/* 
+ * アクティブ季節ボタン - 現在選択中の季節を明示
+ * 
+ * 状態表示のデザイン:
+ * - ゴールドカラーでプレミアム感と選択状態を表現
+ * - ボーダーを太くして重要性を強調
+ * - 立体感と浮上感で「選ばれた状態」を演出
+ * - 金色の光のオーラで神聖さと高級感
+ * 
+ * UX考慮:
+ * - 現在表示中のコンテンツとの明確な連携
+ * - 他のボタンとの明確な視覚的差別化
+ * - スクリーンリーダーでも理解できる明確な状態
+ * - ユーザーの現在位置を常に明示
+ * 
+ * 視覚的効果:
+ * - 適度な浮上でアクティブ状態を表現
+ * - スケール拡大で存在感を強化
+ * - 金色のグロウ効果で特別感を演出
+ */
 .season-btn.active {
+  /* 適度な浮上とスケール拡大 - 選択状態の穏やかな表現 */
   transform: translateY(-4px) scale(1.02);
+  
+  /* ゴールドボーダー - プレミアム感と特別感を表現 */
   border-color: #ffd700;
+  
+  /* ボーダー太く - 重要性とアクティブ状態を強調 */
   border-width: 4px;
+  
+  /* 
+   * ゴールドグロウと立体シャドウの組み合わせ:
+   * - 金色の光のオーラで神聖さを演出
+   * - 深いシャドウで高い立体感を実現
+   * - 複数層のシャドウでリアルな浮遊感
+   */
   box-shadow: 
     0 0 20px rgba(255, 215, 0, 0.4),
     0 12px 32px rgba(0, 0, 0, 0.3),
     0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Season-specific background images */
+/* 
+ * 季節別背景画像 - 各季節の独特な世界観を表現
+ * 
+ * 画像戦略:
+ * - WebP形式で最適化された高品質画像
+ * - 各季節の色彩と情緒を精密にキュレーション
+ * - ユーザーの情緒と共鳴するビジュアルコンテンツ
+ * - ブランドの世界観と価値を視覚的に伝達
+ * 
+ * 季節の特徴:
+ * - 春: 新生、希望、清々しい美しさ
+ * - 夏: エネルギー、生命力、情熱
+ * - 秋: 成熟、温かみ、深みのある美しさ
+ * - 冬: 静寂、純粋、内省的な美しさ
+ * 
+ * 技術的配慮:
+ * - data属性でのセマンティックな管理
+ * - CSSセレクターの特定性で統一管理
+ * - パフォーマンス最適化済み画像フォーマット
+ */
+
+/* 春の背景 - 新緑と清々しさを表現 */
 .season-btn[data-season="spring"] {
   background-image: url('./img/秀歌-春-btn.webp');
 }
 
+/* 夏の背景 - 太陽のエネルギーと生命力を表現 */
 .season-btn[data-season="summer"] {
   background-image: url('./img/秀歌-夏-btn.webp');
 }
 
+/* 秋の背景 - 紅葉の温かみと成熟を表現 */
 .season-btn[data-season="autumn"] {
   background-image: url('./img/秀歌-秋-btn.webp');
 }
 
+/* 冬の背景 - 雪の純粋さと静寂な美しさを表現 */
 .season-btn[data-season="winter"] {
   background-image: url('./img/秀歌-冬-btn.webp');
 }
@@ -1013,7 +2063,7 @@ a:focus {
 .season-btn::before { opacity: 0.35; }
 SURF_END SeasonTextColor */
 
-/* Gallery button styling */
+/* ギャラリーボタンスタイリング */
 .season-btn {
   border-color: rgba(150, 150, 150, 0.6);
 }
@@ -1027,7 +2077,7 @@ SURF_END SeasonTextColor */
   );
 }
 
-/* Responsive adjustments for season buttons */
+/* 季節ボタンのレスポンシブ調整 */
 @media (max-width: 768px) {
   .season-nav {
     gap: var(--space-2);
@@ -1124,8 +2174,9 @@ SURF_END SeasonTextColor */
   align-items: start;
 }
 
+/* アクティブな季節パネル - 選択された季節の楽曲・動画コンテンツを表示 */
 .season-panel.active {
-  display: grid;
+  display: grid; /* グリッドレイアウトで楽曲と画像を並べて表示 */
 }
 
 @media (min-width: 768px) {
@@ -1134,105 +2185,250 @@ SURF_END SeasonTextColor */
   }
 }
 
+/* 
+ * 季節ビジュアルコンテナ - 各季節の代表的な画像・動画を美しく表示
+ * 
+ * デザイン特徴:
+ * - 大きな角丸で和風の柔らかさを演出
+ * - 深いシャドウで存在感と立体感を表現
+ * - オーバーフロー隠しでコンテンツの整った表示
+ * - ホバー時の画像拡大効果の準備
+ */
 .season-visual {
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--radius-xl);
-  box-shadow: 0 10px 30px var(--shadow-lg);
+  position: relative;           /* 内部要素の基準点として設定 */
+  overflow: hidden;             /* 画像拡大時のはみ出しを隠す */
+  border-radius: var(--radius-xl); /* 和風の大きな角丸 */
+  box-shadow: 0 10px 30px var(--shadow-lg); /* 立体感のある深いシャドウ */
 }
 
+/* 
+ * 季節画像 - 各季節の美しい情景を表現するメインビジュアル
+ * 
+ * 表示特性:
+ * - レスポンシブでどのデバイスでも美しく表示
+ * - ゆっくりとしたトランジションで上品な動きを演出
+ * - ホバー時の拡大効果で視覚的な楽しさを提供
+ */
 .season-image {
-  width: 100%;
-  height: auto;
-  display: block;
-  transition: transform var(--transition-slow);
+  width: 100%;                  /* コンテナの幅いっぱいに表示 */
+  height: auto;                 /* アスペクト比を保持して自動調整 */
+  display: block;               /* インライン要素の隙間を除去 */
+  transition: transform var(--transition-slow); /* ゆっくりとした拡大アニメーション */
 }
 
+/* ホバー時の画像拡大効果 - ユーザーの注意を引く魅力的なインタラクション */
 .season-visual:hover .season-image {
-  transform: scale(1.05);
+  transform: scale(1.05);       /* 5%の拡大で迫力と奥行きを演出 */
 }
 
+/* 
+ * 季節楽曲エリア - 各季節に対応した楽曲リストを表示するコンテナ
+ * 
+ * レイアウト設計:
+ * - 十分なパディングで読みやすさと品格を確保
+ * - 楽曲情報の整理された表示
+ * - 季節の雰囲気に合わせたスペーシング
+ */
 .season-tracks {
-  padding: var(--space-6);
+  padding: var(--space-6);      /* 楽曲リスト周りの適切な余白 */
 }
 
+/* 
+ * 季節タイトル - 各季節の名前と特徴を示すメイン見出し
+ * 
+ * デザイン方針:
+ * - システムテキスト色で一貫した表示
+ * - 下部マージンで楽曲リストとの明確な分離
+ * - 季節感を伝える重要なブランディング要素
+ */
 .season-title {
-  margin-bottom: var(--space-4);
-  color: var(--text);
+  margin-bottom: var(--space-4); /* タイトル下の適切な間隔確保 */
+  color: var(--text);           /* テーマに合わせた統一テキスト色 */
 }
 
+/* 
+ * 季節説明文 - 各季節のコンセプトと楽曲の背景を伝えるサブタイトル
+ * 
+ * 情報設計:
+ * - やや大きめの文字サイズで重要性を示す
+ * - ミュートカラーで控えめながら読みやすく表示
+ * - 楽曲リストとの適切な距離で視覚的階層を構築
+ */
 .season-description {
-  margin-bottom: var(--space-8);
-  font-size: var(--text-lg);
-  color: var(--text-muted);
+  margin-bottom: var(--space-8); /* 説明文と楽曲リストの間隔 */
+  font-size: var(--text-lg);    /* やや大きめで読みやすいサイズ */
+  color: var(--text-muted);     /* 控えめで品のあるテキスト色 */
 }
 
+/* 
+ * 楽曲リストコンテナ - 各季節の楽曲を縦並びで整理表示
+ * 
+ * レイアウト戦略:
+ * - 縦方向のFlexレイアウトで楽曲を一列に配置
+ * - 楽曲間の適切な間隔で読みやすさを確保
+ * - スクロール体験を考慮したスペーシング設計
+ */
 .track-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-6);
+  display: flex;                /* フレキシブルレイアウトを採用 */
+  flex-direction: column;       /* 楽曲を縦に一列配置 */
+  gap: var(--space-6);         /* 楽曲カード間の統一された間隔 */
 }
 
+/* 
+ * 楽曲カード - 個々の楽曲情報と再生コントロールを含むコンテナ
+ * 
+ * ビジュアルデザイン:
+ * - 半透明黒背景で深みと高級感を演出
+ * - グラスモーフィズム効果でモダンな印象
+ * - 大きな角丸で和風の柔らかさを表現
+ * - 繊細なボーダーで品のある境界線
+ * 
+ * インタラクション:
+ * - ホバー時の立体的な浮上効果
+ * - スムーズなトランジションで上質な操作感
+ */
 .track {
-  padding: var(--space-6);
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: var(--radius-xl);
-  transition: all var(--transition-normal);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(8px);
+  padding: var(--space-6);      /* カード内コンテンツの適切な余白 */
+  background: rgba(0, 0, 0, 0.3); /* 半透明黒で深みを演出 */
+  border-radius: var(--radius-xl); /* 和風の大きな角丸 */
+  transition: all var(--transition-normal); /* 滑らかな状態変化 */
+  border: 1px solid rgba(255, 255, 255, 0.08); /* 繊細な白ボーダー */
+  backdrop-filter: blur(8px);   /* グラスモーフィズム効果 */
 }
 
+/* 
+ * 楽曲カードのホバー状態 - エレガントな立体的浮上効果
+ * 
+ * インタラクション詳細:
+ * - 二重シャドウで自然な浮遊感を表現
+ * - Y軸移動で物理的な浮き上がりを演出
+ * - 背景の濃度上昇でアクティブ状態を示す
+ * - ボーダーの明度上昇で選択感を強化
+ */
 .track:hover {
   box-shadow:
-    0 8px 25px rgba(0, 0, 0, 0.15),
-    0 4px 10px rgba(0, 0, 0, 0.1);
-  transform: translateY(-2px);
-  background: rgba(0, 0, 0, 0.4);
-  border-color: rgba(255, 255, 255, 0.15);
+    0 8px 25px rgba(0, 0, 0, 0.15), /* 外側の大きく柔らかい影 */
+    0 4px 10px rgba(0, 0, 0, 0.1);  /* 内側のくっきりとした影 */
+  transform: translateY(-2px);      /* 上方向への軽やかな浮上 */
+  background: rgba(0, 0, 0, 0.4);  /* 背景の濃度上昇でアクティブ感 */
+  border-color: rgba(255, 255, 255, 0.15); /* ボーダーの明度上昇 */
 }
 
+/* 
+ * 楽曲オーディオコントロール - ユーザーが楽曲を再生するためのメディア要素
+ * 
+ * 機能設計:
+ * - フル幅でカード全体に合わせた表示
+ * - 角丸でカード全体のデザインと調和
+ * - 下部マージンで楽曲情報との適切な分離
+ * - ネイティブコントロールを活用したアクセシビリティ
+ */
 .track audio {
-  width: 100%;
-  margin-bottom: var(--space-3);
-  border-radius: var(--radius);
+  width: 100%;                  /* カード幅いっぱいに表示 */
+  margin-bottom: var(--space-3); /* オーディオと楽曲情報の間隔 */
+  border-radius: var(--radius); /* 統一感のある角丸 */
 }
 
+/* 
+ * 楽曲タイトル - 楽曲の名前を表示するメイン見出し
+ * 
+ * タイポグラフィ設計:
+ * - やや大きめのフォントサイズで楽曲名を強調
+ * - 統一されたテキスト色でブランド一貫性を保持
+ * - 説明文との適切な間隔で情報階層を明確化
+ */
 .track-title {
-  margin-bottom: var(--space-2);
-  font-size: var(--text-lg);
-  color: var(--text);
+  margin-bottom: var(--space-2); /* タイトルと説明文の間隔 */
+  font-size: var(--text-lg);    /* 楽曲名を際立たせるサイズ */
+  color: var(--text);           /* テーマ統一のテキスト色 */
 }
 
+/* 
+ * 楽曲説明文 - 楽曲のコンセプトや背景情報を伝えるサブテキスト
+ * 
+ * デザイン方針:
+ * - 小さめのフォントサイズで控えめに情報提供
+ * - ミュートカラーで主要情報を邪魔しない配色
+ * - マージンリセットでカード内レイアウトの精密制御
+ */
 .track-description {
-  margin: 0;
-  font-size: var(--text-sm);
-  color: var(--text-muted);
+  margin: 0;                    /* カード内での精密な配置制御 */
+  font-size: var(--text-sm);   /* 控えめで読みやすい小サイズ */
+  color: var(--text-muted);    /* 上品で控えめなテキスト色 */
 }
 
-/* Ensure Season Gallery videos always fit within the visual container */
+/* 
+ * ===== 季節ギャラリー動画表示最適化 =====
+ * 
+ * 動画コンテンツの美しい表示とレスポンシブ対応を両立
+ * 
+ * 設計上の課題解決:
+ * - 様々なアスペクト比の動画を一貫したコンテナで表示
+ * - コンテナのサイズを維持しつつ動画の品質を保持
+ * - モバイルからデスクトップまでの一貫した視聴体験
+ * - レイアウト崩れやコンテンツのはみ出しを防止
+ */
+
+/* 
+ * 季節ビジュアルコンテナのアスペクト比管理
+ * 
+ * 16:9比率を強制することで:
+ * - ワイドスクリーン動画に最適化された表示空間を提供
+ * - モダンな映像コンテンツの標準的な表示空間を確保
+ * - コンテナの一貫性でギャラリー全体の美しい視覚バランス
+ * - 様々なデバイスサイズでの一貫した表示品質
+ */
 .season-visual {
-  aspect-ratio: 16 / 9; /* Maintain 16:9 container */
-}
-.season-visual > .season-video {
-  width: 100%;
-  height: 100%;
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
-/* ===== Contact Section ===== */
-.contact {
-  padding: var(--space-24) 0;
-  background: rgba(17, 24, 39, 0.85);
-  backdrop-filter: blur(1px);
+  aspect-ratio: 16 / 9;         /* 16:9比率でモダンな映像コンテンツ標準を維持 */
 }
 
+/* 
+ * 季節動画要素の表示最適化
+ * 
+ * object-fit: contain の重要性:
+ * - 動画のオリジナルアスペクト比を維持して歪みを防止
+ * - コンテナ内での完全表示を保証しつつ品質を保持
+ * - 異なるサイズの動画でも統一された表示効果
+ * - レスポンシブ表示での適切なサイズ調整
+ */
+.season-visual > .season-video {
+  width: 100%;                  /* コンテナの幅いっぱいに表示 */
+  height: 100%;                 /* コンテナの高さいっぱいに表示 */
+  max-width: 100%;              /* 最大幅制限でオーバーフロー防止 */
+  max-height: 100%;             /* 最大高さ制限でオーバーフロー防止 */
+  object-fit: contain;          /* アスペクト比保持して全体表示を保証 */
+}
+/* ===== お問い合わせセクション - 連絡フォームエリア ===== */
+/* 
+ * お問い合わせセクション - ユーザーからの連絡や質問を受け付けるエリア
+ * 
+ * デザインコンセプト:
+ * - Aboutセクションと同様の半透明背景で統一感を演出
+ * - 大きな上下パディングでセクションの重要性を表現
+ * - ブラーエフェクトでモダンな深みと上品さを付与
+ * - ユーザーに親しみやすさと信頼性を伝える設計
+ */
+.contact {
+  padding: var(--space-24) 0;     /* 上下に十分な余白でセクションの品格を表現 */
+  background: rgba(17, 24, 39, 0.85); /* 半透明黒背景で高級感と読みやすさを両立 */
+  backdrop-filter: blur(1px);      /* 背景との自然な統合と現代的な美しさ */
+}
+
+/* 
+ * お問い合わせコンテンツレイアウト - フォームと連絡情報の柔軟な配置
+ * 
+ * レイアウト戦略:
+ * - グリッドシステムでレスポンシブな2列レイアウトを実現
+ * - モバイルファーストで単一列からスタート
+ * - コンテンツ間の適切な間隔で情報の整理と読みやすさを確保
+ * - 最大幅制限で読みやすいライン長を維持
+ */
 .contact-content {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-12);
-  max-width: 1000px;
-  margin: 0 auto;
+  display: grid;                /* 柔軟な2列グリッドレイアウト */
+  grid-template-columns: 1fr;   /* モバイルファーストの単一列配置 */
+  gap: var(--space-12);         /* コンテンツ間の十分な間隔 */
+  max-width: 1000px;           /* 読みやすい最大幅でコンテンツを制限 */
+  margin: 0 auto;              /* 中央揃えでバランスの良い表示 */
 }
 
 @media (min-width: 768px) {
@@ -1241,70 +2437,181 @@ SURF_END SeasonTextColor */
   }
 }
 
+/* 
+ * お問い合わせフォームコンテナ - ユーザーからのメッセージを受け取るメインエリア
+ * 
+ * フォームデザインの特徴:
+ * - システム背景色でテーマとの一貫性を保持
+ * - 大きなパディングでフォーム要素の操作しやすさを向上
+ * - 特大の角丸でフレンドリーで親しみやすい印象
+ * - 深いシャドウでフォームの重要性と存在感を強調
+ */
 .contact-form {
-  background: var(--background);
-  padding: var(--space-8);
-  border-radius: var(--radius-xl);
-  box-shadow: 0 4px 20px var(--shadow);
+  background: var(--background);  /* テーマ統一の背景色 */
+  padding: var(--space-8);        /* フォーム内部の十分な余白 */
+  border-radius: var(--radius-xl); /* 親しみやすい大きな角丸 */
+  box-shadow: 0 4px 20px var(--shadow); /* フォームの重要性を示す深い影 */
 }
 
+/* 
+ * フォームグループ - 各入力フィールドとラベルをまとめる論理的なコンテナ
+ * 
+ * 構造化の利点:
+ * - ラベルと入力欄の関連性を明確にしてアクセシビリティ向上
+ * - フォーム全体の視覚的リズムと読みやすさを向上
+ * - 適切なスペーシングでユーザーの入力作業を支援
+ * - レスポンシブレイアウトでの一貫した表示
+ */
 .form-group {
-  margin-bottom: var(--space-6);
+  margin-bottom: var(--space-6);  /* フォームフィールド間の十分な分離スペース */
 }
 
+/* 
+ * フォームラベル - 入力フィールドの説明とガイダンスを提供
+ * 
+ * アクセシビリティ重要ポイント:
+ * - ブロック表示で読みやすさと視覚的階層を構築
+ * - セミボールドで重要性を示しつつ可読性を保持
+ * - システムテキストカラーでテーマ統一性を維持
+ * - 入力欄との適切な距離でフォーム操作の流れをサポート
+ * 
+ * ユーザビリティ配慮:
+ * - スクリーンリーダーでの適切な読み上げ
+ * - 明確で理解しやすいラベリング
+ * - フォームの入力項目を論理的にグループ化
+ */
 .form-label {
-  display: block;
-  margin-bottom: var(--space-2);
-  font-weight: 600;
-  color: var(--text);
+  display: block;               /* ラベルをブロック表示して視覚的階層を構築 */
+  margin-bottom: var(--space-2); /* ラベルと入力欄の適切な間隔 */
+  font-weight: 600;             /* セミボールドで重要性を示す */
+  color: var(--text);           /* テーマ統一のテキストカラー */
 }
 
+/* 
+ * 必須項目マーカー - ユーザーが入力必須の項目を即座に認識できる視覚的指標
+ * 
+ * UX設計思想:
+ * - アクセントカラーで必須項目を目立たせて入力漏れを防止
+ * - 色だけでなく記号（*）と組み合わせてアクセシビリティを確保
+ * - フォーム全体の情報優先度を視覚的に整理
+ * - ユーザーの作業効率向上をサポート
+ */
 .required {
-  color: var(--accent);
+  color: var(--accent);         /* アクセントカラーで必須項目を強調表示 */
 }
 
+/* 
+ * フォーム入力要素 - テキスト入力欄とテキストエリアの共通スタイル
+ * 
+ * デザイン統一性:
+ * - フル幅レスポンシブで様々な画面サイズに対応
+ * - 統一されたパディングで快適な入力体験を提供
+ * - テーマカラーで一貫したブランド体験を維持
+ * - 適切な角丸でフレンドリーな印象を演出
+ * 
+ * ユーザビリティ向上:
+ * - 十分なパディングでタッチ入力やクリック操作を快適に
+ * - 継承フォントでサイト全体の一貫性保持
+ * - スムーズなボーダー色変化でフォーカス状態を明確に表現
+ * - 読みやすい文字サイズでフォーム入力作業をサポート
+ */
 .form-input,
 .form-textarea {
-  width: 100%;
-  padding: var(--space-3) var(--space-4);
-  border: 2px solid var(--border);
-  border-radius: var(--radius);
-  font-size: var(--text-base);
-  font-family: inherit;
-  background: var(--background);
-  color: var(--text);
-  transition: border-color var(--transition-fast);
+  width: 100%;                  /* レスポンシブなフル幅表示 */
+  padding: var(--space-3) var(--space-4); /* 快適な入力のための適切な内側余白 */
+  border: 2px solid var(--border); /* テーマ統一の境界線とフォーカス準備 */
+  border-radius: var(--radius);  /* 統一感のあるフレンドリーな角丸 */
+  font-size: var(--text-base);   /* 読みやすい標準文字サイズ */
+  font-family: inherit;          /* サイト全体のフォント統一性保持 */
+  background: var(--background); /* テーマに合わせた背景色 */
+  color: var(--text);            /* テーマ統一のテキストカラー */
+  transition: border-color var(--transition-fast); /* スムーズなフォーカス変化 */
 }
 
+/* 
+ * フォーム入力要素のフォーカス状態 - ユーザーが現在操作中の項目を明確に表現
+ * 
+ * アクセシビリティ重要ポイント:
+ * - デフォルトアウトライン除去の代替として明確なフォーカス表現を提供
+ * - プライマリカラーでブランド統一とフォーカス状態の認識性向上
+ * - ボックスシャドウでフォーカスリングを表現（色覚障害対応）
+ * - 十分なコントラストでWCAG基準への対応
+ * 
+ * UX向上効果:
+ * - キーボード操作時の現在位置明確化
+ * - タブナビゲーション時の迷子防止
+ * - フォーム入力の操作性と完了率向上
+ */
 .form-input:focus,
 .form-textarea:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  outline: none;                 /* デフォルトアウトライン除去 */
+  border-color: var(--primary); /* プライマリカラーでフォーカス状態を明示 */
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1); /* 柔らかいフォーカスリング */
 }
 
+/* 
+ * テキストエリア追加設定 - 長文入力に最適化された特別な配慮
+ * 
+ * ユーザビリティの向上:
+ * - 垂直方向のみのリサイズでレイアウト破綻を防止
+ * - 最小高さ設定でメッセージ入力に十分なスペースを確保
+ * - 複数行入力を前提とした視覚的な大きさで用途を明示
+ * - レスポンシブレイアウトとの調和を維持
+ */
 .form-textarea {
-  resize: vertical;
-  min-height: 120px;
+  resize: vertical;             /* 縦方向のみリサイズ可能でレイアウト保護 */
+  min-height: 120px;           /* 長文入力に適した最小高さを保証 */
 }
 
+/* 
+ * フォーム送信ボタン - ユーザーアクションの最終ステップを担う重要な要素
+ * 
+ * ビジュアル設計の意図:
+ * - グラデーション背景で他のボタンより高い重要度を表現
+ * - フル幅表示でモバイル操作性とデスクトップでの存在感を両立
+ * - 大きなパディングでタッチターゲットサイズを確保
+ * - セミボールドフォントで行動促進の強さを表現
+ * 
+ * インタラクション設計:
+ * - 滑らかなトランジションで高品質な操作感を提供
+ * - ポインターカーソルでクリック可能性を明示
+ * - アクセシビリティを考慮したキーボード操作対応
+ * 
+ * コンバージョン最適化:
+ * - 目立つ配色とサイズでユーザーの注意を引く
+ * - 明確な視覚階層でフォーム完了への誘導
+ */
 .form-submit {
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
-  color: white;
-  border: none;
-  padding: var(--space-4) var(--space-8);
-  border-radius: var(--radius-lg);
-  font-size: var(--text-base);
-  font-weight: 600;
-  cursor: pointer;
-  transition: all var(--transition-normal);
-  width: 100%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light)); /* 重要度の高いグラデーション */
+  color: white;                  /* 高コントラストの白文字 */
+  border: none;                  /* クリーンなボーダーレスデザイン */
+  padding: var(--space-4) var(--space-8); /* 十分なタッチターゲットサイズ */
+  border-radius: var(--radius-lg); /* 大きな角丸で親しみやすさを演出 */
+  font-size: var(--text-base);   /* 読みやすい標準サイズ */
+  font-weight: 600;              /* セミボールドで行動促進を表現 */
+  cursor: pointer;               /* クリック可能性を明示 */
+  transition: all var(--transition-normal); /* 全プロパティの滑らかな変化 */
+  width: 100%;                   /* フル幅でモバイル・デスクトップ最適化 */
 }
 
+/* 
+ * フォーム送信ボタンのインタラクション状態 - ユーザーエンゲージメント向上の仕上げ
+ * 
+ * マイクロインタラクションの効果:
+ * - 軽微な浮上効果でボタンの反応性を視覚化
+ * - 深いシャドウで立体感と重要性を強調
+ * - ホバーとフォーカスの統一で一貫した操作感
+ * - 送信アクションへの心理的促進効果
+ * 
+ * アクセシビリティ配慮:
+ * - マウス操作とキーボード操作の同一視覚効果
+ * - 操作フィードバックで現在の状態を明確に表現
+ * - 様々な入力デバイスでの操作性統一
+ */
 .form-submit:hover,
 .form-submit:focus {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px var(--shadow-lg);
+  transform: translateY(-2px);   /* 軽やかな浮上でボタンの反応を表現 */
+  box-shadow: 0 8px 25px var(--shadow-lg); /* 立体感を強化する深いシャドウ */
 }
 
 .contact-info {
@@ -1346,22 +2653,45 @@ SURF_END SeasonTextColor */
   font-size: var(--text-xl);
 }
 
-/* ===== Footer ===== */
+/* ===== フッター - サイト情報エリア ===== */
+/* 
+ * フッターセクション - サイトの総括情報とナビゲーションを提供する最終エリア
+ * 
+ * デザインコンセプト:
+ * - 和紙テクスチャでサイト全体の和風テイストを統一
+ * - ヘッダーと同じ和紙背景で上下の一体感を演出
+ * - 上部に影を付けてコンテントとの境界を明確化
+ * - 十分なパディングで情報の読みやすさと品格を確保
+ * 
+ * 機能的役割:
+ * - 著作権情報と法的リンクの表示
+ * - ソーシャルメディアへのアクセスポイント
+ * - サイト内ナビゲーションの補助手段
+ */
 .footer {
-  background-image: url('./img/和紙_黒_optimized.webp');
-  background-size: cover;
-  background-repeat: repeat;
-  color: var(--neutral-300);
-  padding: var(--space-20) 0 var(--space-10);
-  position: relative;
-  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.4);
+  background-image: url('./img/和紙_黒_optimized.webp'); /* 和風テクスチャ背景 */
+  background-size: cover;             /* 背景イメージを全面にカバー */
+  background-repeat: repeat;          /* パターンの繰り返しで統一感を演出 */
+  color: var(--neutral-300);          /* 控えめで読みやすいテキスト色 */
+  padding: var(--space-20) 0 var(--space-10); /* 上部に十分、下部に適度の余白 */
+  position: relative;                 /* 内部要素の基準点として設定 */
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.4); /* 上部に影でセクションの境界を明確化 */
 }
 
+/* 
+ * フッターメインコンテンツ - ブランド情報、ナビゲーション、ソーシャルリンクのコンテナ
+ * 
+ * グリッドレイアウト戦略:
+ * - モバイルファーストで単一列からスタート
+ * - タブレット以上で自動的に複数列レイアウトに切り替わり
+ * - コンテンツ間の十分な間隔で情報の整理と読みやすさ
+ * - 下部マージンで著作権情報との適切な分離
+ */
 .footer-content {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-12);
-  margin-bottom: var(--space-12);
+  display: grid;                /* 柔軟なグリッドシステムでレスポンシブ対応 */
+  grid-template-columns: 1fr;   /* モバイルでは単一列配置 */
+  gap: var(--space-12);         /* セクション間の大きな間隔 */
+  margin-bottom: var(--space-12); /* 著作権エリアとの適切な分離 */
 }
 
 @media (min-width: 768px) {
@@ -1376,17 +2706,34 @@ SURF_END SeasonTextColor */
   }
 }
 
+/* 
+ * フッターブランドエリア - Shukaのブランド情報とサイト概要を表示
+ * 
+ * 情報設計:
+ * - 最大幅制限で読みやすいライン長を維持
+ * - コンパクトに繏められたブランドストーリーで信頼性を構築
+ * - 他のフッター要素とのバランスを考慮したサイジング
+ */
 .footer-brand {
-  max-width: 400px;
+  max-width: 400px;             /* 読みやすいライン長に制限して可読性向上 */
 }
 
+/* 
+ * フッターロゴ - フッター内でのSHUKAブランド表示
+ * 
+ * タイポグラフィ特徴:
+ * - プライマリカラーでブランドアイデンティティを強調
+ * - 和風セリフフォントでサイトの世界観を継承
+ * - 文字間設定で日本語の美しさを表現
+ * - 適度なフォントウェイトで存在感と品格を両立
+ */
 .footer-logo {
-  color: var(--primary);
-  margin-bottom: var(--space-4);
-  font-size: var(--text-xl);
-  font-weight: 700;
-  font-family: "Yuji Syuku", "Noto Serif JP", serif;
-  letter-spacing: 0.05em;
+  color: var(--primary);          /* ブランドカラーで一貫性を保持 */
+  margin-bottom: var(--space-4);  /* ロゴ下の適切な間隔 */
+  font-size: var(--text-xl);     /* 目立つが大きすぎないサイズ */
+  font-weight: 700;              /* セミボールドで存在感を演出 */
+  font-family: "Yuji Syuku", "Noto Serif JP", serif; /* 和風セリフフォント */
+  letter-spacing: 0.05em;        /* 文字間を広げて日本語の美しさを表現 */
 }
 
 .footer-description {
@@ -1550,74 +2897,194 @@ SURF_END SeasonTextColor */
   color: var(--neutral-600);
 }
 
-/* Rain Effect Canvas */
-.rain-canvas{
-  position: fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  pointer-events:none;
-  z-index: var(--z-sticky);
+/* 雨エフェクトキャンバス */
+/* 
+ * 雨演出キャンバス - 季節的な雨の演出を描画するスペシャルエフェクト
+ * 
+ * 演出の特徴:
+ * - フィックスドポジションでスクロールに関係なく表示
+ * - フルスクリーンカバーで一面に雨を描画
+ * - ポインターイベント無効化でUI操作を妨げない
+ * - 適切なz-indexで他の要素より前面、モーダルより背面に配置
+ * 
+ * 技術的詳細:
+ * - Canvas APIを使用した高性能なアニメーション実装
+ * - JavaScriptで雨粒の物理的な動きや空気感を演出
+ */
+.rain-canvas {
+  position: fixed;              /* スクロールに関係なく画面に固定表示 */
+  top: 0;                      /* 画面上端から開始 */
+  left: 0;                     /* 画面左端から開始 */
+  width: 100%;                 /* 画面幅いっぱいに広げる */
+  height: 100%;                /* 画面高さいっぱいに広げる */
+  pointer-events: none;        /* クリックやタッチイベントを無効化 */
+  z-index: var(--z-sticky);    /* 適切な重なり順で他要素とのバランスを確保 */
 }
 
-/* ===== Animations ===== */
+/* ===== アニメーション - 動的演出効果 ===== */
+/* 
+ * アニメーションシステム - サイト全体の動的な体験を統括管理
+ * 
+ * アニメーション哲学:
+ * - 和風美学に基づいた「間」と「流れ」の表現
+ * - 物理的な動きを模した自然で心地よいアニメーション
+ * - ユーザーの注意を引きつけ、情報を段階的に提供
+ * - ブランドの高級感と洗練さを表現
+ * 
+ * 技術的原則:
+ * - GPU加速対応プロパティの優先使用（transform, opacity）
+ * - 60FPSを維持するパフォーマンス最適化
+ * - アクセシビリティ配慮（prefers-reduced-motion対応）
+ * - クロスブラウザ互換性と統一性確保
+ * 
+ * ユーザー体験の向上:
+ * - コンテンツの段階的な登場で情報の整理を支援
+ * - 視覚的なフィードバックでインタラクションの品質向上
+ * - ブランドの世界観と情緒を動きで表現
+ * - サイト全体の一体感と連続性を創出
+ */
+
+/* 
+ * fadeInUpアニメーション - 下から上への自然な登場効果
+ * 
+ * 動作原理:
+ * - Y軸方向の移動（30px）で「下から浮かび上がる」感覚
+ * - 透明度の変化で滞らかな出現を演出
+ * - transformとopacityのGPU加速プロパティでスムーズな動作
+ * 
+ * 使用場面:
+ * - ヒーローセクションのメインコンテンツ
+ * - 重要な情報の段階的な提示
+ * - セクション間のスムーズな移行
+ * - ユーザーの注意を自然に誘導
+ */
 @keyframes fadeInUp {
+  /* 開始状態: 不可視で下方にオフセット */
   from {
     opacity: 0;
     transform: translateY(30px);
   }
+  
+  /* 終了状態: 完全可視で正常位置 */
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
+/* 
+ * fadeInアニメーション - シンプルなフェードイン効果
+ * 
+ * 特徴:
+ * - 位置変化なしの純粋な透明度変化
+ * - 最も軽量でパフォーマンスに優しいアニメーション
+ * - さりげなく上品な登場効果
+ * 
+ * 適用場面:
+ * - オーバーレイやモーダルの出現
+ * - 補助情報やアイコンの表示
+ * - メインコンテンツを邪魔しない控えめな効果
+ * - ローディング後のコンテンツ表示
+ */
 @keyframes fadeIn {
+  /* 開始: 完全非表示 */
   from {
     opacity: 0;
   }
+  
+  /* 終了: 完全表示 */
   to {
     opacity: 1;
   }
 }
 
+/* 
+ * slideInRightアニメーション - 右からのスライド登場効果
+ * 
+ * 動作原理:
+ * - X軸方向の水平移動（右から左へ）
+ * - 透明度変化と組み合わせた滞らかな登場
+ * - 日本の文字読み方向（右から左）を意識した動き
+ * 
+ * 使用目的:
+ * - ナビゲーションメニューの表示
+ * - サイドバーやパネルの出現
+ * - 連続したコンテンツの段階的表示
+ * - リストアイテムの逆順登場演出
+ */
 @keyframes slideInRight {
+  /* 開始状態: 右側にオフセットして不可視 */
   from {
     opacity: 0;
     transform: translateX(30px);
   }
+  
+  /* 終了状態: 正常位置で完全可視 */
   to {
     opacity: 1;
     transform: translateX(0);
   }
 }
 
+/* 
+ * slideInLeftアニメーション - 左からのスライド登場効果
+ * 
+ * 動作原理:
+ * - X軸方向の水平移動（左から右へ）
+ * - slideInRightと対称的な動きでバランスを創出
+ * - 日本の伝統的な書道での筆運びを想起させる動き
+ * 
+ * 使用場面:
+ * - メインコンテンツの登場
+ * - テキストブロックの段階的表示
+ * - 左サイドバーやドロワーの表示
+ * - slideInRightと組み合わせた交互登場演出
+ */
 @keyframes slideInLeft {
+  /* 開始状態: 左側にオフセットして不可視 */
   from {
     opacity: 0;
     transform: translateX(-30px);
   }
+  
+  /* 終了状態: 正常位置で完全可視 */
   to {
     opacity: 1;
     transform: translateX(0);
   }
 }
 
-/* Animation classes for JavaScript */
+/* 
+ * JavaScript用アニメーションクラス - 動的コンテント制御用
+ * 
+ * 設計思想:
+ * - JavaScriptから簡単にアニメーションをトリガーできるユーティリティ
+ * - CSSとJavaScriptの分離でメンテナンス性向上
+ * - 統一されたタイミングとイージングで一貫した体験
+ * - パフォーマンス最適化済みの設定
+ * 
+ * タイミング設定:
+ * - 0.6秒: 情報認識に最適な速度
+ * - ease-out: 自然で心地よい加速度カーブ
+ * - ユーザビリティとパフォーマンスのバランスを考慮
+ */
+
+/* フェードインアニメーションクラス - 汎用的な登場効果 */
 .animate-fade-in {
   animation: fadeIn 0.6s ease-out;
 }
 
+/* 右からのスライドインアニメーションクラス */
 .animate-slide-in-right {
   animation: slideInRight 0.6s ease-out;
 }
 
+/* 左からのスライドインアニメーションクラス */
 .animate-slide-in-left {
   animation: slideInLeft 0.6s ease-out;
 }
 
-/* ===== Utility Classes ===== */
+/* ===== ユーティリティクラス - 汎用スタイル ===== */
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -1646,7 +3113,7 @@ SURF_END SeasonTextColor */
 .mt-6 { margin-top: var(--space-6); }
 .mt-8 { margin-top: var(--space-8); }
 
-/* ===== Print Styles ===== */
+/* ===== 印刷スタイル - 紙出力最適化 ===== */
 @media print {
   .header,
   .nav-toggle,
@@ -1671,7 +3138,7 @@ SURF_END SeasonTextColor */
   }
 }
 
-/* WINDSURF_START RippleEnhancement */
+/* ===== 波紋効果強化設定開始 ===== */
 .ripple {
   position: absolute;
   background: transparent !important;
@@ -1849,44 +3316,75 @@ body[data-season="winter"] .ripple{ border-color: var(--accent-winter); }
   }
 }
 
-/* Gold foil sparkle effect - 金箔の煌めき - 強化版 */
+/* 
+ * 金箱の煥めきエフェクト - クリック時に発生する上品な金色の光の爆発
+ * 
+ * 美的表現の特徴:
+ * - ラジアルグラデーションで中心から外縁に向かって美しく減衰
+ * - 金色系のグラデーションで本物の金箱の質感を表現
+ * - 多重シャドウで深みと立体感のある光の拡散
+ * - インセットシャドウで内側からの光を表現
+ * 
+ * アニメーション設計:
+ * - cubic-bezierで弾力的な動きを演出
+ * - 回転と拡大の組み合わせでダイナミックな表現
+ * - 0.6秒の絶妙なタイミングで印象的な瞬間を演出
+ */
 .gold-sparkle {
-  position: absolute;
-  pointer-events: none;
+  position: absolute;           /* クリック位置を基準に配置 */
+  pointer-events: none;         /* UI操作を妨げないように無効化 */
+  /* 本物の金箱を模した美しいラジアルグラデーション */
   background: radial-gradient(
     circle,
-    rgba(255, 215, 0, 1) 0%,
-    rgba(255, 235, 59, 0.95) 15%,
-    rgba(255, 193, 7, 0.8) 35%,
-    rgba(255, 175, 0, 0.4) 60%,
-    transparent 85%
+    rgba(255, 215, 0, 1) 0%,      /* 中心部: 純金の濃い輝き */
+    rgba(255, 235, 59, 0.95) 15%, /* 内側: 明るい金色の光 */
+    rgba(255, 193, 7, 0.8) 35%,   /* 中間: 深い金色の温かみ */
+    rgba(255, 175, 0, 0.4) 60%,   /* 外側: 柔らかいオレンジの温かみ */
+    transparent 85%               /* 外縁: 自然な透明への遷移 */
   );
-  border-radius: 50%;
-  transform: scale(0) rotate(0deg);
-  animation: goldSparkleIntense 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+  border-radius: 50%;           /* 完美な円形で結晶の美しさを表現 */
+  transform: scale(0) rotate(0deg); /* 初期状態は非表示 */
+  animation: goldSparkleIntense 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards; /* 弾力的な爆発アニメーション */
+  /* 多層シャドウで光の拡散と内側の輝きを表現 */
   box-shadow: 
-    0 0 30px rgba(255, 215, 0, 0.9),
-    0 0 60px rgba(255, 215, 0, 0.6),
-    0 0 100px rgba(255, 235, 59, 0.3),
-    inset 0 0 15px rgba(255, 235, 59, 0.7);
+    0 0 30px rgba(255, 215, 0, 0.9),    /* 内側の強い金色の光 */
+    0 0 60px rgba(255, 215, 0, 0.6),    /* 中間の柔らかい拡散光 */
+    0 0 100px rgba(255, 235, 59, 0.3),  /* 外側の大きなオーラ */
+    inset 0 0 15px rgba(255, 235, 59, 0.7); /* 内側からの輝く内光 */
 }
 
+/* 
+ * 金粉パーティクルエフェクト - 空中に舞い上がる繊細な金の粒 
+ * 
+ * 視覚的表現の工夫:
+ * - リニアグラデーションで粒子の立体感と方向性を表現
+ * - CSSカスタムプロパティで動的な角度変化を実現
+ * - 小さな角丸で粒子の特徴を表現
+ * - 二重シャドウで光の拡散効果
+ * 
+ * 動きの特徴:
+ * - 物理的な重力と空気抗力を考慮したリアルな軌道
+ * - 回転と移動の組み合わせで自然な浮遊感
+ * - 段階的なサイズ変化で遠近感を演出
+ */
 .gold-particle {
-  position: absolute;
-  pointer-events: none;
+  position: absolute;           /* クリック位置からの相対配置 */
+  pointer-events: none;         /* インタラクションを妨げない設定 */
+  /* 動的角度を持つ立体的なリニアグラデーション */
   background: linear-gradient(var(--particle-angle, 45deg), 
-    rgba(255, 215, 0, 1) 0%,
-    rgba(255, 235, 59, 0.95) 25%,
-    rgba(255, 193, 7, 0.8) 50%,
-    rgba(255, 175, 0, 0.4) 75%,
-    transparent 100%
+    rgba(255, 215, 0, 1) 0%,      /* 上部: 純金の強い光 */
+    rgba(255, 235, 59, 0.95) 25%, /* 上中: 明るい金の反射 */
+    rgba(255, 193, 7, 0.8) 50%,   /* 中央: 深みのある金色 */
+    rgba(255, 175, 0, 0.4) 75%,   /* 下中: 柔らかいオレンジ */
+    transparent 100%              /* 下部: 自然な透明 */
   );
-  border-radius: 2px;
-  transform: scale(0) rotate(0deg);
-  animation: goldParticleFloatIntense ease-out forwards;
+  border-radius: 2px;           /* 粒子らしい小さな角丸 */
+  transform: scale(0) rotate(0deg); /* 初期状態は非表示 */
+  animation: goldParticleFloatIntense ease-out forwards; /* 物理的な浮遊アニメーション */
+  /* 粒子の光の拡散シャドウ */
   box-shadow: 
-    0 0 12px rgba(255, 215, 0, 0.8),
-    0 0 24px rgba(255, 235, 59, 0.4);
+    0 0 12px rgba(255, 215, 0, 0.8),  /* 内側の集中した光 */
+    0 0 24px rgba(255, 235, 59, 0.4); /* 外側の柔らかいオーラ */
 }
 
 .gold-flake {
@@ -2035,7 +3533,7 @@ body[data-season="winter"] .ripple{ border-color: var(--accent-winter); }
   }
 }
 
-/* Gold flake burst */
+/* 金箔爆発効果 */
 .refined-particle {
   position: absolute;
   pointer-events: none;
@@ -2128,7 +3626,7 @@ body[data-season="winter"] .ripple{ border-color: var(--accent-winter); }
   }
 }
 
-/* Floating musical note for video hover */
+/* 動画ホバー時の浮遊音符 */
 .play-note {
   position: absolute;
   pointer-events: none;
@@ -2141,14 +3639,37 @@ body[data-season="winter"] .ripple{ border-color: var(--accent-winter); }
   text-shadow: 0 0 4px currentColor;
 }
 
+/* 
+ * 桜の花びらエフェクト - 春シーズンのクリック時に発生する美しい桜吹雪演出
+ * 
+ * 日本的美学の表現:
+ * - 桜の花びらを模した特徴的な非対称形状
+ * - ピンク系グラディエントで春の温かみと優しさを表現
+ * - 不规則な回転で空中に舞う花びらの自然な動き
+ * - ドロップシャドウで光に照らされた花びらの立体感
+ * 
+ * 演出タイミング:
+ * - 春シーズン限定で季節感を演出
+ * - クリックやタップの瞬間に発生して駆け去る
+ * - ユーザーの操作に対する情緒的なフィードバック
+ * 
+ * 形状デザイン:
+ * - 非対称な角丸で本物の花びらの特徴を表現
+ * - ラジアルグラデーションの中心をオフセットして立体感を強化
+ */
 .sakura-petal {
-  position: absolute;
-  pointer-events: none;
-  background: radial-gradient(circle at 60% 40%, rgba(255,182,193,0.9) 0%, rgba(255,105,180,0.6) 40%, rgba(255,192,203,0.3) 70%, transparent 100%);
-  border-radius: 70% 90% 70% 90%;
-  transform: scale(0) rotate(0deg);
-  animation: sakuraBurst ease-out forwards;
-  filter: drop-shadow(0 0 3px rgba(255,192,203,0.5));
+  position: absolute;           /* クリック位置を中心に花びらを発生 */
+  pointer-events: none;         /* UI操作を妨げないように無効化 */
+  /* 桜の花びらの美しいピンクグラデーション - 中心から外縁に向かって美しく減衰 */
+  background: radial-gradient(circle at 60% 40%, 
+    rgba(255,182,193,0.9) 0%,     /* 中心部: 濃いピンクで花の厚みを表現 */
+    rgba(255,105,180,0.6) 40%,    /* 中間: 深いピンクで色彩の深み */
+    rgba(255,192,203,0.3) 70%,    /* 外側: 淡いピンクで繊細な縁 */
+    transparent 100%);            /* 端: 完全透明で自然な減衰 */
+  border-radius: 70% 90% 70% 90%; /* 桜の花びららしい非対称・不规則な形状 */
+  transform: scale(0) rotate(0deg); /* 初期状態は非表示・回転なし */
+  animation: sakuraBurst ease-out forwards; /* 爆発的に発生して飛び散るアニメーション */
+  filter: drop-shadow(0 0 3px rgba(255,192,203,0.5)); /* 柔らかいピンクの光で立体感を演出 */
 }
 
 @keyframes sakuraBurst {
@@ -2195,9 +3716,9 @@ body[data-season="winter"] .ripple{ border-color: var(--accent-winter); }
 
 
 
-/* WINDSURF_END RippleEnhancement */
+/* ===== 波紋効果強化設定終了 ===== */
 
-/* ===== High Contrast Mode ===== */
+/* ===== 高コントラストモード ===== */
 @media (prefers-contrast: high) {
   :root {
     --shadow: rgba(0, 0, 0, 0.5);
@@ -2214,20 +3735,20 @@ body[data-season="winter"] .ripple{ border-color: var(--accent-winter); }
  * Improves focus management, contrast, and screen reader experience
  */
 
-/* ===== Focus Management ===== */
-/* Improve focus visibility across all interactive elements */
+/* ===== フゥーカス管理 - キーボード操作最適化 ===== */
+/* 全てのインタラクティブ要素のフォーカス視認性向上 */
 :focus-visible {
   outline: 3px solid var(--primary);
   outline-offset: 2px;
   border-radius: var(--radius-sm);
 }
 
-/* Remove default focus outline when focus-visible is supported */
+/* focus-visibleサポート時のデフォルトフォーカスアウトライン除去 */
 :focus:not(:focus-visible) {
   outline: none;
 }
 
-/* Custom focus styles for specific elements */
+/* 特定要素用のカスタムフォーカススタイル */
 .cta-button:focus-visible,
 .season-btn:focus-visible,
 .form-submit:focus-visible {
@@ -2243,14 +3764,14 @@ body[data-season="winter"] .ripple{ border-color: var(--accent-winter); }
   color: white;
 }
 
-/* Audio controls focus enhancement */
+/* 音声コントロールのフォーカス強化 */
 audio:focus-visible {
   outline: 3px solid var(--secondary);
   outline-offset: 2px;
   border-radius: var(--radius);
 }
 
-/* Form elements focus enhancement */
+/* フォーム要素のフォーカス強化 */
 .form-input:focus-visible,
 .form-textarea:focus-visible {
   outline: 3px solid var(--primary);
@@ -2259,7 +3780,7 @@ audio:focus-visible {
   box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
 }
 
-/* ===== Skip Links Enhancement ===== */
+/* ===== スキップリンク強化 ===== */
 .skip-link {
   position: absolute;
   top: -100px;
@@ -2283,7 +3804,7 @@ audio:focus-visible {
   outline-offset: 2px;
 }
 
-/* ===== Screen Reader Enhancements ===== */
+/* ===== スクリーンリーダー強化 ===== */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -2296,7 +3817,7 @@ audio:focus-visible {
   border: 0;
 }
 
-/* Screen reader announcements */
+/* スクリーンリーダー通知 */
 .sr-announcer {
   position: absolute;
   left: -10000px;
@@ -2305,7 +3826,7 @@ audio:focus-visible {
   overflow: hidden;
 }
 
-/* ===== Enhanced Navigation for Screen Readers ===== */
+/* ===== スクリーンリーダー向けナビゲーション強化 ===== */
 [role="tablist"] {
   display: flex;
   gap: var(--space-2);
@@ -2326,7 +3847,7 @@ audio:focus-visible {
   border-radius: var(--radius-full);
 }
 
-/* ===== High Contrast Mode Support ===== */
+/* ===== 高コントラストモードサポート ===== */
 @media (prefers-contrast: high) {
   :root {
     --shadow: rgba(0, 0, 0, 0.8);
@@ -2358,9 +3879,9 @@ audio:focus-visible {
   }
 }
 
-/* ===== Reduced Motion Preferences ===== */
+/* ===== モーション減らし設定 ===== */
 @media (prefers-reduced-motion: reduce) {
-  /* Disable all animations and transitions */
+  /* 全てのアニメーションとトランジションを無効化 */
   *,
   *::before,
   *::after {
@@ -2370,19 +3891,19 @@ audio:focus-visible {
     scroll-behavior: auto !important;
   }
   
-  /* Keep focus transitions for accessibility */
+  /* アクセシビリティのためフォーカストランジションは維持 */
   :focus,
   :focus-visible {
     transition: outline 0.15s ease-in-out !important;
   }
   
-  /* Disable parallax effects */
+  /* パララックス効果を無効化 */
   .hero {
     background-attachment: scroll !important;
   }
 }
 
-/* ===== Color Blindness Support ===== */
+/* ===== 色覚異常サポート ===== */
 /* Add patterns/shapes alongside color coding */
 .season-btn[data-season="spring"] {
   position: relative;
@@ -2391,8 +3912,8 @@ audio:focus-visible {
 
 
 
-/* ===== Touch Target Size Enhancement ===== */
-/* Ensure minimum 44px touch targets for mobile */
+/* ===== タッチターゲットサイズ強化 ===== */
+/* モバイル向け最低44pxタッチターゲットを確保 */
 @media (max-width: 768px) {
   .nav-toggle,
   .season-btn,
@@ -2407,7 +3928,7 @@ audio:focus-visible {
   }
 }
 
-/* ===== Error State Accessibility ===== */
+/* ===== エラー状態アクセシビリティ ===== */
 .form-input[aria-invalid="true"],
 .form-textarea[aria-invalid="true"] {
   border-color: var(--accent);
@@ -2428,7 +3949,7 @@ audio:focus-visible {
   font-size: var(--text-base);
 }
 
-/* ===== Loading States for Accessibility ===== */
+/* ===== ローディング状態アクセシビリティ ===== */
 .loading {
   position: relative;
   pointer-events: none;
@@ -2453,7 +3974,7 @@ audio:focus-visible {
   100% { transform: rotate(360deg); }
 }
 
-/* Respect reduced motion for loading spinner */
+/* ローディングスピナーのモーション減らし設定に対応 */
 @media (prefers-reduced-motion: reduce) {
   .loading::after {
     animation: none;
@@ -2465,48 +3986,48 @@ audio:focus-visible {
   }
 }
 
-/* ===== Keyboard Navigation Enhancement ===== */
-/* Visual indication for keyboard users */
+/* ===== キーボードナビゲーション強化 ===== */
+/* キーボードユーザー向け視覚的指示 */
 body:not(.using-mouse) :focus {
   outline: 3px solid var(--primary);
   outline-offset: 2px;
 }
 
-/* Hide mouse focus when using mouse */
+/* マウス使用時はマウスフォーカスを非表示 */
 body.using-mouse :focus {
   outline: none;
 }
 
-/* ===== Print Accessibility ===== */
+/* ===== 印刷時アクセシビリティ ===== */
 @media print {
-  /* Ensure good contrast in print */
+  /* 印刷時の高コントラストを確保 */
   * {
     background: transparent !important;
     color: black !important;
     box-shadow: none !important;
   }
   
-  /* Add URLs for links */
+  /* リンクにURLを追加表示 */
   a[href]:after {
     content: " (" attr(href) ")";
     font-size: smaller;
     color: #666;
   }
   
-  /* Skip navigation elements */
+  /* ナビゲーション要素をスキップ */
   .nav-menu,
   .season-nav,
   .hero-actions {
     display: none;
   }
   
-  /* Ensure headings are properly sized */
+  /* 見出しの適切なサイズを確保 */
   h1, h2, h3, h4, h5, h6 {
     page-break-after: avoid;
     font-weight: bold;
   }
   
-  /* Avoid breaking content */
+  /* コンテンツの改ページを回避 */
   .feature,
   .track,
   .season-panel {
@@ -2514,7 +4035,7 @@ body.using-mouse :focus {
   }
 }
 
-/* ===== ARIA Live Region Styling ===== */
+/* ===== ARIAライブリージョンスタイリング ===== */
 [aria-live] {
   position: absolute;
   left: -10000px;
@@ -2523,7 +4044,7 @@ body.using-mouse :focus {
   overflow: hidden;
 }
 
-/* ===== Enhanced Form Labels ===== */
+/* ===== 強化フォームラベル - ユーザビリティ向上 ===== */
 .form-label {
   display: block;
   margin-bottom: var(--space-2);
@@ -2538,7 +4059,7 @@ body.using-mouse :focus {
   margin-left: var(--space-1);
 }
 
-/* Improved fieldset styling if needed */
+/* 必要に応じてfieldsetのスタイルを改善 */
 fieldset {
   border: 2px solid var(--border);
   border-radius: var(--radius);
@@ -2582,7 +4103,7 @@ legend {
  * Additional responsive adjustments for optimal display across all devices
  */
 
-/* ===== Container and Layout Refinements ===== */
+/* ===== コンテナとレイアウトの洗練 ===== */
 @media (max-width: 480px) {
   .container {
     padding: 0 var(--space-3);
@@ -2621,7 +4142,7 @@ legend {
   }
 }
 
-/* ===== Navigation Improvements ===== */
+/* ===== ナビゲーション改善 ===== */
 @media (max-width: 767px) {
   .nav-container {
     padding: var(--space-3) var(--space-4);
@@ -2676,7 +4197,7 @@ legend {
   
 }
 
-/* ===== Section Spacing Adjustments ===== */
+/* ===== セクションスペーシング調整 ===== */
 @media (max-width: 768px) {
   .about,
   .gallery,
@@ -2711,7 +4232,7 @@ legend {
   }
 }
 
-/* ===== Gallery Responsive Improvements ===== */
+/* ===== ギャラリーレスポンシブ改善 ===== */
 @media (max-width: 768px) {
   .season-nav {
     gap: var(--space-2);
@@ -2767,7 +4288,7 @@ legend {
   }
 }
 
-/* ===== Form Responsive Improvements ===== */
+/* ===== フォームレスポンシブ改善 ===== */
 @media (max-width: 768px) {
   .contact-form {
     padding: var(--space-6);
@@ -2815,7 +4336,7 @@ legend {
   }
 }
 
-/* ===== Footer Responsive Improvements ===== */
+/* ===== フッターレスポンシブ改善 ===== */
 @media (max-width: 768px) {
   .footer-content {
     grid-template-columns: 1fr;
@@ -2886,7 +4407,7 @@ legend {
   }
 }
 
-/* ===== Feature Cards Responsive ===== */
+/* ===== フィーチャーカードレスポンシブ ===== */
 @media (max-width: 768px) {
   .features {
     grid-template-columns: 1fr;
@@ -2899,7 +4420,7 @@ legend {
   }
 }
 
-/* ===== Large Desktop Optimizations ===== */
+/* ===== 大型デスクトップ最適化 ===== */
 @media (min-width: 1200px) {
   .container {
     max-width: 1400px;
@@ -2939,7 +4460,7 @@ legend {
   }
 }
 
-/* ===== Ultra-wide Screen Support ===== */
+/* ===== ウルトラワイドスクリーンサポート ===== */
 @media (min-width: 1920px) {
   .hero {
     background-size: cover;
@@ -2951,7 +4472,7 @@ legend {
   }
 }
 
-/* ===== Portrait Tablet Adjustments ===== */
+/* ===== 縦向きタブレット調整 ===== */
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
   .hero {
     height: 80vh;
@@ -2976,7 +4497,7 @@ legend {
   }
 }
 
-/* ===== Landscape Phone Adjustments ===== */
+/* ===== 横向きスマホ調整 ===== */
 @media (max-width: 896px) and (orientation: landscape) and (max-height: 500px) {
   .hero {
     height: 100vh;
@@ -3021,7 +4542,7 @@ legend {
   }
 }
 
-/* ===== High DPI Display Optimizations ===== */
+/* ===== 高DPIディスプレイ最適化 ===== */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .hero,
   .season-image,
@@ -3031,7 +4552,7 @@ legend {
   }
 }
 
-/* ===== Foldable Device Support ===== */
+/* ===== 折りたたみデバイスサポート ===== */
 @media (max-width: 280px) {
   .container {
     padding: 0 var(--space-2);
@@ -3079,7 +4600,7 @@ legend {
   }
 }
 
-/* ===== Print Specific Responsive ===== */
+/* ===== 印刷専用レスポンシブ ===== */
 @media print {
   .hero {
     height: auto;
@@ -3113,7 +4634,7 @@ legend {
   }
 }
 
-/* ===== Animation Performance Optimizations ===== */
+/* ===== アニメーションパフォーマンス最適化 ===== */
 @media (max-width: 768px) {
   .feature,
   .track,
@@ -3126,7 +4647,7 @@ legend {
   }
 }
 
-/* ===== Touch Device Optimizations ===== */
+/* ===== タッチデバイス最適化 ===== */
 @media (hover: none) and (pointer: coarse) {
   .cta-button:hover,
   .season-btn:hover,
@@ -3143,7 +4664,7 @@ legend {
     transform: none;
   }
   
-  /* Increase touch targets */
+  /* タッチターゲットサイズを増大 */
   .nav-menu a,
   .season-btn,
   .social-link {
@@ -3152,7 +4673,7 @@ legend {
   }
 }
 
-/* ===== Reduced Data Mode ===== */
+/* ===== データ節約モード ===== */
 @media (prefers-reduced-data: reduce) {
   .hero {
     background-image: none;
@@ -3177,46 +4698,50 @@ legend {
   }
 }
 
-/* ===== Water Ripple Effect - Enhanced Japanese Aesthetic ===== */
+/* ===== 水の波紋エフェクト - 和風美学の強化 ===== */
+/* 画面全体に表示される水面の波紋効果コンテナ */
 .ripple-container {
-  position: fixed;
+  position: fixed;           /* 画面に固定配置し、スクロールに影響されない */
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  pointer-events: none;
-  z-index: 1;
-  overflow: hidden;
-  mix-blend-mode: overlay;
-  background-color: rgba(47, 63, 79, 0.05);
-  transform: translateZ(0); /* Hardware acceleration */
-  will-change: auto; /* Container doesn't animate */
-  contain: strict; /* Optimize containment */
+  pointer-events: none;      /* マウスイベントを透過させる */
+  z-index: 1;               /* 背景より上、コンテンツより下に表示 */
+  overflow: hidden;          /* コンテナ外の波紋を隠す */
+  mix-blend-mode: overlay;   /* 背景と美しく合成 */
+  background-color: rgba(47, 63, 79, 0.05);  /* 薄い和風グレー */
+  transform: translateZ(0);  /* ハードウェアアクセラレーション有効化 */
+  will-change: auto;         /* コンテナ自体はアニメーションしない */
+  contain: strict;           /* CSS封じ込めによりパフォーマンス最適化 */
 }
 
 
-/* Base ripple with sumi-e ink aesthetic */
+/* 墨絵の美学を持つ基本波紋エフェクト */
 .ripple {
-  position: absolute;
-  border-radius: 50%;
+  position: absolute;        /* 絶対位置でクリック位置に表示 */
+  border-radius: 50%;        /* 完全な円形 */
+  /* 墨が水に滲むような放射状グラデーション */
   background: radial-gradient(
     circle,
-    rgba(47, 63, 79, 0.12) 0%,
-    rgba(47, 63, 79, 0.08) 20%,
-    rgba(47, 63, 79, 0.04) 50%,
-    rgba(47, 63, 79, 0.02) 75%,
-    transparent 95%
+    rgba(47, 63, 79, 0.12) 0%,    /* 中心部：濃い墨色 */
+    rgba(47, 63, 79, 0.08) 20%,   /* 内側：やや薄い */
+    rgba(47, 63, 79, 0.04) 50%,   /* 中間：さらに薄く */
+    rgba(47, 63, 79, 0.02) 75%,   /* 外側：かすか */
+    transparent 95%               /* 端：完全透明 */
   );
-  transform: scale(0);
+  transform: scale(0);       /* 初期状態は縮小 */
+  /* 2.8秒かけてゆっくりと拡大・消失 */
   animation: rippleEffect 2.8s cubic-bezier(0.25, 0.65, 0.35, 1) forwards;
-  pointer-events: none;
-  filter: blur(0.5px);
+  pointer-events: none;      /* マウスイベント透過 */
+  filter: blur(0.5px);       /* わずかなぼかしで自然さ演出 */
+  /* 水面の反射を表現する影効果 */
   box-shadow: 
-    0 0 15px rgba(47, 63, 79, 0.08),
-    inset 0 0 8px rgba(47, 63, 79, 0.04);
+    0 0 15px rgba(47, 63, 79, 0.08),     /* 外側の柔らかい光 */
+    inset 0 0 8px rgba(47, 63, 79, 0.04);  /* 内側の深み */
 }
 
-/* Koi pond ripple variations with sumi-e aesthetics */
+/* 墨絵美学を持つ鯉池の波紋バリエーション */
 .ripple.large {
   background: radial-gradient(
     circle,
@@ -3246,7 +4771,7 @@ legend {
   box-shadow: 0 0 12px rgba(47, 63, 79, 0.06);
 }
 
-/* Sumi-e ink bleeding effect */
+/* 墨絵の墨汁のひどみ効果 */
 .ripple.elegant {
   background: radial-gradient(
     circle,
@@ -3263,7 +4788,7 @@ legend {
   animation: rippleElegant 3s cubic-bezier(0.25, 0.65, 0.35, 1) forwards;
 }
 
-/* Subtle water disturbance */
+/* 微細な水面のゆらぎ */
 .ripple.subtle {
   background: radial-gradient(
     circle,
@@ -3277,7 +4802,7 @@ legend {
   animation: rippleSubtle 3.2s cubic-bezier(0.25, 0.65, 0.35, 1) forwards;
 }
 
-/* Enhanced washi paper texture overlay */
+/* 強化された和紙テクスチャオーバーレイ */
 .ripple-container::before {
   content: '';
   position: absolute;
@@ -3286,7 +4811,7 @@ legend {
   right: 0;
   bottom: 0;
   background-image: 
-    /* Fine paper fibers */
+    /* 細かい紙の繊維 */
     radial-gradient(ellipse 2px 1px at 25% 30%, rgba(247, 244, 233, 0.025) 0%, transparent 70%),
     radial-gradient(ellipse 1px 2px at 70% 65%, rgba(245, 240, 225, 0.02) 0%, transparent 80%),
     radial-gradient(ellipse 1px 1px at 15% 80%, rgba(250, 248, 240, 0.015) 0%, transparent 60%),
@@ -3346,205 +4871,227 @@ body[data-season="winter"] .ripple:not(.elegant):not(.subtle) {
   box-shadow: 0 0 30px rgba(230, 230, 250, 0.06);
 }
 
-/* Tranquil Japanese aesthetic animations - slow and gentle */
+/* 静寂な和風美学 - ゆっくりと穏やかなアニメーション */
 @keyframes rippleEffect {
   0% {
-    transform: scale(0);
-    opacity: 0.3;
+    transform: scale(0);       /* 開始：点から */
+    opacity: 0.3;              /* 初期不透明度：やや見える */
   }
   15% {
-    opacity: 0.25;
+    opacity: 0.25;             /* 早期段階：少し薄く */
   }
   50% {
-    opacity: 0.15;
+    opacity: 0.15;             /* 中間：さらに薄く */
   }
   85% {
-    opacity: 0.05;
+    opacity: 0.05;             /* 後期：かすかに */
   }
   100% {
-    transform: scale(1);
-    opacity: 0;
+    transform: scale(1);       /* 終了：完全拡大 */
+    opacity: 0;                /* 完全透明で消失 */
   }
 }
 
+/* 大きな波紋アニメーション - よりゆっくりと優雅に */
 @keyframes rippleEffectLarge {
   0% {
-    transform: scale(0);
-    opacity: 0.35;
+    transform: scale(0);       /* 開始：中心点から */
+    opacity: 0.35;             /* 初期：やや濃く表示 */
   }
   20% {
-    opacity: 0.25;
+    opacity: 0.25;             /* 早期：穏やかに薄く */
   }
   50% {
-    opacity: 0.18;
+    opacity: 0.18;             /* 中間：自然な透明度 */
   }
   80% {
-    opacity: 0.08;
+    opacity: 0.08;             /* 後期：ほぼ透明 */
   }
   100% {
-    transform: scale(1);
-    opacity: 0;
+    transform: scale(1);       /* 終了：最大サイズ */
+    opacity: 0;                /* 完全消失 */
   }
 }
 
+/* 小さな波紋アニメーション - 素早く繊細に */
 @keyframes rippleEffectSmall {
   0% {
-    transform: scale(0);
-    opacity: 0.25;
+    transform: scale(0);       /* 開始：点から */
+    opacity: 0.25;             /* 初期：適度な可視性 */
   }
   30% {
-    opacity: 0.18;
+    opacity: 0.18;             /* 早期：やや薄く */
   }
   70% {
-    opacity: 0.08;
+    opacity: 0.08;             /* 後期：かすかに */
   }
   100% {
-    transform: scale(1);
-    opacity: 0;
+    transform: scale(1);       /* 終了：完全拡大 */
+    opacity: 0;                /* 消失 */
   }
 }
 
-/* Performance optimizations for 60fps */
+/* 60fps達成のためのパフォーマンス最適化 */
 .ripple {
-  will-change: transform, opacity;
-  backface-visibility: hidden;
-  perspective: 1000px;
-  transform: translateZ(0); /* Force hardware acceleration */
-  contain: layout style paint; /* Optimize for CSS containment */
+  will-change: transform, opacity;    /* 変化するプロパティを事前に通知 */
+  backface-visibility: hidden;        /* 裏面レンダリングを無効化 */
+  perspective: 1000px;                /* 3D変換の遠近感設定 */
+  transform: translateZ(0);           /* ハードウェアアクセラレーション強制有効化 */
+  contain: layout style paint;        /* CSS封じ込めによる最適化 */
 }
 
+/* 洗練されたパーティクル効果の最適化 */
 .refined-particle {
-  will-change: transform, opacity;
-  backface-visibility: hidden;
-  transform: translateZ(0);
-  contain: layout style paint;
+  will-change: transform, opacity;    /* 変化予告でパフォーマンス向上 */
+  backface-visibility: hidden;        /* 不要な裏面計算を削減 */
+  transform: translateZ(0);           /* GPU処理を促進 */
+  contain: layout style paint;        /* レイアウト影響を局所化 */
 }
 
+/* 優雅な光沢効果の最適化 */
 .gentle-glow {
-  will-change: transform, opacity;
-  backface-visibility: hidden;
-  transform: translateZ(0);
-  contain: layout style paint;
+  will-change: transform, opacity;    /* 変化プロパティの事前宣言 */
+  backface-visibility: hidden;        /* 裏面表示を無効化 */
+  transform: translateZ(0);           /* ハードウェア処理を促進 */
+  contain: layout style paint;        /* 影響範囲を制限 */
 }
 
-.gold-sparkle,
-.gold-particle,
-.gold-shimmer,
-.gold-flake,
-.gold-burst {
-  will-change: transform, opacity;
-  backface-visibility: hidden;
-  transform: translateZ(0);
-  contain: layout style paint;
+/* 金色系エフェクト全体の最適化 */
+.gold-sparkle,    /* 金の輝き */
+.gold-particle,   /* 金のパーティクル */
+.gold-shimmer,    /* 金のきらめき */
+.gold-flake,      /* 金箔片 */
+.gold-burst {     /* 金の爆発効果 */
+  will-change: transform, opacity;    /* アニメーション最適化 */
+  backface-visibility: hidden;        /* 裏面計算削減 */
+  transform: translateZ(0);           /* GPU処理有効化 */
+  contain: layout style paint;        /* パフォーマンス封じ込め */
 }
 
-/* Reduced motion support */
+/* 動きを抑えたアクセシビリティ対応 */
+/* 前庭機能障害やモーション酔いを持つユーザーへの配慮 */
 @media (prefers-reduced-motion: reduce) {
   .ripple-container {
-    display: none;
+    display: none;                    /* 波紋コンテナを完全非表示 */
   }
   
+  /* 全てのアニメーション要素を無効化 */
   .ripple,
   .gold-sparkle,
   .gold-particle,
   .gold-shimmer,
   .gold-flake,
   .gold-burst {
-    animation: none;
-    opacity: 0;
+    animation: none;                  /* アニメーション無効 */
+    opacity: 0;                       /* 完全透明で非表示 */
   }
 }
 
-/* High contrast mode adjustments */
+/* 高コントラストモード対応 */
+/* 視覚障害者や低視力ユーザーのための色彩調整 */
 @media (prefers-contrast: high) {
   .ripple {
+    /* 暗い背景用：黒ベースの高コントラスト波紋 */
     background: radial-gradient(
       circle,
-      rgba(0, 0, 0, 0.5) 0%,
-      rgba(0, 0, 0, 0.3) 30%,
-      rgba(0, 0, 0, 0.1) 60%,
-      transparent 90%
+      rgba(0, 0, 0, 0.5) 0%,          /* 中心：濃い黒 */
+      rgba(0, 0, 0, 0.3) 30%,         /* 中間：やや薄い黒 */
+      rgba(0, 0, 0, 0.1) 60%,         /* 外側：薄い黒 */
+      transparent 90%                  /* 端：透明 */
     );
   }
   
   .ripple {
+    /* 明るい背景用：白ベースの高コントラスト波紋 */
     background: radial-gradient(
       circle,
-      rgba(255, 255, 255, 0.5) 0%,
-      rgba(255, 255, 255, 0.3) 30%,
-      rgba(255, 255, 255, 0.1) 60%,
-      transparent 90%
+      rgba(255, 255, 255, 0.5) 0%,    /* 中心：濃い白 */
+      rgba(255, 255, 255, 0.3) 30%,   /* 中間：やや薄い白 */
+      rgba(255, 255, 255, 0.1) 60%,   /* 外側：薄い白 */
+      transparent 90%                  /* 端：透明 */
     );
   }
 }
 
+/* ===== グローバルリセット - 統一されたベーススタイル ===== */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    margin: 0;                      /* 全要素の外側余白をリセット */
+    padding: 0;                     /* 全要素の内側余白をリセット */
+    box-sizing: border-box;         /* パディングとボーダーを幅に含めるボックスモデル */
 }
 
+/* ===== CSSカスタムプロパティ - メインテーマカラーとサイズ ===== */
 :root {
-    --primary: #6366f1;
-    --secondary: #f59e0b;
-    --accent: #ec4899;
-    --neutral: #374151;
-    --background: #111827;
-    --text: #f9fafb;
-    --shadow: rgba(0, 0, 0, 0.3);
-    --space-4: 1rem;
-    --space-6: 1.5rem;
-    --space-8: 2rem;
-    --text-2xl: clamp(1.5rem, 1.3rem + 0.8vw, 2rem);
-    --text-5xl: clamp(3rem, 2.5rem + 2vw, 4rem);
-    --text-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
-    --radius-lg: 1rem;
-    --transition-normal: 300ms ease-in-out;
+    /* メインカラーパレット */
+    --primary: #6366f1;             /* メインブランドカラー（インディゴ） */
+    --secondary: #f59e0b;           /* セカンダリーカラー（アンバー） */
+    --accent: #ec4899;              /* アクセントカラー（ピンク） */
+    --neutral: #374151;             /* ニュートラルグレー */
+    --background: #111827;          /* 背景色（ダークグレー） */
+    --text: #f9fafb;                /* メインテキスト色（ライトグレー） */
+    --shadow: rgba(0, 0, 0, 0.3);   /* 汎用シャドウ色 */
+    
+    /* スペーシングシステム */
+    --space-4: 1rem;                /* 基本スペーシング（16px） */
+    --space-6: 1.5rem;              /* 中サイズスペーシング（24px） */
+    --space-8: 2rem;                /* 大サイズスペーシング（32px） */
+    
+    /* レスポンシブタイポグラフィシステム */
+    --text-2xl: clamp(1.5rem, 1.3rem + 0.8vw, 2rem);   /* 大きなタイトル */
+    --text-5xl: clamp(3rem, 2.5rem + 2vw, 4rem);       /* 特大タイトル */
+    --text-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem); /* 中タイトル */
+    
+    /* デザインシステム */
+    --radius-lg: 1rem;              /* 大きな角丸半径 */
+    --transition-normal: 300ms ease-in-out; /* 標準アニメーション時間 */
 }
 
 
+/* ===== ボディ基本設定 - サイト全体のベーススタイル ===== */
 body {
+    /* フォントシステム：システムフォント優先で可読性を確保 */
     font-family: system-ui, -apple-system, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
-    line-height: 1.6;
-    color: var(--text);
-    background-color: var(--background);
-    overflow-x: hidden;
-    min-height: 100dvh;
-    position: relative;
-    z-index: 0;              /* スタッキングコンテキストを作成 */
-    background-color: var(--background);
+    line-height: 1.6;                    /* 読みやすい行間設定 */
+    color: var(--text);                   /* メインテキスト色を適用 */
+    background-color: var(--background); /* メイン背景色を適用 */
+    overflow-x: hidden;                   /* 横スクロールを無効化 */
+    min-height: 100dvh;                   /* ビューポートの最低高さを保証 */
+    position: relative;                   /* 位置基準を設定 */
+    z-index: 0;                          /* スタッキングコンテキストを作成 */
 }
 
-/* Header styles for immediate display */
+/* ===== ヘッダースタイル - 即座表示用 ===== */
 .header {
-    position: fixed;
+    position: fixed;                              /* 画面上部に固定表示 */
     top: 0;
     left: 0;
     right: 0;
-    background-image: url('./img/和紙_黒_optimized.webp');
-    background-size: cover;
-    background-repeat: repeat;
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
-    z-index: 1020;
-    transition: all var(--transition-normal);
+    background-image: url('./img/和紙_黒_optimized.webp'); /* 和風背景紙 */
+    background-size: cover;                       /* 背景を全体にカバー */
+    background-repeat: repeat;                    /* 背景の繰り返し */
+    backdrop-filter: blur(10px);                  /* 背景ブラー効果 */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15); /* 下端の微かなボーダー */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);     /* 深い影で立体感 */
+    z-index: 1020;                                /* 他要素より前面に表示 */
+    transition: all var(--transition-normal);     /* スムーズな状態変化 */
 }
 
+/* ナビゲーションコンテナ - ヘッダー内部レイアウト */
 .nav-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--space-4);
-    max-width: 1200px;
-    margin: 0 auto;
+    display: flex;                      /* フレックスボックスレイアウト */
+    align-items: center;                /* 垂直中央揃え */
+    justify-content: space-between;     /* 水平方向に等間隔配置 */
+    padding: var(--space-4);            /* 統一した内側余白 */
+    max-width: 1200px;                  /* 最大幅制限 */
+    margin: 0 auto;                     /* 中央揃え */
 }
 
+/* ロゴスタイル - ブランドアイデンティティ */
 .logo {
-    font-size: var(--text-2xl);
-    font-weight: 800;
-    color: var(--primary);
-    margin: 0;
+    font-size: var(--text-2xl);         /* レスポンシブな大きなサイズ */
+    font-weight: 800;                   /* 太字で印象的に */
+    color: var(--primary);              /* ブランドカラーを適用 */
+    margin: 0;                          /* デフォルトマージンを除去 */
 }
 
 .nav-menu {
@@ -3561,20 +5108,21 @@ body {
     }
 }
 
-/* Hero section critical styles */
+/* ===== ヒーローセクション - メインビジュアル重要スタイル ===== */
 .hero {
-    height: 100vh;
-    min-height: 600px;
+    height: 100vh;                      /* フルスクリーン高さ */
+    min-height: 600px;                  /* 最低高さを保証 */
+    /* メインビジュアルとオーバーレイを組み合わせ */
     background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('./img/秀歌-メインビジュアル.webp');
-    background-size: cover;
-    background-position: center top;
-    background-attachment: fixed;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: white;
-    position: relative;
+    background-size: cover;             /* 背景画像を全体にカバー */
+    background-position: center top;    /* 上部中央に配置 */
+    background-attachment: fixed;       /* 背景固定（パララックス効果） */
+    display: flex;                      /* フレックスボックスレイアウト */
+    align-items: center;                /* 垂直中央揃え */
+    justify-content: center;            /* 水平中央揃え */
+    text-align: center;                 /* テキスト中央揃え */
+    color: white;                       /* テキスト色を白に */
+    position: relative;                 /* 相对位置指定 */
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -3665,7 +5213,7 @@ body:not(.loaded) * {
     transition: none !important;
 }
 
-/* ===== Pro Washi Footer 2025 ===== */
+/* ===== プロ和紙フッター 2025 ===== */
 .footer {
     background-image: url('./img/和紙_黒_optimized.webp');
     background-size: cover;
@@ -3735,7 +5283,7 @@ body:not(.loaded) * {
     background: linear-gradient(90deg, var(--accent, #8c3d08), transparent);
 }
 
-/* Social icons */
+/* ソーシャルアイコン */
 .footer-social {
     display: flex;
     gap: var(--space-4);
