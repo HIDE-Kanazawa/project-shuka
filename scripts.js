@@ -133,109 +133,15 @@ const SEASON_DATA = {
  * 目的:
  * - キーボードナビゲーションとスクリーンリーダー対応を改善
  * - マウスとキーボードの使用状況を追跡してフォーカス表示を最適化
- * - ARIAライブリージョンを設定して動的コンテンツ変更を通知
  */
 function initAccessibilityFeatures() {
   // マウス使用状況の追跡（フォーカス管理のため）
   // マウスクリック時は視覚的なフォーカス表示を無効化
   document.addEventListener('mousedown', () => document.body.classList.add('using-mouse'));
-  // キーボード使用時は視覚的なフォーカス表示を有効化
-  document.addEventListener('keydown', () => document.body.classList.remove('using-mouse'));
   
-  // 拡張キーボードナビゲーションの設定
-  document.addEventListener('keydown', handleGlobalKeyboard);
-  
-  // ARIAライブリージョンの設定（動的コンテンツ変更通知用）
-  if (!document.getElementById('aria-live-region')) {
-    const liveRegion = document.createElement('div');
-    liveRegion.id = 'aria-live-region';
-    liveRegion.setAttribute('aria-live', 'polite'); // 丁寧な読み上げモード
-    liveRegion.setAttribute('aria-atomic', 'true'); // コンテンツ全体を読み上げ
-    liveRegion.className = 'sr-only'; // スクリーンリーダー専用（視覚的には非表示）
-    document.body.appendChild(liveRegion);
-  }
 }
 
-/**
- * グローバルキーボードイベントハンドラー
- * 
- * 機能:
- * - Alt+数字キーによるセクション間ショートカットナビゲーション
- * - Escapeキーによるオーバーレイ・メニューの閉じる操作
- */
-function handleGlobalKeyboard(e) {
-  // キーボードショートカット（Alt+数字）
-  if (e.altKey) {
-    switch(e.key) {
-      case '1':
-        e.preventDefault();
-        const homeEl = document.getElementById('home');
-        if (homeEl) homeEl.focus(); // ホームセクションにフォーカス
-        break;
-      case '2':
-        e.preventDefault();
-        const aboutEl = document.getElementById('about');
-        if (aboutEl) aboutEl.focus(); // アバウトセクションにフォーカス
-        break;
-      case '3':
-        e.preventDefault();
-        const galleryEl = document.getElementById('gallery');
-        if (galleryEl) galleryEl.focus(); // ギャラリーセクションにフォーカス
-        break;
-      case '4':
-        e.preventDefault();
-        const contactEl = document.getElementById('contact');
-        if (contactEl) contactEl.focus(); // コンタクトセクションにフォーカス
-        break;
-    }
-  }
-  
-  // Escapeキーで開いているオーバーレイを閉じる
-  if (e.key === 'Escape') {
-    // モバイルメニューが開いている場合は閉じる
-    const navMenu = document.getElementById('nav-menu');
-    const navToggle = document.getElementById('nav-toggle');
-    if (navMenu && navMenu.classList.contains('active')) {
-      navMenu.classList.remove('active');
-      if (navToggle) {
-        navToggle.classList.remove('active');
-        navToggle.focus(); // フォーカスをトグルボタンに戻す
-      }
-    }
-  }
-}
 
-/**
- * initResourcePrefetching()
- *
- * 目的:
- * - 初期表示に不要だが近い将来参照される軽量画像を、アイドル時間に `prefetch` で取得。
- *
- * ポイント:
- * - `requestIdleCallback` によりメインスレッドが空いたタイミングでリンク要素を挿入し、
- *   ユーザー操作に影響しにくい形で後方取得を促す。
- * - ここでは小さめのWebP画像のみを対象とし、太いアセット（動画/音声）は含めない。
- */
-function initResourcePrefetching() {
-  if ('requestIdleCallback' in window) {
-    requestIdleCallback(() => {
-      // Prefetch lightweight image assets during idle time
-      const images = [
-        './img/秀歌-春.webp',
-        './img/秀歌-夏.webp',
-        './img/秀歌-秋.webp',
-        './img/秀歌-冬.webp'
-      ];
-
-      images.forEach(src => {
-        const link = document.createElement('link');
-        link.rel = 'prefetch';
-        link.href = src;
-        document.head.appendChild(link);
-      });
-    });
-  }
-}
 
 /**
  * Navigation Module
@@ -300,8 +206,6 @@ class Navigation {
     // スクロール時のヘッダースタイル変更
     window.addEventListener('scroll', () => this.handleScroll());
     
-    // Escapeキーでモバイルメニューを閉じる
-    document.addEventListener('keydown', (e) => this.handleEscapeKey(e));
   }
   
   /**
@@ -336,11 +240,6 @@ class Navigation {
     // メニュー表示中はページのスクロールを無効化
     document.body.style.overflow = 'hidden';
     
-    // フォーカス管理 - メニュー内の最初のフォーカス可能要素にフォーカス
-    const firstFocusableElement = this.navMenu.querySelector('a, button');
-    if (firstFocusableElement) {
-      firstFocusableElement.focus();
-    }
   }
   
   /**
@@ -361,10 +260,6 @@ class Navigation {
     // ページスクロールを復元
     document.body.style.overflow = '';
     
-    // フォーカスをトグルボタンに戻す
-    if (this.navToggle) {
-      this.navToggle.focus();
-    }
   }
   
   /**
@@ -465,15 +360,6 @@ class Navigation {
     }
   }
   
-  /**
-   * Escapeキー処理
-   * - Escapeキーでモバイルメニューを閉じる
-   */
-  handleEscapeKey(e) {
-    if (e.key === 'Escape' && this.navMenu.classList.contains('active')) {
-      this.closeMobileMenu();
-    }
-  }
   
   /**
    * スクロールイベント処理
@@ -607,7 +493,6 @@ class SeasonsGallery {
     // 季節ボタンのイベント設定
     this.seasonButtons.forEach(button => {
       button.addEventListener('click', (e) => this.handleSeasonChange(e));
-      button.addEventListener('keydown', (e) => this.handleKeyboardNavigation(e));
     });
     
     // オーディオイベントの処理（UX向上のため）
@@ -636,12 +521,6 @@ class SeasonsGallery {
       }
     });
     
-    // 動画要素でのキーボードイベントのデリゲーション
-    document.addEventListener('keydown', (e) => {
-      if (e.target.classList.contains('season-video')) {
-        this.handleVideoKeydown(e);
-      }
-    });
   }
   
   /**
@@ -827,54 +706,6 @@ class SeasonsGallery {
     }
   }
   
-  /**
-   * キーボードナビゲーションの処理
-   * - 矢印キー: 前後の季節ボタンに移動
-   * - Home/End: 最初/最後のボタンに移動
-   * - Enter/Space: 季節を選択
-   */
-  handleKeyboardNavigation(e) {
-    const currentIndex = Array.from(this.seasonButtons).indexOf(e.currentTarget);
-    let nextIndex = currentIndex;
-    
-    switch (e.key) {
-      case 'ArrowRight':
-      case 'ArrowDown':
-        e.preventDefault();
-        // 次のボタンに移動（循環）
-        nextIndex = (currentIndex + 1) % this.seasonButtons.length;
-        break;
-        
-      case 'ArrowLeft':
-      case 'ArrowUp':
-        e.preventDefault();
-        // 前のボタンに移動（循環）
-        nextIndex = (currentIndex - 1 + this.seasonButtons.length) % this.seasonButtons.length;
-        break;
-        
-      case 'Home':
-        e.preventDefault();
-        nextIndex = 0; // 最初のボタンに移動
-        break;
-        
-      case 'End':
-        e.preventDefault();
-        nextIndex = this.seasonButtons.length - 1; // 最後のボタンに移動
-        break;
-        
-      case 'Enter':
-      case ' ':
-        e.preventDefault();
-        this.handleSeasonChange(e); // 現在のボタンを選択
-        return;
-        
-      default:
-        return; // その他のキーは無視
-    }
-    
-    // 計算された次のボタンにフォーカス
-    this.seasonButtons[nextIndex].focus();
-  }
   
   /**
    * 季節の切り替え処理
@@ -1387,14 +1218,6 @@ class SeasonsGallery {
     
     // Create or update live region for screen readers
     let liveRegion = document.getElementById('season-announcer');
-    if (!liveRegion) {
-      liveRegion = document.createElement('div');
-      liveRegion.id = 'season-announcer';
-      liveRegion.setAttribute('aria-live', 'polite');
-      liveRegion.setAttribute('aria-atomic', 'true');
-      liveRegion.className = 'visually-hidden';
-      document.body.appendChild(liveRegion);
-    }
     
     liveRegion.textContent = announcement;
   }
@@ -1517,37 +1340,6 @@ class SeasonsGallery {
     }
   }
   
-  /**
-   * 動画要素のキーボード操作処理
-   * 
-   * 機能:
-   * - スペースキーまたはEnterキーで再生/一時停止切り替え
-   * - 左右矢印キーで5秒単位のシーク操作
-   * - デフォルトキー動作の抑制
-   * 
-   * @param {KeyboardEvent} e - キーボードイベント
-   */
-  handleVideoKeydown(e) {
-    const video = e.target;
-    
-    // スペースキーまたはEnterキーで再生/一時停止切り替え
-    if (e.code === 'Space' || e.code === 'Enter') {
-      e.preventDefault();
-      this.handleVideoClick(e);
-    }
-    
-    // 左矢印キーで5秒巻き戻し
-    if (e.code === 'ArrowLeft') {
-      e.preventDefault();
-      video.currentTime = Math.max(0, video.currentTime - 5);
-    }
-    
-    // 右矢印キーで5秒早送り
-    if (e.code === 'ArrowRight') {
-      e.preventDefault();
-      video.currentTime = Math.min(video.duration, video.currentTime + 5);
-    }
-  }
 
   /**
    * 再生ノートの表示処理
@@ -2240,70 +2032,12 @@ class ShukaApp {
       });
     });
     
-    // モーダル・オーバーレイのフォーカス管理
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Tab') {
-        this.handleTabKey(e); // タブキー操作の処理
-      }
-    });
     
     // スクリーンリーダー向けのページ変更アナウンス設定
     this.setupRouteAnnouncements();
   }
   
-  /**
-   * タブキー操作時の処理
-   * 
-   * 機能:
-   * - アクティブなモーダル内でのフォーカストラップ
-   * - モーダル外への不適切なフォーカス移動を防止
-   * - キーボードナビゲーションの改善
-   * 
-   * @param {KeyboardEvent} e - タブキー押下イベント
-   */
-  handleTabKey(e) {
-    // アクティブなモーダルの存在確認
-    const activeModal = document.querySelector('.modal.active');
-    if (activeModal) {
-      // モーダル内でのフォーカストラップを実行
-      this.trapFocus(e, activeModal);
-    }
-  }
   
-  /**
-   * フォーカストラップの実装
-   * 
-   * 機能:
-   * - 指定されたコンテナ内でのフォーカス循環
-   * - Shift+Tabでの逆方向フォーカス移動対応
-   * - 最初/最後の要素間での自動ループ処理
-   * 
-   * @param {KeyboardEvent} e - タブキーイベント
-   * @param {HTMLElement} container - フォーカストラップ対象のコンテナ
-   */
-  trapFocus(e, container) {
-    // コンテナ内のフォーカス可能な要素をすべて取得
-    const focusableElements = container.querySelectorAll(
-      'a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])'
-    );
-    
-    const firstFocusable = focusableElements[0]; // 最初のフォーカス可能要素
-    const lastFocusable = focusableElements[focusableElements.length - 1]; // 最後のフォーカス可能要素
-    
-    if (e.shiftKey) {
-      // Shift+Tab（逆方向）の場合：最初の要素にいるときは最後の要素にジャンプ
-      if (document.activeElement === firstFocusable) {
-        e.preventDefault();
-        lastFocusable.focus();
-      }
-    } else {
-      // Tab（順方向）の場合：最後の要素にいるときは最初の要素にジャンプ
-      if (document.activeElement === lastFocusable) {
-        e.preventDefault();
-        firstFocusable.focus();
-      }
-    }
-  }
   
   /**
    * ルート変更時のスクリーンリーダー向けアナウンス設定
@@ -2336,7 +2070,6 @@ class ShukaApp {
    * 
    * 機能:
    * - 視覚的に隠されたアナウンサー要素の動的生成
-   * - aria-live属性による適切なライブリージョン設定
    * - スクリーンリーダーでの自動メッセージ読み上げ
    * 
    * @param {string} message - アナウンスするメッセージ
@@ -2348,8 +2081,6 @@ class ShukaApp {
       // アナウンサー要素が存在しない場合は新規作成
       announcer = document.createElement('div');
       announcer.id = 'screen-reader-announcer';
-      announcer.setAttribute('aria-live', 'polite'); // 丁寧な読み上げモード
-      announcer.setAttribute('aria-atomic', 'true'); // 全体を一度に読み上げ
       announcer.className = 'visually-hidden'; // 視覚的に隠蔽
       document.body.appendChild(announcer);
     }
@@ -4148,8 +3879,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // アクセシビリティ機能の初期化（スキップリンク、フォーカス管理など）
   initAccessibilityFeatures();
   
-  // リソースプリフェッチの初期化（重要画像の先読みで表示速度向上）
-  initResourcePrefetching();
 
   // スクロールボタンイベントハンドラーの初期化
   initScrollButtons();
@@ -4259,9 +3988,7 @@ function generateSeasonGallery() {
                  loading="lazy"
                  poster="${season.poster}"
                  width="1280" height="720"
-                 tabindex="0"
-                 playsinline
-                 aria-label="${season.name}をテーマにしたデモ動画 - クリックまたはEnterキーで再生">
+                 playsinline>
            <!-- WebM動画ソースが存在する場合のみ追加 -->
            ${season.video.webm ? `<source data-src="${season.video.webm}" type="video/webm">` : ''}
            <!-- MP4動画ソースをフォールバックとして追加 -->
@@ -4279,7 +4006,7 @@ function generateSeasonGallery() {
           <div class="track-list">
             ${season.tracks.map(track => `
               <div class="track">
-                <audio controls preload="none" aria-label="${track.title} - ${season.name}の楽曲">
+                <audio controls preload="none">
                   <source src="${track.src}" type="audio/mpeg">
                   お使いのブラウザは音声再生に対応していません。
                 </audio>
@@ -4382,7 +4109,6 @@ function generateSocialLinks() {
     return `
     <a ${attrs} class="${classes}" aria-label="${link.label}">
       ${iconHTML}
-      <span class="sr-only">${link.name}</span>
     </a>`;
   }).join('');
   
