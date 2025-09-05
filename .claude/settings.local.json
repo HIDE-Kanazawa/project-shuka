@@ -16,7 +16,8 @@
       "Read(//Users/yamazaki/名称未設定フォルダ/Development/project-shuka3/**)",
       "Bash(npx http-server:*)",
       "Bash(lsof:*)",
-      "Bash(node:*)"
+      "Bash(node:*)",
+      "Bash(pkill:*)"
     ],
     "deny": [],
     "ask": []

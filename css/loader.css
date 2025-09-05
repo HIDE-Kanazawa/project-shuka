@@ -14,12 +14,12 @@
   background: #fdfaf5 url('../img/ローディング.webp') center / cover no-repeat;
   /* 拡大アニメなどで子要素がはみ出す部分はマスク */
   overflow: hidden;
-  /* 初期は可視（不透明） */
-  opacity: 1;
   /* レイアウト上でも表示状態 */
   visibility: visible;
   /* フェードアウト時の滑らかな遷移（不透明度と可視性） */
   transition: opacity 0.8s ease, visibility 0.8s ease;
+  /* GPU加速を促進 */
+  will-change: opacity, visibility;
 }
 
 #loader.fade-out {
@@ -41,8 +41,12 @@
   border-radius: 50%;
   /* 初期は極小（見えない）から開始 */
   transform: scale(0);
+  /* 初期状態は不透明 */
+  opacity: 1;
   /* 5秒かけて拡大し、終了状態を保持（forwards） */
   animation: inkSpread 2.5s ease-out forwards;
+  /* GPU加速を促進 */
+  will-change: transform, opacity;
 }
 
 @keyframes inkSpread {
@@ -50,6 +54,15 @@
     /* 等倍まで拡大（scale(0) → scale(1)） */
     transform: scale(1);
     /* 拡大とともに透明にして自然に消える */
+    opacity: 0;
+  }
+}
+
+/* アクセシビリティ: アニメーションを無効にするユーザー設定への対応 */
+@media (prefers-reduced-motion: reduce) {
+  #loader .ink {
+    animation: none;
+    /* アニメーション無効時は即座に非表示 */
     opacity: 0;
   }
 }
