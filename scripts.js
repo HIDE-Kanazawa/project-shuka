@@ -1,13 +1,23 @@
 /**
- * Season Data Configuration
+ * 季節データ設定
+ * 四季ごとの楽曲・動画・画像データを一元管理するオブジェクト
  *
  * 目的:
- * - 四季ごとの表示情報（アイコン/名称/説明/ポスター/動画/音源）を一元管理。
- * - UI生成ロジック（ギャラリーやナビ）から定数参照で扱いやすくする。
+ * - 四季ごとの表示情報（アイコン/名称/説明/ポスター/動画/音源）を一元管理
+ * - UI生成ロジック（ギャラリーやナビ）から定数参照で扱いやすくする
  *
  * パフォーマンス配慮:
- * - 画像/動画ファイルはここでパスを定義するのみ。実ロードは必要時に行う（遅延）。
- * - 動画は `<source data-src>` を使い、可視化/操作時にのみ `src` をセットする設計（ネットワーク競合を抑制）。
+ * - 画像/動画ファイルはここでパスを定義するのみ。実ロードは必要時に行う（遅延ロード）
+ * - 動画は `<source data-src>` を使い、可視化/操作時にのみ `src` をセットする設計（ネットワーク競合を抑制）
+ * 
+ * データ構造:
+ * - icon: 季節を表すアイコン
+ * - name: 季節の名前
+ * - title: 季節のタイトル
+ * - description: 季節の説明
+ * - poster: 季節のポスター画像
+ * - video: 季節の動画ファイル
+ * - tracks: その季節に属する楽曲の配列
  */
 const SEASON_DATA = {
   spring: {
@@ -250,9 +260,12 @@ class Navigation {
       const progress = Math.min(timeElapsed / duration, 1); // 進行度（0-1）
       
       // イージング関数（ease-in-out-cubic）
+      // 進行度が0.5未満: 加速フェーズ - 3次曲線で緊やかに加速
+      // 進行度が0.5以上: 減速フェーズ - 3次曲線で緊やかに減速
+      // 結果: 滑らかで自然なスクロールアニメーションを実現
       const easeInOutCubic = progress < 0.5 
-        ? 4 * progress * progress * progress 
-        : (progress - 1) * (2 * progress - 2) * (2 * progress - 2) + 1;
+        ? 4 * progress * progress * progress  // 加速: 4t^3
+        : (progress - 1) * (2 * progress - 2) * (2 * progress - 2) + 1; // 減速: 1 - 4(1-t)^3
       
       // 計算された位置にスクロール
       window.scrollTo(0, startPosition + distance * easeInOutCubic);
@@ -353,16 +366,24 @@ window.scrollToSection = function(sectionId) {
 };
 
 
-// Export for module systems
+// モジュールシステム用のエクスポート設定
+// CommonJS環境での利用を可能にする
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = Navigation;
 }
 /**
- * Seasons Module
- * Handles seasonal gallery switching with animations and accessibility
+ * 季節モジュール
+ * 季節ごとのギャラリー切替、アニメーション、アクセシビリティ対応を処理
+ * 
+ * 主な機能:
+ * - 季節ギャラリーの動的生成と切替
+ * - 動画・音楽ファイルの遅延読み込み
+ * - リソース管理による同時再生防止
+ * - バリアフリー対応（キーボード操作、スクリーンリーダー支援）
  */
 
-// Set winter season gallery video to "白のなかで"
+// 冬の季節ギャラリー動画を「白のなかで」に設定
+// 冬の動画ファイルパスを「白のなかで」に上書き設定
 SEASON_DATA.winter.video.mp4 = './video/白のなかで.mp4';
 
 /**
@@ -507,7 +528,7 @@ class SeasonsGallery {
     const run = () => {
       try {
         const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-        if (conn && conn.saveData) return; // Respect Data Saver
+        if (conn && conn.saveData) return; // データ節約モードを尊重
       } catch (e) {}
 
       const washiImages = [
@@ -527,38 +548,46 @@ class SeasonsGallery {
       });
     };
 
+    // アイドルコールバックが利用可能な場合は優先して使用
+    // ブラウザがアイドル状態の時に実行してパフォーマンスへの影響を最小化
     if ('requestIdleCallback' in window) {
-      requestIdleCallback(run, { timeout: 8000 });
+      requestIdleCallback(run, { timeout: 8000 }); // 8秒以内に必ず実行
     } else {
-      setTimeout(run, 5000);
+      setTimeout(run, 5000); // フォールバック: 5秒後に実行
     }
   }
   
+  /**
+   * 初期季節の読み込み処理
+   * - デフォルトで梅雨季節のスタイリングを適用
+   * - パネルは非選択状態でユーザーの選択を待機
+   * - 適切な季節エフェクトを有効化
+   */
   loadInitialSeason() {
-    // Style page for tsuyu season but don't select a panel
+    // 梅雨季節のスタイリングを適用するが、パネルは選択しない
     this.currentSeason = '';
 
-    // Update URL to reflect tsuyu season
+    // URLを梅雨季節を反映して更新
     this.updateURL('tsuyu');
 
-    // Update styling / background
+    // スタイリングと背景を更新
     this.updateSeasonBackground('tsuyu');
 
-    // Enable rain effect for tsuyu season
+    // 梅雨季節の雨エフェクトを有効化
     if (typeof window.enableRain === 'function') {
       window.enableRain();
     }
-    // Ensure sakura effect is disabled
+    // 桃の花エフェクトが無効化されていることを確認
     if (typeof window.disableSakura === 'function') {
       window.disableSakura();
     }
 
-    // Enable sakura effect for spring season
+    // 春季節の桃の花エフェクトを有効化（春が選択されている場合のみ）
     if (typeof window.enableSakura === 'function' && this.currentSeason === 'spring') {
       window.enableSakura();
     }
 
-    // Hide all panels until user selects a season
+    // ユーザーが季節を選択するまで、すべてのパネルを非表示
     this.updateSeasonButtons('');
     this.updateSeasonPanels('', false);
   }
@@ -642,8 +671,6 @@ class SeasonsGallery {
     // 季節パネルの表示状態をアニメーション付きで更新
     this.updateSeasonPanels(season, animate);
 
-    // 前の季節を保存（演出制御用）
-    const previousSeason = this.currentSeason;
     // 現在の季節を更新
     this.currentSeason = season;
 
@@ -727,16 +754,18 @@ class SeasonsGallery {
       const buttonSeason = button.getAttribute('data-season');
       const isActive = buttonSeason === activeSeason;
       
-      // アクティブクラスの切り替え
+      // 視覚的状態の更新: CSSスタイリング用のアクティブクラスを切り替え
       button.classList.toggle('active', isActive);
-      // スクリーンリーダー用の選択状態を通知
+      // アクセシビリティ: スクリーンリーダーに選択状態を通知
+      // aria-selected: タブリストや選択可能要素での選択状態を示すARIA属性
+      // "true"/"false"文字列で設定する必要がある（ブール値ではなく）
       button.setAttribute('aria-selected', isActive.toString());
       
       // キーボードナビゲーション用のtabindex設定
       if (isActive) {
-        button.setAttribute('tabindex', '0'); // フォーカス可能
+        button.setAttribute('tabindex', '0'); // アクティブなボタンのみキーボードフォーカス可能
       } else {
-        button.setAttribute('tabindex', '-1'); // フォーカス不可
+        button.setAttribute('tabindex', '-1'); // 非アクティブボタンはTabキーでスキップ（プログラム的フォーカスのみ）
       }
     });
   }
@@ -1038,7 +1067,7 @@ class SeasonsGallery {
       // 和紙画像をプリロード
       const img = new Image();
       img.onload = () => {
-        // CSSスタイリング用のbody季節属性を更新
+        // CSSスタイリング用のボディ季節属性を更新
         document.body.setAttribute('data-season', season);
         const header = document.getElementById('header');
         if (header)
@@ -1097,13 +1126,13 @@ class SeasonsGallery {
     
     const imageUrl = seasonImages[season];
     if (imageUrl) {
-      // Preload image before changing
+      // 変更前に画像をプリロード
       const img = new Image();
       img.onload = () => {
         aboutImage.src = imageUrl;
         aboutImage.srcset = imageUrl;
         
-        // Update picture source as well
+        // picture要素のソースも更新
         const pictureSource = aboutImage.parentElement.querySelector('source');
         if (pictureSource) {
           pictureSource.srcset = imageUrl;
@@ -1124,7 +1153,7 @@ class SeasonsGallery {
     
     const announcement = `${seasonNames[season]}の楽曲に切り替わりました`;
     
-    // Create or update live region for screen readers
+    // スクリーンリーダー用のライブリージョンを作成または更新
     let liveRegion = document.getElementById('season-announcer');
     
     liveRegion.textContent = announcement;
@@ -1305,7 +1334,7 @@ class SeasonsGallery {
   }
 }
 
-// Global function for external use (e.g., footer links)
+// 外部使用用のグローバル関数（例：フッターリンク）
 /**
  * グローバル季節切り替え関数
  * 
@@ -1390,7 +1419,7 @@ function setupFooterSeasonButtons() {
  * - CommonJS環境でのモジュールエクスポート
  * - ブラウザ環境でのグローバル変数設定
  */
-// CommonJS環境でのエクスポート
+// CommonJS環境でのエクスポート設定
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = SeasonsGallery;
 }
@@ -1723,15 +1752,25 @@ class ShukaApp {
    * @param {number} wait - 待機時間（ミリ秒）
    * @returns {Function} デバウンス処理が適用された関数
    */
+  /**
+   * デバウンス処理の実装詳細
+   * 
+   * 動作原理:
+   * 1. 新しい呼び出しがあるたびに前のタイマーをキャンセル
+   * 2. 新しいタイマーを設定し、指定時間後に関数を実行
+   * 3. 連続呼び出しが停止して初めて実行される
+   * 
+   * 使用例: ユーザー入力の完了待ち、リサイズイベントの遅延実行
+   */
   debounce(func, wait) {
-    let timeout;
+    let timeout;  // タイマーIDを保持するクロージャ変数
     return function executedFunction(...args) {
       const later = () => {
-        clearTimeout(timeout);
-        func(...args); // 指定された引数で元関数を実行
+        clearTimeout(timeout);    // タイマーをクリア（必須ではないが安全のため）
+        func(...args);             // 最終的な引数で元関数を実行
       };
-      clearTimeout(timeout); // 既存タイマーをクリア
-      timeout = setTimeout(later, wait); // 新しいタイマーを設定
+      clearTimeout(timeout);       // 既存タイマーをキャンセル（連続呼び出しでのリセット）
+      timeout = setTimeout(later, wait); // waitミリ秒後に実行する新タイマーを設定
     };
   }
   
@@ -1747,16 +1786,29 @@ class ShukaApp {
    * @param {number} limit - 実行間隔（ミリ秒）
    * @returns {Function} スロットル処理が適用された関数
    */
+  /**
+   * スロットル処理の実装詳細
+   * 
+   * 動作原理:
+   * 1. 初回呼び出しは即座に実行
+   * 2. 実行後はinThrottleフラグをtrueに設定
+   * 3. フラグがtrueの間は後続の呼び出しを無視
+   * 4. limitミリ秒後にフラグをリセットして再び実行可能に
+   * 
+   * 使用例: スクロールイベント、マウス移動の頻度制限
+   */
   throttle(func, limit) {
-    let inThrottle;
+    let inThrottle;  // スロットル中かどうかを表すフラグ
     return function() {
-      const args = arguments;
-      const context = this;
-      if (!inThrottle) {
-        func.apply(context, args); // 即座に実行
-        inThrottle = true; // スロットル状態に設定
-        setTimeout(() => inThrottle = false, limit); // 指定時間後に解除
+      const args = arguments;        // 引数を保持
+      const context = this;          // thisコンテキストを保持
+      if (!inThrottle) {             // スロットル中でない場合のみ実行
+        func.apply(context, args);   // 元のコンテキストと引数で関数を実行
+        inThrottle = true;           // スロットル状態に移行
+        // limitミリ秒後にスロットルを解除し、次回実行を可能に
+        setTimeout(() => inThrottle = false, limit);
       }
+      // inThrottleがtrueの場合は何もしない（呼び出しを無視）
     };
   }
   
@@ -1771,7 +1823,7 @@ class ShukaApp {
   destroy() {
     // 全てのObserverを切断してメモリリークを防止
     this.observers.forEach(observer => observer.disconnect());
-    this.observers.clear(); // Mapをクリア
+    this.observers.clear(); // 観察者Mapをクリア
   }
 }
 
@@ -1863,12 +1915,12 @@ additionalStyle.textContent = additionalCSS;
  * - サイトアクセス時のデフォルト季節を梅雨に設定
  * - ボディ要素にdata-season属性を設定
  */
-// WINDSURF_START SeasonColor
+// 季節カラーモジュール開始
 (function setDefaultSeason(){
   // デフォルトは梅雨（tsuyu）
   document.body.dataset.season = "tsuyu";
 })();
-// WINDSURF_END SeasonColor
+// 季節カラーモジュール終了
 
 /**
  * 水面波紋エフェクトモジュール
@@ -1952,13 +2004,16 @@ class WaterRippleEffect {
   bindEvents() {
     if (!this.isActive) return;
     
-    // マウス移動による波紋生成（スロットル処理）
+    // マウス移動イベント: カーソルの軌跡に沿った波紋生成（スロットル処理付き）
+    // スロットルで程よく制限し、パフォーマンスと静寂感をバランスよく保つ
     document.addEventListener('mousemove', (e) => this.handleMouseMove(e));
     
-    // クリック時の即座の波紋生成
+    // クリックイベント: ユーザーアクション時の即座波紋生成
+    // マウス移動と異なりスロットルなしで直ちに反応、ユーザーフィードバックを重視
     document.addEventListener('click', (e) => this.handleClick(e));
     
-    // タッチデバイス対応の波紋生成
+    // タッチイベント: スマートフォン・タブレットでの波紋生成
+    // passive: trueでスクロールパフォーマンスを最適化（preventDefault()を呼ばないことを保証）
     document.addEventListener('touchstart', (e) => this.handleTouch(e), { passive: true });
     
     // ユーザーのアニメーション設定変更を監視
@@ -2060,31 +2115,40 @@ class WaterRippleEffect {
     const ripple = document.createElement('div');
     ripple.className = `ripple ${size} ${color}`;
     
-    // タイプに基づく波紋サイズの計算 - 自然な大きさのバリエーション
+    // タイプに基づく波紋サイズの確率的計算
+    // Math.random()で各範囲内のランダム値を生成し、自然なバリエーションを実現
+    // 公式: baseSize + Math.random() * variationRange
     const sizeMap = {
-      small: Math.random() * 120 + 80,     // 80-200px (小さめ)
-      medium: Math.random() * 200 + 150,   // 150-350px (標準)
-      large: Math.random() * 300 + 200,    // 200-500px (大きめ)
-      huge: Math.random() * 400 + 300      // 300-700px (特大・壮観)
+      small: Math.random() * 120 + 80,     // 80-200px: 80 + (0-120)の範囲
+      medium: Math.random() * 200 + 150,   // 150-350px: 150 + (0-200)の範囲
+      large: Math.random() * 300 + 200,    // 200-500px: 200 + (0-300)の範囲
+      huge: Math.random() * 400 + 300      // 300-700px: 300 + (0-400)の範囲
     };
     
     const rippleSize = sizeMap[size] || sizeMap.medium;
     
     // 波紋の配置 - 中心座標を基準とした正確な位置決め
-    ripple.style.width = `${rippleSize}px`;
-    ripple.style.height = `${rippleSize}px`;
-    ripple.style.left = `${x - rippleSize / 2}px`;
-    ripple.style.top = `${y - rippleSize / 2}px`;
+    // 円形要素の中心をクリック地点に合わせるため、半径分を減算
+    ripple.style.width = `${rippleSize}px`;                    // 波紋の幅
+    ripple.style.height = `${rippleSize}px`;                   // 波紋の高さ
+    ripple.style.left = `${x - rippleSize / 2}px`;             // X座標: 中心 - 半径
+    ripple.style.top = `${y - rippleSize / 2}px`;              // Y座標: 中心 - 半径
     
-    // 回転と初期スケールの設定 - 自然な動きの演出
-    const rotation = Math.random() * 360;
-    ripple.style.transform = `scale(0) rotate(${rotation}deg)`;
+    // 回転と初期スケールの設定
+    // 0°-360°のランダム回転で自然な動きを演出
+    // 初期スケール0から開始して後のCSSアニメーションで拡大
+    const rotation = Math.random() * 360;                       // 0-360度のランダム回転角
+    ripple.style.transform = `scale(0) rotate(${rotation}deg)`;  // 初期状態: 非表示 + 回転設定
     
-    // 色彩効果の追加 - 虹色や金色の特別な演出
+    // 色彩効果の動的生成 - HSL色空間を利用した鮮やかなグラデーション
     if (color === 'rainbow') {
-      const hue = Math.random() * 360;
+      // 虹色モード: HSLでランダムな色相と補色を組み合わせたグラデーション
+      const hue = Math.random() * 360;                          // 0-360度のランダム色相
+      // 中心から外側に向かって: メインカラー → 補色(+60度) → 透明
       ripple.style.background = `radial-gradient(circle, hsla(${hue}, 80%, 70%, 0.8) 0%, hsla(${hue + 60}, 70%, 60%, 0.4) 40%, transparent 80%)`;
     } else if (color === 'gold') {
+      // 金色モード: 金色系で統一したグラデーション (富貴な印象)
+      // RGB値: (255,215,0)金 → (255,165,0)オレンジ金 → (255,140,0)濃いオレンジ金
       ripple.style.background = 'radial-gradient(circle, rgba(255, 215, 0, 0.9) 0%, rgba(255, 165, 0, 0.6) 30%, rgba(255, 140, 0, 0.3) 60%, transparent 90%)';
     }
     
@@ -2581,7 +2645,7 @@ class WaterRippleEffect {
   createFloatingElements(x, y, count = 6) {
     if (!this.container) return;
     const activeParticles = this.container.querySelectorAll('.refined-particle').length;
-    if (activeParticles >= 15) return; // Lower limit for tranquility
+    if (activeParticles >= 15) return; // 静寂感のための低めの上限
 
     for (let i = 0; i < count; i++) {
       const particle = document.createElement('div');
@@ -2592,9 +2656,9 @@ class WaterRippleEffect {
       particle.style.left = `${x - size / 2}px`;
       particle.style.top = `${y - size / 2}px`;
 
-      // More organic, less organized spread pattern
-      const angle = Math.random() * 360; // Completely random direction
-      const distance = 60 + Math.random() * 60; // Gentler spread
+      // より有機的で、整理されすぎない拡散パターン
+      const angle = Math.random() * 360; // 完全にランダムな方向
+      const distance = 60 + Math.random() * 60; // より優しい拡散
       const dx = Math.cos(angle * Math.PI / 180) * distance;
       const dy = Math.sin(angle * Math.PI / 180) * distance;
       const dur = (Math.random() * 1.2 + 2).toFixed(2); // 2-3.2s - very slow and graceful
@@ -2603,7 +2667,7 @@ class WaterRippleEffect {
       particle.style.setProperty('--dy', `${dy}px`);
       particle.style.animationDuration = `${dur}s`;
 
-      // Add subtle color variation for naturalism
+      // 自然らしさのための微細な色彩変化を追加
       const opacity = 0.3 + Math.random() * 0.3; // 0.3-0.6 opacity
       particle.style.background = `radial-gradient(
         circle,
@@ -2646,13 +2710,13 @@ class WaterRippleEffect {
       this.container.style.display = 'none';
     }
     
-    // Clear all existing ripples
+    // 既存の全ての波紋をクリア
     this.ripples.forEach(ripple => {
       this.removeRipple(ripple.element);
     });
   }
   
-  // Public methods for external control
+  // 外部制御用のパブリックメソッド
   toggle() {
     if (this.isActive) {
       this.disable();
@@ -2692,7 +2756,7 @@ class WaterRippleEffect {
       if (currentTime - lastTime >= 1000) { // Check every second
         const fps = Math.round((frameCount * 1000) / (currentTime - lastTime));
         
-        // If FPS drops below 50, optimize
+        // FPSが50を下回った場合は最適化を実行
         if (fps < 50 && !this.performanceOptimized) {
           this.optimizeForPerformance();
         }
@@ -2715,7 +2779,7 @@ class WaterRippleEffect {
     this.throttleDelay = Math.max(this.throttleDelay * 1.5, 600); // Slower ripples
     this.maxRipples = Math.max(this.maxRipples - 3, 6); // Fewer ripples
     
-    // Reduce existing ripples
+    // 既存の波紋数を削減
     while (this.ripples.length > this.maxRipples) {
       const oldestRipple = this.ripples.shift();
       this.removeRipple(oldestRipple.element);
@@ -2723,7 +2787,7 @@ class WaterRippleEffect {
   }
 }
 
-// Initialize ripple effect when DOM is loaded
+// DOM読み込み完了時に波紋エフェクトを初期化
 let waterRipples;
 document.addEventListener('DOMContentLoaded', () => {
   waterRipples = new WaterRippleEffect();
