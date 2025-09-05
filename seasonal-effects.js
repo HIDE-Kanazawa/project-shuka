@@ -8,6 +8,67 @@
  */
 
 /**
+ * 共通: スタイルを一度だけ注入するユーティリティ（夏柳CSSで使用）
+ */
+function injectStyleOnce(id, cssText) {
+  if (document.getElementById(id)) return;
+  const styleEl = document.createElement('style');
+  styleEl.id = id;
+  styleEl.textContent = cssText;
+  document.head.appendChild(styleEl);
+}
+
+/**
+ * 共有ユーティリティ（非破壊導入）
+ * 現時点では既存クラスからは呼び出さず、フェーズ2以降で段階的に置換することを想定。
+ */
+
+// 値のクランプ
+function clamp(value, min, max) {
+  return Math.min(max, Math.max(min, value));
+}
+
+// 線形補間
+function lerp(a, b, t) {
+  return a + (b - a) * t;
+}
+
+// ビューポート幅に応じた密度算出（例: factor=10 なら width/10 個）
+function computeDensity(viewWidth, factor, min = 0, max = Infinity) {
+  const raw = Math.floor(viewWidth / Math.max(1, factor));
+  return clamp(raw, min, max);
+}
+
+// deltaTime（秒）を取得するクロックを生成
+function createDeltaClock() {
+  let last = performance.now();
+  return function tick() {
+    const now = performance.now();
+    const deltaSec = (now - last) / 1000;
+    last = now;
+    return { deltaSec, now };
+  };
+}
+
+// 風モデルの更新ヘルパ
+// state: { wind:number, windTarget:number, lastWindChange:number }
+// opts: { interval:number(ms), ease:number(0-1), range:number }
+function updateWind(state, now, opts = {}) {
+  const interval = opts.interval ?? 4000;
+  const ease = clamp(opts.ease ?? 0.02, 0, 1);
+  const range = opts.range ?? 1.0;
+
+  if (now - state.lastWindChange > interval) {
+    state.windTarget = (Math.random() * 2 - 1) * range;
+    state.lastWindChange = now;
+  }
+  state.wind = lerp(state.wind, state.windTarget, ease);
+  return state.wind;
+}
+
+// （削除済み）未使用の visibility 連動ユーティリティとスタイル注入ユーティリティは保守性向上のため除去
+
+/**
  * 雨エフェクトモジュール（梅雨季専用）
  * 
  * 機能:
@@ -29,17 +90,25 @@ class RainEffect {
     
     // サイズ設定とリサイズ対応
     this.resize();
-    window.addEventListener('resize', () => this.resize());
+    this._onResize = this.resize.bind(this);
+    window.addEventListener('resize', this._onResize);
 
     // 雨粒の初期化
     this.drops = []; // 雨粒オブジェクトの配列
     // より没入感のある梅雨エフェクトのために雨粒密度を増加
-    this.dropCount = Math.floor(window.innerWidth / 2.5); // 密度の高い雨を生成
+    this.dropCount = computeDensity(window.innerWidth, 2.5); // 密度の高い雨を生成（共有関数）
     for (let i = 0; i < this.dropCount; i++) {
       this.drops.push(this.createRaindrop(true));
     }
 
+    // フレームレート非依存化のための deltaClock（現状は可視化影響なし）
+    this._tick = createDeltaClock();
+
+    // 風モデルの状態（雨では現状使用しないが、将来拡張のため導入）
+    this._wind = { wind: 0, windTarget: 0, lastWindChange: performance.now() };
+
     // アニメーションの開始
+    this._running = true;
     this.animate();
   }
 
@@ -68,10 +137,14 @@ class RainEffect {
    * アニメーションループ
    */
   animate() {
-    if (!this.canvas.parentNode) return; // Canvas が削除されている場合は停止
+    if (!this._running || !this.canvas.parentNode) return; // 停止条件
 
     const ctx = this.ctx;
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    // 共有の風モデル更新（雨では range=0 で無効化し、挙動は従来通り）
+    const { now } = this._tick ? this._tick() : { now: performance.now(), deltaSec: 0 };
+    updateWind(this._wind, now, { interval: 3500, ease: 0.05, range: 0 });
 
     // 雨粒の描画と更新
     for (const drop of this.drops) {
@@ -94,13 +167,15 @@ class RainEffect {
       }
     }
 
-    requestAnimationFrame(() => this.animate());
+    if (this._running) requestAnimationFrame(() => this.animate());
   }
 
   /**
    * 雨エフェクトの破棄処理
    */
   destroy() {
+    this._running = false;
+    if (this._onResize) window.removeEventListener('resize', this._onResize);
     if (this.canvas && this.canvas.parentNode) {
       this.canvas.remove();
     }
@@ -129,19 +204,23 @@ class SakuraEffect {
     
     // サイズ設定とリサイズ対応
     this.resize();
-    window.addEventListener('resize', () => this.resize()); // リサイズ対応
+    this._onResize = this.resize.bind(this);
+    window.addEventListener('resize', this._onResize); // リサイズ対応
 
     // 花びらの初期化
     this.petals = []; // 花びらオブジェクトの配列
-    // エレガントな春エフェクトのための桜の花びら密度
-    this.petalCount = Math.floor(window.innerWidth / 15);
+    // エレガントな春エフェクトのための桜の花びら密度（共有関数に置換）
+    this.petalCount = computeDensity(window.innerWidth, 15);
     
     // 春のそよ風のための風変数
     this.wind = 0;
     this.windTarget = 0;
     this.lastWindChange = performance.now();
+    // フレームレート非依存化のための deltaClock（視覚への影響なし）
+    this._tick = createDeltaClock();
     
     this.initializePetals();
+    this._running = true;
     this.animate();
   }
 
@@ -226,19 +305,14 @@ class SakuraEffect {
    * アニメーションループ
    */
   animate() {
-    if (!this.canvas.parentNode) return; // Canvas が削除されている場合は停止
+    if (!this._running || !this.canvas.parentNode) return; // 停止条件
 
     const ctx = this.ctx;
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    // Update wind every few seconds - gentle spring breeze
-    const now = performance.now();
-    if (now - this.lastWindChange > 4000) {
-      this.windTarget = (Math.random() * 2 - 1) * 2.5; // Moderate spring wind
-      this.lastWindChange = now;
-    }
-    // Ease current wind toward target
-    this.wind += (this.windTarget - this.wind) * 0.015;
+    // 共有の風モデル更新（既存と同一パラメータ: interval=4000ms, ease=0.015, range=2.5）
+    const { now } = this._tick ? this._tick() : { now: performance.now(), deltaSec: 0 };
+    updateWind(this, now, { interval: 4000, ease: 0.015, range: 2.5 });
 
     for (const petal of this.petals) {
       ctx.globalAlpha = petal.opacity;
@@ -271,7 +345,7 @@ class SakuraEffect {
     }
 
     ctx.globalAlpha = 1.0;
-    requestAnimationFrame(() => this.animate());
+    if (this._running) requestAnimationFrame(() => this.animate());
   }
 
   /**
@@ -406,6 +480,8 @@ class SakuraEffect {
    * - リソースの適切な解放
    */
   destroy() {
+    this._running = false;
+    if (this._onResize) window.removeEventListener('resize', this._onResize);
     if (this.canvas && this.canvas.parentNode) {
       this.canvas.remove();
     }
@@ -468,9 +544,7 @@ const sakuraCSS = `
 `;
 
 // CSSを動的にドキュメントヘッドに追加
-const sakuraStyle = document.createElement('style');
-sakuraStyle.textContent = sakuraCSS;
-document.head.appendChild(sakuraStyle);
+injectStyleOnce('sakura-effect-style', sakuraCSS);
 
 /**
  * 雨エフェクトのグローバル制御関数
@@ -500,7 +574,7 @@ window.enableRain = function() {
  */
 window.disableRain = function() {
   if (rainEffect) {
-    rainEffect.canvas.remove(); // Canvas要素をDOMから削除
+    rainEffect.destroy(); // インスタンスの適切な破棄
     rainEffect = null;
     window.rainEffect = null; // グローバル参照をクリア
   }
@@ -520,9 +594,7 @@ const rainCSS = `
 }
 `;
 
-const rainStyle = document.createElement('style');
-rainStyle.textContent = rainCSS;
-document.head.appendChild(rainStyle);
+injectStyleOnce('rain-effect-style', rainCSS);
 
 /**
  * 雪エフェクトモジュール（冬季専用）
@@ -547,12 +619,13 @@ class SnowEffect {
     // キャンバスサイズの設定
     this.resize();
     this.sizeMultiplier = this.getSizeMultiplier();
-    window.addEventListener('resize', () => this.resize());
+    this._onResize = this.resize.bind(this);
+    window.addEventListener('resize', this._onResize);
 
     // 雪片の初期化
     this.flakes = [];
-    // 画面幅に基づく雪の密度 - 雨よりも稀な密度で静寂な冬を表現
-    this.flakeCount = Math.floor(window.innerWidth / 8);
+    // 画面幅に基づく雪の密度（共有関数に置換）- 雨よりも稀な密度で静寂な冬を表現
+    this.flakeCount = computeDensity(window.innerWidth, 8);
     for (let i = 0; i < this.flakeCount; i++) {
       this.flakes.push(this.createFlake(true));
     }
@@ -561,8 +634,11 @@ class SnowEffect {
     this.wind = 0;
     this.windTarget = 0;
     this.lastWindChange = performance.now();
+    // フレームレート非依存化のための deltaClock（視覚への影響なし）
+    this._tick = createDeltaClock();
     this.animate = this.animate.bind(this);
-    requestAnimationFrame(this.animate);
+    this._running = true;
+    if (this._running) requestAnimationFrame(this.animate);
   }
 
   /**
@@ -617,17 +693,13 @@ class SnowEffect {
    *              真の雪の美しい動きを総合的に表現する高品質な冬の演出
    */
   animate() {
+    if (!this._running || !this.canvas.parentNode) return;
     const ctx = this.ctx;
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    // 穏やかな風の更新 - 雨よりもゆっくりとした自然な風変化
-    const now = performance.now();
-    if (now - this.lastWindChange > 4000) {
-      this.windTarget = (Math.random() * 2 - 1) * 0.5; // 冬らしい穏やかな風力
-      this.lastWindChange = now;
-    }
-    // 現在の風を目標値に向けて徐々に変化させる（冬の静寂な風の表現）
-    this.wind += (this.windTarget - this.wind) * 0.01;
+    // 共有の風モデル更新（従来と同一パラメータ: interval=4000ms, ease=0.01, range=0.5）
+    const { now } = this._tick ? this._tick() : { now: performance.now(), deltaSec: 0 };
+    updateWind(this, now, { interval: 4000, ease: 0.01, range: 0.5 });
 
     // 各雪片の描画と物理シミュレーション
     for (const flake of this.flakes) {
@@ -713,6 +785,8 @@ class SnowEffect {
    * 雪エフェクトの破棄処理
    */
   destroy() {
+    this._running = false;
+    if (this._onResize) window.removeEventListener('resize', this._onResize);
     if (this.canvas && this.canvas.parentNode) {
       this.canvas.remove();
     }
@@ -772,9 +846,7 @@ const snowCSS = `
 `;
 
 // CSSスタイルの動的注入
-const snowStyle = document.createElement('style');
-snowStyle.textContent = snowCSS;
-document.head.appendChild(snowStyle);
+injectStyleOnce('snow-effect-style', snowCSS);
 
 /**
  * 紅葉エフェクトモジュール（秋季専用）
@@ -800,12 +872,13 @@ class AutumnLeavesEffect {
     // キャンバスサイズの設定
     this.resize();
     this.sizeMultiplier = this.getSizeMultiplier();
-    window.addEventListener('resize', () => this.resize());
+    this._onResize = this.resize.bind(this);
+    window.addEventListener('resize', this._onResize);
 
     // 落ち葉の初期化
     this.leaves = [];
-    // 画面幅に基づく落ち葉の密度 - 適度な密度で秋の情緒を表現
-    this.leafCount = Math.floor(window.innerWidth / 12);
+    // 画面幅に基づく落ち葉の密度（共有関数に置換）- 適度な密度で秋の情緒を表現
+    this.leafCount = computeDensity(window.innerWidth, 12);
     for (let i = 0; i < this.leafCount; i++) {
       this.leaves.push(this.createLeaf(true));
     }
@@ -814,7 +887,10 @@ class AutumnLeavesEffect {
     this.wind = 0;
     this.windTarget = 0;
     this.lastWindChange = performance.now();
+    // フレームレート非依存化のための deltaClock（視覚への影響なし）
+    this._tick = createDeltaClock();
     this.animate = this.animate.bind(this);
+    this._running = true;
     requestAnimationFrame(this.animate);
   }
 
@@ -913,20 +989,15 @@ class AutumnLeavesEffect {
     const ctx = this.ctx;
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    // 秋風の更新 - 雨よりも動的で多彩な風変化
-    const now = performance.now();
-    if (now - this.lastWindChange > 3500) {
-      this.windTarget = (Math.random() * 2 - 1) * 1.5; // 適度な秋風の強さ
-      this.lastWindChange = now;
-    }
-    // 現在の風を目標値に向けて徐々に変化させる（秋風の自然な流れ）
-    this.wind += (this.windTarget - this.wind) * 0.015;
+    // 共有の風モデル更新（従来と同一パラメータ: interval=3500ms, ease=0.015, range=1.5）
+    const { now } = this._tick ? this._tick() : { now: performance.now(), deltaSec: 0 };
+    updateWind(this, now, { interval: 3500, ease: 0.015, range: 1.5 });
 
     // 各落ち葉の描画と物理シミュレーション
     for (const leaf of this.leaves) {
       ctx.globalAlpha = leaf.opacity;
       
-      const time = now * 0.001; // ミリ秒を秒に変換
+      const time = now * 0.001; // ミリ秒を秒に変換（_tickのnowを使用）
       const swayX = Math.sin(time * leaf.swaySpeed + leaf.swayOffset) * leaf.swayAmplitude;
       
       ctx.save();
@@ -1035,6 +1106,8 @@ class AutumnLeavesEffect {
    * 紅葉エフェクトの破棄処理
    */
   destroy() {
+    this._running = false;
+    if (this._onResize) window.removeEventListener('resize', this._onResize);
     if (this.canvas && this.canvas.parentNode) {
       this.canvas.remove();
     }
@@ -1094,9 +1167,7 @@ const autumnLeavesCSS = `
 `;
 
 // CSSスタイルの動的注入
-const autumnLeavesStyle = document.createElement('style');
-autumnLeavesStyle.textContent = autumnLeavesCSS;
-document.head.appendChild(autumnLeavesStyle);
+injectStyleOnce('autumn-leaves-effect-style', autumnLeavesCSS);
 
 /**
  * 夏の柳エフェクトモジュール（青柳エフェクト）
@@ -1121,11 +1192,12 @@ class SummerWillowEffect {
     document.body.appendChild(this.canvas);
 
     this.resize();
-    window.addEventListener('resize', () => this.resize());
+    this._onResize = this.resize.bind(this);
+    window.addEventListener('resize', this._onResize);
 
     this.willowLeaves = [];
-    // 柳葉の密度 - 繊細で流れるような夏の表現
-    this.leafCount = Math.floor(window.innerWidth / 10); // 適度な密度で涼しげを表現
+    // 柳葉の密度（共有関数に置換）- 繊細で流れるような夏の表現
+    this.leafCount = computeDensity(window.innerWidth, 10); // 適度な密度で涼しげを表現
     for (let i = 0; i < this.leafCount; i++) {
       this.willowLeaves.push(this.createWillowLeaf(true));
     }
@@ -1134,7 +1206,10 @@ class SummerWillowEffect {
     this.wind = 0;
     this.windTarget = 0;
     this.lastWindChange = performance.now();
+    // フレームレート非依存化のための deltaClock（視覚への影響なし）
+    this._tick = createDeltaClock();
     this.animate = this.animate.bind(this);
+    this._running = true;
     requestAnimationFrame(this.animate);
   }
 
@@ -1209,14 +1284,9 @@ class SummerWillowEffect {
     const ctx = this.ctx;
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    // 夏風の更新 - 流れるような効果のための強めの夏風
-    const now = performance.now();
-    if (now - this.lastWindChange > 3000) {
-      this.windTarget = (Math.random() * 2 - 1) * 3.5; // 流れる効果のための強い風
-      this.lastWindChange = now;
-    }
-    // 現在の風を目標値に向けて弐々に変化させる（夏風の自然な流れ）
-    this.wind += (this.windTarget - this.wind) * 0.02;
+    // 共有の風モデル更新（従来と同一パラメータ: interval=3000ms, ease=0.02, range=3.5）
+    const { now } = this._tick ? this._tick() : { now: performance.now(), deltaSec: 0 };
+    updateWind(this, now, { interval: 3000, ease: 0.02, range: 3.5 });
 
     // 各柳葉の描画と物理シミュレーション
     for (const leaf of this.willowLeaves) {
@@ -1324,6 +1394,8 @@ class SummerWillowEffect {
    * 夏の柳エフェクトの破棄処理
    */
   destroy() {
+    this._running = false;
+    if (this._onResize) window.removeEventListener('resize', this._onResize);
     if (this.canvas && this.canvas.parentNode) {
       this.canvas.remove();
     }
@@ -1383,6 +1455,4 @@ const summerWillowCSS = `
 `;
 
 // CSSスタイルの動的注入
-const summerWillowStyle = document.createElement('style');
-summerWillowStyle.textContent = summerWillowCSS;
-document.head.appendChild(summerWillowStyle);
+injectStyleOnce('summer-willow-effect-style', summerWillowCSS);
