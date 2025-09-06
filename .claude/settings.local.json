@@ -1,19 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Read(/Users/yamazaki/Downloads/名称未設定フォルダ/Development/project-shuka3/**)",
+      "Read(/Users/yamazaki/名称未設定フォルダ/Development/秀歌公式サイト/**)",
       "Bash(python3:*)",
-      "Read(/Users/yamazaki/Downloads/名称未設定フォルダ/Development/project-shuka3/**)",
-      "Read(/Users/yamazaki/Downloads/名称未設定フォルダ/Development/project-shuka3/**)",
-      "Read(/Users/yamazaki/Downloads/名称未設定フォルダ/Development/project-shuka3/**)",
-      "Read(/Users/yamazaki/Downloads/名称未設定フォルダ/Development/project-shuka3/**)",
-      "Read(/Users/yamazaki/Downloads/名称未設定フォルダ/Development/project-shuka3/**)",
-      "Read(/Users/yamazaki/Downloads/名称未設定フォルダ/Development/project-shuka3/**)",
-      "Read(/Users/yamazaki/Downloads/名称未設定フォルダ/Development/project-shuka3/**)",
-      "Read(/Users/yamazaki/Downloads/名称未設定フォルダ/Development/project-shuka3/**)",
-      "Read(/Users/yamazaki/Downloads/名称未設定フォルダ/Development/project-shuka3/**)",
-      "Read(/Users/yamazaki/Downloads/名称未設定フォルダ/Development/project-shuka3/**)",
-      "Read(//Users/yamazaki/名称未設定フォルダ/Development/project-shuka3/**)",
       "Bash(npx http-server:*)",
       "Bash(lsof:*)",
       "Bash(node:*)",
