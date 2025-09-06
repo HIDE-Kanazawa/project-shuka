@@ -666,10 +666,7 @@ a:focus {
  * - 季節切替時のテーマカラー
  * - アクセント要素の強調色
  */
-.autumn {
-  --primary: #FFC080;           /* 秋の夕日・紅葉を表現する温かいオレンジ */
-  --accent: #FF69B4;            /* 秋の実りを表現する鮮やかなピンク */
-}
+/* Deprecated: class-based seasonal theme (.autumn) removed. Using body[data-season] instead. */
 
 /* 
  * 冬テーマカラー設定 - 雪と氷の季節を表現する清涼感のある色調
@@ -683,10 +680,7 @@ a:focus {
  * - 雪化粧した日本の風景をイメージ
  * - 清廉で上品な印象を与える配色
  */
-.winter {
-  --primary: #87CEEB;           /* 冬空の澄んだ青・雪景色の清涼感 */
-  --accent: #ADD8E6;            /* 氷や霜の繊細で美しい青白さ */
-}
+/* Deprecated: class-based seasonal theme (.winter) removed. Using body[data-season] instead. */
 
 /* 
  * 春テーマカラー設定 - 新緑と桜の季節を表現する生命力あふれる色調
@@ -700,10 +694,7 @@ a:focus {
  * - 日本の美しい春景色をイメージ
  * - 希望と活力を感じさせる配色
  */
-.spring {
-  --primary: #C6E2B5;           /* 新緑の若葉・春の生命力を表現 */
-  --accent: #8BC34A;            /* 芽吹きの力強さ・成長のエネルギー */
-}
+/* Deprecated: class-based seasonal theme (.spring) removed. Using body[data-season] instead. */
 
 /* 
  * 夏テーマカラー設定 - 太陽と海の季節を表現する活力的な色調
@@ -717,10 +708,7 @@ a:focus {
  * - 日本の夏祭りや海辺をイメージ
  * - 活動的で開放的な気分を演出
  */
-.summer {
-  --primary: #FFA07A;           /* 夏の夕陽・温かな陽光を表現 */
-  --accent: #FFC080;            /* 夏の果実・豊かさと活力を演出 */
-}
+/* Deprecated: class-based seasonal theme (.summer) removed. Using body[data-season] instead. */
 /* ===== 季節変数設定終了 ===== */
 
 /* ===== フッターアイコンスタイル開始 ===== */
@@ -2738,6 +2726,7 @@ SURF_END SeasonTextColor */
   gap: var(--space-2);
 }
 
+/* Deprecated: footer-season-btn is not present in DOM; keep commented to avoid dead CSS
 .footer-season-btn {
   display: flex;
   align-items: center;
@@ -2758,6 +2747,7 @@ SURF_END SeasonTextColor */
   color: var(--primary);
   background: rgba(99, 102, 241, 0.1);
 }
+*/
 
 .footer-social {
   display: flex;
@@ -3105,7 +3095,8 @@ SURF_END SeasonTextColor */
   filter: blur(0.2px);
   transform: scale(0);
   opacity: 0.85;
-  animation: rippleRing 6s cubic-bezier(0.25, 0.65, 0.35, 1) forwards !important;
+  /* Deprecated: legacy rippleRing animation disabled in favor of rippleEffect set */
+  /* animation: rippleRing 6s cubic-bezier(0.25, 0.65, 0.35, 1) forwards !important; */
 }
 
 .ripple::after {
@@ -3117,29 +3108,14 @@ SURF_END SeasonTextColor */
   opacity: 0.3;
   filter: blur(1px);
   transform: scale(0);
-  animation: rippleRing 7s cubic-bezier(0.25, 0.65, 0.35, 1) 0.4s forwards !important;
+  /* animation: rippleRing 7s cubic-bezier(0.25, 0.65, 0.35, 1) 0.4s forwards !important; */
 }
 
-@keyframes rippleRing {
-  0% {
-    transform: scale(0);
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.6;
-  }
-  100% {
-    transform: scale(7); 
-    opacity: 0;
-  }
-}
+/* Deprecated: @keyframes rippleRing removed in favor of rippleEffect* animations */
 
 
 
-body[data-season="spring"] .ripple{ border-color: var(--accent-spring); }
-body[data-season="summer"] .ripple{ border-color: var(--accent-summer); }
-body[data-season="autumn"] .ripple{ border-color: var(--accent-autumn); }
-body[data-season="winter"] .ripple{ border-color: var(--accent-winter); }
+/* Deprecated: early seasonal ripple border mapping replaced by refined seasonal gradients */
 
 .ink-drop {
   position: absolute;

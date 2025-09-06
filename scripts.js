@@ -248,36 +248,7 @@ class Navigation {
    * - より細かなアニメーション制御が必要な場合に使用
    * - ease-in-out-cubic イージング関数を使用
    */
-  smoothScrollTo(targetPosition) {
-    const startPosition = window.pageYOffset; // 開始位置
-    const distance = targetPosition - startPosition; // 移動距離
-    const duration = 400; // アニメーション時間（ミリ秒）
-    let start = null;
-    
-    const animation = (currentTime) => {
-      if (start === null) start = currentTime;
-      const timeElapsed = currentTime - start; // 経過時間
-      const progress = Math.min(timeElapsed / duration, 1); // 進行度（0-1）
-      
-      // イージング関数（ease-in-out-cubic）
-      // 進行度が0.5未満: 加速フェーズ - 3次曲線で緊やかに加速
-      // 進行度が0.5以上: 減速フェーズ - 3次曲線で緊やかに減速
-      // 結果: 滑らかで自然なスクロールアニメーションを実現
-      const easeInOutCubic = progress < 0.5 
-        ? 4 * progress * progress * progress  // 加速: 4t^3
-        : (progress - 1) * (2 * progress - 2) * (2 * progress - 2) + 1; // 減速: 1 - 4(1-t)^3
-      
-      // 計算された位置にスクロール
-      window.scrollTo(0, startPosition + distance * easeInOutCubic);
-      
-      // アニメーション継続判定
-      if (timeElapsed < duration) {
-        requestAnimationFrame(animation);
-      }
-    };
-    
-    requestAnimationFrame(animation);
-  }
+  // smoothScrollTo は未使用のため削除しました（ネイティブの window.scrollTo を使用）
   
   /**
    * アクティブナビゲーションリンクの更新
@@ -597,34 +568,14 @@ class SeasonsGallery {
    * - URLクエリパラメータ「season」の値を確認
    * - 有効な季節名の場合のみ返却
    */
-  getSeasonFromURL() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const season = urlParams.get('season');
-    
-    // 有効な季節名のチェック
-    if (['spring', 'summer', 'autumn', 'winter', 'tsuyu'].includes(season)) {
-      return season;
-    }
-    
-    return null; // 無効または未設定の場合
-  }
+  // getSeasonFromURL は未使用のため削除しました
 
   /**
    * ローカルストレージから最後に選択された季節を取得
    * - 前回のユーザー選択を記憶
    * - ストレージアクセスエラー時も安全に処理
    */
-  getSeasonFromStorage() {
-    try {
-      const s = localStorage.getItem('lastSeason');
-      if (['spring','summer','autumn','winter','tsuyu'].includes(s)) {
-        return s;
-      }
-    } catch (e) {
-      // ストレージアクセスエラー時は無視
-    }
-    return null; // 未保存または無効な値の場合
-  }
+  // getSeasonFromStorage は未使用のため削除しました
   
   
   /**
@@ -1391,26 +1342,19 @@ function initSeasonSelector() {
 }
 window.initSeasonSelector = initSeasonSelector;
 
-/**
- * フッター季節ボタンの初期化
- * 
- * 機能:
- * - フッター内の季節切り替えボタンにイベントリスナーを追加
- * - デフォルトリンク動作を無効化
- * - グローバル季節切り替え関数を呼び出し
- */
-function setupFooterSeasonButtons() {
-  const footerSeasonButtons = document.querySelectorAll('.footer-season-btn');
-  footerSeasonButtons.forEach(button => {
-    button.addEventListener('click', (e) => {
-      e.preventDefault(); // デフォルトリンク動作を防止
-      const season = button.getAttribute('data-season');
-      if (season && window.switchSeason) {
-        window.switchSeason(season);
-      }
-    });
-  });
-}
+// フッター季節ボタン初期化は未使用のため無効化
+// function setupFooterSeasonButtons() {
+//   const footerSeasonButtons = document.querySelectorAll('.footer-season-btn');
+//   footerSeasonButtons.forEach(button => {
+//     button.addEventListener('click', (e) => {
+//       e.preventDefault();
+//       const season = button.getAttribute('data-season');
+//       if (season && window.switchSeason) {
+//         window.switchSeason(season);
+//       }
+//     });
+//   });
+// }
 
 /**
  * モジュールシステム対応のエクスポート処理
@@ -2874,9 +2818,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (window.seasonsGallery && typeof window.seasonsGallery.refresh === 'function') {
     window.seasonsGallery.refresh();
   }
-  
-  // フッターの季節切り替えボタンのイベント設定
-  setupFooterSeasonButtons();
+
+  // フッター季節ボタンは現在DOMに存在しないため未初期化（安全に無効化）
+  // setupFooterSeasonButtons();
 });
 
 /**
