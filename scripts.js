@@ -1439,8 +1439,8 @@ class ShukaApp {
       });
     }, observerOptions);
     
-    // アニメーション対象要素の監視開始
-    const animatedElements = document.querySelectorAll('.feature, .track, .about-visual, .contact-form');
+    // アニメーション対象要素の監視開始（未使用の .contact-form を除外）
+    const animatedElements = document.querySelectorAll('.feature, .track, .about-visual');
     animatedElements.forEach(el => {
       animationObserver.observe(el);
     });
@@ -1754,77 +1754,6 @@ class ShukaApp {
  */
 window.shukaApp = new ShukaApp();
 
-/**
- * フォーム状態とアニメーション用のCSS追加
- * 
- * 機能:
- * - フォームエラー状態のスタイリング
- * - 送信成功メッセージのデザイン
- * - トラック再生状態の表示スタイル
- * - 動的に生成されるUI要素のスタイリング統一
- */
-const additionalCSS = `
-  /* フォームエラーメッセージのスタイル */
-  .field-error {
-    color: var(--accent);
-    font-size: var(--text-sm);
-    margin-top: var(--space-1);
-  }
-  
-  /* エラー状態の入力フィールドスタイル */
-  .form-input.error,
-  .form-textarea.error {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
-  }
-  
-  /* 送信成功メッセージのスタイル */
-  .form-success {
-    background: var(--spring);
-    color: white;
-    padding: var(--space-8);
-    border-radius: var(--radius-xl);
-    text-align: center;
-    animation: fadeIn 0.5s ease-out;
-  }
-  
-  /* 成功メッセージコンテンツのレイアウト */
-  .success-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-4);
-  }
-  
-  /* 成功アイコンのスタイル */
-  .success-icon {
-    font-size: var(--text-4xl);
-    width: 60px;
-    height: 60px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: var(--radius-full);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  /* 再生中トラックのハイライト表示 */
-  .track.playing {
-    background: var(--primary-light);
-    color: white;
-  }
-`;
-
-/**
- * 追加CSSのインジェクション
- * 
- * 機能:
- * - 動的に生成されるフォーム状態スタイルをDOMに追加
- * - 実行時にスタイルシートを文書のheadに注入
- */
-// 追加CSSのインジェクション
-const additionalStyle = document.createElement('style');
-additionalStyle.textContent = additionalCSS;
 /**
  * デフォルト季節設定 - 梅雨
  * 
