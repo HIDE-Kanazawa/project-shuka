@@ -1572,20 +1572,7 @@ class ShukaApp {
    * - ページ変更時のスクリーンリーダー向けアナウンス
    */
   setupAccessibilityEnhancements() {
-    // スキップリンクの設定
-    const skipLinks = document.querySelectorAll('.skip-link');
-    skipLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault(); // デフォルトのリンク動作を防止
-        const targetId = link.getAttribute('href').substring(1); // '#'を除去してID取得
-        const target = document.getElementById(targetId);
-        if (target) {
-          target.focus(); // 対象要素にフォーカス設定
-          target.scrollIntoView(); // 対象要素へスクロール
-        }
-      });
-    });
-    
+    // スキップリンクは未採用のため、関連バインドは削除済み
     
     // スクリーンリーダー向けのページ変更アナウンス設定
     this.setupRouteAnnouncements();
@@ -1635,7 +1622,7 @@ class ShukaApp {
       // アナウンサー要素が存在しない場合は新規作成
       announcer = document.createElement('div');
       announcer.id = 'screen-reader-announcer';
-      announcer.className = 'visually-hidden'; // 視覚的に隠蔽
+      announcer.className = 'sr-only'; // 視覚的に隠蔽（既存ユーティリティクラス）
       document.body.appendChild(announcer);
     }
     

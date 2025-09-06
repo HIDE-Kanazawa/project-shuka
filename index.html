@@ -304,7 +304,6 @@
           loaded = true;
           Promise.resolve()
             .then(function(){ return loadScript(cdnBase + '/build/three.min.js'); })
-            .then(function(){ return loadScript(cdnBase + '/examples/js/controls/OrbitControls.js'); })
             .then(function(){ return loadScript(cdnBase + '/examples/js/loaders/STLLoader.js'); })
             .then(function(){ return loadScript('./three-lanterns.js'); })
             .then(function(){

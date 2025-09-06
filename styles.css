@@ -535,23 +535,7 @@ a:focus {
   margin-right: auto;
 }
 
-/* ===== スキップリンク（アクセシビリティ） ===== */
-.skip-link {
-  position: absolute;
-  top: -100px;
-  left: var(--space-4);
-  background: var(--primary);
-  color: white;
-  padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius);
-  font-weight: 600;
-  z-index: var(--z-tooltip);
-  transition: top var(--transition-fast);
-}
-
-.skip-link:focus {
-  top: var(--space-4);
-}
+/* スキップリンクは未採用のため削除 */
 
 /* ===== ヘッダーとナビゲーション ===== */
 .header {
@@ -3685,29 +3669,7 @@ audio:focus-visible {
   box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
 }
 
-/* ===== スキップリンク強化 ===== */
-.skip-link {
-  position: absolute;
-  top: -100px;
-  left: var(--space-4);
-  background: var(--primary);
-  color: white;
-  padding: var(--space-3) var(--space-4);
-  border-radius: var(--radius);
-  font-weight: 600;
-  font-size: var(--text-sm);
-  text-decoration: none;
-  z-index: var(--z-tooltip);
-  transition: top var(--transition-fast);
-  border: 2px solid white;
-}
-
-.skip-link:focus,
-.skip-link:focus-visible {
-  top: var(--space-4);
-  outline: 3px solid var(--accent);
-  outline-offset: 2px;
-}
+/* スキップリンク強化定義は未採用のため削除 */
 
 /* ===== スクリーンリーダー強化 ===== */
 .sr-only {
@@ -3720,15 +3682,6 @@ audio:focus-visible {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
-}
-
-/* スクリーンリーダー通知 */
-.sr-announcer {
-  position: absolute;
-  left: -10000px;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
 }
 
 /* ===== スクリーンリーダー向けナビゲーション強化 ===== */
@@ -5073,23 +5026,7 @@ body {
     border: 2px solid white;
 }
 
-/* Skip link for accessibility */
-.skip-link {
-    position: absolute;
-    top: -100px;
-    left: var(--space-4);
-    background: var(--primary);
-    color: white;
-    padding: var(--space-4);
-    border-radius: var(--radius-lg);
-    font-weight: 600;
-    z-index: 1060;
-    transition: top var(--transition-normal);
-}
-
-.skip-link:focus {
-    top: var(--space-4);
-}
+/* Skip link styles removed (feature not used) */
 
 /* Loading state to prevent FOUC */
 body:not(.loaded) * {

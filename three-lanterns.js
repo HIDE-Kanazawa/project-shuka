@@ -41,11 +41,7 @@ function initThreeJsScene() {
   renderer.domElement.className = 'three-js-canvas';
   document.body.appendChild(renderer.domElement);
 
-  var controls = new THREE.OrbitControls(camera, renderer.domElement);
-  controls.maxDistance = 150;
-  controls.enableDamping = true;
-  // Disable controls for background effect
-  controls.enabled = false;
+  // OrbitControls removed: background effect does not need user interaction
 
   // 鯉をより美しく見せるためのライティング
   let ambientLight = new THREE.AmbientLight(0x404040, 0.4); // 柔らかい環境光
@@ -196,9 +192,6 @@ function initThreeJsScene() {
   var clock = new THREE.Clock();
 
   function renderFrame(){
-    if (controls.enabled) {
-      controls.update();
-    }
     let t = clock.getElapsedTime();
     oUs.forEach(ou => {ou.uTime.value = t;});
     renderer.render(scene, camera);
