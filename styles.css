@@ -2720,34 +2720,6 @@ SURF_END SeasonTextColor */
   color: var(--primary);
 }
 
-.footer-seasons {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-2);
-}
-
-/* Deprecated: footer-season-btn is not present in DOM; keep commented to avoid dead CSS
-.footer-season-btn {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-3);
-  background: transparent;
-  border: 1px solid var(--neutral-600);
-  border-radius: var(--radius);
-  color: var(--neutral-400);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  font-size: var(--text-sm);
-}
-
-.footer-season-btn:hover,
-.footer-season-btn:focus {
-  border-color: var(--primary);
-  color: var(--primary);
-  background: rgba(99, 102, 241, 0.1);
-}
-*/
 
 .footer-social {
   display: flex;
@@ -4281,15 +4253,6 @@ legend {
     gap: var(--space-6);
   }
   
-  .footer-seasons {
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-1);
-  }
-  
-  .footer-season-btn {
-    padding: var(--space-2);
-    font-size: 0.75rem;
-  }
   
   .footer-social {
     justify-content: center;
@@ -4312,18 +4275,6 @@ legend {
     gap: var(--space-6);
   }
   
-  .footer-seasons {
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-2);
-  }
-  
-  .footer-season-btn {
-    min-height: 44px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-1);
-  }
   
   .footer-bottom {
     padding-top: var(--space-6);

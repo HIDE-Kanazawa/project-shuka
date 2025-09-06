@@ -49,9 +49,10 @@ _Autonoums Development Guide for Claude Code_
 #### ローカル起動メモ
 - ビルド工程なし。プレビューは `npx http-server -c-1` を推奨（キャッシュ無効）。
 
-#### Service Worker 運用
-- `sw.js` は `VERSION` によりキャッシュ更新を制御（現在: `v4`）。
-- `PRECACHE_URLS` は非 minified アセット（例: `/css/loader.css`, `/js/loader.js`）を対象とする。
+#### Service Worker（現在は未運用）
+- 現在、Service Worker は使用していません。
+- `index.html` 起動時に、既存登録済みの Service Worker を一括 `unregister()` しています。
+- キャッシュ戦略はブラウザ標準の HTTP キャッシュに委ねます。将来的に SW を再導入する場合は、別途方針と設計をドキュメント化してください。
 
 ### 4-2. レスポンシブ対応
 - **モバイルファースト** 設計  
@@ -141,7 +142,7 @@ _Autonoums Development Guide for Claude Code_
 ## 7. 運用・最適化メモ
 継続的な改善は必要に応じて実施。個別タスク管理（Issue 等）に移行し、フェーズ表記は廃止。
 
-## 7-1. パフォーマンス最適化実績 ✅
+### 7-1. パフォーマンス最適化実績 ✅
 ### 画像圧縮
 - **hide.png**: 266KB → 83KB（約69%削減）
 - **suno.png**: 298KB → 30KB（約90%削減）
@@ -151,11 +152,10 @@ _Autonoums Development Guide for Claude Code_
 ### ソースファイル最適化
 - **ソースファイル直接使用**: 開発効率とメンテナンス性を重視
 - **コード品質**: 可読性と保守性を優先した実装
-- **パフォーマンス**: Service Worker キャッシュで補完
+ - **パフォーマンス**: 不要コードと重複定義の削除、条件付き遅延ロードで補完
  - **アセット方針**: 可読性重視のため `.min.css` / `.min.js` は使用しない（必要時のみ再導入）。
 
 ### 追加最適化
-- **Service Worker**: キャッシュ機能実装
 - **WebP形式**: 全画像をWebPに変換
 - **遅延読み込み**: 画像のlazy loading実装
 

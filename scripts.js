@@ -1342,20 +1342,6 @@ function initSeasonSelector() {
 }
 window.initSeasonSelector = initSeasonSelector;
 
-// フッター季節ボタン初期化は未使用のため無効化
-// function setupFooterSeasonButtons() {
-//   const footerSeasonButtons = document.querySelectorAll('.footer-season-btn');
-//   footerSeasonButtons.forEach(button => {
-//     button.addEventListener('click', (e) => {
-//       e.preventDefault();
-//       const season = button.getAttribute('data-season');
-//       if (season && window.switchSeason) {
-//         window.switchSeason(season);
-//       }
-//     });
-//   });
-// }
-
 /**
  * モジュールシステム対応のエクスポート処理
  * 
