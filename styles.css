@@ -2328,216 +2328,6 @@ SURF_END SeasonTextColor */
   max-height: 100%;             /* 最大高さ制限でオーバーフロー防止 */
   object-fit: contain;          /* アスペクト比保持して全体表示を保証 */
 }
-/* ===== お問い合わせセクション - 連絡フォームエリア ===== */
-/* 
- * お問い合わせセクション - ユーザーからの連絡や質問を受け付けるエリア
- * 
- * デザインコンセプト:
- * - Aboutセクションと同様の半透明背景で統一感を演出
- * - 大きな上下パディングでセクションの重要性を表現
- * - ブラーエフェクトでモダンな深みと上品さを付与
- * - ユーザーに親しみやすさと信頼性を伝える設計
- */
-.contact {
-  padding: var(--space-24) 0;     /* 上下に十分な余白でセクションの品格を表現 */
-  background: rgba(17, 24, 39, 0.85); /* 半透明黒背景で高級感と読みやすさを両立 */
-  backdrop-filter: blur(1px);      /* 背景との自然な統合と現代的な美しさ */
-}
-
-/* 
- * お問い合わせコンテンツレイアウト - フォームと連絡情報の柔軟な配置
- * 
- * レイアウト戦略:
- * - グリッドシステムでレスポンシブな2列レイアウトを実現
- * - モバイルファーストで単一列からスタート
- * - コンテンツ間の適切な間隔で情報の整理と読みやすさを確保
- * - 最大幅制限で読みやすいライン長を維持
- */
-.contact-content {
-  display: grid;                /* 柔軟な2列グリッドレイアウト */
-  grid-template-columns: 1fr;   /* モバイルファーストの単一列配置 */
-  gap: var(--space-12);         /* コンテンツ間の十分な間隔 */
-  max-width: 1000px;           /* 読みやすい最大幅でコンテンツを制限 */
-  margin: 0 auto;              /* 中央揃えでバランスの良い表示 */
-}
-
-@media (min-width: 768px) {
-  .contact-content {
-    grid-template-columns: 2fr 1fr;
-  }
-}
-
-
-/* 
- * フォームグループ - 各入力フィールドとラベルをまとめる論理的なコンテナ
- * 
- * 構造化の利点:
- * - ラベルと入力欄の関連性を明確にしてアクセシビリティ向上
- * - フォーム全体の視覚的リズムと読みやすさを向上
- * - 適切なスペーシングでユーザーの入力作業を支援
- * - レスポンシブレイアウトでの一貫した表示
- */
-.form-group {
-  margin-bottom: var(--space-6);  /* フォームフィールド間の十分な分離スペース */
-}
-
-/* 
- * フォームラベル - 入力フィールドの説明とガイダンスを提供
- * 
- * アクセシビリティ重要ポイント:
- * - ブロック表示で読みやすさと視覚的階層を構築
- * - セミボールドで重要性を示しつつ可読性を保持
- * - システムテキストカラーでテーマ統一性を維持
- * - 入力欄との適切な距離でフォーム操作の流れをサポート
- * 
- * ユーザビリティ配慮:
- * - スクリーンリーダーでの適切な読み上げ
- * - 明確で理解しやすいラベリング
- * - フォームの入力項目を論理的にグループ化
- */
-.form-label {
-  display: block;               /* ラベルをブロック表示して視覚的階層を構築 */
-  margin-bottom: var(--space-2); /* ラベルと入力欄の適切な間隔 */
-  font-weight: 600;             /* セミボールドで重要性を示す */
-  color: var(--text);           /* テーマ統一のテキストカラー */
-}
-
-/* 
- * 必須項目マーカー - ユーザーが入力必須の項目を即座に認識できる視覚的指標
- * 
- * UX設計思想:
- * - アクセントカラーで必須項目を目立たせて入力漏れを防止
- * - 色だけでなく記号（*）と組み合わせてアクセシビリティを確保
- * - フォーム全体の情報優先度を視覚的に整理
- * - ユーザーの作業効率向上をサポート
- */
-.required {
-  color: var(--accent);         /* アクセントカラーで必須項目を強調表示 */
-}
-
-/* 
- * フォーム入力要素 - テキスト入力欄とテキストエリアの共通スタイル
- * 
- * デザイン統一性:
- * - フル幅レスポンシブで様々な画面サイズに対応
- * - 統一されたパディングで快適な入力体験を提供
- * - テーマカラーで一貫したブランド体験を維持
- * - 適切な角丸でフレンドリーな印象を演出
- * 
- * ユーザビリティ向上:
- * - 十分なパディングでタッチ入力やクリック操作を快適に
- * - 継承フォントでサイト全体の一貫性保持
- * - スムーズなボーダー色変化でフォーカス状態を明確に表現
- * - 読みやすい文字サイズでフォーム入力作業をサポート
- */
-.form-input,
-.form-textarea {
-  width: 100%;                  /* レスポンシブなフル幅表示 */
-  padding: var(--space-3) var(--space-4); /* 快適な入力のための適切な内側余白 */
-  border: 2px solid var(--border); /* テーマ統一の境界線とフォーカス準備 */
-  border-radius: var(--radius);  /* 統一感のあるフレンドリーな角丸 */
-  font-size: var(--text-base);   /* 読みやすい標準文字サイズ */
-  font-family: inherit;          /* サイト全体のフォント統一性保持 */
-  background: var(--background); /* テーマに合わせた背景色 */
-  color: var(--text);            /* テーマ統一のテキストカラー */
-  transition: border-color var(--transition-fast); /* スムーズなフォーカス変化 */
-}
-
-/* 
- * フォーム入力要素のフォーカス状態 - ユーザーが現在操作中の項目を明確に表現
- * 
- * アクセシビリティ重要ポイント:
- * - デフォルトアウトライン除去の代替として明確なフォーカス表現を提供
- * - プライマリカラーでブランド統一とフォーカス状態の認識性向上
- * - ボックスシャドウでフォーカスリングを表現（色覚障害対応）
- * - 十分なコントラストでWCAG基準への対応
- * 
- * UX向上効果:
- * - キーボード操作時の現在位置明確化
- * - タブナビゲーション時の迷子防止
- * - フォーム入力の操作性と完了率向上
- */
-.form-input:focus,
-.form-textarea:focus {
-  outline: none;                 /* デフォルトアウトライン除去 */
-  border-color: var(--primary); /* プライマリカラーでフォーカス状態を明示 */
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1); /* 柔らかいフォーカスリング */
-}
-
-/* 
- * テキストエリア追加設定 - 長文入力に最適化された特別な配慮
- * 
- * ユーザビリティの向上:
- * - 垂直方向のみのリサイズでレイアウト破綻を防止
- * - 最小高さ設定でメッセージ入力に十分なスペースを確保
- * - 複数行入力を前提とした視覚的な大きさで用途を明示
- * - レスポンシブレイアウトとの調和を維持
- */
-.form-textarea {
-  resize: vertical;             /* 縦方向のみリサイズ可能でレイアウト保護 */
-  min-height: 120px;           /* 長文入力に適した最小高さを保証 */
-}
-
-/* 
- * フォーム送信ボタン - ユーザーアクションの最終ステップを担う重要な要素
- * 
- * ビジュアル設計の意図:
- * - グラデーション背景で他のボタンより高い重要度を表現
- * - フル幅表示でモバイル操作性とデスクトップでの存在感を両立
- * - 大きなパディングでタッチターゲットサイズを確保
- * - セミボールドフォントで行動促進の強さを表現
- * 
- * インタラクション設計:
- * - 滑らかなトランジションで高品質な操作感を提供
- * - ポインターカーソルでクリック可能性を明示
- * - アクセシビリティを考慮したキーボード操作対応
- * 
- * コンバージョン最適化:
- * - 目立つ配色とサイズでユーザーの注意を引く
- * - 明確な視覚階層でフォーム完了への誘導
- */
-.form-submit {
-  background: linear-gradient(135deg, var(--primary), var(--primary-light)); /* 重要度の高いグラデーション */
-  color: white;                  /* 高コントラストの白文字 */
-  border: none;                  /* クリーンなボーダーレスデザイン */
-  padding: var(--space-4) var(--space-8); /* 十分なタッチターゲットサイズ */
-  border-radius: var(--radius-lg); /* 大きな角丸で親しみやすさを演出 */
-  font-size: var(--text-base);   /* 読みやすい標準サイズ */
-  font-weight: 600;              /* セミボールドで行動促進を表現 */
-  cursor: pointer;               /* クリック可能性を明示 */
-  transition: all var(--transition-normal); /* 全プロパティの滑らかな変化 */
-  width: 100%;                   /* フル幅でモバイル・デスクトップ最適化 */
-}
-
-/* 
- * フォーム送信ボタンのインタラクション状態 - ユーザーエンゲージメント向上の仕上げ
- * 
- * マイクロインタラクションの効果:
- * - 軽微な浮上効果でボタンの反応性を視覚化
- * - 深いシャドウで立体感と重要性を強調
- * - ホバーとフォーカスの統一で一貫した操作感
- * - 送信アクションへの心理的促進効果
- * 
- * アクセシビリティ配慮:
- * - マウス操作とキーボード操作の同一視覚効果
- * - 操作フィードバックで現在の状態を明確に表現
- * - 様々な入力デバイスでの操作性統一
- */
-.form-submit:hover,
-.form-submit:focus {
-  transform: translateY(-2px);   /* 軽やかな浮上でボタンの反応を表現 */
-  box-shadow: 0 8px 25px var(--shadow-lg); /* 立体感を強化する深いシャドウ */
-}
-
-.contact-info {
-  padding: var(--space-8);
-}
-
-.contact-info h3 {
-  margin-bottom: var(--space-6);
-  color: var(--text);
-}
-
 .social-links {
   display: flex;
   flex-direction: column;
@@ -2734,20 +2524,7 @@ SURF_END SeasonTextColor */
   font-size: var(--text-sm);
 }
 
-/* removed: .footer-bottom-links (unused) */
-
-.footer-bottom-link {
-  color: var(--neutral-500);
-  text-decoration: none;
-  font-size: var(--text-sm);
-  transition: color var(--transition-fast);
-}
-
-.footer-bottom-link:hover,
-.footer-bottom-link:focus {
-  color: var(--neutral-500);
-  outline: none;
-}
+/* removed: .footer-bottom-link (unused) */
 
 .footer-links {
   display: grid;
@@ -3585,8 +3362,7 @@ SURF_END SeasonTextColor */
   }
   
   .cta-button,
-  .season-btn,
-  .form-submit {
+  .season-btn {
     border: 2px solid currentColor;
   }
 }/**
@@ -3609,8 +3385,7 @@ SURF_END SeasonTextColor */
 
 /* 特定要素用のカスタムフォーカススタイル */
 .cta-button:focus-visible,
-.season-btn:focus-visible,
-.form-submit:focus-visible {
+.season-btn:focus-visible {
   outline: 3px solid var(--accent);
   outline-offset: 3px;
   box-shadow: 0 0 0 2px var(--background), 0 0 0 5px var(--accent);
@@ -3630,14 +3405,7 @@ audio:focus-visible {
   border-radius: var(--radius);
 }
 
-/* フォーム要素のフォーカス強化 */
-.form-input:focus-visible,
-.form-textarea:focus-visible {
-  outline: 3px solid var(--primary);
-  outline-offset: 1px;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
-}
+/* removed: form focus-visible rules (unused) */
 
 /* スキップリンク強化定義は未採用のため削除 */
 
@@ -3684,7 +3452,6 @@ audio:focus-visible {
   
   .cta-button,
   .season-btn,
-  .form-submit,
   .social-link {
     border: 2px solid currentColor;
     font-weight: 700;
@@ -3755,26 +3522,7 @@ audio:focus-visible {
   }
 }
 
-/* ===== エラー状態アクセシビリティ ===== */
-.form-input[aria-invalid="true"],
-.form-textarea[aria-invalid="true"] {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.2);
-}
-
-.field-error {
-  color: var(--accent);
-  font-size: var(--text-sm);
-  margin-top: var(--space-1);
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-}
-
-.field-error::before {
-  content: "⚠️";
-  font-size: var(--text-base);
-}
+/* removed: form aria-invalid and field-error (unused) */
 
 /* ===== ローディング状態アクセシビリティ ===== */
 .loading {
@@ -3871,61 +3619,8 @@ body.using-mouse :focus {
   overflow: hidden;
 }
 
-/* ===== 強化フォームラベル - ユーザビリティ向上 ===== */
-.form-label {
-  display: block;
-  margin-bottom: var(--space-2);
-  font-weight: 600;
-  color: var(--text);
-  cursor: pointer;
-}
-
-.form-label .required {
-  color: var(--accent);
-  font-weight: bold;
-  margin-left: var(--space-1);
-}
-
-/* 必要に応じてfieldsetのスタイルを改善 */
-fieldset {
-  border: 2px solid var(--border);
-  border-radius: var(--radius);
-  padding: var(--space-4);
-  margin: var(--space-4) 0;
-}
-
-legend {
-  font-weight: 600;
-  padding: 0 var(--space-2);
-  color: var(--text);
-}
-
-/* ===== Toast/Notification Accessibility ===== */
-.toast {
-  position: fixed;
-  top: var(--space-4);
-  right: var(--space-4);
-  background: var(--primary);
-  color: white;
-  padding: var(--space-4) var(--space-6);
-  border-radius: var(--radius);
-  font-weight: 600;
-  z-index: var(--z-tooltip);
-  transform: translateX(100%);
-  transition: transform var(--transition-normal);
-}
-
-.toast.show {
-  transform: translateX(0);
-}
-
-.toast[role="alert"] {
-  background: var(--accent);
-}
-
-.toast[role="status"] {
-  background: var(--spring);
-}/**
+/* removed: form-label rules (unused) */
+/**
  * Responsive Enhancement Styles
  * Additional responsive adjustments for optimal display across all devices
  */
@@ -4027,13 +3722,11 @@ legend {
 /* ===== セクションスペーシング調整 ===== */
 @media (max-width: 768px) {
   .about,
-  .gallery,
-  .contact {
+  .gallery {
     padding: var(--space-16) 0;
   }
   
-  .about-content,
-  .contact-content {
+  .about-content {
     grid-template-columns: 1fr;
     gap: var(--space-8);
   }
@@ -4173,10 +3866,7 @@ legend {
     font-size: var(--text-sm);
   }
   
-  .footer-bottom-links {
-    flex-direction: column;
-    gap: var(--space-3);
-  }
+  
 }
 
 /* ===== フィーチャーカードレスポンシブ ===== */
@@ -4212,10 +3902,7 @@ legend {
     gap: var(--space-16);
   }
   
-  .contact-content {
-    grid-template-columns: 1.5fr 1fr;
-    gap: var(--space-16);
-  }
+  /* removed: .contact-content (unused) */
 }
 
 @media (min-width: 1600px) {
@@ -4256,8 +3943,7 @@ legend {
   }
   
   .about-content,
-  .season-panel,
-  .contact-content {
+  .season-panel {
     grid-template-columns: 1fr;
     gap: var(--space-10);
   }
