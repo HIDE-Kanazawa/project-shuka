@@ -101,14 +101,14 @@ const SEASON_DATA = {
     },
     tracks: [
       {
-        title: '洛陽の宵（よい）',
-        description: '秋の夜に響く古都の響き',
-        src: './audio/落葉の宵(よい).mp3'
+        title: '観月祭',
+        description: '灯籠と満月が照らす秋夜の幻想',
+        src: './audio/観月祭.mp3'
       },
       {
-        title: '風の庭にて',
-        description: '秋風に舞う葉音のハーモニー',
-        src: './audio/風の庭にて.mp3'
+        title: '秋深し',
+        description: '静かな夜に、季節の深まりと心の余韻を映す',
+        src: './audio/秋深し.mp3'
       }
     ]
   },
