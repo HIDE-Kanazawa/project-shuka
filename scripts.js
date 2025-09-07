@@ -94,10 +94,10 @@ const SEASON_DATA = {
     name: '秋',
     title: '秋の詩',
     description: '色づく季節の深い情感と静寂を表現した楽曲集',
-    poster: './img/秀歌-秋.webp',
+    poster: './img/サムネイル_秋灯りの道_1080p.webp',
     video: {
       webm: null,
-      mp4: './video/洛陽の宵.mp4'
+      mp4: './video/秋灯りの道_web_standard.mp4'
     },
     tracks: [
       {
@@ -129,9 +129,9 @@ const SEASON_DATA = {
         src: './audio/白のなかで.mp3'
       },
       {
-        title: 'しろのことば',
-        description: '雪降る夜の静寂な語らい',
-        src: './audio/しろのことば.mp3'
+        title: '雪の参道',
+        description: '雪に包まれた参道を歩む情景',
+        src: './audio/雪の参道.mp3'
       }
     ]
   }
@@ -1361,7 +1361,7 @@ window.SeasonsGallery = SeasonsGallery;
  */
 
 /**
- * ShukaAppクラス - メインアプリケーション制御
+ * ShūkaAppクラス - メインアプリケーション制御
  * 
  * 役割:
  * - アプリケーション全体の初期化とライフサイクル管理
@@ -1370,7 +1370,7 @@ window.SeasonsGallery = SeasonsGallery;
  * - パフォーマンス最適化とアクセシビリティ強化
  * - エラーハンドリングと監視
  */
-class ShukaApp {
+class ShūkaApp {
   /**
    * コンストラクタ - アプリケーションの基本設定
    */
@@ -1748,11 +1748,11 @@ class ShukaApp {
  * メインアプリケーションの初期化
  * 
  * 機能:
- * - ShukaAppクラスのインスタンス生成
+ * - ShūkaAppクラスのインスタンス生成
  * - グローバルアクセス用にウィンドウオブジェクトに登録
  * - アプリケーションのメイン機能を自動起動
  */
-window.shukaApp = new ShukaApp();
+window.shukaApp = new ShūkaApp();
 
 /**
  * デフォルト季節設定 - 梅雨

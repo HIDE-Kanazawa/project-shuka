@@ -6,7 +6,10 @@
       "Bash(npx http-server:*)",
       "Bash(lsof:*)",
       "Bash(node:*)",
-      "Bash(pkill:*)"
+      "Bash(pkill:*)",
+      "Read(//Users/yamazaki/名称未設定フォルダ/Development/秀歌公式サイト/**)",
+      "Bash(cwebp:*)",
+      "Read(//var/folders/mf/857mvkr90pngs73rrb_860z00000gn/T/TemporaryItems/NSIRD_screencaptureui_yYkWQ2/**)"
     ],
     "deny": [],
     "ask": []

@@ -1,5 +1,5 @@
 /* =============================================================================
- * Shuka - 秀歌（AI音楽アーティスト公式サイト）スタイルシート
+ * Shūka - 秀歌（AI音楽アーティスト公式サイト）スタイルシート
  * =============================================================================
  * 和風テイストを基調とした季節演出システム搭載のレスポンシブWebサイト
  * Three.js 3D演出、季節自動切替、モバイル最適化対応
@@ -10,13 +10,15 @@
  * フォント設定
  * =============================================================================
  * 日本語表示に最適化されたフォントファミリーを定義
- * Noto Serif JP を使用して和風な印象を演出
+ * 明朝体を使用して和風な印象を演出
  * ============================================================================= */
 :root {
-  /* 見出し用フォント - 和風セリフ体で重厚感を演出 */
-  --ff-heading: "Noto Serif JP", serif;
-  /* 本文用フォント - 可読性を重視した日本語最適化フォント */
-  --ff-body:    "Noto Serif JP", serif;
+  /* 統一明朝体フォント - サイト全体で使用 */
+  --ff-mincho: "Source Serif 4", "Source Serif Pro", "Source Serif", "Noto Serif JP", "Noto Serif", "Meiryo", "Yu Mincho", "Hiragino Mincho ProN", "Times New Roman", serif;
+  /* 見出し用フォント - 明朝体で重厚感を演出 */
+  --ff-heading: var(--ff-mincho);
+  /* 本文用フォント - 可読性を重視した明朝体 */
+  --ff-body:    var(--ff-mincho);
 }
 
 /* ===== 初期body設定 - フォント適用とリセット ===== */
@@ -607,7 +609,7 @@ a:focus {
 
 /* 日本語ロゴ補助テキスト */
 .logo-jp {
-  font-family: var(--font-jp);     /* 日本語最適化フォント */
+  font-family: var(--ff-mincho);   /* 統一明朝体フォント */
   color: var(--text);             /* 標準テキスト色 */
   font-weight: 400;              /* ノーマルウェイト */
 }
@@ -627,7 +629,7 @@ a:focus {
   transition: color var(--transition-fast);
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius);
-  font-family: "Yuji Syuku", "Noto Serif JP", serif;
+  font-family: var(--ff-mincho);
   letter-spacing: 0.05em;
 }
 
@@ -1373,7 +1375,7 @@ a:focus {
  * Aboutセクション - アーティスト紹介とブランドストーリー
  * 
  * セクションの役割:
- * - Shukaのアーティストアイデンティティ確立
+ * - Shūkaのアーティストアイデンティティ確立
  * - Vibe Cordingのコンセプト説明
  * - ユーザーの共感と理解を深める情報提供
  * - サイト全体の信頼性と専門性の証明
@@ -1443,7 +1445,7 @@ a:focus {
  * 
  * 役割と目的:
  * - ユーザーの最初の共感ポイント構築
- * - Shukaのアーティストとしての世界観伝達
+ * - Shūkaのアーティストとしての世界観伝達
  * - サイト全体のトーン設定と期待管理
  * - 続くコンテンツへの興味喚起
  * 
@@ -1611,7 +1613,7 @@ a:focus {
 
 /* ===== ギャラリーセクション - 作品展示エリア ===== */
 /* 
- * ギャラリーセクション - Shukaの楽曲とビジュアル作品の展示スペース
+ * ギャラリーセクション - Shūkaの楽曲とビジュアル作品の展示スペース
  * 
  * コンセプトアプローチ:
  * - 日本の四季をテーマにした情緒的なコンテンツ組織
@@ -1741,7 +1743,7 @@ a:focus {
   cursor: pointer;
   
   /* 和文フォント - ブランド世界観と文字の美しさ */
-  font-family: "Yuji Syuku", "Noto Serif JP", serif;
+  font-family: var(--ff-mincho);
   
   /* 多層シャドウ - 高級感と立体感の絶妙な演出 */
   box-shadow: 
@@ -2412,7 +2414,7 @@ SURF_END SeasonTextColor */
 }
 
 /* 
- * フッターブランドエリア - Shukaのブランド情報とサイト概要を表示
+ * フッターブランドエリア - Shūkaのブランド情報とサイト概要を表示
  * 
  * 情報設計:
  * - 最大幅制限で読みやすいライン長を維持
@@ -2437,7 +2439,7 @@ SURF_END SeasonTextColor */
   margin-bottom: var(--space-4);  /* ロゴ下の適切な間隔 */
   font-size: var(--text-xl);     /* 目立つが大きすぎないサイズ */
   font-weight: 700;              /* セミボールドで存在感を演出 */
-  font-family: "Yuji Syuku", "Noto Serif JP", serif; /* 和風セリフフォント */
+  font-family: var(--ff-mincho); /* 和風セリフフォント */
   letter-spacing: 0.05em;        /* 文字間を広げて日本語の美しさを表現 */
 }
 
@@ -2452,7 +2454,7 @@ SURF_END SeasonTextColor */
   margin-bottom: var(--space-4);
   font-size: var(--text-lg);
   font-weight: 600;
-  font-family: "Yuji Syuku", "Noto Serif JP", serif;
+  font-family: var(--ff-mincho);
   letter-spacing: 0.05em;
 }
 
@@ -3464,7 +3466,7 @@ audio:focus-visible {
   
   .nav-menu a {
     border: 1px solid transparent;
-    font-family: "Yuji Syuku", "Noto Serif JP", serif;
+    font-family: var(--ff-mincho);
     letter-spacing: 0.05em;
   }
   
@@ -3709,7 +3711,7 @@ body.using-mouse :focus {
     display: block;
     padding: var(--space-4);
     text-align: center;
-    font-family: "Yuji Syuku", "Noto Serif JP", serif;
+    font-family: var(--ff-mincho);
     letter-spacing: 0.05em;
     border: 1px solid var(--border);
     border-radius: var(--radius);
@@ -4508,7 +4510,7 @@ body[data-season="winter"] .ripple:not(.elegant):not(.subtle) {
 /* ===== ボディ基本設定 - サイト全体のベーススタイル ===== */
 body {
     /* フォントシステム：システムフォント優先で可読性を確保 */
-    font-family: system-ui, -apple-system, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+    font-family: var(--ff-mincho);
     line-height: 1.6;                    /* 読みやすい行間設定 */
     color: var(--text);                   /* メインテキスト色を適用 */
     background-color: var(--background); /* メイン背景色を適用 */
@@ -4696,7 +4698,7 @@ body:not(.loaded) * {
 }
 
 .footer-logo {
-    font-family: "Yuji Syuku", "Noto Serif JP", serif;
+    font-family: var(--ff-mincho);
     font-size: 1.5rem;
     letter-spacing: .04em;
     margin-bottom: var(--space-4);
@@ -4707,7 +4709,7 @@ body:not(.loaded) * {
 }
 
 .footer-section-title {
-    font-family: "Yuji Syuku", "Noto Serif JP", serif;
+    font-family: var(--ff-mincho);
     font-size: 1.125rem;
     letter-spacing: .05em;
     color: currentColor;
