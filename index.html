@@ -52,13 +52,13 @@
     <!-- Preload critical resources: 初回描画に必要なアセットを先読みしてLCPを短縮 -->
     <link rel="preload" href="./img/秀歌-メインビジュアル.webp" as="image">
     <link rel="preload" href="./img/ローディング.webp" as="image">
-    <link rel="preload" href="./styles.css" as="style">
-    <!-- 上のpreloadと一致する実CSS読み込み。重要CSSは分割しすぎない -->
-    <link rel="stylesheet" href="./styles.css">
+    <!-- CSS変数とベーススタイルの読み込み -->
+    <link rel="preload" href="./css/variables.css" as="style">
+    <link rel="stylesheet" href="./css/variables.css">
+    <link rel="preload" href="./css/main.css" as="style">
+    <link rel="stylesheet" href="./css/main.css">
     <link rel="preload" href="./css/loader.css" as="style">
     <link rel="stylesheet" href="./css/loader.css">
-    <link rel="preload" href="./css/inline.css" as="style">
-    <link rel="stylesheet" href="./css/inline.css">
     <link rel="preload" href="./scripts.js" as="script">
     <!-- scripts.js は後段で defer で読み込み。preloadで先に取得だけ行う -->
 

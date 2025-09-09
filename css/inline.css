@@ -1,9 +1,0 @@
-#loader {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #fdfaf5 url('../img/ローディング.webp') center/cover no-repeat;
-    overflow: hidden;
-}
