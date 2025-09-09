@@ -68,7 +68,7 @@ if (window.location.hash && /(access_token|id_token|login)/.test(window.location
     Promise.resolve()
       .then(function(){ return loadScript(cdnBase + '/build/three.min.js'); }) // Three.js本体
       .then(function(){ return loadScript(cdnBase + '/examples/js/loaders/STLLoader.js'); }) // STLローダー
-      .then(function(){ return loadScript('./js/three-scene.js'); }) // カスタム3Dシーンファイル
+      .then(function(){ return loadScript('./assets/js/three-scene.js'); }) // カスタム3Dシーンファイル
       .then(function(){
         // 3Dシーン初期化関数が存在する場合は実行
         if (typeof window.initThreeJsScene === 'function') {

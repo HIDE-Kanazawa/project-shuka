@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2214%22 font-size=%2216%22>🌸</text></svg>">
-    <link rel="apple-touch-icon" href="./img/秀歌.webp">
+    <link rel="apple-touch-icon" href="./assets/images/秀歌.webp">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="AI音楽アーティスト「Shūka – 秀歌」の公式サイト。四季をテーマにしたAI×和楽器サウンドで、日本の情緒と現代音楽を融合した新しい音楽体験をお届けします。">
     <meta name="keywords" content="AI音楽, 和楽器, 四季, Shūka, 秀歌, 日本音楽, アーティスト">
@@ -25,7 +25,7 @@
     <!-- Open Graph -->
     <meta property="og:title" content="Shūka – 秀歌 | AI音楽アーティスト 公式サイト">
     <meta property="og:description" content="四季をテーマにしたAI×和楽器サウンドで新しい音楽体験を">
-    <meta property="og:image" content="https://project-shuka.com/img/%E7%A7%80%E6%AD%8C.webp?v=20250811-02">
+    <meta property="og:image" content="https://project-shuka.com/assets/images/%E7%A7%80%E6%AD%8C.webp?v=20250811-02">
     <meta property="og:image:type" content="image/webp">
     <meta property="og:image:width" content="1024">
     <meta property="og:image:height" content="1024">
@@ -50,17 +50,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap" rel="stylesheet">
     
     <!-- Preload critical resources: 初回描画に必要なアセットを先読みしてLCPを短縮 -->
-    <link rel="preload" href="./img/秀歌-メインビジュアル.webp" as="image">
-    <link rel="preload" href="./img/ローディング.webp" as="image">
+    <link rel="preload" href="./assets/images/秀歌-メインビジュアル.webp" as="image">
+    <link rel="preload" href="./assets/images/ローディング.webp" as="image">
     <!-- CSS変数とベーススタイルの読み込み -->
-    <link rel="preload" href="./css/variables.css" as="style">
-    <link rel="stylesheet" href="./css/variables.css">
-    <link rel="preload" href="./css/main.css" as="style">
-    <link rel="stylesheet" href="./css/main.css">
-    <link rel="preload" href="./css/loader.css" as="style">
-    <link rel="stylesheet" href="./css/loader.css">
-    <link rel="preload" href="./scripts.js" as="script">
-    <!-- scripts.js は後段で defer で読み込み。preloadで先に取得だけ行う -->
+    <link rel="preload" href="./assets/css/variables.css" as="style">
+    <link rel="stylesheet" href="./assets/css/variables.css">
+    <link rel="preload" href="./assets/css/main.css" as="style">
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="preload" href="./assets/css/loader.css" as="style">
+    <link rel="stylesheet" href="./assets/css/loader.css">
+    <link rel="preload" href="./assets/js/main.js" as="script">
+    <!-- main.js は後段で defer で読み込み。preloadで先に取得だけ行う -->
 
     
     <!-- DNS prefetch for external resources if any -->
@@ -75,10 +75,10 @@
     <!-- WINDSURF_END Fonts -->
     
     <!-- Resource hints for seasonal images -->
-    <link rel="prefetch" href="./img/秀歌-春.webp" as="image">
-    <link rel="prefetch" href="./img/秀歌-夏.webp" as="image">
-    <link rel="prefetch" href="./img/秀歌-秋.webp" as="image">
-    <link rel="prefetch" href="./img/秀歌-冬.webp" as="image">
+    <link rel="prefetch" href="./assets/images/秀歌-春.webp" as="image">
+    <link rel="prefetch" href="./assets/images/秀歌-夏.webp" as="image">
+    <link rel="prefetch" href="./assets/images/秀歌-秋.webp" as="image">
+    <link rel="prefetch" href="./assets/images/秀歌-冬.webp" as="image">
     <title>Shūka – 秀歌 | AI音楽アーティスト 公式サイト</title>    
 
 </head>
@@ -186,9 +186,9 @@
                     <div class="about-visual">
                         <picture>
                             <!-- WebP format for modern browsers -->
-                            <source srcset="./img/秀歌.webp" type="image/webp">
+                            <source srcset="./assets/images/秀歌.webp" type="image/webp">
                             <!-- Fallback to original format -->
-                            <img src="./img/秀歌.webp" alt="shuka – 秀歌のアーティスト画像" loading="lazy" decoding="async" fetchpriority="low" width="1024" height="1024" class="about-image">
+                            <img src="./assets/images/秀歌.webp" alt="shuka – 秀歌のアーティスト画像" loading="lazy" decoding="async" fetchpriority="low" width="1024" height="1024" class="about-image">
                         </picture>
                     </div>
                 </div>
@@ -247,10 +247,10 @@
     <!-- Load non-critical CSS -->
     
     <!-- Load JavaScript with defer for optimal performance -->
-    <script src="./js/inline.js" defer></script>
-    <script src="./js/effects.js" defer></script>
-    <script src="./js/main.js" defer></script>
+    <script src="./assets/js/inline.js" defer></script>
+    <script src="./assets/js/effects.js" defer></script>
+    <script src="./assets/js/main.js" defer></script>
     
-    <script defer src="./js/loader.js"></script>
+    <script defer src="./assets/js/loader.js"></script>
   </body>
   </html>

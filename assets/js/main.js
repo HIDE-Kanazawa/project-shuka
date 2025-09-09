@@ -25,21 +25,21 @@ const SEASON_DATA = {
     name: '春',
     title: '春の調べ',
     description: '桜咲く季節の温かな希望と新しい始まりを表現した楽曲集',
-    poster: './img/秀歌-春.webp',
+    poster: './assets/images/秀歌-春.webp',
     video: {
       webm: null,
-      mp4: './video/光のほうへ.mp4'
+      mp4: './assets/videos/光のほうへ.mp4'
     },
     tracks: [
       {
         title: '光のほうへ',
         description: '新緑の季節に響く希望のメロディー',
-        src: './audio/光のほうへ.mp3'
+        src: './assets/audio/光のほうへ.mp3'
       },
       {
         title: 'ひかりのあと',
         description: '春の陽だまりで感じる穏やかな時間',
-        src: './audio/ひかりのあと.mp3'
+        src: './assets/audio/ひかりのあと.mp3'
       }
     ]
   },
@@ -48,21 +48,21 @@ const SEASON_DATA = {
     name: '梅雨',
     title: '梅雨の音色',
     description: '雨の季節の静けさと潤いを感じる楽曲集',
-    poster: './img/秀歌-梅雨.webp',
+    poster: './assets/images/秀歌-梅雨.webp',
     video: {
       webm: null,
-      mp4: './video/夏庭園の歌.mp4'
+      mp4: './assets/videos/夏庭園の歌.mp4'
     },
     tracks: [
       {
         title: 'ひかりのあと',
         description: '春の陽だまりで感じる穏やかな時間',
-        src: './audio/ひかりのあと.mp3'
+        src: './assets/audio/ひかりのあと.mp3'
       },
       {
         title: '緑の中のひととき',
         description: '木陰で過ごす静寂な時間',
-        src: './audio/緑の中のひととき.mp3'
+        src: './assets/audio/緑の中のひととき.mp3'
       }
     ]
   },
@@ -71,21 +71,21 @@ const SEASON_DATA = {
     name: '夏',
     title: '夏の響き',
     description: '緑豊かな季節の生命力と情熱を込めた楽曲集',
-    poster: './img/秀歌-夏.webp',
+    poster: './assets/images/秀歌-夏.webp',
     video: {
       webm: null,
-      mp4: './video/夏庭園の歌.mp4'
+      mp4: './assets/videos/夏庭園の歌.mp4'
     },
     tracks: [
       {
         title: '夏庭園の詩',
         description: '緑陰の中で感じる夏の情景',
-        src: './audio/夏庭園の詩.mp3'
+        src: './assets/audio/夏庭園の詩.mp3'
       },
       {
         title: '緑の中のひととき',
         description: '木陰で過ごす静寂な時間',
-        src: './audio/緑の中のひととき.mp3'
+        src: './assets/audio/緑の中のひととき.mp3'
       }
     ]
   },
@@ -94,21 +94,21 @@ const SEASON_DATA = {
     name: '秋',
     title: '秋の詩',
     description: '色づく季節の深い情感と静寂を表現した楽曲集',
-    poster: './img/サムネイル_秋灯りの道_1080p.webp',
+    poster: './assets/images/サムネイル_秋灯りの道_1080p.webp',
     video: {
       webm: null,
-      mp4: './video/秋灯りの道.mp4'
+      mp4: './assets/videos/秋灯りの道.mp4'
     },
     tracks: [
       {
         title: '観月祭',
         description: '灯籠と満月が照らす秋夜の幻想',
-        src: './audio/観月祭.mp3'
+        src: './assets/audio/観月祭.mp3'
       },
       {
         title: '秋深し',
         description: '静かな夜に、季節の深まりと心の余韻を映す',
-        src: './audio/秋深し.mp3'
+        src: './assets/audio/秋深し.mp3'
       }
     ]
   },
@@ -117,21 +117,21 @@ const SEASON_DATA = {
     name: '冬',
     title: '冬の静寂',
     description: '雪景色の中の静けさと内省を込めた楽曲集',
-    poster: './img/秀歌-冬.webp',
+    poster: './assets/images/秀歌-冬.webp',
     video: {
       webm: null,
-      mp4: './video/白のなかで.mp4'
+      mp4: './assets/videos/白のなかで.mp4'
     },
     tracks: [
       {
         title: '白のなかで',
         description: '雪に包まれた世界の静寂',
-        src: './audio/白のなかで.mp3'
+        src: './assets/audio/白のなかで.mp3'
       },
       {
         title: '雪の参道',
         description: '雪に包まれた参道を歩む情景',
-        src: './audio/雪の参道.mp3'
+        src: './assets/audio/雪の参道.mp3'
       }
     ]
   }
@@ -355,7 +355,7 @@ if (typeof module !== 'undefined' && module.exports) {
 
 // 冬の季節ギャラリー動画を「白のなかで」に設定
 // 冬の動画ファイルパスを「白のなかで」に上書き設定
-SEASON_DATA.winter.video.mp4 = './video/白のなかで.mp4';
+SEASON_DATA.winter.video.mp4 = './assets/videos/白のなかで.mp4';
 
 /**
  * SeasonsGallery
@@ -503,11 +503,11 @@ class SeasonsGallery {
       } catch (e) {}
 
       const washiImages = [
-        './img/和紙-春.webp',
-        './img/和紙-夏.webp',
-        './img/和紙-秋.webp',
-        './img/和紙-冬.webp',
-        './img/和紙-梅雨.webp'
+        './assets/images/和紙-春.webp',
+        './assets/images/和紙-夏.webp',
+        './assets/images/和紙-秋.webp',
+        './assets/images/和紙-冬.webp',
+        './assets/images/和紙-梅雨.webp'
       ];
 
       // 画像は非同期デコード指定でメインスレッド負荷を軽減
@@ -1006,11 +1006,11 @@ class SeasonsGallery {
   updateSeasonBackground(season) {
     // スムーズな切り替えのため和紙背景をプリロード
     const washiImages = {
-      spring: './img/和紙-春.webp',
-      summer: './img/和紙-夏.webp', 
-      autumn: './img/和紙-秋.webp',
-      winter: './img/和紙-冬.webp',
-      tsuyu: './img/和紙-梅雨.webp'
+      spring: './assets/images/和紙-春.webp',
+      summer: './assets/images/和紙-夏.webp', 
+      autumn: './assets/images/和紙-秋.webp',
+      winter: './assets/images/和紙-冬.webp',
+      tsuyu: './assets/images/和紙-梅雨.webp'
     };
 
     const imageUrl = washiImages[season];
@@ -1068,11 +1068,11 @@ class SeasonsGallery {
     if (!aboutImage) return;
     
     const seasonImages = {
-      spring: './img/秀歌-春-btn.webp',
-      summer: './img/秀歌-夏-btn.webp',
-      autumn: './img/秀歌-秋-btn.webp',
-      winter: './img/秀歌-冬-btn.webp',
-      tsuyu: './img/秀歌-梅雨.webp'
+      spring: './assets/images/秀歌-春-btn.webp',
+      summer: './assets/images/秀歌-夏-btn.webp',
+      autumn: './assets/images/秀歌-秋-btn.webp',
+      winter: './assets/images/秀歌-冬-btn.webp',
+      tsuyu: './assets/images/秀歌-梅雨.webp'
     };
     
     const imageUrl = seasonImages[season];
@@ -1535,10 +1535,10 @@ class ShūkaApp {
   preloadOnHover() {
     // プリロード対象の季節画像リスト
     const seasonImages = [
-      './img/秀歌-春.webp',
-      './img/秀歌-夏.webp',
-      './img/秀歌-秋.webp',
-      './img/秀歌-冬.webp'
+      './assets/images/秀歌-春.webp',
+      './assets/images/秀歌-夏.webp',
+      './assets/images/秀歌-秋.webp',
+      './assets/images/秀歌-冬.webp'
     ];
     
     // 各季節画像をprefetchで先読み
@@ -2893,7 +2893,7 @@ function generateSocialLinks() {
       label: 'Suno アカウント', // AI音楽プラットフォーム
       name: 'Suno',
       icon: null, // SVGアイコンではなく画像アイコンを使用
-      image: './img/suno-small.webp', // Sunoロゴ画像
+      image: './assets/images/suno-small.webp', // Sunoロゴ画像
       enabled: true,
       class: 'suno'
     },

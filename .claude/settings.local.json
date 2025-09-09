@@ -15,7 +15,10 @@
       "Bash(ffmpeg:*)",
       "Bash(done)",
       "Bash(do original=\"$file/_optimized/\")",
-      "Bash(ffprobe:*)"
+      "Bash(ffprobe:*)",
+      "Bash(sed:*)",
+      "Bash(tree:*)",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []
