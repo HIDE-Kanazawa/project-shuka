@@ -14,7 +14,8 @@
       "Bash(do echo \"Optimizing $file...\")",
       "Bash(ffmpeg:*)",
       "Bash(done)",
-      "Bash(do original=\"$file/_optimized/\")"
+      "Bash(do original=\"$file/_optimized/\")",
+      "Bash(ffprobe:*)"
     ],
     "deny": [],
     "ask": []

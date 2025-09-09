@@ -97,7 +97,7 @@ const SEASON_DATA = {
     poster: './img/サムネイル_秋灯りの道_1080p.webp',
     video: {
       webm: null,
-      mp4: './video/秋灯りの道_web_standard.mp4'
+      mp4: './video/秋灯りの道.mp4'
     },
     tracks: [
       {
