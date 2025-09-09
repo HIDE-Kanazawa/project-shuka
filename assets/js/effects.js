@@ -267,16 +267,21 @@ class SakuraEffect {
    *              穏やかな回転、優雅な揺れ、変化に富んだ色彩などを統合した美しい演出
    */
   createPetal(randomY = false) {
+    // 自然な揺らぎを追加するため、位相・ゆらぎ量を持たせる
     return {
       x: Math.random() * this.canvas.width,
       y: randomY ? Math.random() * this.canvas.height : -20,
-      size: (6 + Math.random() * 11) * this.sizeMultiplier, // レスポンシブな花びらサイズ
-      speed: 0.3 + Math.random() * 0.7, // 穏やかな落下速度
+      // 少しだけ大きく（+約15〜20%）
+      size: (7 + Math.random() * 13) * this.sizeMultiplier, // レスポンシブな花びらサイズ
+      // 垂直速度をやや広めにして個体差を出す
+      speed: 0.35 + Math.random() * 0.8, // 穏やかな落下速度
       opacity: 0.7 + Math.random() * 0.3, // 視認性向上のための高い透明度
-      drift: (Math.random() - 0.5) * 0.5, // 水平方向のドリフト
+      // ドリフトの幅を少し増やして緩やかな蛇行を演出
+      drift: (Math.random() - 0.5) * 0.6, // 水平方向のドリフト
       rotationSpeed: (Math.random() - 0.5) * 2, // 穏やかな回転
       rotation: Math.random() * Math.PI * 2,
-      turbulence: Math.random() * 0.4, // 穏やかな乱気流
+      turbulence: 0.25 + Math.random() * 0.5, // 穏やかな乱気流（0.25〜0.75）
+      phase: Math.random() * Math.PI * 2, // 個体ごとの位相
       petalType: Math.floor(Math.random() * 3), // 異なる花びらの形
       color: this.getSakuraColor()
     };
@@ -330,10 +335,13 @@ class SakuraEffect {
       
       ctx.restore();
 
-      // 花びらの移動（他の降下物と同じシンプルな動作）
-      petal.x += this.wind + petal.drift;
-      petal.y += petal.speed;
-      petal.rotation += petal.rotationSpeed;
+      // 花びらの移動（自然な揺らぎを加える）
+      // ゆっくりとした左右の揺れ + わずかな上下のゆらぎ + 穏やかな回転
+      const tSec = now / 1000;
+      const sway = Math.sin(tSec * (0.8 + petal.turbulence) + petal.phase) * (0.6 + petal.turbulence * 1.4);
+      petal.x += this.wind + petal.drift + sway * 0.6;
+      petal.y += petal.speed + Math.cos(tSec * 0.9 + petal.phase) * 0.15;
+      petal.rotation += petal.rotationSpeed * 0.015 + Math.sin(tSec * 0.6 + petal.phase) * 0.002;
 
       // 画面外に出たら上端から再生成
       if (petal.y > this.canvas.height + 50 || 
@@ -877,8 +885,9 @@ class AutumnLeavesEffect {
 
     // 落ち葉の初期化
     this.leaves = [];
-    // 画面幅に基づく落ち葉の密度（共有関数に置換）- 適度な密度で秋の情緒を表現
-    this.leafCount = computeDensity(window.innerWidth, 12);
+    // 画面幅に基づく落ち葉の密度（やや少なめに調整）
+    // factor を大きくして密度を下げ、上限も設けて過密を防止
+    this.leafCount = computeDensity(window.innerWidth, 18, 8, 40);
     for (let i = 0; i < this.leafCount; i++) {
       this.leaves.push(this.createLeaf(true));
     }
