@@ -12,28 +12,11 @@
  * ブラウザ間の差異を吸収し、統一されたベーススタイルを適用
  * ============================================================================= */
 
-/* ベース要素のスタイル設定 */
-body {
-  font-family: var(--ff-body);    /* 日本語最適化フォントファミリーを適用 */
-  margin: 0;                      /* ブラウザデフォルトマージンをリセット */
-  padding: 0;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+/* ベース要素のスタイル設定（重複定義を下部の body に統合） */
 
-/* 見出し要素のフォント統一 */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--ff-heading); /* 重厚感のある見出し用和風フォント適用 */
-  margin: 0;
-  line-height: 1.2;
-}
+/* 見出し要素のフォント統一は下部のタイポグラフィ節で定義 */
 
-/* リンクのデフォルトスタイル */
-a {
-  text-decoration: none;
-  color: inherit;
-}
+/* リンクのデフォルトスタイルは下部のリンクスタイルに集約 */
 
 /* =============================================================================
  * Three.js 3D演出用キャンバス設定
@@ -215,7 +198,6 @@ body[data-season="tsuyu"] .ripple {
   --accent-light: #f472b6;       /* ライトピンク */
   --accent-dark: #db2777;        /* ダークピンク */
   
-  
   /* ===== ニュートラルグレースケール ===== */
   --neutral-50: #f9fafb;         /* 極薄グレー（背景用） */
   --neutral-100: #f3f4f6;        /* 薄グレー（カード背景） */
@@ -228,7 +210,6 @@ body[data-season="tsuyu"] .ripple {
   --neutral-800: #1f2937;        /* 濃いダーク */
   --neutral-900: #111827;        /* 最深ダーク */
   
-  
   /* ===== セマンティックカラー（意味付けされた色） ===== */
   --background: #111827;         /* メイン背景色 */
   --surface: #1f2937;            /* カードやパネルの表面色 */
@@ -239,22 +220,7 @@ body[data-season="tsuyu"] .ripple {
   --shadow: rgba(0, 0, 0, 0.3);  /* 基本シャドウ */
   --shadow-lg: rgba(0, 0, 0, 0.4); /* 大きなシャドウ */
   
-  
-  /* ===== 季節アクセントカラー ===== */
-  --spring: #22c55e;             /* 春：新緑のグリーン */
-  --summer: #0ea5e9;             /* 夏：清涼なスカイブルー */
-  --autumn: #f97316;             /* 秋：紅葉のオレンジ */
-  --winter: #64748b;             /* 冬：雪空のグレー */
-  
-  
   /* ===== タイポグラフィシステム ===== */
-  /* クロスプラットフォーム対応のフォントファミリー定義 */
-  --font-sans: system-ui, -apple-system, "Segoe UI", "Roboto", "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif;
-  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-  --font-mono: ui-monospace, "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
-  --font-jp: "Noto Sans JP", "Yu Gothic", "游ゴシック", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
-  
-  
   /* ===== レスポンシブフォントサイズ（clamp関数使用） ===== */
   --text-xs: clamp(0.75rem, 0.7rem + 0.2vw, 0.875rem);     /* 最小テキスト */
   --text-sm: clamp(0.875rem, 0.8rem + 0.3vw, 1rem);        /* 小テキスト */
@@ -340,7 +306,7 @@ html {
   }
 }
 
-/* メインbody要素 - サイト全体のコンテナ */
+/* メインbody要素 - サイト全体のコンテナ（上部の重複定義から統合） */
 body {
   font-family: var(--ff-body);        /* 日本語最適化フォント適用 */
   font-size: var(--text-base);        /* レスポンシブベースフォントサイズ */
@@ -350,6 +316,10 @@ body {
   overflow-x: hidden;                 /* 横スクロール禁止 */
   min-height: 100dvh;                 /* ビューポートの最低高さを確保 */
   position: relative;                 /* 位置基準設定 */
+  margin: 0;                          /* ブラウザデフォルトマージンをリセット */
+  padding: 0;                         /* デフォルトパディング削除 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* ===== 季節対応和紙背景システム ===== */

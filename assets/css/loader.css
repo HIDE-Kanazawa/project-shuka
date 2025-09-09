@@ -16,8 +16,8 @@
   overflow: hidden;
   /* レイアウト上でも表示状態 */
   visibility: visible;
-  /* フェードアウト時の滑らかな遷移（不透明度と可視性） */
-  transition: opacity 0.8s ease, visibility 0.8s ease;
+  /* フェードアウト時の滑らかな遷移（不透明度と可視性） - インク演出(1s)と合わせる */
+  transition: opacity 1s ease, visibility 1s ease;
   /* GPU加速を促進 */
   will-change: opacity, visibility;
 }
@@ -43,8 +43,8 @@
   transform: scale(0);
   /* 初期状態は不透明 */
   opacity: 1;
-  /* 5秒かけて拡大し、終了状態を保持（forwards） */
-  animation: inkSpread 2.5s ease-out forwards;
+  /* 1秒かけて拡大し、終了状態を保持（forwards） */
+  animation: inkSpread 1s ease-out forwards;
   /* GPU加速を促進 */
   will-change: transform, opacity;
 }
