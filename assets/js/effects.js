@@ -18,6 +18,31 @@ function injectStyleOnce(id, cssText) {
   document.head.appendChild(styleEl);
 }
 
+// エフェクトのシングルトン管理ヘルパ
+// - 各エフェクトの enable/disable の重複ロジックを共通化
+function createEffectController(EffectClass, globalKey) {
+  let instance = null;
+  return {
+    enable() {
+      if (!instance) {
+        instance = new EffectClass();
+        // デバッグ/他モジュール参照用に window にも公開
+        window[globalKey] = instance;
+      } else if (instance.canvas) {
+        // 既存インスタンスの場合は再表示
+        instance.canvas.style.display = '';
+      }
+    },
+    disable() {
+      if (instance) {
+        instance.destroy();
+        instance = null;
+        window[globalKey] = null;
+      }
+    }
+  };
+}
+
 /**
  * 共有ユーティリティ（非破壊導入）
  * 現時点では既存クラスからは呼び出さず、フェーズ2以降で段階的に置換することを想定。
@@ -48,6 +73,22 @@ function createDeltaClock() {
     last = now;
     return { deltaSec, now };
   };
+}
+
+// フルスクリーン固定のキャンバス用CSSを生成（重複定義の削減・可読性向上）
+function makeFullScreenCanvasCSS(className, opacity) {
+  return `
+.${className} {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: ${opacity};
+}
+`;
 }
 
 // 風モデルの更新ヘルパ
@@ -88,10 +129,9 @@ class RainEffect {
     this.ctx = this.canvas.getContext('2d');
     document.body.appendChild(this.canvas);
     
-    // サイズ設定とリサイズ対応
-    this.resize();
-    this._onResize = this.resize.bind(this);
-    window.addEventListener('resize', this._onResize);
+    // キャンバスサイズを初期設定（以後リサイズしない）
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
 
     // 雨粒の初期化
     this.drops = []; // 雨粒オブジェクトの配列
@@ -112,13 +152,7 @@ class RainEffect {
     this.animate();
   }
 
-  /**
-   * キャンバスサイズのリサイズ処理
-   */
-  resize() {
-    this.canvas.width = window.innerWidth;
-    this.canvas.height = window.innerHeight;
-  }
+  // リサイズ処理は無効化（初期設定のみ）
 
   /**
    * 雨粒オブジェクトの生成
@@ -187,7 +221,6 @@ class RainEffect {
  * 
  * 機能:
  * - 舞い散る桜の花びらアニメーション
- * - 初期バースト機能（季節切り替え時の演出）
  * - 風の変化による自然な動き
  * - 春の季節感を演出するエレガントな密度
  */
@@ -202,10 +235,11 @@ class SakuraEffect {
     this.ctx = this.canvas.getContext('2d'); // 2D描画コンテキスト
     document.body.appendChild(this.canvas);
     
-    // サイズ設定とリサイズ対応
-    this.resize();
-    this._onResize = this.resize.bind(this);
-    window.addEventListener('resize', this._onResize); // リサイズ対応
+    // キャンバスサイズを初期設定（以後リサイズしない）
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+    // 初期倍率を一度だけ算出
+    this.sizeMultiplier = this.getSizeMultiplier();
 
     // 花びらの初期化
     this.petals = []; // 花びらオブジェクトの配列
@@ -224,17 +258,7 @@ class SakuraEffect {
     this.animate();
   }
 
-  /**
-   * キャンバスサイズのリサイズ処理 - ウィンドウサイズ変更への動的対応
-   * ブラウザのリサイズ時にキャンバスをウィンドウ全体に合わせ、花びらのサイズ倍率を再計算
-   * @description レスポンシブデザインに対応し、あらゆるデバイスで適切な桜の演出を保証。
-   *              スマートフォンから大画面まで、一貫した美しい春の花びらの演出
-   */
-  resize() {
-    this.canvas.width = window.innerWidth;
-    this.canvas.height = window.innerHeight;
-    this.sizeMultiplier = this.getSizeMultiplier();
-  }
+  // リサイズ処理は無効化（初期設定のみ）
 
   /**
    * デバイスサイズ倍率の計算 - 画面サイズに応じた適切なスケーリング
@@ -503,31 +527,10 @@ class SakuraEffect {
  * - 春の桜エフェクトの有効化/無効化
  * - 季節変更時のスムーズなエフェクト切り替え
  */
-let sakuraEffect;
-/**
- * 桜エフェクトを有効化
- */
-window.enableSakura = function() {
-  if (!sakuraEffect) {
-    // 新しい桜エフェクトインスタンスを作成
-    sakuraEffect = new SakuraEffect();
-    window.sakuraEffect = sakuraEffect; // グローバルアクセス用
-  } else {
-    // 既存インスタンスの表示を復元
-    sakuraEffect.canvas.style.display = '';
-  }
-};
-
-/**
- * 桜エフェクトを無効化してリソースを解放
- */
-window.disableSakura = function() {
-  if (sakuraEffect) {
-    sakuraEffect.destroy(); // インスタンスの適切な破棄処理
-    sakuraEffect = null;
-    window.sakuraEffect = null; // グローバル参照をクリア
-  }
-};
+// 桜エフェクトのコントローラを共通ヘルパで作成
+const sakuraController = createEffectController(SakuraEffect, 'sakuraEffect');
+window.enableSakura = () => sakuraController.enable();
+window.disableSakura = () => sakuraController.disable();
 
 /**
  * 桜エフェクト用CSSスタイルの追加
@@ -538,18 +541,7 @@ window.disableSakura = function() {
  * - 適切なz-indexとopacityによる美しい重ね表示
  */
 // 桜エフェクト用CSSの定義
-const sakuraCSS = `
-.sakura-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0.8;
-}
-`;
+const sakuraCSS = makeFullScreenCanvasCSS('sakura-canvas', 0.8);
 
 // CSSを動的にドキュメントヘッドに追加
 injectStyleOnce('sakura-effect-style', sakuraCSS);
@@ -562,45 +554,13 @@ injectStyleOnce('sakura-effect-style', sakuraCSS);
  * - 没入感のある雨のアニメーションと水しぶきエフェクト
  * - 日本の梅雨の情悩を表現する雨音と雰囲気
  */
-let rainEffect;
-/**
- * 雨エフェクトを有効化
- */
-window.enableRain = function() {
-  if (!rainEffect) {
-    // 新しい雨エフェクトインスタンスを作成
-    rainEffect = new RainEffect();
-    window.rainEffect = rainEffect; // グローバルアクセス用
-  } else {
-    // 既存インスタンスの表示を復元
-    rainEffect.canvas.style.display = '';
-  }
-};
-
-/**
- * 雨エフェクトを無効化してリソースを解放
- */
-window.disableRain = function() {
-  if (rainEffect) {
-    rainEffect.destroy(); // インスタンスの適切な破棄
-    rainEffect = null;
-    window.rainEffect = null; // グローバル参照をクリア
-  }
-};
+// 雨エフェクトのコントローラ
+const rainController = createEffectController(RainEffect, 'rainEffect');
+window.enableRain = () => rainController.enable();
+window.disableRain = () => rainController.disable();
 
 // 雨エフェクト用CSSの追加
-const rainCSS = `
-.rain-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0.6;
-}
-`;
+const rainCSS = makeFullScreenCanvasCSS('rain-canvas', 0.6);
 
 injectStyleOnce('rain-effect-style', rainCSS);
 
@@ -624,11 +584,10 @@ class SnowEffect {
     this.ctx = this.canvas.getContext('2d');
     document.body.appendChild(this.canvas);
 
-    // キャンバスサイズの設定
-    this.resize();
+    // キャンバスサイズを初期設定（以後リサイズしない）
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
     this.sizeMultiplier = this.getSizeMultiplier();
-    this._onResize = this.resize.bind(this);
-    window.addEventListener('resize', this._onResize);
 
     // 雪片の初期化
     this.flakes = [];
@@ -649,17 +608,7 @@ class SnowEffect {
     if (this._running) requestAnimationFrame(this.animate);
   }
 
-  /**
-   * キャンバスサイズのリサイズ処理 - ウィンドウサイズ変更への動的対応
-   * ブラウザのリサイズ時にキャンバスをウィンドウ全体に合わせ、雪片のサイズ倍率を再計算
-   * @description レスポンシブデザインに対応し、あらゆるデバイスで適切な雪の演出を保証。
-   *              スマートフォンから大画面まで、一貫した美しい冬の雪景の演出
-   */
-  resize() {
-    this.canvas.width = window.innerWidth;
-    this.canvas.height = window.innerHeight;
-    this.sizeMultiplier = this.getSizeMultiplier();
-  }
+  // リサイズ処理は無効化（初期設定のみ）
 
   /**
    * デバイスサイズ倍率の計算 - 画面サイズに応じた適切なスケーリング
@@ -809,49 +758,17 @@ class SnowEffect {
  * - インスタンスの適切な管理とメモリリーク防止
  * - 季節変更時のスムーズなエフェクト切り替え
  */
-let snowEffect;
-/**
- * 雪エフェクトを有効化
- */
-window.enableSnow = function() {
-  if (!snowEffect) {
-    // 新しい雪エフェクトインスタンスを作成
-    snowEffect = new SnowEffect();
-    window.snowEffect = snowEffect; // グローバルアクセス用
-  } else {
-    // 既存インスタンスの表示を復元
-    snowEffect.canvas.style.display = '';
-  }
-};
-
-/**
- * 雪エフェクトを無効化してリソースを解放
- */
-window.disableSnow = function() {
-  if (snowEffect) {
-    snowEffect.destroy(); // インスタンスの破棄
-    snowEffect = null; // インスタンスを破棄
-    window.snowEffect = null; // グローバル参照もクリア
-  }
-};
+// 雪エフェクトのコントローラ
+const snowController = createEffectController(SnowEffect, 'snowEffect');
+window.enableSnow = () => snowController.enable();
+window.disableSnow = () => snowController.disable();
 
 /**
  * 雪エフェクト用CSSの動的注入
  * 雪のキャンバスのスタイルを動的に設定し、全画面に美しい雪の演出を提供
  * @description 固定位置でポインターイベントを無効化し、適切な透明度で冬の雪を表現
  */
-const snowCSS = `
-.snow-canvas {
-  position: fixed;     /* 画面全体に固定 */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none; /* マウスイベントを通す */
-  z-index: 1;          /* 背景の上、コンテンツの下 */
-  opacity: 0.8;        /* 雪らしい穏やかな透明度 */
-}
-`;
+const snowCSS = makeFullScreenCanvasCSS('snow-canvas', 0.8);
 
 // CSSスタイルの動的注入
 injectStyleOnce('snow-effect-style', snowCSS);
@@ -877,11 +794,10 @@ class AutumnLeavesEffect {
     this.ctx = this.canvas.getContext('2d');
     document.body.appendChild(this.canvas);
 
-    // キャンバスサイズの設定
-    this.resize();
+    // キャンバスサイズを初期設定（以後リサイズしない）
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
     this.sizeMultiplier = this.getSizeMultiplier();
-    this._onResize = this.resize.bind(this);
-    window.addEventListener('resize', this._onResize);
 
     // 落ち葉の初期化
     this.leaves = [];
@@ -903,17 +819,7 @@ class AutumnLeavesEffect {
     requestAnimationFrame(this.animate);
   }
 
-  /**
-   * キャンバスサイズのリサイズ処理 - ウィンドウサイズ変更への動的対応
-   * ブラウザのリサイズ時にキャンバスをウィンドウ全体に合わせ、落ち葉のサイズ倍率を再計算
-   * @description レスポンシブデザインに対応し、あらゆるデバイスで適切な秋の紅葉演出を保証。
-   *              スマートフォンから大画面まで、一貫した美しい秋の情緒ある演出
-   */
-  resize() {
-    this.canvas.width = window.innerWidth;
-    this.canvas.height = window.innerHeight;
-    this.sizeMultiplier = this.getSizeMultiplier();
-  }
+  // リサイズ処理は無効化（初期設定のみ）
 
   /**
    * デバイスサイズ倍率の計算 - 画面サイズに応じた適切な落ち葉スケーリング
@@ -943,7 +849,7 @@ class AutumnLeavesEffect {
       x: Math.random() * this.canvas.width,
       y: randomY ? Math.random() * this.canvas.height : -50,
       type: type, // 葉の種類（もみじまたはイチョウ）
-      size: (8 + Math.random() * 16) * this.sizeMultiplier, // レスポンシブな落ち葉サイズ
+      size: (7 + Math.random() * 10) * this.sizeMultiplier, // レスポンシブな落ち葉サイズ（少しだけ小さく）
       speed: 0.8 + Math.random() * 1.2, // 自然な落下速度
       opacity: 0.6 + Math.random() * 0.4, // 十分な視認性
       drift: Math.random() * 1 - 0.5, // 左右への漂い動作
@@ -1087,25 +993,30 @@ class AutumnLeavesEffect {
    *              日本の秋の黄金色の美しさを表現する黄葉のシンボル
    */
   drawGinkgoLeaf(ctx, cx, cy, size) {
-    const scale = size / 20;
+    const s = size / 22; // 扇のスケール基準
     
+    // 扇形（外周）: 横幅をさらに広げ、上辺フラット＋わずかなスカラップで扇らしさを明確化
     ctx.beginPath();
-
-    // Soft fan-shaped ginkgo leaf
-    ctx.moveTo(cx, cy + 8 * scale);
-    ctx.quadraticCurveTo(cx - 8 * scale, cy + 6 * scale, cx - 8 * scale, cy);
-    ctx.quadraticCurveTo(cx - 8 * scale, cy - 6 * scale, cx, cy - 8 * scale);
-    ctx.quadraticCurveTo(cx + 8 * scale, cy - 6 * scale, cx + 8 * scale, cy);
-    ctx.quadraticCurveTo(cx + 8 * scale, cy + 6 * scale, cx, cy + 8 * scale);
+    ctx.moveTo(cx, cy + 6.2 * s); // 下端
+    // 左側の広がり
+    ctx.quadraticCurveTo(cx - 9 * s,  cy + 4.5 * s, cx - 13 * s, cy + 0.6 * s);
+    ctx.quadraticCurveTo(cx - 14 * s, cy - 1.8 * s, cx - 8 * s,  cy - 5.6 * s);
+    // 上辺左の軽いスカラップ → フラット → 右スカラップ
+    ctx.quadraticCurveTo(cx - 4 * s,  cy - 6.6 * s, cx - 2 * s,  cy - 6.6 * s);
+    ctx.lineTo(cx + 2 * s,  cy - 6.6 * s);
+    ctx.quadraticCurveTo(cx + 4 * s,  cy - 6.4 * s, cx + 8 * s,  cy - 5.6 * s);
+    // 右側の広がり
+    ctx.quadraticCurveTo(cx + 14 * s, cy - 1.8 * s, cx + 13 * s, cy + 0.6 * s);
+    ctx.quadraticCurveTo(cx + 9 * s,  cy + 4.5 * s, cx,        cy + 6.2 * s);
     ctx.closePath();
     ctx.fill();
 
-    // Characteristic notch at the center
+    // 中央の切れ込み（destination-outでV字を作る）- 少し深め＆角度をつける
     ctx.globalCompositeOperation = 'destination-out';
     ctx.beginPath();
-    ctx.moveTo(cx, cy);
-    ctx.quadraticCurveTo(cx - 2 * scale, cy - 2 * scale, cx, cy - 4 * scale);
-    ctx.quadraticCurveTo(cx + 2 * scale, cy - 2 * scale, cx, cy);
+    ctx.moveTo(cx, cy - 0.3 * s);
+    ctx.quadraticCurveTo(cx - 3.4 * s, cy - 3.9 * s, cx, cy - 6.9 * s);
+    ctx.quadraticCurveTo(cx + 3.4 * s, cy - 3.9 * s, cx, cy - 0.3 * s);
     ctx.closePath();
     ctx.fill();
     ctx.globalCompositeOperation = 'source-over';
