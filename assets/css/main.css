@@ -673,6 +673,7 @@ a:focus {
   gap: 1rem;                   /* アイコン間の適切なスペーシング */
   justify-content: center;     /* 中央揃えで視覚的バランス確保 */
   margin-top: 1.5rem;          /* 上部コンテンツとの適切な分離 */
+  flex-wrap: wrap;             /* 画面幅が狭い場合に折り返して表示 */
 }
 
 /* 
@@ -684,14 +685,56 @@ a:focus {
  * - スムーズなトランジションで上品な操作感
  */
 .social-links a {
-  font-size: 1.8rem;           /* 視認性の高い大きなアイコンサイズ */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;                 /* タップ領域を拡大（モバイル親和性） */
+  height: 48px;
+  border-radius: 12px;         /* 角丸をやや大きく */
+  font-size: 20px;             /* アイコンサイズをわずかに拡大 */
   color: var(--accent);        /* テーマ統一のアクセントカラー */
-  transition: opacity 0.3s;    /* 滑らかな透明度変化アニメーション */
+  transition: background var(--transition-fast),
+              transform var(--transition-fast),
+              box-shadow var(--transition-fast),
+              opacity var(--transition-fast);
+  background: rgba(255, 255, 255, 0.04); /* 半透明のガラス風背景 */
+  border: 1px solid rgba(255, 255, 255, 0.12); /* 薄い枠線で視認性UP */
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05),
+              0 4px 14px rgba(0,0,0,0.35);       /* 立体感 */
+  backdrop-filter: blur(6px);  /* グラス感の演出（対応環境） */
 }
 
 /* ホバー時の透明度変化で操作感をフィードバック */
 .social-links a:hover {
-  opacity: 0.6;                /* ホバー時に透明度を下げて反応を示す */
+  opacity: 1;                  /* コントラストを保つ */
+  transform: translateY(-2px); /* 浮き上がりを明確に */
+  background: rgba(255, 255, 255, 0.08); /* 少し明るく */
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06),
+              0 8px 22px rgba(0,0,0,0.45);
+}
+
+/* フォーカスリング（キーボード操作向け） */
+.social-links a:focus-visible {
+  outline: 3px solid color-mix(in oklab, var(--primary) 70%, white 30%);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px rgba(99, 102, 241, 0.2),
+              0 10px 24px rgba(0,0,0,0.5);
+}
+
+/* クリック時の押し込み表現 */
+.social-links a:active {
+  transform: translateY(0);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.35),
+              0 2px 8px rgba(0,0,0,0.3);
+}
+
+/* アイコン（SVG/画像）の視認性向上 */
+.social-links a svg,
+.social-links a img {
+  display: block;
+  filter: drop-shadow(0 1px 0 rgba(0,0,0,0.4))
+          drop-shadow(0 4px 8px rgba(0,0,0,0.25));
 }
 
 /* 
@@ -706,6 +749,13 @@ a:focus {
   pointer-events: none;        /* クリック・タッチ操作を無効化 */
   filter: grayscale(100%);     /* グレースケール化で非アクティブを表現 */
   opacity: 0.5;                /* 透明度を下げて無効状態を視覚化 */
+}
+
+/* モーション削減設定に配慮 */
+@media (prefers-reduced-motion: reduce) {
+  .social-links a {
+    transition: none;
+  }
 }
 
 /* 
@@ -2467,23 +2517,21 @@ SURF_END SeasonTextColor */
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: transparent;
   color: var(--neutral-200);
   text-decoration: none;
-  transition: all var(--transition-normal);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
+  border: none;
 }
 
 .footer-social .social-link:hover,
 .footer-social .social-link:focus {
-  transform: translateY(-2px);
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.06);
+  opacity: 0.8;
 }
 
 .footer-social .social-icon {
@@ -4719,21 +4767,21 @@ body:not(.loaded) * {
 }
 
 .footer-social .social-link {
-    width: 44px;
-    height: 44px;
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
-    border: 1px solid currentColor;
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(6px);
-    transition: transform 0.2s ease-in-out, color 0.2s ease-in-out, background 0.2s ease-in-out;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    transition: all 0.2s ease;
 }
 
 .footer-social .social-link:hover {
-    transform: translateY(-2px);
-    background: rgba(255, 255, 255, 0.7);
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.06);
+    opacity: 0.8;
 }
 
 .footer a {

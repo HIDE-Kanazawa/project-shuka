@@ -18,7 +18,8 @@
       "Bash(ffprobe:*)",
       "Bash(sed:*)",
       "Bash(tree:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Read(//var/folders/mf/857mvkr90pngs73rrb_860z00000gn/T/TemporaryItems/NSIRD_screencaptureui_Qh0Jj7/**)"
     ],
     "deny": [],
     "ask": []

@@ -1,4 +1,28 @@
 /**
+ * Shūka アプリケーション グローバルネームスペース
+ * 
+ * 目的:
+ * - すべてのグローバル変数と機能を統一されたネームスペース下に整理
+ * - window オブジェクトの汚染を防止
+ * - モジュール間の依存関係を明確化
+ */
+window.ShukaApp = window.ShukaApp || {
+  // コア機能
+  gallery: null,
+  navigation: null,
+  effects: null,
+  
+  // ユーティリティ関数
+  utils: {},
+  
+  // 設定とデータ
+  data: {},
+  
+  // イベントハンドラー
+  handlers: {}
+};
+
+/**
  * 季節データ設定
  * 四季ごとの楽曲・動画・画像データを一元管理するオブジェクト
  *
@@ -19,7 +43,7 @@
  * - video: 季節の動画ファイル
  * - tracks: その季節に属する楽曲の配列
  */
-const SEASON_DATA = {
+ShukaApp.data.SEASON_DATA = {
   spring: {
     icon: '🌸',
     name: '春',
@@ -320,7 +344,7 @@ class Navigation {
  * - 外部からセクションにスクロールする際に使用
  * - ヘッダーの高さを考慮したスムーズスクロール
  */
-window.scrollToSection = function(sectionId) {
+ShukaApp.utils.scrollToSection = function(sectionId) {
   const targetElement = document.getElementById(sectionId);
   const header = document.getElementById('header');
   
@@ -355,7 +379,7 @@ if (typeof module !== 'undefined' && module.exports) {
 
 // 冬の季節ギャラリー動画を「白のなかで」に設定
 // 冬の動画ファイルパスを「白のなかで」に上書き設定
-SEASON_DATA.winter.video.mp4 = './assets/videos/白のなかで.mp4';
+ShukaApp.data.SEASON_DATA.winter.video.mp4 = './assets/videos/白のなかで.mp4';
 
 /**
  * SeasonsGallery
@@ -948,8 +972,7 @@ class SeasonsGallery {
     if (!video || video.dataset.loaded === 'true') {
       // 既に読み込み済みで自動再生が要求されている場合は即座に再生
       if (autoPlay && video && video.paused) {
-        video.play().catch(error => {
-          console.error('Video play failed:', error);
+        video.play().catch(() => {
         });
       }
       return;
@@ -973,7 +996,6 @@ class SeasonsGallery {
     // 自動再生が要求されている場合は再生開始
     if (autoPlay) {
       video.play().catch(error => {
-        console.error('Video play failed:', error);
       });
     }
   }
@@ -1197,7 +1219,6 @@ class SeasonsGallery {
     
     // 有効な動画要素かどうかを確認
     if (!video || !video.tagName || video.tagName.toLowerCase() !== 'video') {
-      console.warn('handleVideoClick called without valid video element');
       return;
     }
     
@@ -1212,12 +1233,10 @@ class SeasonsGallery {
       // 読み込み済み動画の再生/一時停止切り替え
       if (video.paused) {
         // 動画再生開始
-        video.play().catch(error => {
-          console.error('Video play failed:', error);
+        video.play().catch(() => {
         });
       } else {
         // 動画一時停止
-        console.log('Pausing video...');
         video.pause();
       }
     }
@@ -1295,12 +1314,13 @@ class SeasonsGallery {
  * 
  * @param {string} season - 切り替え先の季節
  */
-function switchSeason(season) {
+ShukaApp.handlers.switchSeason = function(season) {
   if (window.seasonsGallery && typeof window.seasonsGallery.switchToSeason === 'function') {
     window.seasonsGallery.switchToSeason(season);
   }
 }
-window.switchSeason = switchSeason;
+// 後方互換性のための従来のグローバル参照を維持
+window.switchSeason = ShukaApp.handlers.switchSeason;
 
 /**
  * 季節セレクタの初期化
@@ -1310,7 +1330,7 @@ window.switchSeason = switchSeason;
  * - アクティブ状態の更新メソッド追加
  * - アクセシビリティ対応（aria-checked）
  */
-function initSeasonSelector() {
+ShukaApp.utils.initSeasonSelector = function() {
   const selector = document.getElementById('season-selector');
   if (!selector)
     return;
@@ -1340,7 +1360,8 @@ function initSeasonSelector() {
       window.switchSeason(season);
   });
 }
-window.initSeasonSelector = initSeasonSelector;
+// 後方互換性のための従来のグローバル参照を維持
+window.initSeasonSelector = ShukaApp.utils.initSeasonSelector;
 
 /**
  * モジュールシステム対応のエクスポート処理
@@ -1354,6 +1375,9 @@ if (typeof module !== 'undefined' && module.exports) {
   module.exports = SeasonsGallery;
 }
 // ブラウザ環境でのグローバル変数設定
+// SeasonsGallery クラスをネームスペースに追加
+ShukaApp.SeasonsGallery = SeasonsGallery;
+// 後方互換性のための従来のグローバル参照を維持
 window.SeasonsGallery = SeasonsGallery;
 /**
  * Main JavaScript Module
@@ -1752,7 +1776,8 @@ class ShūkaApp {
  * - グローバルアクセス用にウィンドウオブジェクトに登録
  * - アプリケーションのメイン機能を自動起動
  */
-window.shukaApp = new ShūkaApp();
+// ShūkaApp インスタンスをネームスペースに追加
+ShukaApp.instance = new ShūkaApp();
 
 /**
  * デフォルト季節設定 - 梅雨
@@ -2637,7 +2662,10 @@ class WaterRippleEffect {
 let waterRipples;
 document.addEventListener('DOMContentLoaded', () => {
   waterRipples = new WaterRippleEffect();
-  window.waterRipples = waterRipples; // Make globally accessible
+  // ウォーターリップルエフェクトをネームスペースに追加
+  ShukaApp.effects = waterRipples;
+  // 後方互換性のための従来のグローバル参照を維持
+  window.waterRipples = waterRipples;
 });
 
 /**
@@ -2652,7 +2680,7 @@ document.addEventListener('DOMContentLoaded', () => {
 /**
  * 水面波紋エフェクトのオン/オフを切り替え
  */
-window.toggleRipples = function() {
+ShukaApp.utils.toggleRipples = function() {
   if (window.waterRipples) {
     window.waterRipples.toggle();
   }
@@ -2666,7 +2694,7 @@ window.toggleRipples = function() {
  * @param {string} color - 波紋の色（CSSカラー形式）
  * @param {number} size - 波紋のサイズ（ピクセル）
  */
-window.createCustomRipple = function(x, y, color, size) {
+ShukaApp.utils.createCustomRipple = function(x, y, color, size) {
   if (window.waterRipples) {
     window.waterRipples.createCustomRipple(x, y, color, size);
   }
@@ -2701,18 +2729,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // モバイルナビゲーションシステムの初期化
   if (typeof Navigation !== 'undefined') {
-    window.navigationInstance = new Navigation();
+    // ナビゲーションインスタンスをネームスペースに追加
+    ShukaApp.navigation = new Navigation();
   }
   
   // 動的コンテンツの生成（必ずDOM生成が先）
-  generateSocialLinks(); // SNSリンク一覧の動的生成
   generateSeasonGallery(); // 季節別ギャラリーのHTML生成
   
   // 画像読み込みエラーのハンドリング設定
   setupImageErrorHandling();
 
   // DOM要素生成完了後に季節ギャラリークラスを初期化
-  window.seasonsGallery = new SeasonsGallery();
+  // 季節ギャラリーインスタンスをネームスペースに追加
+  ShukaApp.gallery = new SeasonsGallery();
+  // 後方互換性のための従来のグローバル参照を維持
+  window.seasonsGallery = ShukaApp.gallery;
   if (typeof initSeasonSelector === 'function')
     initSeasonSelector(); // 季節セレクターコンポーネントの初期化
   
@@ -2738,7 +2769,7 @@ function initScrollButtons() {
   document.querySelectorAll('[data-scroll-target]').forEach(button => {
     button.addEventListener('click', (e) => {
       const target = e.currentTarget.getAttribute('data-scroll-target');
-      scrollToSection(target); // スムーススクロール関数を呼び出し
+      ShukaApp.utils.scrollToSection(target); // スムーススクロール関数を呼び出し
     });
   });
 }
@@ -2747,7 +2778,7 @@ function initScrollButtons() {
  * 季節ギャラリーナビゲーションとコンテンツの動的生成
  * 
  * 機能:
- * - SEASON_DATAから季節別ナビゲーションボタンを動的生成
+ * - ShukaApp.data.SEASON_DATAから季節別ナビゲーションボタンを動的生成
  * - 季節別コンテンツパネル（動画・音声・説明）を動的生成
  * - アクセシビリティ属性の適切な設定
  * - 遅延読み込みやフォールバック処理の統合
@@ -2769,8 +2800,8 @@ function generateSeasonGallery() {
   let contentHTML = '';
   let isFirst = true; // 最初のアイテムをアクティブ状態にするためのフラグ
 
-  // SEASON_DATA内の各季節データをループ処理
-  for (const [key, season] of Object.entries(SEASON_DATA)) {
+  // ShukaApp.data.SEASON_DATA内の各季節データをループ処理
+  for (const [key, season] of Object.entries(ShukaApp.data.SEASON_DATA)) {
     if (key === 'tsuyu') {
       // 梅雨シーズンはボタンとコンテンツを生成しない
       continue;
@@ -2850,87 +2881,6 @@ function generateSeasonGallery() {
   }
 }
 
-/**
- * ソーシャルメディアリンクの動的生成
- * 
- * 機能:
- * - サポートしているソーシャルメディアプラットフォームのリンク一覧を生成
- * - SVGアイコンや画像アイコンを適切に表示
- * - アクセシビリティラベルやaria属性の適切な設定
- * - リンクの有効/無効状態の制御
- * - 新しいタブでの安全なリンク開く設定
- * 
- * サポートプラットフォーム:
- * - YouTube：公式チャンネル
- * - Instagram：アーティストアカウント
- * - Suno AI：AI音楽生成プラットフォーム
- * - Spotify：ユーザープロフィール
- */
-function generateSocialLinks() {
-  const socialContainer = document.getElementById('social-links');
-  if (!socialContainer) return; // コンテナが存在しない場合は処理を終了
-  
-  // ソーシャルメディアリンクの定義データ
-  const socialLinks = [
-    {
-      url: 'https://www.youtube.com/@project-shuka',
-      label: 'YouTube チャンネル', // アクセシビリティラベル
-      name: 'YouTube',
-      icon: '<path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>' , // YouTube SVGアイコン
-      enabled: true,
-      class: 'youtube'
-    },
-    {
-      url: 'https://www.instagram.com/shuka_sounds?igsh=MXhrd29oeWJuNHB5OQ==',
-      label: 'Instagram アカウント',
-      name: 'Instagram',
-      icon: '<path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>' , // Instagram SVGアイコン
-      enabled: true,
-      class: 'instagram'
-    },
-    {
-      url: 'https://suno.com/@shuka_sounds',
-      label: 'Suno アカウント', // AI音楽プラットフォーム
-      name: 'Suno',
-      icon: null, // SVGアイコンではなく画像アイコンを使用
-      image: './assets/images/suno-small.webp', // Sunoロゴ画像
-      enabled: true,
-      class: 'suno'
-    },
-    {
-      url: 'https://open.spotify.com/user/31fn263kaqklxmvqkwyhixpt3oke',
-      label: 'Spotify プロフィール',
-      name: 'Spotify',
-      icon: '<path d="M12 0C5.371 0 0 5.371 0 12s5.371 12 12 12 12-5.371 12-12S18.629 0 12 0zm5.177 17.364a.748.748 0 0 1-1.029.246c-2.811-1.72-6.354-2.107-10.522-1.152a.75.75 0 0 1-.33-1.464c4.61-1.04 8.54-.602 11.64 1.255a.748.748 0 0 1 .241 1.115zm1.474-3.282a.935.935 0 0 1-1.284.307c-3.222-1.973-8.135-2.547-11.943-1.39a.937.937 0 0 1-.546-1.796c4.357-1.323 9.763-.676 13.45 1.62a.936.936 0 0 1 .323 1.259zm.127-3.354a1.122 1.122 0 0 1-1.541.369c-3.676-2.247-9.29-2.75-13.62-1.502a1.124 1.124 0 1 1-.642-2.154c4.924-1.468 11.126-.9 15.3 1.636a1.122 1.122 0 0 1 .503 1.651z"/>',
-      enabled: true,
-      class: 'spotify'
-    }
-  ];
-  
-  // 各ソーシャルメディアリンクのHTMLを生成
-  const socialHTML = socialLinks.map(link => {
-    // 有効なリンクの場合のhref等の属性設定
-    const attrs = link.enabled ?
-      `href="${link.url}" rel="noopener noreferrer" target="_blank"` : '';
-    const classes = `social-link${link.enabled ? '' : ' disabled'}${link.class ? ' ' + link.class : ''}`;
-    
-    // アイコンのHTML生成：画像またはSVGアイコン
-    const iconHTML = link.image ? 
-      `<img src="${link.image}" alt="${link.name}" class="social-icon-img" width="24" height="24" aria-hidden="true">` :
-      `<svg class="social-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-        ${link.icon}
-      </svg>`;
-    
-    // 完成したリンクHTMLを返す
-    return `
-    <a ${attrs} class="${classes}" aria-label="${link.label}">
-      ${iconHTML}
-    </a>`;
-  }).join('');
-  
-  // 生成したHTMLをコンテナに挿入
-  socialContainer.innerHTML = socialHTML;
-}
 
 
 /**
@@ -2948,7 +2898,6 @@ function handleImageError(img) {
   // 重複エラーハンドリングを防止（同じ画像に対して一度だけ処理）
   if (!img.dataset.errorHandled) {
     img.dataset.errorHandled = 'true'; // 処理済みフラグを設定
-    console.warn('Failed to load image:', img.src); // デバッグ用エラー情報出力
     
     // フォールバック処理：特定クラスの要素は完全に非表示
     if (img.classList.contains('about-image') || img.classList.contains('creator-avatar')) {
