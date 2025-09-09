@@ -57,6 +57,8 @@
     <link rel="stylesheet" href="./styles.css">
     <link rel="preload" href="./css/loader.css" as="style">
     <link rel="stylesheet" href="./css/loader.css">
+    <link rel="preload" href="./css/inline.css" as="style">
+    <link rel="stylesheet" href="./css/inline.css">
     <link rel="preload" href="./scripts.js" as="script">
     <!-- scripts.js は後段で defer で読み込み。preloadで先に取得だけ行う -->
 
@@ -77,36 +79,7 @@
     <link rel="prefetch" href="./img/秀歌-夏.webp" as="image">
     <link rel="prefetch" href="./img/秀歌-秋.webp" as="image">
     <link rel="prefetch" href="./img/秀歌-冬.webp" as="image">
-    <title>Shūka – 秀歌 | AI音楽アーティスト 公式サイト</title>
-    <script>
-        // Prevent automatic scrolling caused by login redirects containing a hash
-        if (window.location.hash && /(access_token|id_token|login)/.test(window.location.hash)) {
-            history.replaceState(null, '', window.location.pathname);
-            window.scrollTo(0, 0);
-        }
-    </script>
-    <script>
-        // One-time cleanup: unregister any existing service workers
-        (function(){
-          if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.getRegistrations()
-              .then(regs => Promise.all(regs.map(r => r.unregister())))
-              .catch(() => {});
-          }
-        })();
-    </script>
-
-    <style>
-        #loader {
-            position: fixed;
-            inset: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #fdfaf5 url('./img/ローディング.webp') center/cover no-repeat;
-            overflow: hidden;
-        }
-    </style>    
+    <title>Shūka – 秀歌 | AI音楽アーティスト 公式サイト</title>    
 
 </head>
 <body>
@@ -274,80 +247,9 @@
     <!-- Load non-critical CSS -->
     
     <!-- Load JavaScript with defer for optimal performance -->
-    <script src="./seasonal-effects.js" defer></script>
-    <script src="./scripts.js" defer></script>
-    
-    <!-- Conditional lazy loader for Three.js stack -->
-    <script>
-      (function(){
-        var loaded = false;
-        var cdnBase = 'https://cdn.jsdelivr.net/npm/three@0.130.0';
-        function shouldLoad(){
-          try {
-            if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
-            var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-            if (conn && conn.saveData) return false;
-            var canvas = document.createElement('canvas');
-            var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-            if (!gl) return false;
-          } catch (e) {}
-          return true;
-        }
-        function loadScript(src){
-          return new Promise(function(resolve, reject){
-            var s = document.createElement('script');
-            s.src = src;
-            s.async = true;
-            s.onload = function(){ resolve(); };
-            s.onerror = function(){ reject(new Error('Failed '+ src)); };
-            document.head.appendChild(s);
-          });
-        }
-        function cleanup(){
-          if (io) { try { io.disconnect(); } catch(e) {} io = null; }
-          window.removeEventListener('scroll', onUser, { passive: true });
-          window.removeEventListener('pointerdown', onUser, { passive: true });
-          window.removeEventListener('mousemove', onUser, { passive: true });
-        }
-        function tryLoad(){
-          if (loaded) return;
-          if (!shouldLoad()) { cleanup(); return; }
-          loaded = true;
-          Promise.resolve()
-            .then(function(){ return loadScript(cdnBase + '/build/three.min.js'); })
-            .then(function(){ return loadScript(cdnBase + '/examples/js/loaders/STLLoader.js'); })
-            .then(function(){ return loadScript('./three-lanterns.js'); })
-            .then(function(){
-              if (typeof window.initThreeJsScene === 'function') {
-                window.initThreeJsScene();
-              }
-            })
-            .catch(function(e){ console.error('Three.js stack load failed', e); })
-            .finally(cleanup);
-        }
-        function onUser(){ tryLoad(); }
-        var io = null;
-        if ('IntersectionObserver' in window){
-          var hero = document.getElementById('home') || document.body;
-          try {
-            io = new IntersectionObserver(function(entries){
-              entries.forEach(function(entry){
-                if (entry.isIntersecting){ tryLoad(); }
-              });
-            }, { rootMargin: '0px 0px -40% 0px', threshold: 0.1 });
-            if (hero) io.observe(hero);
-          } catch(e) {}
-        }
-        window.addEventListener('scroll', onUser, { once: true, passive: true });
-        window.addEventListener('pointerdown', onUser, { once: true, passive: true });
-        window.addEventListener('mousemove', onUser, { once: true, passive: true });
-        if ('requestIdleCallback' in window){
-          requestIdleCallback(function(){ tryLoad(); }, { timeout: 5000 });
-        } else {
-          setTimeout(function(){ tryLoad(); }, 4000);
-        }
-      })();
-    </script>
+    <script src="./js/inline.js" defer></script>
+    <script src="./js/effects.js" defer></script>
+    <script src="./js/main.js" defer></script>
     
     <script defer src="./js/loader.js"></script>
   </body>

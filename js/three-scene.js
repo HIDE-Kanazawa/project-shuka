@@ -25,7 +25,12 @@
  * SOFTWARE.
  */
 
-// Initialize Three.js Scene after DOM is loaded
+/**
+ * Three.js 3Dシーン初期化関数
+ * 鯉と提灯のアニメーションを含むWebGL背景エフェクトを生成
+ * prisoner849氏の作品をベースに和風テイストに改良
+ */
+// DOM読み込み後にThree.jsシーンを初期化
 function initThreeJsScene() {
   if (window.__threeSceneInitialized) return;
   window.__threeSceneInitialized = true;
