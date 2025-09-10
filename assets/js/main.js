@@ -52,18 +52,18 @@ ShukaApp.data.SEASON_DATA = {
     poster: './assets/images/秀歌-春.webp',
     video: {
       webm: null,
-      mp4: './assets/videos/光のほうへ.mp4'
+      mp4: './assets/videos/芽吹きの朝.mp4'
     },
     tracks: [
       {
-        title: '光のほうへ',
-        description: '新緑の季節に響く希望のメロディー',
-        src: './assets/audio/光のほうへ.mp3'
+        title: '芽吹きの朝',
+        description: '柔らかな光に包まれる春の朝',
+        src: './assets/audio/芽吹きの朝.mp3'
       },
       {
-        title: 'ひかりのあと',
-        description: '春の陽だまりで感じる穏やかな時間',
-        src: './assets/audio/ひかりのあと.mp3'
+        title: '花影の道',
+        description: '舞い散る桜と灯籠の明かりが導く春の参道',
+        src: './assets/audio/花影の道.mp3'
       }
     ]
   },
@@ -79,14 +79,14 @@ ShukaApp.data.SEASON_DATA = {
     },
     tracks: [
       {
-        title: 'ひかりのあと',
-        description: '春の陽だまりで感じる穏やかな時間',
-        src: './assets/audio/ひかりのあと.mp3'
+        title: '花影の道',
+        description: '舞い散る桜と灯籠の明かりが導く春の参道',
+        src: './assets/audio/花影の道.mp3'
       },
       {
-        title: '緑の中のひととき',
-        description: '木陰で過ごす静寂な時間',
-        src: './assets/audio/緑の中のひととき.mp3'
+        title: '涼風（すずかぜ）',
+        description: '青葉を渡り水辺を駆け抜ける夏の風',
+        src: './assets/audio/涼風（すずかぜ）.mp3'
       }
     ]
   },
@@ -102,14 +102,14 @@ ShukaApp.data.SEASON_DATA = {
     },
     tracks: [
       {
-        title: '夏庭園の詩',
-        description: '緑陰の中で感じる夏の情景',
-        src: './assets/audio/夏庭園の詩.mp3'
+        title: '蝉時雨',
+        description: '降りしきる蝉の声を夏の鼓動',
+        src: './assets/audio/蝉時雨.mp3'
       },
       {
-        title: '緑の中のひととき',
-        description: '木陰で過ごす静寂な時間',
-        src: './assets/audio/緑の中のひととき.mp3'
+        title: '涼風（すずかぜ）',
+        description: '青葉を渡り水辺を駆け抜ける夏の風',
+        src: './assets/audio/涼風（すずかぜ）.mp3'
       }
     ]
   },

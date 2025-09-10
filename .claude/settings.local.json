@@ -19,7 +19,13 @@
       "Bash(sed:*)",
       "Bash(tree:*)",
       "Bash(curl:*)",
-      "Read(//var/folders/mf/857mvkr90pngs73rrb_860z00000gn/T/TemporaryItems/NSIRD_screencaptureui_Qh0Jj7/**)"
+      "Read(//var/folders/mf/857mvkr90pngs73rrb_860z00000gn/T/TemporaryItems/NSIRD_screencaptureui_Qh0Jj7/**)",
+      "Bash(git fetch:*)",
+      "Bash(git push:*)",
+      "Bash(mkdir:*)",
+      "Bash(rm:*)",
+      "Bash(mv:*)",
+      "Read(//var/folders/mf/857mvkr90pngs73rrb_860z00000gn/T/TemporaryItems/NSIRD_screencaptureui_j6jDW4/**)"
     ],
     "deny": [],
     "ask": []

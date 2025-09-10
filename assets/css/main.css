@@ -462,7 +462,8 @@ a:focus {
 .section-subtitle {
   text-align: center;
   font-size: var(--text-lg);
-  color: var(--text-muted);
+  color: var(--text-secondary); /* より読みやすいテキスト色 */
+  font-weight: 500;             /* やや太めにして視認性向上 */
   margin-bottom: var(--space-12);
   max-width: 600px;
   margin-left: auto;
@@ -1071,14 +1072,16 @@ a:focus {
   /* 密な行間 - コンパクトで力強い表示 */
   line-height: 1.1;
   
-  /* 深い墨色 - 掛け軸の墨のような上品な黒 */
-  color: #2c2c54;
+  /* 白色 - 清潔で美しい白 */
+  color: #ffffff;
   
-  /* 金箔のような微細なシャドウ - しっとりとした上品さ */
+  /* 文字縁取りと微細なシャドウ - 視認性と上品さを両立 */
   text-shadow: 
-    1px 1px 3px rgba(212, 175, 55, 0.3),
-    0px 0px 6px rgba(255, 248, 220, 0.2),
-    2px 2px 8px rgba(139, 69, 19, 0.15);
+    1px 1px 0px rgba(0, 0, 0, 0.5),
+    -1px -1px 0px rgba(0, 0, 0, 0.5),
+    1px -1px 0px rgba(0, 0, 0, 0.5),
+    -1px 1px 0px rgba(0, 0, 0, 0.5),
+    2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 /* 
@@ -2086,13 +2089,16 @@ SURF_END SeasonTextColor */
   position: relative;
   z-index: 10;
   font-size: var(--text-xl);
-  font-weight: 700;
+  font-weight: 400;                /* taglineと同じ標準的な太さ */
   letter-spacing: 0.15em;
-  color: white;
+  color: rgba(255, 255, 255, 0.7); /* taglineと同じ薄い白色 */
+  line-height: 1.3;                /* taglineと同じ行間 */
   text-shadow: 
-    2px 2px 6px rgba(0, 0, 0, 0.9),
-    0 0 12px rgba(0, 0, 0, 0.8),
-    0 0 4px rgba(0, 0, 0, 1);
+    1px 1px 0px rgba(0, 0, 0, 0.5),
+    -1px -1px 0px rgba(0, 0, 0, 0.5),
+    1px -1px 0px rgba(0, 0, 0, 0.5),
+    -1px 1px 0px rgba(0, 0, 0, 0.5),
+    2px 2px 4px rgba(0, 0, 0, 0.3); /* taglineと同じ文字縁取り */
   background: rgba(0, 0, 0, 0.4);
   padding: var(--space-1) var(--space-2);
   border-radius: var(--radius);
@@ -2194,7 +2200,9 @@ SURF_END SeasonTextColor */
 .season-description {
   margin-bottom: var(--space-8); /* 説明文と楽曲リストの間隔 */
   font-size: var(--text-lg);    /* やや大きめで読みやすいサイズ */
-  color: var(--text-muted);     /* 控えめで品のあるテキスト色 */
+  color: var(--text-secondary); /* より読みやすいテキスト色 */
+  line-height: 1.6;            /* 行間を広げて可読性向上 */
+  font-weight: 400;            /* 適度な太さで読みやすく */
 }
 
 /* 
@@ -2290,9 +2298,23 @@ SURF_END SeasonTextColor */
  */
 .track-description {
   margin: 0;                    /* カード内での精密な配置制御 */
-  font-size: var(--text-sm);   /* 控えめで読みやすい小サイズ */
-  color: var(--text-muted);    /* 上品で控えめなテキスト色 */
+  font-size: var(--text-base); /* より見やすい標準サイズ */
+  color: var(--text-secondary); /* より読みやすいテキスト色 */
+  line-height: 1.5;            /* 行間を広げて可読性向上 */
+  font-weight: 400;            /* 適度な太さで読みやすく */
 }
+
+/* 冬の季節での楽曲テキストの視認性改善 */
+body[data-season="winter"] .track-title {
+  color: var(--text-primary);  /* より濃い色でコントラスト向上 */
+  font-weight: 600;            /* 太めにしてタイトルを強調 */
+}
+
+body[data-season="winter"] .track-description {
+  color: var(--text-primary);  /* より濃い色でコントラスト向上 */
+  font-weight: 500;            /* やや太めにして視認性向上 */
+}
+
 
 /* 
  * ===== 季節ギャラリー動画表示最適化 =====
