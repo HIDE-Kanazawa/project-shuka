@@ -49,6 +49,29 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap" rel="stylesheet">
     
+    <!-- Critical inline CSS: Show loader image from the very first paint to avoid white flash -->
+    <style id="critical-loader-css">
+      /* Minimal styles so #loader appears immediately even before external CSS loads */
+      #loader {
+        position: fixed;
+        inset: 0;
+        z-index: 100000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* Same background as assets/css/loader.css but inlined for first paint */
+        background: #fdfaf5 url('./assets/images/ローディング.webp') center / cover no-repeat;
+        overflow: hidden;
+        visibility: visible;
+      }
+      /* Keep the ink node non-intrusive until full CSS arrives */
+      #loader .ink {
+        position: absolute;
+        width: 1px; height: 1px; /* tiny placeholder to avoid layout shift */
+        opacity: 0;               /* real animation defined in loader.css */
+      }
+    </style>
+    
     <!-- Preload critical resources: 初回描画に必要なアセットを先読みしてLCPを短縮 -->
     <link rel="preload" href="./assets/images/秀歌-メインビジュアル.webp" as="image">
     <link rel="preload" href="./assets/images/ローディング.webp" as="image">
