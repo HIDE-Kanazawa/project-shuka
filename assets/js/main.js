@@ -49,7 +49,7 @@ ShukaApp.data.SEASON_DATA = {
     name: '春',
     title: '春の調べ',
     description: '桜咲く季節の温かな希望と新しい始まりを表現した楽曲集',
-    poster: './assets/images/秀歌-春.webp',
+    poster: './assets/images/portraits/秀歌-春.webp',
     video: {
       webm: null,
       mp4: './assets/videos/芽吹きの朝.mp4'
@@ -72,7 +72,7 @@ ShukaApp.data.SEASON_DATA = {
     name: '梅雨',
     title: '梅雨の音色',
     description: '雨の季節の静けさと潤いを感じる楽曲集',
-    poster: './assets/images/秀歌-梅雨.webp',
+    poster: './assets/images/portraits/秀歌-梅雨.webp',
     video: {
       webm: null,
       mp4: './assets/videos/夏庭園の歌.mp4'
@@ -95,7 +95,7 @@ ShukaApp.data.SEASON_DATA = {
     name: '夏',
     title: '夏の響き',
     description: '緑豊かな季節の生命力と情熱を込めた楽曲集',
-    poster: './assets/images/秀歌-夏.webp',
+    poster: './assets/images/portraits/秀歌-夏.webp',
     video: {
       webm: null,
       mp4: './assets/videos/夏庭園の歌.mp4'
@@ -118,7 +118,7 @@ ShukaApp.data.SEASON_DATA = {
     name: '秋',
     title: '秋の詩',
     description: '色づく季節の深い情感と静寂を表現した楽曲集',
-    poster: './assets/images/サムネイル_秋灯りの道_1080p.webp',
+    poster: './assets/images/posters/サムネイル_秋灯りの道_optimized.webp',
     video: {
       webm: null,
       mp4: './assets/videos/秋灯りの道.mp4'
@@ -141,7 +141,7 @@ ShukaApp.data.SEASON_DATA = {
     name: '冬',
     title: '冬の静寂',
     description: '雪景色の中の静けさと内省を込めた楽曲集',
-    poster: './assets/images/秀歌-冬.webp',
+    poster: './assets/images/portraits/秀歌-冬.webp',
     video: {
       webm: null,
       mp4: './assets/videos/白のなかで.mp4'
@@ -527,11 +527,11 @@ class SeasonsGallery {
       } catch (e) {}
 
       const washiImages = [
-        './assets/images/和紙-春.webp',
-        './assets/images/和紙-夏.webp',
-        './assets/images/和紙-秋.webp',
-        './assets/images/和紙-冬.webp',
-        './assets/images/和紙-梅雨.webp'
+        './assets/images/backgrounds/和紙-春.webp',
+        './assets/images/backgrounds/和紙-夏.webp',
+        './assets/images/backgrounds/和紙-秋.webp',
+        './assets/images/backgrounds/和紙-冬.webp',
+        './assets/images/backgrounds/和紙-梅雨.webp'
       ];
 
       // 画像は非同期デコード指定でメインスレッド負荷を軽減
@@ -1028,11 +1028,11 @@ class SeasonsGallery {
   updateSeasonBackground(season) {
     // スムーズな切り替えのため和紙背景をプリロード
     const washiImages = {
-      spring: './assets/images/和紙-春.webp',
-      summer: './assets/images/和紙-夏.webp', 
-      autumn: './assets/images/和紙-秋.webp',
-      winter: './assets/images/和紙-冬.webp',
-      tsuyu: './assets/images/和紙-梅雨.webp'
+      spring: './assets/images/backgrounds/和紙-春.webp',
+      summer: './assets/images/backgrounds/和紙-夏.webp', 
+      autumn: './assets/images/backgrounds/和紙-秋.webp',
+      winter: './assets/images/backgrounds/和紙-冬.webp',
+      tsuyu: './assets/images/backgrounds/和紙-梅雨.webp'
     };
 
     const imageUrl = washiImages[season];
@@ -1090,11 +1090,11 @@ class SeasonsGallery {
     if (!aboutImage) return;
     
     const seasonImages = {
-      spring: './assets/images/秀歌-春-btn.webp',
-      summer: './assets/images/秀歌-夏-btn.webp',
-      autumn: './assets/images/秀歌-秋-btn.webp',
-      winter: './assets/images/秀歌-冬-btn.webp',
-      tsuyu: './assets/images/秀歌-梅雨.webp'
+      spring: './assets/images/buttons/秀歌-春-btn.webp',
+      summer: './assets/images/buttons/秀歌-夏-btn.webp',
+      autumn: './assets/images/buttons/秀歌-秋-btn.webp',
+      winter: './assets/images/buttons/秀歌-冬-btn.webp',
+      tsuyu: './assets/images/portraits/秀歌-梅雨.webp'
     };
     
     const imageUrl = seasonImages[season];
@@ -1559,10 +1559,10 @@ class ShūkaApp {
   preloadOnHover() {
     // プリロード対象の季節画像リスト
     const seasonImages = [
-      './assets/images/秀歌-春.webp',
-      './assets/images/秀歌-夏.webp',
-      './assets/images/秀歌-秋.webp',
-      './assets/images/秀歌-冬.webp'
+      './assets/images/portraits/秀歌-春.webp',
+      './assets/images/portraits/秀歌-夏.webp',
+      './assets/images/portraits/秀歌-秋.webp',
+      './assets/images/portraits/秀歌-冬.webp'
     ];
     
     // 各季節画像をprefetchで先読み
