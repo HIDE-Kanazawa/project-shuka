@@ -11,7 +11,7 @@
   justify-content: center;
   align-items: center;
   /* 指定のローディング背景を使用 */
-  background: #fdfaf5 url('../images/ローディング.webp') center / cover no-repeat;
+  background: #fdfaf5 url('../images/ui/ローディング.webp') center / cover no-repeat;
   /* 拡大アニメなどで子要素がはみ出す部分はマスク */
   overflow: hidden;
   /* レイアウト上でも表示状態 */

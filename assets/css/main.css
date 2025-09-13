@@ -331,7 +331,7 @@ body::before {
   left: 0;
   right: 0;
   bottom: 0;                          /* 全画面をカバー */
-  background-image: url('../images/和紙-春.webp'); /* デフォルトは春テーマ */
+  background-image: url('../images/backgrounds/背景_春模様.webp'); /* デフォルトは春テーマ */
   background-size: cover;             /* 画面全体をカバー */
   background-position: center;        /* 中央配置 */
   background-repeat: no-repeat;       /* 繰り返しなし */
@@ -348,23 +348,23 @@ body::before {
 /* ===== 季節別和紙背景設定 ===== */
 /* 各季節に合わせた独自の和紙テクスチャを適用 */
 body[data-season="spring"]::before {
-  background-image: url('../images/和紙-春.webp'); /* 春：桜色の和紙 */
+  background-image: url('../images/backgrounds/背景_春模様.webp'); /* 春：桜色の和紙 */
 }
 
 body[data-season="summer"]::before {
-  background-image: url('../images/和紙-夏.webp'); /* 夏：緑色の和紙 */
+  background-image: url('../images/backgrounds/背景_夏模様.webp'); /* 夏：緑色の和紙 */
 }
 
 body[data-season="autumn"]::before {
-  background-image: url('../images/和紙-秋.webp'); /* 秋：紅葉色の和紙 */
+  background-image: url('../images/backgrounds/背景_秋模様.webp'); /* 秋：紅葉色の和紙 */
 }
 
 body[data-season="winter"]::before {
-  background-image: url('../images/和紙-冬.webp'); /* 冬：雪白の和紙 */
+  background-image: url('../images/backgrounds/背景_冬模様.webp'); /* 冬：雪白の和紙 */
 }
 
 body[data-season="tsuyu"]::before {
-  background-image: url('../images/和紙-梅雨.webp'); /* 梅雨：雨雲色の和紙 */
+  background-image: url('../images/backgrounds/和紙-梅雨.webp'); /* 梅雨：雨雲色の和紙 */
   opacity: 1;                         /* 梅雨時は特に鮮明に表示 */
 }
 
@@ -478,7 +478,7 @@ a:focus {
   top: 0;
   left: 0;
   right: 0;
-  background-image: url('../images/和紙_黒_optimized.webp');
+  background-image: url('../images/backgrounds/背景_黒和紙.webp');
   background-size: cover;
   background-repeat: repeat;
   backdrop-filter: blur(10px);
@@ -994,7 +994,7 @@ a:focus {
   background: linear-gradient(
     rgba(0, 0, 0, 0.4), 
     rgba(0, 0, 0, 0.4)
-  ), url('../images/秀歌-メインビジュアル.webp');
+  ), url('../images/portraits/秀歌-メインビジュアル.webp');
   
   /* 背景画像の完全カバレッジ - どの画面比でも美しく表示 */
   background-size: cover;
@@ -2051,22 +2051,22 @@ a:focus {
 
 /* 春の背景 - 新緑と清々しさを表現 */
 .season-btn[data-season="spring"] {
-  background-image: url('../images/秀歌-春-btn.webp');
+  background-image: url('../images/buttons/秀歌-春-btn.webp');
 }
 
 /* 夏の背景 - 太陽のエネルギーと生命力を表現 */
 .season-btn[data-season="summer"] {
-  background-image: url('../images/秀歌-夏-btn.webp');
+  background-image: url('../images/buttons/秀歌-夏-btn.webp');
 }
 
 /* 秋の背景 - 紅葉の温かみと成熟を表現 */
 .season-btn[data-season="autumn"] {
-  background-image: url('../images/秀歌-秋-btn.webp');
+  background-image: url('../images/buttons/秀歌-秋-btn.webp');
 }
 
 /* 冬の背景 - 雪の純粋さと静寂な美しさを表現 */
 .season-btn[data-season="winter"] {
-  background-image: url('../images/秀歌-冬-btn.webp');
+  background-image: url('../images/buttons/秀歌-冬-btn.webp');
 }
 
 .season-btn::before { opacity: 0.35; }
@@ -2472,7 +2472,7 @@ body[data-season="winter"] .track-description {
  * - サイト内ナビゲーションの補助手段
  */
 .footer {
-  background-image: url('../images/和紙_黒_optimized.webp'); /* 和風テクスチャ背景 */
+  background-image: url('../images/backgrounds/背景_黒和紙.webp'); /* 和風テクスチャ背景 */
   background-size: cover;             /* 背景イメージを全面にカバー */
   background-repeat: repeat;          /* パターンの繰り返しで統一感を演出 */
   color: var(--neutral-300);          /* 控えめで読みやすいテキスト色 */
@@ -4632,7 +4632,7 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    background-image: url('../images/和紙_黒_optimized.webp'); /* 和風背景紙 */
+    background-image: url('../images/backgrounds/背景_黒和紙.webp'); /* 和風背景紙 */
     background-size: cover;                       /* 背景を全体にカバー */
     background-repeat: repeat;                    /* 背景の繰り返し */
     backdrop-filter: blur(10px);                  /* 背景ブラー効果 */
@@ -4679,7 +4679,7 @@ body {
     height: 100vh;                      /* フルスクリーン高さ */
     min-height: 600px;                  /* 最低高さを保証 */
     /* メインビジュアルとオーバーレイを組み合わせ */
-    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../images/秀歌-メインビジュアル.webp');
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../images/portraits/秀歌-メインビジュアル.webp');
     background-size: cover;             /* 背景画像を全体にカバー */
     background-position: center top;    /* 上部中央に配置 */
     background-attachment: fixed;       /* 背景固定（パララックス効果） */
@@ -4765,7 +4765,7 @@ body:not(.loaded) * {
 
 /* ===== プロ和紙フッター 2025 ===== */
 .footer {
-    background-image: url('../images/和紙_黒_optimized.webp');
+    background-image: url('../images/backgrounds/背景_黒和紙.webp');
     background-size: cover;
     background-repeat: repeat;
     border-top: 3px double rgba(0,0,0,0.12);

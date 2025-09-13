@@ -52,7 +52,7 @@ ShukaApp.data.SEASON_DATA = {
     poster: './assets/images/portraits/秀歌-春.webp',
     video: {
       webm: null,
-      mp4: './assets/videos/芽吹きの朝.mp4'
+      mp4: './assets/videos/光のほうへ.mp4'
     },
     tracks: [
       {
@@ -118,7 +118,7 @@ ShukaApp.data.SEASON_DATA = {
     name: '秋',
     title: '秋の詩',
     description: '色づく季節の深い情感と静寂を表現した楽曲集',
-    poster: './assets/images/posters/サムネイル_秋灯りの道_optimized.webp',
+    poster: './assets/images/posters/秋灯りの道.webp',
     video: {
       webm: null,
       mp4: './assets/videos/秋灯りの道.mp4'
@@ -527,10 +527,10 @@ class SeasonsGallery {
       } catch (e) {}
 
       const washiImages = [
-        './assets/images/backgrounds/和紙-春.webp',
-        './assets/images/backgrounds/和紙-夏.webp',
-        './assets/images/backgrounds/和紙-秋.webp',
-        './assets/images/backgrounds/和紙-冬.webp',
+        './assets/images/backgrounds/背景_春模様.webp',
+        './assets/images/backgrounds/背景_夏模様.webp',
+        './assets/images/backgrounds/背景_秋模様.webp',
+        './assets/images/backgrounds/背景_冬模様.webp',
         './assets/images/backgrounds/和紙-梅雨.webp'
       ];
 
@@ -1028,10 +1028,10 @@ class SeasonsGallery {
   updateSeasonBackground(season) {
     // スムーズな切り替えのため和紙背景をプリロード
     const washiImages = {
-      spring: './assets/images/backgrounds/和紙-春.webp',
-      summer: './assets/images/backgrounds/和紙-夏.webp', 
-      autumn: './assets/images/backgrounds/和紙-秋.webp',
-      winter: './assets/images/backgrounds/和紙-冬.webp',
+      spring: './assets/images/backgrounds/背景_春模様.webp',
+      summer: './assets/images/backgrounds/背景_夏模様.webp', 
+      autumn: './assets/images/backgrounds/背景_秋模様.webp',
+      winter: './assets/images/backgrounds/背景_冬模様.webp',
       tsuyu: './assets/images/backgrounds/和紙-梅雨.webp'
     };
 

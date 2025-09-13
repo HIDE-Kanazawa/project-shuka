@@ -28,7 +28,13 @@
       "Read(//var/folders/mf/857mvkr90pngs73rrb_860z00000gn/T/TemporaryItems/NSIRD_screencaptureui_j6jDW4/**)",
       "Read(//var/folders/mf/857mvkr90pngs73rrb_860z00000gn/T/TemporaryItems/NSIRD_screencaptureui_4ivV3L/**)",
       "Read(//var/folders/mf/857mvkr90pngs73rrb_860z00000gn/T/TemporaryItems/NSIRD_screencaptureui_Ityibz/**)",
-      "Read(//var/folders/mf/857mvkr90pngs73rrb_860z00000gn/T/TemporaryItems/NSIRD_screencaptureui_3vuNQd/**)"
+      "Read(//var/folders/mf/857mvkr90pngs73rrb_860z00000gn/T/TemporaryItems/NSIRD_screencaptureui_3vuNQd/**)",
+      "Bash(do echo -n \"Testing $file: \")",
+      "Bash(xargs kill:*)",
+      "Bash(if [ -f \"$file\" ])",
+      "Bash(then echo \"✓ EXISTS\")",
+      "Bash(else echo \"✗ MISSING\")",
+      "Bash(fi)"
     ],
     "deny": [],
     "ask": []
