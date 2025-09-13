@@ -35,7 +35,10 @@
       "Bash(then echo \"✓ EXISTS\")",
       "Bash(else echo \"✗ MISSING\")",
       "Bash(fi)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Read(//var/folders/mf/857mvkr90pngs73rrb_860z00000gn/T/TemporaryItems/NSIRD_screencaptureui_BsEP8X/**)",
+      "Read(//var/folders/mf/857mvkr90pngs73rrb_860z00000gn/T/TemporaryItems/NSIRD_screencaptureui_zrwRVt/**)",
+      "Read(//var/folders/mf/857mvkr90pngs73rrb_860z00000gn/T/TemporaryItems/NSIRD_screencaptureui_hAmwYm/**)"
     ],
     "deny": [],
     "ask": []

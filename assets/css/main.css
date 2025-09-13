@@ -445,6 +445,10 @@ a:focus {
   text-align: center;
   margin-bottom: var(--space-8);
   position: relative;
+  text-shadow:
+    1px 1px 2px rgba(0, 0, 0, 0.1),
+    0 0 4px rgba(0, 0, 0, 0.05);
+  -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.1);
 }
 
 .section-title::after {
@@ -1782,25 +1786,25 @@ a:focus {
   /* 相対配置 - 絶対配置された子要素の基準点 */
   position: relative;
   
-  /* フレックスコンテナ - 内部要素の縦並びと中央配置 */
+  /* フレックスコンテナ - 内部要素の右下配置 */
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
+  align-items: flex-end;
   justify-content: flex-end;
   
   /* 内側パディング - テキストと縁の適切な間隔 */
   padding: var(--space-4);
   
-  /* 固定サイズ - 統一感あるカードサイズ */
-  width: 160px;
-  height: 200px;
+  /* 固定サイズ - 横長構図で統一感あるカードサイズ */
+  width: 240px;
+  height: 140px;
   
   /* 白文字 - 背景画像上での最適な可読性 */
   color: white;
   
   /* 背景画像の最適化設定 */
   background-size: cover;
-  background-position: center;
+  background-position: center top;
   background-repeat: no-repeat;
   
   /* 画像レンダリング最適化 - 鮮明で鮮やかな表示 */
@@ -2087,17 +2091,29 @@ SURF_END SeasonTextColor */
 }
 
 /* 季節ボタンのレスポンシブ調整 */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .season-nav {
-    gap: var(--space-2);
+    display: flex;
+    flex-direction: row;
+    gap: var(--space-3);
     padding: var(--space-2);
     justify-content: center;
+    flex-wrap: nowrap;
   }
-  
-  
+
   .season-btn {
-    width: 80px;
+    width: 200px;
     height: 120px;
+    padding: var(--space-3);
+    flex-shrink: 0;
+  }
+}
+
+/* タブレット専用調整 */
+@media (max-width: 768px) {
+  .season-btn {
+    width: 180px;
+    height: 100px;
     padding: var(--space-2);
   }
   
@@ -2111,8 +2127,8 @@ SURF_END SeasonTextColor */
 
 @media (max-width: 480px) {
   .season-btn {
-    width: 70px;
-    height: 100px;
+    width: 160px;
+    height: 90px;
     padding: var(--space-1);
   }
   
@@ -3849,15 +3865,27 @@ body.using-mouse :focus {
 }
 
 /* ===== ギャラリーレスポンシブ改善 ===== */
+@media (max-width: 1024px) {
+  .season-nav {
+    gap: var(--space-3);
+    margin-bottom: var(--space-12);
+    flex-wrap: nowrap;
+  }
+
+  .season-btn {
+    min-width: 200px;
+    padding: var(--space-3) var(--space-4);
+  }
+}
+
 @media (max-width: 768px) {
   .season-nav {
     gap: var(--space-2);
-    margin-bottom: var(--space-12);
   }
-  
+
   .season-btn {
-    min-width: 80px;
-    padding: var(--space-3) var(--space-4);
+    min-width: 180px;
+    padding: var(--space-2) var(--space-3);
   }
   
   .season-icon {
@@ -3876,15 +3904,21 @@ body.using-mouse :focus {
 
 @media (max-width: 480px) {
   .season-nav {
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     gap: var(--space-2);
     width: 100%;
+    flex-wrap: nowrap;
+    padding: 0 var(--space-4);
   }
-  
+
   .season-btn {
-    min-width: unset;
-    width: 100%;
-    padding: var(--space-3);
+    min-width: 70px;
+    width: calc((100% - 3 * var(--space-2)) / 4);
+    height: 70px;
+    padding: var(--space-2);
+    flex-shrink: 0;
   }
   
   .season-name {
@@ -4149,12 +4183,20 @@ body.using-mouse :focus {
   }
   
   .season-nav {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     gap: var(--space-1);
+    flex-wrap: nowrap;
+    padding: 0 var(--space-2);
   }
-  
+
   .season-btn {
-    padding: var(--space-2);
+    min-width: 60px;
+    width: calc((100% - 3 * var(--space-1)) / 4);
+    height: 60px;
+    padding: var(--space-1);
+    flex-shrink: 0;
   }
   
   .season-icon {
