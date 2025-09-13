@@ -796,8 +796,6 @@ class SeasonsGallery {
         panel.style.transform = '';
       }, 400);
 
-      // 子要素のアニメーション実行
-      this.animatePanelChildren(panel, true);
     }
 
     // スクリーンリーダー用の表示状態を更新
@@ -817,8 +815,6 @@ class SeasonsGallery {
    */
   hidePanel(panel, animate) {
     if (animate) {
-      // 子要素の退場アニメーション
-      this.animatePanelChildren(panel, false);
       panel.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
       panel.style.opacity = '0';
       panel.style.transform = 'scale(0.97)';
@@ -853,108 +849,8 @@ class SeasonsGallery {
    * @param {boolean} isEntering - true: 登場アニメーション, false: 退場アニメーション
    */
   animatePanelChildren(panel, isEntering) {
-    const videoElement = panel.querySelector('.season-visual');
-    const trackList = panel.querySelector('.season-tracks');
-    const seasonTitle = panel.querySelector('.season-title');
-    const seasonDesc = panel.querySelector('.season-description');
-
-    if (isEntering) {
-      // 動画要素の登場アニメーション（左からスライドイン）
-      if (videoElement) {
-        videoElement.style.opacity = '0';
-        videoElement.style.transform = 'translateX(-80px)';
-        videoElement.style.transition = 'opacity 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) 0.1s, transform 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) 0.1s';
-        requestAnimationFrame(() => {
-          videoElement.style.opacity = '1';
-          videoElement.style.transform = 'translateX(0)';
-        });
-        // アニメーション完了後にスタイルをリセット
-        setTimeout(() => {
-          videoElement.style.transition = '';
-          videoElement.style.opacity = '';
-          videoElement.style.transform = '';
-        }, 800);
-      }
-
-      if (trackList) {
-        // 季節タイトルと説明文の登場アニメーション（右からスライドイン、時間差）
-        [seasonTitle, seasonDesc].forEach((el, idx) => {
-          if (el) {
-            el.style.opacity = '0';
-            el.style.transform = 'translateX(60px)';
-            el.style.transition = `opacity 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) ${0.2 + idx * 0.1}s, transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) ${0.2 + idx * 0.1}s`;
-            requestAnimationFrame(() => {
-              el.style.opacity = '1';
-              el.style.transform = 'translateX(0)';
-            });
-            // 要素ごとに異なるタイミングでリセット
-            setTimeout(() => {
-              el.style.transition = '';
-              el.style.opacity = '';
-              el.style.transform = '';
-            }, 700 + idx * 100);
-          }
-        });
-
-        // 楽曲リストコンテナの登場アニメーション（右から大きくスライドイン）
-        trackList.style.opacity = '0';
-        trackList.style.transform = 'translateX(100px)';
-        trackList.style.transition = 'opacity 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) 0.3s, transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) 0.3s';
-        requestAnimationFrame(() => {
-          trackList.style.opacity = '1';
-          trackList.style.transform = 'translateX(0)';
-        });
-        setTimeout(() => {
-          trackList.style.transition = '';
-          trackList.style.opacity = '';
-          trackList.style.transform = '';
-        }, 1100);
-
-        // 個別楽曲の連続登場アニメーション（順次表示）
-        const tracks = trackList.querySelectorAll('.track');
-        tracks.forEach((track, idx) => {
-          track.style.opacity = '0';
-          track.style.transform = 'translateX(40px)';
-          track.style.transition = `opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) ${0.5 + idx * 0.08}s, transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) ${0.5 + idx * 0.08}s`;
-          requestAnimationFrame(() => {
-            track.style.opacity = '1';
-            track.style.transform = 'translateX(0)';
-          });
-          setTimeout(() => {
-            track.style.transition = '';
-            track.style.opacity = '';
-            track.style.transform = '';
-          }, 1000 + idx * 80);
-        });
-      }
-    } else {
-      // 退場アニメーション
-      if (videoElement) {
-        // 動画要素の退場（左へフェードアウト）
-        videoElement.style.transition = 'opacity 0.4s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1)';
-        videoElement.style.opacity = '0';
-        videoElement.style.transform = 'translateX(-60px)';
-      }
-      if (trackList) {
-        // 個別楽曲の順次退場アニメーション
-        const tracks = trackList.querySelectorAll('.track');
-        tracks.forEach((track, idx) => {
-          track.style.transition = `opacity 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) ${idx * 0.03}s, transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) ${idx * 0.03}s`;
-          track.style.opacity = '0';
-          track.style.transform = 'translateX(30px)';
-        });
-        // テキスト要素とリストコンテナの退場（右へスライドアウト）
-        [seasonTitle, seasonDesc, trackList].forEach((el, idx) => {
-          if (el) {
-            el.style.transition = `opacity 0.4s cubic-bezier(0.25, 0.1, 0.25, 1) ${0.1 + idx * 0.05}s, transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1) ${0.1 + idx * 0.05}s`;
-            el.style.opacity = '0';
-            el.style.transform = 'translateX(50px)';
-          }
-        });
-      }
-    }
+    // アニメーション機能を削除しました
   }
-
   /**
    * パネル内動画の遅延読み込み処理
    * 
@@ -1402,7 +1298,6 @@ class ShūkaApp {
    * - アプリケーション準備完了の通知
    */
   onDOMReady() {
-    this.setupIntersectionObserver(); // 交差監視による要素アニメーション
     this.setupPerformanceOptimizations(); // パフォーマンス最適化
     this.setupAccessibilityEnhancements(); // アクセシビリティ機能強化
     this.setupErrorHandling(); // エラーハンドリング設定
@@ -1426,31 +1321,6 @@ class ShūkaApp {
    * - パフォーマンスを考慮した閾値設定
    * - 複数要素の効率的な監視管理
    */
-  setupIntersectionObserver() {
-    // 交差監視のオプション設定
-    const observerOptions = {
-      threshold: 0.1, // 要素の10%が見えたらアニメーション開始
-      rootMargin: '0px 0px -50px 0px' // 下側50px余裕を持たせる
-    };
-    
-    // アニメーション用オブザーバーの作成
-    const animationObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          this.animateElement(entry.target); // ビューポート内の要素をアニメーション
-        }
-      });
-    }, observerOptions);
-    
-    // アニメーション対象要素の監視開始（未使用の .contact-form を除外）
-    const animatedElements = document.querySelectorAll('.feature, .track, .about-visual');
-    animatedElements.forEach(el => {
-      animationObserver.observe(el);
-    });
-    
-    // オブザーバーをマップに保存（後でクリーンアップ可能）
-    this.observers.set('animation', animationObserver);
-  }
   
   /**
    * 要素のアニメーション実行処理
@@ -1462,28 +1332,6 @@ class ShūkaApp {
    * 
    * @param {HTMLElement} element - アニメーション対象要素
    */
-  animateElement(element) {
-    // ユーザーがアニメーション無効化を設定している場合は簡素化
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      element.style.opacity = '1';
-      element.style.transform = 'none';
-      return;
-    }
-    
-    // 要素タイプに基づいてアニメーションクラスを追加
-    if (element.classList.contains('feature')) {
-      element.classList.add('animate-slide-in-left'); // 特徴カードは左からスライド
-    } else if (element.classList.contains('about-visual')) {
-      element.classList.add('animate-slide-in-right'); // アバウト画像は右からスライド
-    } else {
-      element.classList.add('animate-fade-in'); // その他の要素はフェードイン
-    }
-    
-    // アニメーション完了後にクラスを削除（再アニメーション可能にする）
-    setTimeout(() => {
-      element.classList.remove('animate-slide-in-left', 'animate-slide-in-right', 'animate-fade-in');
-    }, 600); // 600ms後にクリーンアップ
-  }
   
   
   /**

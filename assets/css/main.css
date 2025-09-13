@@ -472,6 +472,10 @@ a:focus {
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
+  text-shadow:
+    1px 1px 2px rgba(0, 0, 0, 0.1),
+    0 0 4px rgba(0, 0, 0, 0.05);
+  -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.1);
 }
 
 /* スキップリンクは未採用のため削除 */
@@ -1106,8 +1110,6 @@ a:focus {
   /* テキストシャドウ - 背景画像上での可読性向上 */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
   
-  /* フェードイン登場アニメーション - 印象的な初回体験 */
-  animation: fadeInUp 1s ease-out;
   
   /* 自然改行許可 - レスポンシブ対応 */
   white-space: normal;
@@ -1246,8 +1248,6 @@ a:focus {
   /* 控えめなテキストシャドウ - 可読性向上と自然な立体感 */
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
   
-  /* 遅延フェードイン - 0.3秒後に登場する段階的演出 */
-  animation: fadeInUp 1s ease-out 0.3s both;
 }
 
 /* 
@@ -1276,8 +1276,6 @@ a:focus {
   /* 自動折り返し - 小画面での適切な表示 */
   flex-wrap: wrap;
   
-  /* 最終段階のフェードイン - ユーザーの注意を段階的に誘導 */
-  animation: fadeInUp 1s ease-out 0.6s both;
 }
 
 /* ===== ボタン - インタラクション要素 ===== */
@@ -2176,14 +2174,12 @@ SURF_END SeasonTextColor */
   font-size: var(--text-xl);
   font-weight: 400;                /* taglineと同じ標準的な太さ */
   letter-spacing: 0.15em;
+  text-shadow:
+    1px 1px 2px rgba(0, 0, 0, 0.2),
+    0 0 4px rgba(0, 0, 0, 0.1);
+  -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.15);
   color: rgba(255, 255, 255, 0.7); /* taglineと同じ薄い白色 */
   line-height: 1.3;                /* taglineと同じ行間 */
-  text-shadow: 
-    1px 1px 0px rgba(0, 0, 0, 0.5),
-    -1px -1px 0px rgba(0, 0, 0, 0.5),
-    1px -1px 0px rgba(0, 0, 0, 0.5),
-    -1px 1px 0px rgba(0, 0, 0, 0.5),
-    2px 2px 4px rgba(0, 0, 0, 0.3); /* taglineと同じ文字縁取り */
   background: rgba(0, 0, 0, 0.4);
   padding: var(--space-1) var(--space-2);
   border-radius: var(--radius);
@@ -2272,6 +2268,10 @@ SURF_END SeasonTextColor */
 .season-title {
   margin-bottom: var(--space-4); /* タイトル下の適切な間隔確保 */
   color: var(--text);           /* テーマに合わせた統一テキスト色 */
+  text-shadow:
+    1px 1px 2px rgba(0, 0, 0, 0.15),
+    0 0 4px rgba(0, 0, 0, 0.08);
+  -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.12);
 }
 
 /* 
@@ -2288,6 +2288,10 @@ SURF_END SeasonTextColor */
   color: var(--text-secondary); /* より読みやすいテキスト色 */
   line-height: 1.6;            /* 行間を広げて可読性向上 */
   font-weight: 400;            /* 適度な太さで読みやすく */
+  text-shadow:
+    1px 1px 2px rgba(0, 0, 0, 0.1),
+    0 0 4px rgba(0, 0, 0, 0.05);
+  -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.1);
 }
 
 /* 
@@ -2371,6 +2375,10 @@ SURF_END SeasonTextColor */
   margin-bottom: var(--space-2); /* タイトルと説明文の間隔 */
   font-size: var(--text-lg);    /* 楽曲名を際立たせるサイズ */
   color: var(--text);           /* テーマ統一のテキスト色 */
+  text-shadow:
+    1px 1px 2px rgba(0, 0, 0, 0.12),
+    0 0 4px rgba(0, 0, 0, 0.06);
+  -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.1);
 }
 
 /* 
@@ -2387,6 +2395,10 @@ SURF_END SeasonTextColor */
   color: var(--text-secondary); /* より読みやすいテキスト色 */
   line-height: 1.5;            /* 行間を広げて可読性向上 */
   font-weight: 400;            /* 適度な太さで読みやすく */
+  text-shadow:
+    1px 1px 2px rgba(0, 0, 0, 0.08),
+    0 0 4px rgba(0, 0, 0, 0.04);
+  -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.08);
 }
 
 /* 冬の季節での楽曲テキストの視認性改善 */
@@ -2708,87 +2720,8 @@ body[data-season="winter"] .track-description {
  * - サイト全体の一体感と連続性を創出
  */
 
-/* 
- * fadeInUpアニメーション - 下から上への自然な登場効果
- * 
- * 動作原理:
- * - Y軸方向の移動（30px）で「下から浮かび上がる」感覚
- * - 透明度の変化で滞らかな出現を演出
- * - transformとopacityのGPU加速プロパティでスムーズな動作
- * 
- * 使用場面:
- * - ヒーローセクションのメインコンテンツ
- * - 重要な情報の段階的な提示
- * - セクション間のスムーズな移行
- * - ユーザーの注意を自然に誘導
- */
-@keyframes fadeInUp {
-  /* 開始状態: 不可視で下方にオフセット */
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  
-  /* 終了状態: 完全可視で正常位置 */
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
-/* 
- * fadeInアニメーション - シンプルなフェードイン効果
- * 
- * 特徴:
- * - 位置変化なしの純粋な透明度変化
- * - 最も軽量でパフォーマンスに優しいアニメーション
- * - さりげなく上品な登場効果
- * 
- * 適用場面:
- * - オーバーレイやモーダルの出現
- * - 補助情報やアイコンの表示
- * - メインコンテンツを邪魔しない控えめな効果
- * - ローディング後のコンテンツ表示
- */
-@keyframes fadeIn {
-  /* 開始: 完全非表示 */
-  from {
-    opacity: 0;
-  }
-  
-  /* 終了: 完全表示 */
-  to {
-    opacity: 1;
-  }
-}
 
-/* 
- * slideInRightアニメーション - 右からのスライド登場効果
- * 
- * 動作原理:
- * - X軸方向の水平移動（右から左へ）
- * - 透明度変化と組み合わせた滞らかな登場
- * - 日本の文字読み方向（右から左）を意識した動き
- * 
- * 使用目的:
- * - ナビゲーションメニューの表示
- * - サイドバーやパネルの出現
- * - 連続したコンテンツの段階的表示
- * - リストアイテムの逆順登場演出
- */
-@keyframes slideInRight {
-  /* 開始状態: 右側にオフセットして不可視 */
-  from {
-    opacity: 0;
-    transform: translateX(30px);
-  }
-  
-  /* 終了状態: 正常位置で完全可視 */
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
 
 /* 
  * slideInLeftアニメーション - 左からのスライド登場効果
@@ -2804,19 +2737,6 @@ body[data-season="winter"] .track-description {
  * - 左サイドバーやドロワーの表示
  * - slideInRightと組み合わせた交互登場演出
  */
-@keyframes slideInLeft {
-  /* 開始状態: 左側にオフセットして不可視 */
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-  
-  /* 終了状態: 正常位置で完全可視 */
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
 
 /* 
  * JavaScript用アニメーションクラス - 動的コンテント制御用
@@ -2833,20 +2753,6 @@ body[data-season="winter"] .track-description {
  * - ユーザビリティとパフォーマンスのバランスを考慮
  */
 
-/* フェードインアニメーションクラス - 汎用的な登場効果 */
-.animate-fade-in {
-  animation: fadeIn 0.6s ease-out;
-}
-
-/* 右からのスライドインアニメーションクラス */
-.animate-slide-in-right {
-  animation: slideInRight 0.6s ease-out;
-}
-
-/* 左からのスライドインアニメーションクラス */
-.animate-slide-in-left {
-  animation: slideInLeft 0.6s ease-out;
-}
 
 /* ===== ユーティリティクラス - 汎用スタイル ===== */
 .visually-hidden {
