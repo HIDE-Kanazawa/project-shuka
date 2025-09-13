@@ -34,7 +34,8 @@
       "Bash(if [ -f \"$file\" ])",
       "Bash(then echo \"✓ EXISTS\")",
       "Bash(else echo \"✗ MISSING\")",
-      "Bash(fi)"
+      "Bash(fi)",
+      "Bash(find:*)"
     ],
     "deny": [],
     "ask": []

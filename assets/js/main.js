@@ -49,7 +49,7 @@ ShukaApp.data.SEASON_DATA = {
     name: '春',
     title: '春の調べ',
     description: '桜咲く季節の温かな希望と新しい始まりを表現した楽曲集',
-    poster: './assets/images/portraits/秀歌-春.webp',
+    poster: './assets/images/portraits/秀歌-About-春.webp',
     video: {
       webm: null,
       mp4: './assets/videos/光のほうへ.mp4'
@@ -95,7 +95,7 @@ ShukaApp.data.SEASON_DATA = {
     name: '夏',
     title: '夏の響き',
     description: '緑豊かな季節の生命力と情熱を込めた楽曲集',
-    poster: './assets/images/portraits/秀歌-夏.webp',
+    poster: './assets/images/portraits/秀歌-About-夏.webp',
     video: {
       webm: null,
       mp4: './assets/videos/夏庭園の歌.mp4'
@@ -141,7 +141,7 @@ ShukaApp.data.SEASON_DATA = {
     name: '冬',
     title: '冬の静寂',
     description: '雪景色の中の静けさと内省を込めた楽曲集',
-    poster: './assets/images/portraits/秀歌-冬.webp',
+    poster: './assets/images/portraits/秀歌-About-冬.webp',
     video: {
       webm: null,
       mp4: './assets/videos/白のなかで.mp4'
@@ -1069,10 +1069,10 @@ class SeasonsGallery {
     if (!aboutImage) return;
     
     const seasonImages = {
-      spring: './assets/images/buttons/秀歌-春-btn.webp',
-      summer: './assets/images/buttons/秀歌-夏-btn.webp',
-      autumn: './assets/images/buttons/秀歌-秋-btn.webp',
-      winter: './assets/images/buttons/秀歌-冬-btn.webp',
+      spring: './assets/images/portraits/秀歌-About-春.webp',
+      summer: './assets/images/portraits/秀歌-About-夏.webp',
+      autumn: './assets/images/portraits/秀歌-About-秋.webp',
+      winter: './assets/images/portraits/秀歌-About-冬.webp',
       tsuyu: './assets/images/portraits/秀歌-梅雨.webp'
     };
     
@@ -1538,10 +1538,10 @@ class ShūkaApp {
   preloadOnHover() {
     // プリロード対象の季節画像リスト
     const seasonImages = [
-      './assets/images/portraits/秀歌-春.webp',
-      './assets/images/portraits/秀歌-夏.webp',
-      './assets/images/portraits/秀歌-秋.webp',
-      './assets/images/portraits/秀歌-冬.webp'
+      './assets/images/portraits/秀歌-About-春.webp',
+      './assets/images/portraits/秀歌-About-夏.webp',
+      './assets/images/portraits/秀歌-About-秋.webp',
+      './assets/images/portraits/秀歌-About-冬.webp'
     ];
     
     // 各季節画像をprefetchで先読み
