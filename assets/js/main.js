@@ -582,8 +582,8 @@ class SeasonsGallery {
       window.enableSakura();
     }
 
-    // ユーザーが季節を選択するまで、すべてのパネルを非表示
-    this.updateSeasonButtons('');
+    // デフォルト季節のボタンをアクティブにし、パネルは非表示のまま
+    this.updateSeasonButtons(this.currentSeason);
     this.updateSeasonPanels('', false);
   }
   
@@ -801,6 +801,11 @@ class SeasonsGallery {
     // スクリーンリーダー用の表示状態を更新
     panel.setAttribute('aria-hidden', 'false');
 
+    // 子要素の段階的アニメーション実行
+    if (animate) {
+      this.animatePanelChildren(panel, true);
+    }
+
     // パネル表示時に動画ソースを読み込み（プレーヤー準備）
     this.loadVideoForPanel(panel, false);
   }
@@ -814,6 +819,9 @@ class SeasonsGallery {
    * - アクセシビリティ属性の更新
    */
   hidePanel(panel, animate) {
+    // 子要素の退場アニメーション実行
+    this.animatePanelChildren(panel, false);
+
     if (animate) {
       panel.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
       panel.style.opacity = '0';
@@ -849,7 +857,40 @@ class SeasonsGallery {
    * @param {boolean} isEntering - true: 登場アニメーション, false: 退場アニメーション
    */
   animatePanelChildren(panel, isEntering) {
-    // アニメーション機能を削除しました
+    if (!isEntering) {
+      // 退場時は即座にアニメーションクラスを削除
+      const elements = panel.querySelectorAll('.season-tracks, .season-visual');
+      elements.forEach(el => {
+        el.classList.remove('animate-slide-in-left', 'animate-slide-in-right', 'animate-fade-in');
+        el.style.opacity = '';
+      });
+      return;
+    }
+
+    // 登場アニメーション: 左から楽曲リスト、右から画像・動画
+    const tracksList = panel.querySelector('.season-tracks');
+    const visualContainer = panel.querySelector('.season-visual');
+
+    // 初期状態を透明にセット
+    [tracksList, visualContainer].forEach(el => {
+      if (el) {
+        el.style.opacity = '0';
+        el.classList.remove('animate-slide-in-left', 'animate-slide-in-right', 'animate-fade-in');
+      }
+    });
+
+    // 段階的アニメーション実行
+    setTimeout(() => {
+      if (tracksList) {
+        tracksList.classList.add('animate-slide-in-left');
+      }
+    }, 100); // パネルアニメーション後に開始
+
+    setTimeout(() => {
+      if (visualContainer) {
+        visualContainer.classList.add('animate-slide-in-right');
+      }
+    }, 200); // 楽曲リストの後に続く
   }
   /**
    * パネル内動画の遅延読み込み処理

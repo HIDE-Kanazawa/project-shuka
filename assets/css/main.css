@@ -138,18 +138,6 @@ body[data-season="tsuyu"] .track:hover {
               0 2px 6px rgba(123, 167, 212, 0.25);  /* 強化された内側の影 */
 }
 
-/* =============================================================================
- * 梅雨シーズンボタンスタイリング
- * =============================================================================
- * 季節切替ボタンに梅雨の雰囲気を付与する特別エフェクト
- * フォーカスやホバー時に水滴の波紋が広がるようなアニメーション
- * ============================================================================= */
-body[data-season="tsuyu"] .season-btn:hover,
-body[data-season="tsuyu"] .season-btn:focus-visible {
-  /* 大きな水滴の波紋を表現する大きな影 */
-  box-shadow: 0 12px 32px rgba(74, 144, 184, 0.25),  /* 幅広い波紋エフェクト */
-              0 6px 12px rgba(123, 167, 212, 0.2);   /* 中心部の濃い影 */
-}
 
 /* =============================================================================
  * 梅雨シーズンのテキストエフェクト
@@ -1905,8 +1893,6 @@ a:focus {
   /* 大胆な浮上とスケール拡大 - ダイナミックな3D効果 */
   transform: translateY(-8px) scale(1.05);
   
-  /* ボーダーの完全不透明化 - 選択状態の明確な視覚的フィードバック */
-  border-color: rgba(255, 255, 255, 1);
   
   /* ドラマティックな多層シャドウ - 最大限の立体感と存在感 */
   box-shadow: 
@@ -1914,7 +1900,8 @@ a:focus {
     0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-/* 
+
+/*
  * 季節ボタンのシャインオーバーレイ - ホバー時の特別効果
  * 
  * シャイン効果の技術:
@@ -2723,35 +2710,78 @@ body[data-season="winter"] .track-description {
 
 
 
-/* 
+/*
  * slideInLeftアニメーション - 左からのスライド登場効果
- * 
+ *
  * 動作原理:
  * - X軸方向の水平移動（左から右へ）
  * - slideInRightと対称的な動きでバランスを創出
  * - 日本の伝統的な書道での筆運びを想起させる動き
- * 
+ *
  * 使用場面:
  * - メインコンテンツの登場
  * - テキストブロックの段階的表示
  * - 左サイドバーやドロワーの表示
  * - slideInRightと組み合わせた交互登場演出
  */
+@keyframes slideInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
 
-/* 
+@keyframes slideInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*
  * JavaScript用アニメーションクラス - 動的コンテント制御用
- * 
+ *
  * 設計思想:
  * - JavaScriptから簡単にアニメーションをトリガーできるユーティリティ
  * - CSSとJavaScriptの分離でメンテナンス性向上
  * - 統一されたタイミングとイージングで一貫した体験
  * - パフォーマンス最適化済みの設定
- * 
+ *
  * タイミング設定:
  * - 0.6秒: 情報認識に最適な速度
  * - ease-out: 自然で心地よい加速度カーブ
  * - ユーザビリティとパフォーマンスのバランスを考慮
  */
+.animate-slide-in-left {
+  animation: slideInLeft 0.6s ease-out forwards;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.6s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
 
 
 /* ===== ユーティリティクラス - 汎用スタイル ===== */
@@ -3518,9 +3548,6 @@ audio:focus-visible {
 
 /* ===== 色覚異常サポート ===== */
 /* Add patterns/shapes alongside color coding */
-.season-btn[data-season="spring"] {
-  position: relative;
-}
 
 
 
