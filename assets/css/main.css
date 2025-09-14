@@ -1147,25 +1147,6 @@ a:focus {
     2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* 
- * 煌めきアニメーション定義
- * 
- * 動作原理:
- * - グラデーション背景を左右に移動
- * - 200%の背景サイズを活用した滑らかな循環
- * - 光の反射を模した自然な輝きを演出
- * 
- * パフォーマンス:
- * - GPU加速対象のtransform使用
- * - 60FPSでの滑らかな動作保証
- */
-@keyframes shine {
-  /* 開始位置 - グラデーションが右端に位置 */
-  0% { background-position: 0 0; }
-  
-  /* 終了位置 - グラデーションが左端まで移動（200%移動で1周） */
-  100% { background-position: -200% 0; }
-}
 
 /* 
  * アーティスト名の日本語部分スタイリング
@@ -2746,16 +2727,6 @@ body[data-season="winter"] .track-description {
   }
 }
 
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
 /*
  * JavaScript用アニメーションクラス - 動的コンテント制御用
@@ -2779,9 +2750,6 @@ body[data-season="winter"] .track-description {
   animation: slideInRight 0.6s ease-out forwards;
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.5s ease-out forwards;
-}
 
 
 /* ===== ユーティリティクラス - 汎用スタイル ===== */
@@ -2946,6 +2914,7 @@ body[data-season="winter"] .track-description {
     opacity: 0;
   }
 }
+
 
 @keyframes leafFloat {
   0% {

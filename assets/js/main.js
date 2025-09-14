@@ -861,7 +861,7 @@ class SeasonsGallery {
       // 退場時は即座にアニメーションクラスを削除
       const elements = panel.querySelectorAll('.season-tracks, .season-visual');
       elements.forEach(el => {
-        el.classList.remove('animate-slide-in-left', 'animate-slide-in-right', 'animate-fade-in');
+        el.classList.remove('animate-slide-in-left', 'animate-slide-in-right');
         el.style.opacity = '';
       });
       return;
@@ -875,7 +875,7 @@ class SeasonsGallery {
     [tracksList, visualContainer].forEach(el => {
       if (el) {
         el.style.opacity = '0';
-        el.classList.remove('animate-slide-in-left', 'animate-slide-in-right', 'animate-fade-in');
+        el.classList.remove('animate-slide-in-left', 'animate-slide-in-right');
       }
     });
 
