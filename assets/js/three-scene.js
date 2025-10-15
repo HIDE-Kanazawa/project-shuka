@@ -67,7 +67,7 @@ function initThreeJsScene() {
 
   let loader = new THREE.STLLoader();
   //https://clara.io/view/b47726c8-02cf-4eb5-b275-d9b2be591bad
-  loader.load("https://cywarr.github.io/small-shop/fish.stl", objGeom => {
+  loader.load("./assets/models/fish.stl", objGeom => {
 
     // Create multiple paths for koi school
     for (let koiIndex = 0; koiIndex < koiCount; koiIndex++) {

@@ -82,33 +82,30 @@ if (window.location.hash && /(access_token|id_token|login)/.test(window.location
   // ユーザーアクションが検出された時の処理
   function onUser(){ tryLoad(); }
   
-  var io = null; // IntersectionObserver のインスタンス保存用
-  
-  // IntersectionObserver を使用した viewport 内表示検出
-  if ('IntersectionObserver' in window){
-    var hero = document.getElementById('home') || document.body; // 監視対象要素（ヒーローセクションまたはbody）
-    try {
-      // 要素が viewport に入った時に Three.js を読み込む
-      io = new IntersectionObserver(function(entries){
-        entries.forEach(function(entry){
-          if (entry.isIntersecting){ tryLoad(); } // 要素が表示されたら読み込み実行
-        });
-      }, { rootMargin: '0px 0px -40% 0px', threshold: 0.1 }); // viewport の60%以上に入った時に発火
-      if (hero) io.observe(hero); // 監視開始
-    } catch(e) {} // エラーが発生しても処理を継続
-  }
-  
-  // ユーザーインタラクション検出用のイベントリスナー設定
-  window.addEventListener('scroll', onUser, { once: true, passive: true }); // スクロール検出（1回のみ）
-  window.addEventListener('pointerdown', onUser, { once: true, passive: true }); // ポインター押下検出（1回のみ）
-  window.addEventListener('mousemove', onUser, { once: true, passive: true }); // マウス移動検出（1回のみ）
-  
-  // アイドル時間を利用した遅延読み込み
-  if ('requestIdleCallback' in window){
-    // ブラウザがアイドル状態の時に読み込み（最大5秒後）
-    requestIdleCallback(function(){ tryLoad(); }, { timeout: 5000 });
-  } else {
-    // requestIdleCallback が非対応の場合は4秒後に実行
-    setTimeout(function(){ tryLoad(); }, 4000);
-  }
+  // window.load 完了後に遅延読み込みトリガーを設定
+  window.addEventListener('load', function(){
+    var io = null; // IntersectionObserver のインスタンス保存用
+    
+    // IntersectionObserver を使用した viewport 内表示検出
+    if ('IntersectionObserver' in window){
+      var hero = document.getElementById('home') || document.body; // 監視対象要素（ヒーローセクションまたはbody）
+      try {
+        // 要素が viewport に入った時に Three.js を読み込む
+        io = new IntersectionObserver(function(entries){
+          entries.forEach(function(entry){
+            if (entry.isIntersecting){ tryLoad(); } // 要素が表示されたら読み込み実行
+          });
+        }, { rootMargin: '0px 0px -40% 0px', threshold: 0.1 }); // viewport の60%以上に入った時に発火
+        if (hero) io.observe(hero); // 監視開始
+      } catch(e) {} // エラーが発生しても処理を継続
+    }
+    
+    // ユーザーインタラクション検出用のイベントリスナー設定
+    window.addEventListener('scroll', onUser, { once: true, passive: true }); // スクロール検出（1回のみ）
+    window.addEventListener('pointerdown', onUser, { once: true, passive: true }); // ポインター押下検出（1回のみ）
+    window.addEventListener('mousemove', onUser, { once: true, passive: true }); // マウス移動検出（1回のみ）
+    
+    // フォールバック: ロード完了から一定時間後に実行
+    setTimeout(function(){ tryLoad(); }, 8000);
+  });
 })();

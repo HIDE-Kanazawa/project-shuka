@@ -83,8 +83,7 @@
     <link rel="stylesheet" href="./assets/css/main.css">
     <link rel="preload" href="./assets/css/loader.css" as="style">
     <link rel="stylesheet" href="./assets/css/loader.css">
-    <link rel="preload" href="./assets/js/main.js" as="script">
-    <!-- main.js は後段で defer で読み込み。preloadで先に取得だけ行う -->
+    <!-- main.js は後段で defer で読み込み（初期描画を優先するためプリロード無し） -->
 
     
     <!-- DNS prefetch for external resources if any -->

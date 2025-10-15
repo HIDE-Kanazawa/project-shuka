@@ -2528,13 +2528,20 @@ class WaterRippleEffect {
 
 // DOM読み込み完了時に波紋エフェクトを初期化
 let waterRipples;
-document.addEventListener('DOMContentLoaded', () => {
+function initWaterRipples() {
+  if (waterRipples) return;
   waterRipples = new WaterRippleEffect();
   // ウォーターリップルエフェクトをネームスペースに追加
   ShukaApp.effects = waterRipples;
   // 後方互換性のための従来のグローバル参照を維持
   window.waterRipples = waterRipples;
-});
+}
+
+if ('requestIdleCallback' in window) {
+  requestIdleCallback(() => initWaterRipples(), { timeout: 3000 });
+} else {
+  window.addEventListener('load', () => initWaterRipples(), { once: true });
+}
 
 /**
  * 水面波紋エフェクトのグローバル制御関数
@@ -2604,20 +2611,28 @@ document.addEventListener('DOMContentLoaded', () => {
   // 動的コンテンツの生成（必ずDOM生成が先）
   generateSeasonGallery(); // 季節別ギャラリーのHTML生成
   
-  // 画像読み込みエラーのハンドリング設定
-  setupImageErrorHandling();
-
-  // DOM要素生成完了後に季節ギャラリークラスを初期化
-  // 季節ギャラリーインスタンスをネームスペースに追加
-  ShukaApp.gallery = new SeasonsGallery();
-  // 後方互換性のための従来のグローバル参照を維持
-  window.seasonsGallery = ShukaApp.gallery;
-  if (typeof initSeasonSelector === 'function')
-    initSeasonSelector(); // 季節セレクターコンポーネントの初期化
+  const deferredInit = () => {
+    // 画像読み込みエラーのハンドリング設定
+    setupImageErrorHandling();
   
-  // 動的生成された要素に対するイベントの再バインド
-  if (window.seasonsGallery && typeof window.seasonsGallery.refresh === 'function') {
-    window.seasonsGallery.refresh();
+    // DOM要素生成完了後に季節ギャラリークラスを初期化
+    // 季節ギャラリーインスタンスをネームスペースに追加
+    ShukaApp.gallery = new SeasonsGallery();
+    // 後方互換性のための従来のグローバル参照を維持
+    window.seasonsGallery = ShukaApp.gallery;
+    if (typeof initSeasonSelector === 'function')
+      initSeasonSelector(); // 季節セレクターコンポーネントの初期化
+    
+    // 動的生成された要素に対するイベントの再バインド
+    if (window.seasonsGallery && typeof window.seasonsGallery.refresh === 'function') {
+      window.seasonsGallery.refresh();
+    }
+  };
+
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(() => deferredInit(), { timeout: 2000 });
+  } else {
+    setTimeout(() => deferredInit(), 0);
   }
 
   // フッター季節ボタンは現在DOMに存在しないため未初期化（安全に無効化）
@@ -2790,4 +2805,3 @@ function setupImageErrorHandling() {
     img.addEventListener('error', () => handleImageError(img));
   });
 }
-

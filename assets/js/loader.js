@@ -15,6 +15,7 @@
   // インク演出（CSS animation）が 1s のため、最低1秒は表示させる
   const MIN_SHOW_MS = 1000;
   const startAt = performance.now();
+  let done = false;
 
   // 安全対策: 約 1.2 秒を上限として自動で閉じる
   // - ネットワーク遅延や画像プリロード失敗などのケースでも UI が固まらないようにする
@@ -22,9 +23,13 @@
 
   // 通常ルート: ウィンドウの load 完了でフェードアウト（最短1s後）を開始
   window.addEventListener('load', finishLoading);
+  // DOMContentLoaded 時点でも解除できるようにする（重い外部スクリプトに影響されないように）
+  document.addEventListener('DOMContentLoaded', finishLoading, { once: true });
 
   // フェードアウト → 遷移完了後に DOM から除去
   function finishLoading() {
+    if (done) return;
+    done = true;
     // 重複呼び出しを避けるため、まずタイマーを解除
     clearTimeout(safety);
 
